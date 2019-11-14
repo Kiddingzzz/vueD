@@ -27,9 +27,13 @@
             <span slot="title"><a-icon type="laptop" />房源管理</span>
             <a-menu-item key="6">
               <router-link to="pubulish">发布房源</router-link>
-            </a-menu-item>
+            </a-menu-item>  
             <a-menu-item key="7">发布状态</a-menu-item>
+           
             <a-menu-item key="8"><router-link to="simple">抓取房源</router-link></a-menu-item>
+            <a-menu-item key="9">
+                <router-link to="ceshi">测试1</router-link>
+            </a-menu-item>
           </a-sub-menu>
           <!-- <a-sub-menu key="sub3">
             <span slot="title"><a-icon type="notification" />subnav 3</span>

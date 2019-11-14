@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Index from '@/views/home/index'
 import Simple from '@/views/home/simple'
 import Pubulish from '@/views/home-second/pubulishHome/pubulish'
-
+import Ceshi from '@/views/home-second/ceshi'
 Vue.use(Router)
 
 export default new Router({
@@ -38,6 +38,11 @@ export default new Router({
 			name: "Pubulish",
 			component: Pubulish
 			
+		},
+		{
+			path: "/ceshi",
+			name: "ceshi",
+			component: Ceshi
 		},
   ]
 })
