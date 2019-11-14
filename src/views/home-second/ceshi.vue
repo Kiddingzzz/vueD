@@ -1,64 +1,70 @@
 <template>
- <div class="ts">
-    <div class="wrap">
+    <div class="ts">
+        <div class="wrap">
             <a-layout style="padding: 24px 24px 24px 24px">
-            <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-           <a-table :columns="columns" :dataSource="list">
-            <span slot="customTitle">
-              <a-icon type="smile-o" /> 编号</span>
-           
-            <template slot="phones" slot-scope="text, record">
-              <a :href="record.url" target="_blank">{{record.phone}}</a>
-            </template>
-            <template slot="titles" slot-scope="text, record">
-              <a :href="record.url" target="_blank">{{record.title}}</a>
-            </template>
-            <template slot="def" slot-scope="text, record">
-              <a :href="record.url" target="_blank">{{record.def}}</a>
-            </template>
-          </a-table>
-            </a-layout-content>
+                <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+
+                    <a-table :columns="columns" :dataSource="list">
+                        <span slot="customTitle">
+                            <a-icon type="smile-o" />编号</span>
+
+                        <template slot="phones" slot-scope="text, record">
+                            <a :href="record.url" target="_blank">{{record.phone}}</a>
+                        </template>
+                        <template slot="titles" slot-scope="text, record">
+                            <a :href="record.url" target="_blank">{{record.title}}</a>
+                        </template>
+                        <template slot="def" slot-scope="text, record">
+                            <a :href="record.url" target="_blank">{{_def}}</a>
+                        </template>
+                    </a-table>
+                </a-layout-content>
             </a-layout>
         </div>
+        <div style="">
+            <div></div>
+            <div></div>
         </div>
+    </div>
 </template>
 <script>
-const columns = [
-    {
-      dataIndex: 'id',
-      key: 'id',
-      slots: { title: 'customTitle' },
-      scopedSlots: { customRender: 'id' },
-      width: 100
-    },
-    {
-      title: '路径',
-      dataIndex: 'url',
-      key: 'url',
-      width: 140
-    },
-    {
-      title: '创建时间',
-      dataIndex: 'createTime',
-      key: 'createTime',
-      width: 140
-    },
-   
-    {
-      title: '创建者',
-      dataIndex: 'createName',
-      key: 'createName',
-      width: 80
-    },
-    {
-      title: '创建者地址',
-      dataIndex: 'address',
-      key: 'address',
-      width: 80
-    },
-  ];
- export default {
-     data() {
+    const columns = [
+        {
+            dataIndex: 'id',
+            key: 'id',
+            slots: { title: 'customTitle' },
+            scopedSlots: { customRender: 'id' },
+            width: 100
+        },
+        {
+            title: '路径',
+            dataIndex: 'url',
+            key: 'url',
+            width: 140
+        },
+        {
+            title: '创建时间',
+            dataIndex: 'createTime',
+            key: 'createTime',
+            width: 140
+        },
+
+        {
+            title: '创建者',
+            dataIndex: 'createName',
+            key: 'createName',
+            width: 80
+        },
+        {
+            title: '创建者地址',
+            dataIndex: 'address',
+            key: 'address',
+            width: 80
+        },
+    ];
+    import { mapState } from '@/views/store.js'
+    export default {
+        data() {
             return {
                 url: '11',
                 visible: false,
@@ -69,7 +75,7 @@ const columns = [
                     sm: { span: 5 },
                 },
                 columns,
-                list:[],
+                list: [],
                 visible: false,
                 wrapperCol: {
                     xs: { span: 24 },
@@ -80,89 +86,105 @@ const columns = [
         mounted() {
             this.GetList();
         },
-      methods: {
-         async GetList(){
-            var res = await this.$http.get(`http://localhost:21021/api/cms/url/urllist`)
-            console.log(JSON.stringify(res.data.items))
-            this.list = res.data.items;
-         }
-     },
- }
-  
+        components: {
+            _def() {
+                return this.record.def == true ? 1 : 0;
+            },
+        },
+        methods: {
+            async GetList() {
+                var res = await this.$http.get(`http://localhost:21021/api/cms/url/urllist`)
+                console.log(JSON.stringify(res.data.items))
+                this.list = res.data.items;
+            }
+        },
+    }
+
 </script>
 <style lang="less">
-.wrap {
-    width: 100%;    
-    display: flex;
-    flex: 0 0 auto;
-  }
-  .ts{
-    display: flex;
-    width: 100%;
-    flex-flow: column;
-    margin: 0 auto;
-  }
-  .filter-wraps{
-    position: relative;
-    z-index: 1;
-    display: flex;
-    flex: 0 0 auto;
-    justify-content: center;
-  }
-  .filter-wraps .search_bd .secitem dd a.select {
-    color: #ff552e;
-  }
-  .sale-content-tip{
-    margin: 8px 0;
-    background-color: #ffffdd;
-    padding: 8px;
-    border: 1px solid #fcfcb3;
-    border-radius: 5px;
-    font-size: 12px;
-  }
-  .search_bds{
-    background: #ffffdd;
-    display: flex;
-    flex-flow: column;
-    height: 110px;
-    width: 100%;
-    padding: 12px;
-    line-height: 26px;
-    border-radius: 10px;
-    border: 1px solid #ebedf0;
-  }
-  .filter-wraps .search_bds .secitem dt {
-    color: #888;
-    width: 36px;
-    font-size: 12px;
-    height: 18px;
-    line-height: 18px;
-    float: left;
-  }
-  .fontU{
-      position: absolute;
-      bottom: 50px;
-      right: 0px;
-  }
-  .ant-table-row ant-table-row-level-0{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .sale-content-tip li{
-    line-height: 20px;
-    font-size: 12px;
-    list-style:none;
-  }
-  .ant-modal-content{
-      width: 800px;
-      height: 700px;
-  }
-  li{
-      list-style:none;
-  }
-  .ant-modal-body{
-      height: 85%;
-  }
-</style>
+    .wrap {
+        width: 100%;
+        display: flex;
+        flex: 0 0 auto;
+    }
 
+    .ts {
+        display: flex;
+        width: 100%;
+        flex-flow: column;
+        margin: 0 auto;
+    }
+
+    .filter-wraps {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex: 0 0 auto;
+        justify-content: center;
+    }
+
+    .filter-wraps .search_bd .secitem dd a.select {
+        color: #ff552e;
+    }
+
+    .sale-content-tip {
+        margin: 8px 0;
+        background-color: #ffffdd;
+        padding: 8px;
+        border: 1px solid #fcfcb3;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+
+    .search_bds {
+        background: #ffffdd;
+        display: flex;
+        flex-flow: column;
+        height: 110px;
+        width: 100%;
+        padding: 12px;
+        line-height: 26px;
+        border-radius: 10px;
+        border: 1px solid #ebedf0;
+    }
+
+    .filter-wraps .search_bds .secitem dt {
+        color: #888;
+        width: 36px;
+        font-size: 12px;
+        height: 18px;
+        line-height: 18px;
+        float: left;
+    }
+
+    .fontU {
+        position: absolute;
+        bottom: 50px;
+        right: 0px;
+    }
+
+    .ant-table-row ant-table-row-level-0 {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .sale-content-tip li {
+        line-height: 20px;
+        font-size: 12px;
+        list-style: none;
+    }
+
+    .ant-modal-content {
+        width: 800px;
+        height: 700px;
+    }
+
+    li {
+        list-style: none;
+    }
+
+    .ant-modal-body {
+        height: 85%;
+    }
+</style>
