@@ -12,3 +12,8 @@ yarn-error.log*
 *.ntvs*
 *.njsproj
 *.sln
+
+/抓房cms/CMS/.vs/Sport7.CMS/v15/Server/sqlite3/db.lock
+/抓房cms/CMS/.vs/Sport7.CMS/v15/Server/sqlite3/storage.ide
+/抓房cms/CMS/.vs/Sport7.CMS/v15/Server/sqlite3/storage.ide-shm
+/抓房cms/CMS/.vs/Sport7.CMS/v15/Server/sqlite3/storage.ide-wal
