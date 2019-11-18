@@ -96,7 +96,7 @@
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:"
                             validate-status="error" help="">
-                            <a-input id="error" placeholder="房源所属小区" style="width:50%;" />
+                            <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" />
                             <label style="margin-left:5px;margin-right:10px">找不到小区？</label>
                             <a style="margin-left:5px;font-size:12px">查看相似小区</a>
                             <a style="margin-left:5px;" @click="addxiaoqu">我要添加小区</a>
@@ -117,7 +117,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="地址" has-feedback
                             validate-status="" help="">
-                            <a-input id="validating" placeholder="房源地址" />
+                            <a-input v-model="ref.address" id="validating" placeholder="房源地址" />
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
@@ -544,7 +544,7 @@
                 text:'',
                 spinning: false,
                 hutong:'',
-
+                ref:{},
             }
         },
         mounted() {
@@ -571,17 +571,19 @@
                 this.urlss = params;
                 const data = {
                     userId: this.userId,
-                    urls: this.urlss,
+                    url: this.urlss,
                     houseType: this.houseTypes,
-                    weiyiUesrId: this.text
+                    weiYiUrl: this.text
                 };
                 await this.$http.post(`${this.$config.api}/api/cms/urls/url`, data).then(response => {
                     this.spinning = true;
                     console.log(JSON.stringify(response))
                     if (response.status == 200) {
-                        this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&urls=' + this.urlss + '&houseType=' + this.houseTypes + '&weiyiUesrId=' + this.text).then(res => {
-                            console.log(`222` + JSON.stringify(res))
+                        this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
                             this.spinning = false;
+                            this.ref = res.data;
+                            console.log(`222` + JSON.stringify(this.ref))
+
                         });
 
                     }
