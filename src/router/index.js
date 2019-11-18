@@ -3,7 +3,9 @@ import Router from 'vue-router'
 import Index from '@/views/home/index'
 import Simple from '@/views/home/simple'
 import Pubulish from '@/views/home-second/pubulishHome/pubulish'
-import Ceshi from '@/views/home-second/ceshi'
+import Test from '@/views/pulishUrl/test'
+import DashBoard from '@/components/Dashboard'
+
 Vue.use(Router)
 
 export default new Router({
@@ -18,20 +20,9 @@ export default new Router({
 			component: Index
 		},
 		{
-			path: '/',
-			redirect: '/simple',
-		},
-		{
 			path: "/simple",
 			name: "Simple",
 			component: Simple
-			
-		},
-		{
-			path: "/simple",
-			name: "Simple",
-			component: Simple
-			
 		},
 		{
 			path: "/pubulish",
@@ -40,9 +31,15 @@ export default new Router({
 			
 		},
 		{
-			path: "/ceshi",
-			name: "ceshi",
-			component: Ceshi
+			path: "/test",
+			name: "Test",
+			component: Test
+			
 		},
+		{
+			path: '/Dashboard',
+			name: 'DashBoard',
+			component: DashBoard
+		}
   ]
 })
