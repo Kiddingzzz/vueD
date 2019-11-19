@@ -63,18 +63,12 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所属区域:"
                             validate-status="error" help="">
-                            <a-select :defaultValue="proquyuseData[0]" style="width: 120px"
-                                @change="quyuProvinceChange">
+                            <a-select :defaultValue="proquyuseData[0]" style="width: 120px">
                                 <a-select-option v-for="proquyuse in proquyuseData" :key="proquyuse">{{proquyuse}}
                                 </a-select-option>
                             </a-select>
                         </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所属路段:"
-                            validate-status="error" help="">
-                            <a-select v-model="secondseCity" style="width: 120px">
-                                <a-select-option v-for="city in secities" :key="city">{{city}}</a-select-option>
-                            </a-select>
-                        </a-form-item>
+                        
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑年代:"
                             validate-status="error" help="">
                             <a-date-picker :defaultValue="moment('2015/01/01', dateFormat)" :format="dateFormat" />
@@ -103,24 +97,17 @@
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:"
-                            validate-status="error" help="">
+                            validate-status="" help="">
                             <a-input id="error" placeholder="房源所属小区" style="width:50%;" />
                             <label class="addshowxq">找不到小区？</label>
                             <a class="addshowxq" @click="addshowxaqu">查看相似小区</a>
                             <a class="addshowxq" @click="addxiaoqu">我要添加小区</a>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
-                            <a-select :defaultValue="provinceData[0]" style="width: 120px"
-                                @change="handleProvinceChange">
-                                <a-select-option v-for="province in provinceData" :key="province">{{province}}
+                            <a-select :defaultValue="provinceData[0]"  style="width: 120px" v-model="address">
+                                <a-select-option v-for="(province,index) of provinceData" :key="index" :value="province">{{province}}
                                 </a-select-option>
                             </a-select>
-                            <label class="yzxinxi">*通过验证信息</label>
-                            <label class="luduanpa">*路段:</label>
-                            <a-select v-model="secondCity" style="width: 120px">
-                                <a-select-option v-for="city in cities" :key="city">{{city}}</a-select-option>
-                            </a-select>
-                            <label class="yzxinxi">*通过验证信息</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="地址" has-feedback
@@ -210,7 +197,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*租赁方式" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptionzf" @change="onChange1" :defaultValue="value1" />
+                            <a-radio-group :options="plainOptionzf" :defaultValue="value1" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*合租方式" has-feedback
                             validate-status="">
@@ -280,19 +267,19 @@
                             <label class="laberall">楼</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向" has-feedback
-                            validate-status="">
-                           <a-radio-group :options="plainOptioncx" @change="onChange2" :defaultValue="value2" />
+                            validate-status="" >
+                           <a-radio-group :options="plainOptioncx"  :defaultValue="value2" v-model="chaoxiang" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
-                             <a-radio-group :options="plainOptioncf" @change="onChange3" :defaultValue="value3" />
+                             <a-radio-group :options="plainOptioncf"  :defaultValue="value3" v-model="kanfang" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
-                            validate-status=""><a-radio-group :options="plainOptionzx" @change="onChange4" :defaultValue="value4" />
+                            validate-status=""><a-radio-group :options="plainOptionzx"  :defaultValue="value4" v-model="zhuangxiu" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptiongn" @change="onChange5" :defaultValue="value5" />
+                            <a-radio-group :options="plainOptiongn"  :defaultValue="value5" v-model="gongnuan" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
@@ -340,13 +327,13 @@
                         <div class="picdivbox divallbox">
                             <div class="laberbox">上传方式:</div>
                             <div class="laberboxla">
-                                 <a-radio-group :options="plainOptionsc" @change="onChange6" :defaultValue="value6" />
+                                 <a-radio-group :options="plainOptionsc"  :defaultValue="value6" />
                             </div>
                         </div>
                         <div class="picdivbox divallbox">
                             <div class="laberbox">水印位置:</div>
                             <div class="laberboxla">
-                                <a-radio-group :options="plainOptionsy" @change="onChange7" :defaultValue="value7" />
+                                <a-radio-group :options="plainOptionsy"  :defaultValue="value7" />
                             </div>
                             
                         </div>
@@ -363,8 +350,6 @@
                                     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     listType="picture-card"
                                     :fileList="fileList"
-                                    @preview="handlePreview"
-                                    @change="handleChange"
                                     >
                                     <a-button class="updatedbutton">
                                         <a-icon type="upload" />上传图片</a-button>
@@ -383,7 +368,6 @@
                             <div class="tupianbox">
                                 <a-upload name="file" :multiple="true"
                                     action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers"
-                                    @change="handleChange">
                                     <a-button class="updatedbutton">
                                         <a-icon type="upload" />上传图片</a-button>
                                 </a-upload>
@@ -402,24 +386,19 @@
                                 <div class="radisflex">
                                     <div class="tupianbox">
                                         <a-upload name="file" :multiple="true"
-                                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers"
-                                            @change="handleChange">
+                                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers">
                                             <a-button class="updatedbutton">
                                                 <a-icon type="upload" />上传图片</a-button>
                                         </a-upload>
                                     </div>
                                     <div class="xiala">
                                         <a-dropdown>
-                                            <a-menu slot="overlay" @click="handleMenuClick">
-                                                <a-menu-item key="1">
-                                                    <a-icon type="user" />批量水印</a-menu-item>
-                                                <a-menu-item key="2">
-                                                    <a-icon type="user" />批量美颜</a-menu-item>
-                                                <a-menu-item key="3">
-                                                    <a-icon type="user" />批量水印美颜</a-menu-item>
+                                            <a-menu slot="overlay" >
+                                                <a-menu-item  v-for="(pilaingsy,index) of pilianglist" :key="index" >
+                                                    <a-icon type="user" />{{pilaingsy}}</a-menu-item>
                                             </a-menu>
                                             <a-button class="tupianchuli">图片处理
-                                                <a-icon type="down" />
+                                                <a-icon type="up" />
                                             </a-button>
                                         </a-dropdown>
                                     </div>
@@ -443,8 +422,7 @@
 
                             <div>
                                 <a-upload name="file" :multiple="true"
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers"
-                                    @change="handleChange">
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers">
                                     <a-button class="updatedspbutton">
                                         <a-icon type="upload" />添加视频 </a-button>
                                 </a-upload>
@@ -465,23 +443,17 @@
 </template>
 <script>
     import moment from 'moment';
-    const provinceData = ['沙坪坝', '北碚'];
-    const cityData = {
-        沙坪坝: ['大学城', '微电园', '双碑'],
-        北碚: ['状元碑', '蔡家', '向家岗'],
-    };
-    const proquyuseData = ['沙坪坝', '北碚'];
-    const cityquyuData = {
-        沙坪坝: ['大学城', '微电园', '双碑'],
-        北碚: ['状元碑', '蔡家', '向家岗'],
-    };
+     const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
      const plainOptionzf = ['整租', '合租'];
-     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北','合租','南北'];
+     const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
+     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北','南北'];
      const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛胚'];
      const plainOptioncf=['随时看房', '非工作时间', '电话预约', '其他'];
      const plainOptiongn=['集体供暖', '自供暖', '不供暖'];
      const plainOptionsc=['普通上传', '批量上传', '大图压缩批量上传'];
      const plainOptionsy=['不加水印','添加水印'];
+     const pilianglist=['批量水印','批量美颜','批量水印美颜','批量恢复原图','批量调整大小','批量下载图片'];
+    
     export default {
         data() {
             return {
@@ -505,7 +477,7 @@
                   plainOptionsy,
                   value2:'东',
                   value1: 'hezu',
-                  value3:'随时看房',
+                  value3: '随时看房',
                   value4:'豪华装修',
                   value5:'集体供暖',
                   value6:'普通上传',
@@ -516,7 +488,7 @@
                     lineHeight: '30px',
                 },
                 ret: {},
-                visible: false,
+                
                 wrapperCol: {
                     xs: { span: 24 },
                     sm: { span: 12 },
@@ -526,14 +498,9 @@
                 headers: {
                     authorization: 'authorization-text',
                 },
+                pilianglist,
                 provinceData,
-                cityData,
-                cities: cityData[provinceData[0]],
-                secondCity: cityData[provinceData[0]][0],
                 proquyuseData,
-                cityquyuData,
-                secities: cityquyuData[provinceData[0]],
-                secondseCity: cityquyuData[provinceData[0]][0],
                 houseTypes: '二手房',
                 userId: '48639146-0751-11EA-87FE-305A3A80A208',
                 urlss:'',
@@ -541,35 +508,23 @@
                 spinning: false,
                 hutong:'',
                 ref:{},
+                address:'',
+                kanfang:'',
+                chaoxiang:'',
+                zhuangxiu:'',
+                gongnuan:'',
+               
                 fileList: [
                 ],
             }
         },
         mounted() {
-
+           // this.kanfang="随时看房";
+            this.zhuangxiu="中等装修";
+            this.gongnuan="自供暖";
         },
         methods: {
-            onChange1(e) {
-                console.log('radio1 checked', e.target.value);
-            },
-             onChange2(e) {
-                console.log('radio1 checked', e.target.value);
-            },
-             onChange3(e) {
-                console.log('radio1 checked', e.target.value);
-            },
-            onChange4(e) {
-                console.log('radio1 checked', e.target.value);
-            },
-             onChange5(e) {
-                console.log('radio1 checked', e.target.value);
-            },
-            onChange6(e) {
-                console.log('radio1 checked', e.target.value);
-            },
-             onChange7(e) {
-                console.log('radio1 checked', e.target.value);
-            },
+          
             uuid() {
                 var s = [];
                 var hexDigits = "0123456789abcdef";
@@ -600,6 +555,9 @@
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&urls=' + this.urlss + '&houseType=' + this.houseTypes + '&weiyiUesrId=' + this.text).then(res => {
                             console.log(`222` + JSON.stringify(res))
+                            ret= res.data;
+                           this.address=ret.split("-")[0]; 
+                           this.chaoxiang=ret.chaoxiang;
                             this.spinning = false;
                             // for(let index=0;index<this.ref.shineiImg.length;index++){
                             //     var tt = {};
@@ -632,12 +590,6 @@
             // search(value){  
 
             // },
-            onChange(){
-                 
-            },
-            change(){
-
-            },
             handleOk(e) {
                 console.log(e);
                 this.visible = false;
@@ -649,26 +601,6 @@
               addshowok(e) {
                 console.log(e);
                 this.addshowxqu = false;
-            },
-            handleChange(){
-
-            },
-            handleButtonClick(e) {
-                console.log('click left button', e);
-            },
-            handleMenuClick(e) {
-                console.log('click', e);
-            },
-            handleProvinceChange(value) {
-                this.cities = cityData[value];
-                this.secondCity = cityData[value][0];
-            },
-            quyuProvinceChange(value) {
-                this.secities = cityData[value];
-                this.secondseCity = cityData[value][0];
-            },
-            preview(){
-
             },
             handlePreview(){},
             moment,
@@ -762,18 +694,6 @@
     .ant-modal-body {
         height: 85%;
     }
-
-    .yzxinxi {
-        padding-left: 10px;
-        font-size: 14px;
-        color: green
-    }
-
-    .luduanpa {
-        padding-left: 20px;
-        padding-right: 10px
-    }
-
     .shihaow {
         width: 70px;
         margin-right: 8px

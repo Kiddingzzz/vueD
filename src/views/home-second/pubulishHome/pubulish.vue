@@ -75,7 +75,7 @@
             key: i,
             name: `Edward King ${i}`,
             age: 32,
-            address: `London, Park Lane no. ${i}`,
+            simplePrice: ` ${i+1}元`,
         });
     }
 
@@ -136,7 +136,7 @@
             },
         },
         methods: {
-            onSelectChange(selectedRowKeys) {
+                onSelectChange(selectedRowKeys) {
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
