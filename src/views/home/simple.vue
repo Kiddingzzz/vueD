@@ -122,19 +122,19 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
                             validate-status="">
-                            <a-input type="number" id="success" placeholder="占地面积" class="mianji" />
+                            <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积" class="mianji" />
                             <label class="smianij">平方米</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
                             validate-status="">
-                            <a-input type="number" id="warning2" placeholder="活动面积" class="mianji" />
+                            <a-input type="number" v-model="ref.square" id="warning2" placeholder="活动面积" class="mianji" />
                             <label class="smianij">平方米</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">
-                            <a-input id="error2" placeholder="" class="shihaow" />
+                            <a-input id="error2"  placeholder="" class="shihaow" />
                             <a-select default-value="1" class="shihaoselw mianji">
                                 <a-select-option value="1">
                                     栋
@@ -197,7 +197,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
-                            <a-input type="number" id="" placeholder="" class="mianji" /><label>元/月</label>
+                            <a-input type="number" id="" v-model="ref.rice" placeholder="" class="mianji" /><label>元/月</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*租赁方式" has-feedback
@@ -262,16 +262,17 @@
                             </a-select>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
-                            validate-status="" help="">
+                            validate-status="" help="
+                            ">
                             <a-input-number :min="1950" :max="2019" />
                             <label class="laberall">年</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所在楼层" has-feedback
                             validate-status="" help="">
-                            <a-input-number :min="1" :max="100" />
+                            <a-input-number :min="1" :max="100" v-model="ceng" />
                             <label class="laberall">楼</label>
                             <label class="glaber">共</label>
-                            <a-input-number :min="1" :max="100" />
+                            <a-input-number :min="1" :max="100" v-model="lou"/>
                             <label class="laberall">楼</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向" has-feedback
@@ -318,16 +319,16 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
-                            <a-input id="" placeholder="" class="mianji" />
+                            <a-input id="" v-model="ref.fangyuanBiaoqian" placeholder="" class="mianji" />
                             <label class="neibula">内部编号为0~20位,只能由数字和字母组成</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房源标签:" validate-status=""
                             help="">
-                            <a-input id="" placeholder="" />
+                            <a-input id="" v-model="ref.fangyuanBiaoqian" placeholder="" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套标签:" validate-status=""
                             help="">
-                            <a-input id="" placeholder="" />
+                            <a-input id="" v-model="ref.peitaoBiaoqain" placeholder="" />
                         </a-form-item>
                     </a-form>
                 </a-layout-content>
@@ -545,6 +546,8 @@
                 spinning: false,
                 hutong:'',
                 ref:{},
+                ceng:'',
+                lou:'',
             }
         },
         mounted() {
@@ -582,6 +585,8 @@
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
                             this.spinning = false;
                             this.ref = res.data;
+                            this.ceng = this.ref.louceng.substring(0,this.ref.louceng.indexOf("/"))
+                           
                             console.log(`222` + JSON.stringify(this.ref))
 
                         });
