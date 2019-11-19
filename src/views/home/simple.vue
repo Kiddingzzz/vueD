@@ -125,7 +125,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="地址" has-feedback
                             validate-status="" help="">
-                            <a-input id="validating" placeholder="房源地址" />
+                            <a-input v-model="ref.address" id="validating" placeholder="房源地址" />
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
@@ -359,9 +359,13 @@
                         <div class="shinei divallbox">
                             <div class="laberbox">室内照片: </div>
                             <div class="tupianbox">
-                                <a-upload name="file" :multiple="true"
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers"
-                                    @change="handleChange">
+                                <a-upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card"
+                                    :fileList="fileList"
+                                    @preview="handlePreview"
+                                    @change="handleChange"
+                                    >
                                     <a-button class="updatedbutton">
                                         <a-icon type="upload" />上传图片</a-button>
                                 </a-upload>
@@ -536,7 +540,9 @@
                 text:'',
                 spinning: false,
                 hutong:'',
-
+                ref:{},
+                fileList: [
+                ],
             }
         },
         mounted() {
@@ -584,9 +590,9 @@
                 this.urlss = params;
                 const data = {
                     userId: this.userId,
-                    urls: this.urlss,
+                    url: this.urlss,
                     houseType: this.houseTypes,
-                    weiyiUesrId: this.text
+                    weiYiUrl: this.text
                 };
                 await this.$http.post(`${this.$config.api}/api/cms/urls/url`, data).then(response => {
                     this.spinning = true;
@@ -595,6 +601,18 @@
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&urls=' + this.urlss + '&houseType=' + this.houseTypes + '&weiyiUesrId=' + this.text).then(res => {
                             console.log(`222` + JSON.stringify(res))
                             this.spinning = false;
+                            // for(let index=0;index<this.ref.shineiImg.length;index++){
+                            //     var tt = {};
+                            //     tt.url = this.ref.shineiImg[index],
+                            //     tt.name = "xxx.jpg",
+                            //     tt.status = 'done',
+                            //     tt.uid += 1,
+                            //     console.log(tt)
+                            //     this.fileList.push(tt)
+                            // }
+                            setTimeout(() => {
+                                this.visible = true;
+                            }, 300);
                         });
 
                     }
@@ -649,6 +667,10 @@
                 this.secities = cityData[value];
                 this.secondseCity = cityData[value][0];
             },
+            preview(){
+
+            },
+            handlePreview(){},
             moment,
         }
     }
