@@ -97,8 +97,8 @@
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:"
-                            validate-status="" help="">
-                            <a-input id="error" placeholder="房源所属小区" style="width:50%;" />
+                            validate-status="error" help="">
+                            <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" />
                             <label class="addshowxq">找不到小区？</label>
                             <a class="addshowxq" @click="addshowxaqu">查看相似小区</a>
                             <a class="addshowxq" @click="addxiaoqu">我要添加小区</a>
@@ -117,19 +117,19 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
                             validate-status="">
-                            <a-input type="number" id="success" placeholder="占地面积" class="mianji" />
+                            <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积" class="mianji" />
                             <label class="smianij">平方米</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
                             validate-status="">
-                            <a-input type="number" id="warning2" placeholder="活动面积" class="mianji" min="1" max="99" />
+                            <a-input type="number" v-model="ref.square" id="warning2" placeholder="活动面积" class="mianji" />
                             <label class="smianij">平方米</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">
-                            <a-input id="error2" placeholder="" class="shihaow" />
+                            <a-input id="error2"  placeholder="" class="shihaow" />
                             <a-select default-value="1" class="shihaoselw mianji">
                                 <a-select-option value="1">
                                     栋
@@ -168,31 +168,41 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*户型" has-feedback
                             validate-status="">
-                            <a-select default-value="1" class="huxing marginall">
-
+                            <a-select default-value="1" class="huxing marginall" v-model="selectedShi">
+                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                    {{option}}
+                                </a-select-option>
                             </a-select>
                             <label>室</label>
-                            <a-select default-value="1" class="huxing">
-
+                            <a-select default-value="1" class="huxing" v-model="selectedTing">
+                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                    {{option}}
+                                </a-select-option>
                             </a-select>
                             <label>厅</label>
-                            <a-select default-value="1" class="huxing">
-
+                            <a-select default-value="1" class="huxing" v-model="selectedChu">
+                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                    {{option}}
+                                </a-select-option>
                             </a-select>
                             <label>厨</label>
-                            <a-select default-value="1" class="huxing">
-
+                            <a-select default-value="1" class="huxing" v-model="selectedWei">
+                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                    {{option}}
+                                </a-select-option>
                             </a-select>
                             <label>卫</label>
-                            <a-select default-value="1" class="huxing">
-
+                            <a-select default-value="1" class="huxing" v-model="selectedTai">
+                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                    {{option}}
+                                </a-select-option>
                             </a-select>
                             <label>阳台</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
-                            <a-input type="number" id="" placeholder="" class="mianji" /><label>元/月</label>
+                            <a-input type="number" id="" v-model="ref.rice" placeholder="" class="mianji" /><label>元/月</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*租赁方式" has-feedback
@@ -254,16 +264,17 @@
                             </a-select>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
-                            validate-status="" help="">
-                            <a-input-number :min="1950" :max="2019" />
+                            validate-status="" help="
+                            ">
+                            <a-input-number :min="1950" :max="2019" v-model="ref.fangwuDate"/>
                             <label class="laberall">年</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所在楼层" has-feedback
                             validate-status="" help="">
-                            <a-input-number :min="1" :max="100" />
+                            <a-input-number :min="1" :max="100" v-model="ceng" />
                             <label class="laberall">楼</label>
                             <label class="glaber">共</label>
-                            <a-input-number :min="1" :max="100" />
+                            <a-input-number :min="1" :max="100" v-model="lou"/>
                             <label class="laberall">楼</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向" has-feedback
@@ -273,13 +284,29 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
                              <a-radio-group :options="plainOptioncf"  :defaultValue="value3" v-model="kanfang" />
+                                <a-radio :style="radioStyle" :value="1">随时看房</a-radio>
+                                <a-radio :style="radioStyle" :value="2">非工作时间</a-radio>
+                                <a-radio :style="radioStyle" :value="3">电话预约</a-radio>
+                                <a-radio :style="radioStyle" :value="4">其他</a-radio>
+                            </a-radio-group>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status=""><a-radio-group :options="plainOptionzx"  :defaultValue="value4" v-model="zhuangxiu" />
+                            <a-radio-group v-model="value" class="radisflex">
+                                <a-radio :style="radioStyle" :value="1">豪华装修</a-radio>
+                                <a-radio :style="radioStyle" :value="2">精装修</a-radio>
+                                <a-radio :style="radioStyle" :value="3">中等装修</a-radio>
+                                <a-radio :style="radioStyle" :value="4">简装修</a-radio>
+                                <a-radio :style="radioStyle" :value="4">毛胚</a-radio>
+                            </a-radio-group>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
                             <a-radio-group :options="plainOptiongn"  :defaultValue="value5" v-model="gongnuan" />
+                                <a-radio :style="radioStyle" :value="1">集体供暖</a-radio>
+                                <a-radio :style="radioStyle" :value="2">自供暖</a-radio>
+                                <a-radio :style="radioStyle" :value="3">不供暖</a-radio>
+                            </a-radio-group>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
@@ -288,11 +315,11 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房源标签:" validate-status=""
                             help="">
-                            <a-input id="" placeholder="" />
+                            <a-input id="" v-model="ref.fangyuanBiaoqian" placeholder="" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套标签:" validate-status=""
                             help="">
-                            <a-input id="" placeholder="" />
+                            <a-input id="" v-model="ref.peitaoBiaoqain" placeholder="" />
                         </a-form-item>
                     </a-form>
                 </a-layout-content>
@@ -460,8 +487,6 @@
                 url: '11',
                 visible: false,
                 addxq: false,
-                addshowxqu:false,
-
                 spinning: false,
                 confirmLoading: false,
                 labelCol: {
@@ -514,7 +539,7 @@
                 zhuangxiu:'',
                 gongnuan:'',
                
-                fileList: [
+                ceng:'',
                 ],
             }
         },
@@ -554,23 +579,21 @@
                     console.log(JSON.stringify(response))
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&urls=' + this.urlss + '&houseType=' + this.houseTypes + '&weiyiUesrId=' + this.text).then(res => {
-                            console.log(`222` + JSON.stringify(res))
                             ret= res.data;
                            this.address=ret.split("-")[0]; 
                            this.chaoxiang=ret.chaoxiang;
                             this.spinning = false;
-                            // for(let index=0;index<this.ref.shineiImg.length;index++){
-                            //     var tt = {};
-                            //     tt.url = this.ref.shineiImg[index],
-                            //     tt.name = "xxx.jpg",
-                            //     tt.status = 'done',
-                            //     tt.uid += 1,
-                            //     console.log(tt)
-                            //     this.fileList.push(tt)
-                            // }
-                            setTimeout(() => {
-                                this.visible = true;
-                            }, 300);
+                            this.ref = res.data;
+                            console.log(`222` + JSON.stringify(this.ref))
+                            //字符串
+                            this.ceng = this.ref.louceng.substring(0,this.ref.louceng.indexOf("/"));
+                            this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/")+1,str.length);
+                            let shi = this.ref.huxing.indexOf("室");
+                            let ting = this.ref.huxing.indexOf("厅");
+                            let wei = this.ref.huxing.indexOf("卫");
+                            this.selectedShi =  this.ref.huxing.substring(0,shi);
+                            this.selectedTing =  this.ref.huxing.substring(shi+1,ting);
+                            this.selectedWei =  this.ref.huxing.substring(ting+1,wei);
                         });
 
                     }
@@ -601,8 +624,6 @@
               addshowok(e) {
                 console.log(e);
                 this.addshowxqu = false;
-            },
-            handlePreview(){},
             moment,
         }
     }
