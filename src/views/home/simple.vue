@@ -68,7 +68,7 @@
                                 </a-select-option>
                             </a-select>
                         </a-form-item>
-                        
+
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑年代:"
                             validate-status="error" help="">
                             <a-date-picker :defaultValue="moment('2015/01/01', dateFormat)" :format="dateFormat" />
@@ -84,11 +84,11 @@
                 </div>
             </div>
         </a-modal>
-         <a-modal title="查看相似小区" v-model="addshowxqu" @ok="addshowok">
+        <a-modal title="查看相似小区" v-model="addshowxqu" @ok="addshowok">
             <div style="width:100%">
-               <div>
-                  没有类似小区
-               </div>
+                <div>
+                    没有类似小区
+                </div>
 
             </div>
         </a-modal>
@@ -104,8 +104,9 @@
                             <a class="addshowxq" @click="addxiaoqu">我要添加小区</a>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
-                            <a-select :defaultValue="provinceData[0]"  style="width: 120px" v-model="address">
-                                <a-select-option v-for="(province,index) of provinceData" :key="index" :value="province">{{province}}
+                            <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="address">
+                                <a-select-option v-for="(province,index) of provinceData" :key="index"
+                                    :value="province">{{province}}
                                 </a-select-option>
                             </a-select>
                         </a-form-item>
@@ -117,19 +118,21 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
                             validate-status="">
-                            <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积" class="mianji" />
+                            <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积"
+                                class="mianji" />
                             <label class="smianij">平方米</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
                             validate-status="">
-                            <a-input type="number" v-model="ref.square" id="warning2" placeholder="活动面积" class="mianji" />
+                            <a-input type="number" v-model="ref.square" id="warning2" placeholder="活动面积"
+                                class="mianji" />
                             <label class="smianij">平方米</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">
-                            <a-input id="error2"  placeholder="" class="shihaow" />
+                            <a-input id="error2" placeholder="" class="shihaow" />
                             <a-select default-value="1" class="shihaoselw mianji">
                                 <a-select-option value="1">
                                     栋
@@ -169,31 +172,31 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*户型" has-feedback
                             validate-status="">
                             <a-select default-value="1" class="huxing marginall" v-model="selectedShi">
-                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
                             </a-select>
                             <label>室</label>
                             <a-select default-value="1" class="huxing" v-model="selectedTing">
-                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
                             </a-select>
                             <label>厅</label>
                             <a-select default-value="1" class="huxing" v-model="selectedChu">
-                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
                             </a-select>
                             <label>厨</label>
                             <a-select default-value="1" class="huxing" v-model="selectedWei">
-                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
                             </a-select>
                             <label>卫</label>
                             <a-select default-value="1" class="huxing" v-model="selectedTai">
-                                <a-select-option  v-for="(option,i) in options" :key="i" :value="option">
+                                <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
                             </a-select>
@@ -202,7 +205,8 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
-                            <a-input type="number" id="" v-model="ref.rice" placeholder="" class="mianji" /><label>元/月</label>
+                            <a-input type="number" id="" v-model="ref.rice" placeholder="" class="mianji" />
+                            <label>元/月</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*租赁方式" has-feedback
@@ -266,7 +270,7 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
                             validate-status="" help="
                             ">
-                            <a-input-number :min="1950" :max="2019" v-model="ref.fangwuDate"/>
+                            <a-input-number :min="1950" :max="2019" v-model="ref.fangwuDate" />
                             <label class="laberall">年</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所在楼层" has-feedback
@@ -274,28 +278,24 @@
                             <a-input-number :min="1" :max="100" v-model="ceng" />
                             <label class="laberall">楼</label>
                             <label class="glaber">共</label>
-                            <a-input-number :min="1" :max="100" v-model="lou"/>
+                            <a-input-number :min="1" :max="100" v-model="lou" />
                             <label class="laberall">楼</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向" has-feedback
-                            validate-status="" >
-                           <a-radio-group :options="plainOptioncx"  :defaultValue="value2" v-model="chaoxiang" />
+                            validate-status="">
+                            <a-radio-group :options="plainOptioncx" :defaultValue="value2" v-model="chaoxiang" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
-                             <a-radio-group :options="plainOptioncf"  :defaultValue="value3" v-model="kanfang" />
-                                <a-radio :style="radioStyle" :value="1">随时看房</a-radio>
-                                <a-radio :style="radioStyle" :value="2">非工作时间</a-radio>
-                                <a-radio :style="radioStyle" :value="3">电话预约</a-radio>
-                                <a-radio :style="radioStyle" :value="4">其他</a-radio>
-                            </a-radio-group>
+                            <a-radio-group :options="plainOptioncf" :defaultValue="value3" v-model="kanfang" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
-                            validate-status=""><a-radio-group :options="plainOptionzx"  :defaultValue="value4" v-model="zhuangxiu" />
+                            validate-status="">
+                            <a-radio-group :options="plainOptionzx" :defaultValue="value4" v-model="zhuangxiu" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptiongn"  :defaultValue="value5" v-model="gongnuan" />
+                            <a-radio-group :options="plainOptiongn" :defaultValue="value5" v-model="gongnuan" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
@@ -343,47 +343,38 @@
                         <div class="picdivbox divallbox">
                             <div class="laberbox">上传方式:</div>
                             <div class="laberboxla">
-                                 <a-radio-group :options="plainOptionsc" @change="onChange6" :defaultValue="value6" />
+                                <a-radio-group :options="plainOptionsc" :defaultValue="value6" />
                             </div>
                         </div>
                         <div class="picdivbox divallbox">
                             <div class="laberbox">水印位置:</div>
                             <div class="laberboxla">
-                                <a-radio-group :options="plainOptionsy" @change="onChange7" :defaultValue="value7" />
+                                <a-radio-group :options="plainOptionsy" :defaultValue="value7" />
                             </div>
-                            
+
                         </div>
                         <div class="shinei divallbox">
                             <div class="laberbox">&nbsp;封&nbsp;面&nbsp;图:</div>
                             <div class="laberboxla">
                                 点击希望设定为封面的图片右下角的封面按钮即可设定。
                             </div>
-                            <a-upload
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                    listType="picture-card"
-                                    :fileList="imgHeaderList"
-                                    @preview="handlePreview"
-                                    @change="handleChange"
-                                    >
-                                </a-upload>
-                                 <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                                    <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
-                                </a-modal>
+                            <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card"
+                                :fileList="imgHeaderList" @preview="handlePreview" @change="handleChange">
+                            </a-upload>
+                            <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                            </a-modal>
                         </div>
                         <div class="shinei divallbox">
                             <div class="laberbox">室内照片: </div>
                             <div class="tupianbox">
-                                <a-upload
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                    listType="picture-card"
-                                    :fileList="shineiList"
-                                    @preview="handlePreview"
-                                    @change="handleChange"
-                                    >
+                                <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card" :fileList="shineiList" @preview="handlePreview"
+                                    @change="handleChange">
                                     <!-- <a-button class="updatedbutton">
                                         <a-icon type="upload" />上传图片</a-button> -->
                                 </a-upload>
-                                 <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                                     <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
                                 </a-modal>
                             </div>
@@ -398,13 +389,9 @@
                         <div class="shinei divallbox">
                             <div class="laberbox">&nbsp;房&nbsp;型&nbsp;图:</div>
                             <div class="tupianbox">
-                                <a-upload
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                    listType="picture-card"
-                                    :fileList="fangxinlist"
-                                    @preview="handlePreview"
-                                    @change="handleChange"
-                                    >
+                                <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card" :fileList="fangxinlist" @preview="handlePreview"
+                                    @change="handleChange">
                                 </a-upload>
                             </div>
                             <div class="shineipadd">
@@ -419,13 +406,9 @@
                             <div class="laberbox">小区图片:
                                 <div class="radisflex">
                                     <div class="tupianbox">
-                                        <a-upload
-                                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                        listType="picture-card"
-                                        :fileList="xiaoQuList"
-                                        @preview="handlePreview"
-                                        @change="handleChange"
-                                        >
+                                        <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                            listType="picture-card" :fileList="xiaoQuList" @preview="handlePreview"
+                                            @change="handleChange">
                                         </a-upload>
                                         <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                                             <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
@@ -433,8 +416,8 @@
                                     </div>
                                     <div class="xiala">
                                         <a-dropdown>
-                                            <a-menu slot="overlay" >
-                                                <a-menu-item  v-for="(pilaingsy,index) of pilianglist" :key="index" >
+                                            <a-menu slot="overlay">
+                                                <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
                                                     <a-icon type="user" />{{pilaingsy}}</a-menu-item>
                                             </a-menu>
                                             <a-button class="tupianchuli">图片处理
@@ -483,24 +466,24 @@
 </template>
 <script>
     import moment from 'moment';
-     const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
-     const plainOptionzf = ['整租', '合租'];
-     const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
-     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北','南北'];
-     const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛胚'];
-     const plainOptioncf=['随时看房', '非工作时间', '电话预约', '其他'];
-     const plainOptiongn=['集体供暖', '自供暖', '不供暖'];
-     const plainOptionsc=['普通上传', '批量上传', '大图压缩批量上传'];
-     const plainOptionsy=['不加水印','添加水印'];
-     const pilianglist=['批量水印','批量美颜','批量水印美颜','批量恢复原图','批量调整大小','批量下载图片'];
-    
+    const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
+    const plainOptionzf = ['整租', '合租'];
+    const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
+    const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北', '南北'];
+    const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛胚'];
+    const plainOptioncf = ['随时看房', '非工作时间', '电话预约', '其他'];
+    const plainOptiongn = ['集体供暖', '自供暖', '不供暖'];
+    const plainOptionsc = ['普通上传', '批量上传', '大图压缩批量上传'];
+    const plainOptionsy = ['不加水印', '添加水印'];
+    const pilianglist = ['批量水印', '批量美颜', '批量水印美颜', '批量恢复原图', '批量调整大小', '批量下载图片'];
+
     export default {
         data() {
             return {
                 url: '11',
                 visible: false,
                 addxq: false,
-                addshowxqu:false,
+                addshowxqu: false,
 
                 spinning: false,
                 confirmLoading: false,
@@ -508,27 +491,27 @@
                     xs: { span: 24 },
                     sm: { span: 5 },
                 },
-                  plainOptionzf,
-                  plainOptioncx,
-                  plainOptioncf,
-                  plainOptionzx,
-                  plainOptiongn,
-                  plainOptionsc,
-                  plainOptionsy,
-                  value2:'东',
-                  value1: 'hezu',
-                  value3:'随时看房',
-                  value4:'豪华装修',
-                  value5:'集体供暖',
-                  value6:'普通上传',
-                  value7:'不加水印',
+                plainOptionzf,
+                plainOptioncx,
+                plainOptioncf,
+                plainOptionzx,
+                plainOptiongn,
+                plainOptionsc,
+                plainOptionsy,
+                value2: '东',
+                value1: 'hezu',
+                value3: '随时看房',
+                value4: '豪华装修',
+                value5: '集体供暖',
+                value6: '普通上传',
+                value7: '不加水印',
                 radioStyle: {
                     display: 'block',
                     height: '30px',
                     lineHeight: '30px',
                 },
                 ret: {},
-                
+
                 wrapperCol: {
                     xs: { span: 24 },
                     sm: { span: 12 },
@@ -543,34 +526,40 @@
                 proquyuseData,
                 houseTypes: '二手房',
                 userId: '48639146-0751-11EA-87FE-305A3A80A208',
-                urlss:'',
-                text:'',
+                urlss: '',
+                text: '',
                 spinning: false,
-                hutong:'',
-                ref:{},
+                hutong: '',
+                ref: {},
                 previewVisible: false,
                 previewImage: '',
                 shineiList: [
                 ],
-                imgHeaderList:[],
-                xiaoQuList:[],
-                fangxinlist:[],
-		address:'',
-                kanfang:'',
-                chaoxiang:'',
-                zhuangxiu:'',
-                gongnuan:'',
-               
+                imgHeaderList: [],
+                xiaoQuList: [],
+                fangxinlist: [],
+                address: '',
+                kanfang: '',
+                chaoxiang: '',
+                zhuangxiu: '',
+                gongnuan: '',
+                selectedShi:'',
+                selectedTing:'',
+                selectedChu:'',
+                selectedWei:'',
+                selectedTai:'',
+                options:[0,1,2,3,4,5,6,7,8,9,10],
                 ceng:'',
+                lou:'',
             }
         },
         mounted() {
-           // this.kanfang="随时看房";
-            this.zhuangxiu="中等装修";
-            this.gongnuan="自供暖";
+            // this.kanfang="随时看房";
+            this.zhuangxiu = "中等装修";
+            this.gongnuan = "自供暖";
         },
         methods: {
-          
+
             uuid() {
                 var s = [];
                 var hexDigits = "0123456789abcdef";
@@ -601,55 +590,55 @@
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`222` + JSON.stringify(res))
-			    ret= res.data;
-                            this.address=ret.split("-")[0]; 
-                            this.chaoxiang=ret.chaoxiang;
+                            var ret = res.data;
+                            this.address = ret.split("-")[0];
+                            this.chaoxiang = ret.chaoxiang;
                             this.spinning = false;
                             this.ref = res.data;
                             console.log(`222` + JSON.stringify(this.ref))
                             //字符串
-                            this.ceng = this.ref.louceng.substring(0,this.ref.louceng.indexOf("/"));
-                            this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/")+1,str.length);
+                            this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
+                            this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, str.length);
                             let shi = this.ref.huxing.indexOf("室");
                             let ting = this.ref.huxing.indexOf("厅");
                             let wei = this.ref.huxing.indexOf("卫");
-                            this.selectedShi =  this.ref.huxing.substring(0,shi);
-                            this.selectedTing =  this.ref.huxing.substring(shi+1,ting);
-                            this.selectedWei =  this.ref.huxing.substring(ting+1,wei);
+                            this.selectedShi = this.ref.huxing.substring(0, shi);
+                            this.selectedTing = this.ref.huxing.substring(shi + 1, ting);
+                            this.selectedWei = this.ref.huxing.substring(ting + 1, wei);
                             this.spinning = false;
-                            var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[','').replace(']','');
+                            var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
                             var ss = shineiImg.split(",")
-                            for(var i=0; i<ss.length;i++){
+                            for (var i = 0; i < ss.length; i++) {
                                 var imgUrl = {};
                                 imgUrl.url = ss[i];
-                                imgUrl.uid =  i;
+                                imgUrl.uid = i;
                                 imgUrl.name = 'xxx.jpg';
                                 imgUrl.status = 'done';
                                 this.shineiList.push(imgUrl);
                             }
                             var imgH = {};
                             imgH.url = ss[0],
-                            imgH.uid = '-1',
-                            imgH.name = 'xxx.jpg',
-                            imgH.status = 'done',
-                            this.imgHeaderList.push(imgH);
+                                imgH.uid = '-1',
+                                imgH.name = 'xxx.jpg',
+                                imgH.status = 'done',
+                                this.imgHeaderList.push(imgH);
 
-                            
+
                             var imgFangxing = {};
-                            imgFangxing.url = res.data.imgHeader.replace(/'/g, '').replace('[','').replace(']',''),
-                            imgFangxing.uid = '-1',
-                            imgFangxing.name = 'xxx.jpg',
-                            imgFangxing.status = 'done',
-                            this.fangxinlist.push(imgFangxing);
+                            imgFangxing.url = res.data.imgHeader.replace(/'/g, '').replace('[', '').replace(']', ''),
+                                imgFangxing.uid = '-1',
+                                imgFangxing.name = 'xxx.jpg',
+                                imgFangxing.status = 'done',
+                                this.fangxinlist.push(imgFangxing);
 
-                            
+
                             var XiaoquImg = {};
-                            XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[','').replace(']',''),
-                            XiaoquImg.uid = '-3',
-                            XiaoquImg.name = 'xxx.jpg',
-                            XiaoquImg.status = 'done',
-                            this.xiaoQuList.push(XiaoquImg);
-                        }); 
+                            XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                                XiaoquImg.uid = '-3',
+                                XiaoquImg.name = 'xxx.jpg',
+                                XiaoquImg.status = 'done',
+                                this.xiaoQuList.push(XiaoquImg);
+                        });
 
                     }
                 });
@@ -662,8 +651,9 @@
             addxiaoqu() {
                 this.addxq = true;
             },
-            addshowxaqu(){
-               this.addshowxqu = true;
+            addshowxaqu() {
+                this.addshowxqu = true;
+            },
             handleOk(e) {
                 console.log(e);
                 this.visible = false;
@@ -672,9 +662,10 @@
                 console.log(e);
                 this.addxq = false;
             },
-              addshowok(e) {
+            addshowok(e) {
                 console.log(e);
                 this.addshowxqu = false;
+            },
             handleCancel() {
                 this.previewVisible = false;
             },
@@ -724,9 +715,11 @@
         border-radius: 5px;
         font-size: 12px;
     }
-    .ant-modal-close{
+
+    .ant-modal-close {
         display: none;
     }
+
     .search_bds {
         background: #ffffdd;
         display: flex;
@@ -778,6 +771,7 @@
     .ant-modal-body {
         height: 85%;
     }
+
     .shihaow {
         width: 70px;
         margin-right: 8px
@@ -963,8 +957,9 @@
     .tupianchuli {
         background-color: #f0f2f5;
     }
-    .addshowxq{
-        margin-left:5px;
-        font-size:14px
+
+    .addshowxq {
+        margin-left: 5px;
+        font-size: 14px
     }
 </style>
