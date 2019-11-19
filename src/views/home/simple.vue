@@ -292,21 +292,10 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status=""><a-radio-group :options="plainOptionzx"  :defaultValue="value4" v-model="zhuangxiu" />
-                            <a-radio-group v-model="value" class="radisflex">
-                                <a-radio :style="radioStyle" :value="1">豪华装修</a-radio>
-                                <a-radio :style="radioStyle" :value="2">精装修</a-radio>
-                                <a-radio :style="radioStyle" :value="3">中等装修</a-radio>
-                                <a-radio :style="radioStyle" :value="4">简装修</a-radio>
-                                <a-radio :style="radioStyle" :value="4">毛胚</a-radio>
-                            </a-radio-group>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
                             <a-radio-group :options="plainOptiongn"  :defaultValue="value5" v-model="gongnuan" />
-                                <a-radio :style="radioStyle" :value="1">集体供暖</a-radio>
-                                <a-radio :style="radioStyle" :value="2">自供暖</a-radio>
-                                <a-radio :style="radioStyle" :value="3">不供暖</a-radio>
-                            </a-radio-group>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
@@ -348,27 +337,38 @@
             </div>
         </div>
         <div class="wrap">
-            <a-layout class="res">
+            <a-layout class="res" style="padding:24px;">
                 <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
                     <a-form>
                         <div class="picdivbox divallbox">
                             <div class="laberbox">上传方式:</div>
                             <div class="laberboxla">
-                                 <a-radio-group :options="plainOptionsc"  :defaultValue="value6" />
+                                 <a-radio-group :options="plainOptionsc" @change="onChange6" :defaultValue="value6" />
                             </div>
                         </div>
                         <div class="picdivbox divallbox">
                             <div class="laberbox">水印位置:</div>
                             <div class="laberboxla">
-                                <a-radio-group :options="plainOptionsy"  :defaultValue="value7" />
+                                <a-radio-group :options="plainOptionsy" @change="onChange7" :defaultValue="value7" />
                             </div>
                             
                         </div>
-                        <div class="picdivbox divallbox">
+                        <div class="shinei divallbox">
                             <div class="laberbox">&nbsp;封&nbsp;面&nbsp;图:</div>
                             <div class="laberboxla">
                                 点击希望设定为封面的图片右下角的封面按钮即可设定。
                             </div>
+                            <a-upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card"
+                                    :fileList="imgHeaderList"
+                                    @preview="handlePreview"
+                                    @change="handleChange"
+                                    >
+                                </a-upload>
+                                 <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                    <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                                </a-modal>
                         </div>
                         <div class="shinei divallbox">
                             <div class="laberbox">室内照片: </div>
@@ -376,11 +376,16 @@
                                 <a-upload
                                     action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     listType="picture-card"
-                                    :fileList="fileList"
+                                    :fileList="shineiList"
+                                    @preview="handlePreview"
+                                    @change="handleChange"
                                     >
-                                    <a-button class="updatedbutton">
-                                        <a-icon type="upload" />上传图片</a-button>
+                                    <!-- <a-button class="updatedbutton">
+                                        <a-icon type="upload" />上传图片</a-button> -->
                                 </a-upload>
+                                 <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                    <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                                </a-modal>
                             </div>
                             <div class="shineipadd">
                                 最多10张。您可以<label class="piclaber">从我的图库选择</label>
@@ -390,33 +395,41 @@
                                 <label class="orangelaber">可拖拽交换位置</label>
                             </div>
                         </div>
-                        <div class="fangxingtu divallbox">
+                        <div class="shinei divallbox">
                             <div class="laberbox">&nbsp;房&nbsp;型&nbsp;图:</div>
                             <div class="tupianbox">
-                                <a-upload name="file" :multiple="true"
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers"
-                                    <a-button class="updatedbutton">
-                                        <a-icon type="upload" />上传图片</a-button>
+                                <a-upload
+                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card"
+                                    :fileList="fangxinlist"
+                                    @preview="handlePreview"
+                                    @change="handleChange"
+                                    >
                                 </a-upload>
                             </div>
                             <div class="shineipadd">
                                 <label class="orangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图
-                                </label><br />
-                                最多5张。您可以<label class="piclaber">从我的图库选择</label>或者<label class="piclaber">从房型选择</label>
+                                </label>
                                 <a-button type="" class="buttontuku">我的图库</a-button>
                                 <a-button type="" class="orangetuku">房型图库</a-button>
                                 <a-button type="" class="buttontuku">在线绘制</a-button>
                             </div>
                         </div>
-                        <div class="xiaoqupic divallbox">
+                        <div class="shinei divallbox">
                             <div class="laberbox">小区图片:
                                 <div class="radisflex">
                                     <div class="tupianbox">
-                                        <a-upload name="file" :multiple="true"
-                                            action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers">
-                                            <a-button class="updatedbutton">
-                                                <a-icon type="upload" />上传图片</a-button>
+                                        <a-upload
+                                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                        listType="picture-card"
+                                        :fileList="xiaoQuList"
+                                        @preview="handlePreview"
+                                        @change="handleChange"
+                                        >
                                         </a-upload>
+                                        <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                            <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                                        </a-modal>
                                     </div>
                                     <div class="xiala">
                                         <a-dropdown>
@@ -487,6 +500,8 @@
                 url: '11',
                 visible: false,
                 addxq: false,
+                addshowxqu:false,
+
                 spinning: false,
                 confirmLoading: false,
                 labelCol: {
@@ -502,7 +517,7 @@
                   plainOptionsy,
                   value2:'东',
                   value1: 'hezu',
-                  value3: '随时看房',
+                  value3:'随时看房',
                   value4:'豪华装修',
                   value5:'集体供暖',
                   value6:'普通上传',
@@ -533,14 +548,20 @@
                 spinning: false,
                 hutong:'',
                 ref:{},
-                address:'',
+                previewVisible: false,
+                previewImage: '',
+                shineiList: [
+                ],
+                imgHeaderList:[],
+                xiaoQuList:[],
+                fangxinlist:[],
+		address:'',
                 kanfang:'',
                 chaoxiang:'',
                 zhuangxiu:'',
                 gongnuan:'',
                
                 ceng:'',
-                ],
             }
         },
         mounted() {
@@ -578,10 +599,11 @@
                     this.spinning = true;
                     console.log(JSON.stringify(response))
                     if (response.status == 200) {
-                        this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&urls=' + this.urlss + '&houseType=' + this.houseTypes + '&weiyiUesrId=' + this.text).then(res => {
-                            ret= res.data;
-                           this.address=ret.split("-")[0]; 
-                           this.chaoxiang=ret.chaoxiang;
+                        this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
+                            console.log(`222` + JSON.stringify(res))
+			    ret= res.data;
+                            this.address=ret.split("-")[0]; 
+                            this.chaoxiang=ret.chaoxiang;
                             this.spinning = false;
                             this.ref = res.data;
                             console.log(`222` + JSON.stringify(this.ref))
@@ -594,7 +616,40 @@
                             this.selectedShi =  this.ref.huxing.substring(0,shi);
                             this.selectedTing =  this.ref.huxing.substring(shi+1,ting);
                             this.selectedWei =  this.ref.huxing.substring(ting+1,wei);
-                        });
+                            this.spinning = false;
+                            var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[','').replace(']','');
+                            var ss = shineiImg.split(",")
+                            for(var i=0; i<ss.length;i++){
+                                var imgUrl = {};
+                                imgUrl.url = ss[i];
+                                imgUrl.uid =  i;
+                                imgUrl.name = 'xxx.jpg';
+                                imgUrl.status = 'done';
+                                this.shineiList.push(imgUrl);
+                            }
+                            var imgH = {};
+                            imgH.url = ss[0],
+                            imgH.uid = '-1',
+                            imgH.name = 'xxx.jpg',
+                            imgH.status = 'done',
+                            this.imgHeaderList.push(imgH);
+
+                            
+                            var imgFangxing = {};
+                            imgFangxing.url = res.data.imgHeader.replace(/'/g, '').replace('[','').replace(']',''),
+                            imgFangxing.uid = '-1',
+                            imgFangxing.name = 'xxx.jpg',
+                            imgFangxing.status = 'done',
+                            this.fangxinlist.push(imgFangxing);
+
+                            
+                            var XiaoquImg = {};
+                            XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[','').replace(']',''),
+                            XiaoquImg.uid = '-3',
+                            XiaoquImg.name = 'xxx.jpg',
+                            XiaoquImg.status = 'done',
+                            this.xiaoQuList.push(XiaoquImg);
+                        }); 
 
                     }
                 });
@@ -609,10 +664,6 @@
             },
             addshowxaqu(){
                this.addshowxqu = true;
-            },
-            // search(value){  
-
-            // },
             handleOk(e) {
                 console.log(e);
                 this.visible = false;
@@ -624,6 +675,16 @@
               addshowok(e) {
                 console.log(e);
                 this.addshowxqu = false;
+            handleCancel() {
+                this.previewVisible = false;
+            },
+            handlePreview(file) {
+                this.previewImage = file.url || file.thumbUrl;
+                this.previewVisible = true;
+            },
+            handleChange({ fileList }) {
+                this.fileList = fileList;
+            },
             moment,
         }
     }
@@ -663,7 +724,9 @@
         border-radius: 5px;
         font-size: 12px;
     }
-
+    .ant-modal-close{
+        display: none;
+    }
     .search_bds {
         background: #ffffdd;
         display: flex;
@@ -810,7 +873,7 @@
     }
 
     .shinei {
-        height: 120px !important;
+        height: 180px !important;
         flex-flow: column;
         flex: 0 0 auto;
     }

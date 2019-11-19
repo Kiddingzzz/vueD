@@ -118,13 +118,13 @@
               <a-menu-item key="1" @click="reset('东')"><a-icon type="user" />东</a-menu-item>
               <a-menu-item key="2" @click="reset('南')"><a-icon type="user" />南</a-menu-item>
               <a-menu-item key="3" @click="reset('西')"><a-icon type="user" />西</a-menu-item>
-              <a-menu-item key="3" @click="reset('北')"><a-icon type="user" />北</a-menu-item>
-              <a-menu-item key="3" @click="reset('南北')"><a-icon type="user" />南北</a-menu-item>
-              <a-menu-item key="3" @click="reset('东西')"><a-icon type="user" />东西</a-menu-item>
-              <a-menu-item key="3" @click="reset('东南')"><a-icon type="user" />东南</a-menu-item>
-              <a-menu-item key="3" @click="reset('西南')"><a-icon type="user" />西南</a-menu-item>
-              <a-menu-item key="3" @click="reset('东北')"><a-icon type="user" />东北</a-menu-item>
-              <a-menu-item key="3" @click="reset('西北')"><a-icon type="user" />西北</a-menu-item>
+              <a-menu-item key="4" @click="reset('北')"><a-icon type="user" />北</a-menu-item>
+              <a-menu-item key="5" @click="reset('南北')"><a-icon type="user" />南北</a-menu-item>
+              <a-menu-item key="6" @click="reset('东西')"><a-icon type="user" />东西</a-menu-item>
+              <a-menu-item key="7" @click="reset('东南')"><a-icon type="user" />东南</a-menu-item>
+              <a-menu-item key="8" @click="reset('西南')"><a-icon type="user" />西南</a-menu-item>
+              <a-menu-item key="9" @click="reset('东北')"><a-icon type="user" />东北</a-menu-item>
+              <a-menu-item key="10" @click="reset('西北')"><a-icon type="user" />西北</a-menu-item>
             </a-menu>
             <a-button style="margin-left: 8px"> 朝向不限 <a-icon type="down" /> </a-button>
           </a-dropdown>
@@ -132,10 +132,10 @@
           <div class="moniselectcon">
             <a-dropdown>
             <a-menu slot="overlay">
-              <a-menu-item key="1" @click="reset('毛坯')"><a-icon type="user" />毛坯</a-menu-item>
-              <a-menu-item key="2" @click="reset('简单装修')"><a-icon type="user" />简单装修</a-menu-item>
-              <a-menu-item key="3" @click="reset('精装修')"><a-icon type="user" />精装修</a-menu-item>
-              <a-menu-item key="3" @click="reset('豪华装修')"><a-icon type="user" />豪华装修</a-menu-item>
+              <a-menu-item key="11" @click="reset('毛坯')"><a-icon type="user" />毛坯</a-menu-item>
+              <a-menu-item key="12" @click="reset('简单装修')"><a-icon type="user" />简单装修</a-menu-item>
+              <a-menu-item key="13" @click="reset('精装修')"><a-icon type="user" />精装修</a-menu-item>
+              <a-menu-item key="14" @click="reset('豪华装修')"><a-icon type="user" />豪华装修</a-menu-item>
             </a-menu>
             <a-button style="margin-left: 8px"> 装修不限 <a-icon type="down" /> </a-button>
           </a-dropdown>
