@@ -365,7 +365,7 @@
                                 <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
                             </a-modal>
                         </div>
-                        <div class="shinei divallbox">
+                        <div class="shinei divallbox" style="height: 244px !important;">
                             <div class="laberbox">室内照片: </div>
                             <div class="tupianbox">
                                 <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -452,7 +452,7 @@
                             </div>
                         </div>
                         <div class="bottomobx">
-                            <a-button type="" class="buttonfang okbutton">保存房源</a-button>
+                            <a-button type="" class="buttonfang okbutton" @click="saveHouse()">保存房源</a-button>
                             <a-button type="" class="okbutton">保存草稿</a-button>
 
                         </div>
@@ -550,6 +550,8 @@
                 options:[0,1,2,3,4,5,6,7,8,9,10],
                 ceng:'',
                 lou:'',
+                weiyiUserId:'',
+                saveRes:{},
             }
         },
         mounted() {
@@ -590,6 +592,7 @@
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`222` + JSON.stringify(res))
                             var ret = res.data.address;
+                            this.saveRes = res.data;
                             this.address = ret.split("-")[0];
                             this.chaoxiang = ret.chaoxiang;
                             this.spinning = false;
@@ -607,6 +610,7 @@
                             this.spinning = false;
                             var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
                             var ss = shineiImg.split(",")
+                            this.weiyiUserId = res.data.weiYiUrl;
                             for (var i = 0; i < ss.length; i++) {
                                 var imgUrl = {};
                                 imgUrl.url = ss[i];
@@ -647,6 +651,46 @@
                 });
 
 
+            },
+            async saveHouse(){
+                if(this.saveRes.xiaoquName == null && this.saveRes.title == null && 
+                this.saveRes.rice == null && this.saveRes.simpleRice == null && 
+                this.saveRes.square == null && this.saveRes.huxing == null &&
+                this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null  && this.saveRes.imgHeader == null
+                )
+                {
+                   this.openNotificationWithIcon('error') 
+                }
+                else{
+                    await this.$http.post(`${this.$config.api}/api/cms/pubulish/publishHouse`,this.saveRes).then(response =>{
+                        if(response.status == 200){
+                            this.openNotificationWithIcon('success')
+                        }
+                    })
+                }
+
+            },
+            openNotificationWithIcon(type) {
+                if(type == 'success'){
+                    this.$notification[type]({
+                    message: '保存成功',
+                    placement: 'bottomRight',
+                    bottom: '50px',
+                    right:'500px',
+                    description:
+                        '保存房源成功数据将存入发布房源列表',
+                    });
+                }
+                if(type == 'error'){
+                    this.$notification[type]({
+                    message: '保存失败',
+                    placement: 'bottomRight',
+                    bottom: '50px',
+                    right:'500px',
+                    description:
+                        '保存房源失败数据不能为空',
+                    });
+                }
             },
             showModal() {
                 this.visible = true;
