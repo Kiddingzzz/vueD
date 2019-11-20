@@ -208,69 +208,6 @@
                             <a-input type="number" id="" v-model="ref.rice" placeholder="" class="mianji" />
                             <label>元/月</label>
                         </a-form-item>
-
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*租赁方式" has-feedback
-                            validate-status="">
-                            <a-radio-group :options="plainOptionzf" :defaultValue="value1" />
-                        </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*合租方式" has-feedback
-                            validate-status="">
-                            <a-select default-value="0" class="hezuf marginall">
-                                    <a-select-option v-for="(zuf,index) in hzlist" :key="zuf" :value="zuf">
-                                           {{zuf}}
-                                    </a-select-option>
-                            </a-select>
-                            <label>户合租</label>
-                            <a-select default-value="0" class="hezuf">
-                                    <a-select-option v-for="(zuf,index) in hzlist" :key="zuf" :value="zuf">
-                                            {{zuf}}
-                                     </a-select-option>
-                            </a-select>
-                            <label>户已租</label>
-                            <a-select default-value="1" class="hezuf">
-                                <a-select-option value="1">
-                                    主卧
-                                </a-select-option>
-                                <a-select-option value="2">
-                                    次卧
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    床位
-                                </a-select-option>
-                            </a-select>
-
-                            <a-select default-value="1" class="hezuf">
-                                <a-select-option value="1">
-                                    性别不限
-                                </a-select-option>
-                                <a-select-option value="2">
-                                    限男生
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    限女生
-                                </a-select-option>
-                                <a-select-option value="4">
-                                    限夫妻
-                                </a-select-option>
-                            </a-select>
-                        </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*支付方式" has-feedback
-                            validate-status="">
-                            <a-select default-value="1" class="zhifuf">
-                                <a-select-option value="1">
-                                    押一付一
-                                </a-select-option>
-                                <a-select-option value="2">
-                                    押一付二
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    押一付三
-                                </a-select-option>
-                                <a-select-option value="4">
-                                    押二付一
-                                </a-select-option>
-                            </a-select>
-                        </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
                             validate-status="" help="
                             ">
@@ -359,7 +296,7 @@
                         </div>
                         <div class="shinei divallbox">
                             <div class="laberbox">&nbsp;封&nbsp;面&nbsp;图:</div>
-                            <div class="laberboxla shineipadd" >
+                            <div class="laberboxla">
                                 点击希望设定为封面的图片右下角的封面按钮即可设定。
                             </div>
                             <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card"
@@ -369,7 +306,7 @@
                                 <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
                             </a-modal>
                         </div>
-                        <div class="shinei divallbox">
+                        <div class="shinei divallbox" style="height: 244px !important;">
                             <div class="laberbox">室内照片: </div>
                             <div class="tupianbox">
                                 <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -456,7 +393,7 @@
                             </div>
                         </div>
                         <div class="bottomobx">
-                            <a-button type="" class="buttonfang okbutton">保存房源</a-button>
+                            <a-button type="" class="buttonfang okbutton" @click="saveHouse()">保存房源</a-button>
                             <a-button type="" class="okbutton">保存草稿</a-button>
 
                         </div>
@@ -471,7 +408,6 @@
 <script>
     import moment from 'moment';
     const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
-    const plainOptionzf = ['整租', '合租'];
     const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北', '南北'];
     const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛胚'];
@@ -495,7 +431,6 @@
                     xs: { span: 24 },
                     sm: { span: 5 },
                 },
-                plainOptionzf,
                 plainOptioncx,
                 plainOptioncf,
                 plainOptionzx,
@@ -503,7 +438,6 @@
                 plainOptionsc,
                 plainOptionsy,
                 value2: '东',
-                value1: 'hezu',
                 value3: '随时看房',
                 value4: '豪华装修',
                 value5: '集体供暖',
@@ -552,9 +486,10 @@
                 selectedWei:'',
                 selectedTai:'',
                 options:[0,1,2,3,4,5,6,7,8,9,10],
-                hzlist:[0,1,2,3,4],
                 ceng:'',
                 lou:'',
+                weiyiUserId:'',
+                saveRes:{},
             }
         },
         mounted() {
@@ -595,6 +530,7 @@
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`222` + JSON.stringify(res))
                             var ret = res.data.address;
+                            this.saveRes = res.data;
                             this.address = ret.split("-")[0];
                             this.chaoxiang = ret.chaoxiang;
                             this.spinning = false;
@@ -612,6 +548,7 @@
                             this.spinning = false;
                             var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
                             var ss = shineiImg.split(",")
+                            this.weiyiUserId = res.data.weiYiUrl;
                             for (var i = 0; i < ss.length; i++) {
                                 var imgUrl = {};
                                 imgUrl.url = ss[i];
@@ -652,6 +589,46 @@
                 });
 
 
+            },
+            async saveHouse(){
+                if(this.saveRes.xiaoquName == null && this.saveRes.title == null && 
+                this.saveRes.rice == null && this.saveRes.simpleRice == null && 
+                this.saveRes.square == null && this.saveRes.huxing == null &&
+                this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null  && this.saveRes.imgHeader == null
+                )
+                {
+                   this.openNotificationWithIcon('error') 
+                }
+                else{
+                    await this.$http.post(`${this.$config.api}/api/cms/pubulish/publishHouse`,this.saveRes).then(response =>{
+                        if(response.status == 200){
+                            this.openNotificationWithIcon('success')
+                        }
+                    })
+                }
+
+            },
+            openNotificationWithIcon(type) {
+                if(type == 'success'){
+                    this.$notification[type]({
+                    message: '保存成功',
+                    placement: 'bottomRight',
+                    bottom: '50px',
+                    right:'500px',
+                    description:
+                        '保存房源成功数据将存入发布房源列表',
+                    });
+                }
+                if(type == 'error'){
+                    this.$notification[type]({
+                    message: '保存失败',
+                    placement: 'bottomRight',
+                    bottom: '50px',
+                    right:'500px',
+                    description:
+                        '保存房源失败数据不能为空',
+                    });
+                }
             },
             showModal() {
                 this.visible = true;
@@ -809,18 +786,7 @@
         margin-right: 5px
     }
 
-    .hezuf {
-        width: 100px !important;
-        margin-right: 5px;
-        margin-left: 15px;
-    }
-
     .marginall {
-        margin-left: 0px;
-    }
-
-    .zhifuf {
-        width: 120px !important;
         margin-left: 0px;
     }
 

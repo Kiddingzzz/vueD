@@ -27,21 +27,18 @@
             <span slot="title"><a-icon type="laptop" />房源管理</span>
             <a-menu-item key="6">
               <router-link to="pubulish">发布房源</router-link>
-            </a-menu-item>  
-            <a-menu-item key="7"></a-menu-item>
-           
-            <a-menu-item key="8"><router-link to="simple">抓取房源</router-link></a-menu-item>
-            <a-menu-item key="9">
+            </a-menu-item> 
+            <a-menu-item key="8">
                 <router-link to="test">url链接列表</router-link>
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub3">
             <span slot="title"><a-icon type="inbox" />房源录入</span>
-            <a-menu-item key="10">
+            <a-menu-item key="9">
               <router-link to="lease">租房录入</router-link>
             </a-menu-item>  
-            <a-menu-item key="11">
-                 <router-link to="simple">售房录入</router-link>
+            <a-menu-item key="10">
+                 <router-link to="sell">售房录入</router-link>
             </a-menu-item>
            
           </a-sub-menu>
