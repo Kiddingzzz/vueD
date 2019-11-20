@@ -5,7 +5,8 @@ import Simple from '@/views/home/simple'
 import Pubulish from '@/views/home-second/pubulishHome/pubulish'
 import Test from '@/views/pulishUrl/test'
 import DashBoard from '@/components/Dashboard'
-import Shangpu from '@/views/home/Shangpu'
+import Shops from '@/views/home/shop/shops'
+import Lease from '@/views/houseluru/lease'
 import Loginform from '@/components/loginform'
 
 Vue.use(Router)
@@ -44,10 +45,15 @@ export default new Router({
 			component: DashBoard
 		},
 		{
-			path: '/shangpu',
-			name: 'Shangpu',
-			component: Shangpu
+			 path:'/shops',
+			 name:'Shops',
+			 component:Shops
 		},
+		{
+			path:'/lease',
+			name:'Lease',
+			component:Lease
+	   },
 		{
 			path: '/loginform',
 			name: 'Loginform',
