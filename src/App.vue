@@ -5,6 +5,12 @@
       <div class="logo">
         <img class="logo" src="../static/logoJXW.png">
       </div>
+      <!-- 登录、注册 -->
+      <div class="login">
+        <a-button type="link">
+          <router-link to="loginform">登录</router-link>
+        </a-button>
+      </div>
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
@@ -91,5 +97,9 @@ export default {
       display: flex;
       width: 100%;
       
+  }
+  .login{
+    float: right;
+
   }
 </style>
