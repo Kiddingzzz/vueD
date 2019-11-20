@@ -511,7 +511,7 @@
                     lineHeight: '30px',
                 },
                 ret: {},
-
+                visible:false,
                 wrapperCol: {
                     xs: { span: 24 },
                     sm: { span: 12 },
@@ -528,7 +528,6 @@
                 userId: '48639146-0751-11EA-87FE-305A3A80A208',
                 urlss: '',
                 text: '',
-                spinning: false,
                 hutong: '',
                 ref: {},
                 previewVisible: false,
@@ -590,7 +589,7 @@
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`222` + JSON.stringify(res))
-                            var ret = res.data;
+                            var ret = res.data.address;
                             this.address = ret.split("-")[0];
                             this.chaoxiang = ret.chaoxiang;
                             this.spinning = false;
@@ -598,7 +597,7 @@
                             console.log(`222` + JSON.stringify(this.ref))
                             //字符串
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
-                            this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, str.length);
+                            this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
                             let shi = this.ref.huxing.indexOf("室");
                             let ting = this.ref.huxing.indexOf("厅");
                             let wei = this.ref.huxing.indexOf("卫");
@@ -638,6 +637,10 @@
                                 XiaoquImg.name = 'xxx.jpg',
                                 XiaoquImg.status = 'done',
                                 this.xiaoQuList.push(XiaoquImg);
+                                setTimeout(() => {
+                                    this.visible = false;
+                                }, 500);
+                                this.visible = false;
                         });
 
                     }

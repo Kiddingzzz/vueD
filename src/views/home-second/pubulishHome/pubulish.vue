@@ -3,7 +3,11 @@
         <div class="wrap">
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-                    <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="data" />
+                    <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="data">
+                        <span slot="operation" slot-scope="text, record">
+                        <a href="javascript:;" @click="onDelete(record.key)">Delete</a>
+                        </span>
+                    </a-table>
                 </a-layout-content>
             </a-layout>
         </div>
@@ -66,6 +70,11 @@
         {
             title: '均价',
             dataIndex: 'simplePrice',
+        },
+        {
+            title: 'operation',
+            dataIndex: 'operation',
+            scopedSlots: { customRender: 'operation' },
         },
     ];
 
@@ -136,9 +145,14 @@
             },
         },
         methods: {
-                onSelectChange(selectedRowKeys) {
+            onSelectChange(selectedRowKeys) {
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
+            },
+            onDelete(key) {
+                console.log(key);
+                const data = [...this.data];
+                this.data = data.filter(item => item.key !== key);
             },
         },
     };
