@@ -5,7 +5,8 @@
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="data">
                         <span slot="operation" slot-scope="text, record">
-                        <a href="javascript:;" @click="onDelete(record.key)">Delete</a>
+                        <a href="javascript:;" @click="onDelete(record.key)">删除</a>
+                        <a href="javascript:;" @click="onfabu(record.key)" >未发布</a>
                         </span>
                     </a-table>
                 </a-layout-content>
@@ -72,7 +73,7 @@
             dataIndex: 'simplePrice',
         },
         {
-            title: 'operation',
+            title: '操作',
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
         },
@@ -82,6 +83,7 @@
     for (let i = 0; i < 46; i++) {
         data.push({
             key: i,
+            xiaoQuName:'花卉园',
             name: `Edward King ${i}`,
             age: 32,
             simplePrice: ` ${i+1}元`,
@@ -153,6 +155,10 @@
                 console.log(key);
                 const data = [...this.data];
                 this.data = data.filter(item => item.key !== key);
+            },
+            onfabu(key) {
+                console.log(key);
+               
             },
         },
     };

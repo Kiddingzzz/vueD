@@ -97,7 +97,7 @@
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:"
-                            validate-status="error" help="">
+                            validate-status="" help="">
                             <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" />
                             <label class="addshowxq">找不到小区？</label>
                             <a class="addshowxq" @click="addshowxaqu">查看相似小区</a>
@@ -113,7 +113,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="地址" has-feedback
                             validate-status="" help="">
-                            <a-input v-model="ref.address" id="validating" placeholder="房源地址" />
+                            <a-input v-model="ref.address" id="validating" placeholder="房源地址" /> 
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
@@ -207,65 +207,6 @@
                             validate-status="">
                             <a-input type="number" id="" v-model="ref.rice" placeholder="" class="mianji" />
                             <label>元/月</label>
-                        </a-form-item>
-
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*租赁方式" has-feedback
-                            validate-status="">
-                            <a-radio-group :options="plainOptionzf" :defaultValue="value1" />
-                        </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*合租方式" has-feedback
-                            validate-status="">
-                            <a-select default-value="1" class="hezuf marginall">
-
-                            </a-select>
-                            <label>户合租</label>
-                            <a-select default-value="1" class="hezuf">
-
-                            </a-select>
-                            <label>户已租</label>
-                            <a-select default-value="1" class="hezuf">
-                                <a-select-option value="1">
-                                    主卧
-                                </a-select-option>
-                                <a-select-option value="2">
-                                    次卧
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    床位
-                                </a-select-option>
-                            </a-select>
-
-                            <a-select default-value="1" class="hezuf">
-                                <a-select-option value="1">
-                                    性别不限
-                                </a-select-option>
-                                <a-select-option value="2">
-                                    限男生
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    限女生
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    限夫妻
-                                </a-select-option>
-                            </a-select>
-                        </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*支付方式" has-feedback
-                            validate-status="">
-                            <a-select default-value="1" class="zhifuf">
-                                <a-select-option value="1">
-                                    押一付一
-                                </a-select-option>
-                                <a-select-option value="2">
-                                    押一付二
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    押一付三
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    押二付一
-                                </a-select-option>
-                            </a-select>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
                             validate-status="" help="
@@ -467,7 +408,6 @@
 <script>
     import moment from 'moment';
     const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
-    const plainOptionzf = ['整租', '合租'];
     const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北', '南北'];
     const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛胚'];
@@ -491,7 +431,6 @@
                     xs: { span: 24 },
                     sm: { span: 5 },
                 },
-                plainOptionzf,
                 plainOptioncx,
                 plainOptioncf,
                 plainOptionzx,
@@ -499,7 +438,6 @@
                 plainOptionsc,
                 plainOptionsy,
                 value2: '东',
-                value1: 'hezu',
                 value3: '随时看房',
                 value4: '豪华装修',
                 value5: '集体供暖',
@@ -804,18 +742,7 @@
         margin-right: 5px
     }
 
-    .hezuf {
-        width: 100px !important;
-        margin-right: 5px;
-        margin-left: 15px;
-    }
-
     .marginall {
-        margin-left: 0px;
-    }
-
-    .zhifuf {
-        width: 120px !important;
         margin-left: 0px;
     }
 

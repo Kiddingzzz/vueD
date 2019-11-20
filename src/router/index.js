@@ -5,6 +5,8 @@ import Simple from '@/views/home/simple'
 import Pubulish from '@/views/home-second/pubulishHome/pubulish'
 import Test from '@/views/pulishUrl/test'
 import DashBoard from '@/components/Dashboard'
+import Shops from '@/views/home/shop/shops'
+import Lease from '@/views/houseluru/lease'
 
 Vue.use(Router)
 
@@ -40,6 +42,17 @@ export default new Router({
 			path: '/Dashboard',
 			name: 'DashBoard',
 			component: DashBoard
-		}
+		},
+		{
+			 path:'/shops',
+			 name:'Shops',
+			 component:Shops
+		},
+		{
+			path:'/lease',
+			name:'Lease',
+			component:Lease
+	   },
+		
   ]
 })

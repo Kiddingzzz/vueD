@@ -20,7 +20,7 @@
               <router-link to="index">二手房</router-link>
             </a-menu-item>
             <a-menu-item key="2">
-              商铺
+              <router-link to="shops">商铺</router-link>
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub2">
@@ -34,6 +34,16 @@
             <a-menu-item key="9">
                 <router-link to="test">url链接列表</router-link>
             </a-menu-item>
+          </a-sub-menu>
+          <a-sub-menu key="sub3">
+            <span slot="title"><a-icon type="inbox" />房源录入</span>
+            <a-menu-item key="10">
+              <router-link to="lease">租房录入</router-link>
+            </a-menu-item>  
+            <a-menu-item key="11">
+                 <router-link to="simple">售房录入</router-link>
+            </a-menu-item>
+           
           </a-sub-menu>
           <!-- <a-sub-menu key="sub3">
             <span slot="title"><a-icon type="notification" />subnav 3</span>
