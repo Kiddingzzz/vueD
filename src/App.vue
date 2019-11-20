@@ -5,6 +5,12 @@
       <div class="logo">
         <img class="logo" src="../static/logoJXW.png">
       </div>
+      <!-- 登录、注册 -->
+      <div class="login">
+        <a-button type="link">
+          <router-link to="loginform">登录</router-link>
+        </a-button>
+      </div>
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
@@ -20,7 +26,7 @@
               <router-link to="index">二手房</router-link>
             </a-menu-item>
             <a-menu-item key="2">
-              商铺
+              <router-link to="shangpu">商铺</router-link>
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub2">
@@ -84,5 +90,9 @@ export default {
       display: flex;
       width: 100%;
       
+  }
+  .login{
+    float: right;
+
   }
 </style>

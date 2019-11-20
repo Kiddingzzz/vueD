@@ -5,6 +5,8 @@ import Simple from '@/views/home/simple'
 import Pubulish from '@/views/home-second/pubulishHome/pubulish'
 import Test from '@/views/pulishUrl/test'
 import DashBoard from '@/components/Dashboard'
+import Shangpu from '@/views/home/Shangpu'
+import Loginform from '@/components/loginform'
 
 Vue.use(Router)
 
@@ -40,6 +42,16 @@ export default new Router({
 			path: '/Dashboard',
 			name: 'DashBoard',
 			component: DashBoard
-		}
+		},
+		{
+			path: '/shangpu',
+			name: 'Shangpu',
+			component: Shangpu
+		},
+		{
+			path: '/loginform',
+			name: 'Loginform',
+			component: Loginform
+		},
   ]
 })

@@ -6,6 +6,10 @@ import axios from "axios";
 import Antd from 'ant-design-vue'
 import 'ant-design-vue/dist/antd.css'
 import VueResource from 'vue-resource';
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+import './assets/iconfont/iconfont.css';
+Vue.use(ElementUI);
 Vue.use(Antd) 
 // 对Date的扩展，将 Date 转化为指定格式的String
 // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
