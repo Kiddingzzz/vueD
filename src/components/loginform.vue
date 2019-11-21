@@ -69,7 +69,7 @@
 </template>
 <script>
 import dialogRegister from "./dialog-register.vue";
-
+import md5 from 'js-md5';
 export default {
   components: {
     dialogRegister
@@ -84,7 +84,12 @@ export default {
       account: "qcode",
       sendVal: false,
       user: "",
-      password: ""
+      password: "",
+      TokenRES:{},
+      RefreshTokenRES:{},
+      openId:'',
+      access_token:'',
+      refresh_token:'',
     };
   },
   computed: {
@@ -94,6 +99,8 @@ export default {
      :"../../assets/alipay.png";
     }
   },
+  mounted(){
+        },
   methods: {
      hide() {
         console.log(111);
@@ -108,6 +115,7 @@ export default {
       // const statu =`${this.config}/api/`;
       // const response = await this.$http.get(statu);
       // const data = response.data;
+
 			try {
 				// if (this.user.length < 5) {
 				// 	this.$message({
@@ -124,6 +132,83 @@ export default {
 				// 	return;
 				// }
 
+        //获取58令牌
+        const WuBaApi = 'https://openapi.58.com/v2/auth/show?app_key=e36309f80bd9030c879d69ba4155a74b&redirect_uri=http://www.58.com/callback'
+
+        const resWuba = await this.$http.get(WuBaApi);
+        //获取授权令牌
+        var sortList = [{code:resWuba.code},{timestamp:'1496829295748'},{app_key:'e36309f80bd9030c879d69ba4155a74b'}];
+
+        //排序
+        var cc = sortList.sort(function (a,b) {
+            return Object.keys(a) > Object.keys(b)
+        });
+
+        // console.log(cc);//获得一个新数组
+        //转成字符串数组
+        var strArr = [];
+        cc.forEach(function (value,currentIndex) {
+            //取出key值和value值
+            var arrValue = Object.keys(value)+'='+value[Object.keys(value)];
+            strArr.push(arrValue)
+        });
+        var sortValue = strArr[0]+'&'+strArr[1]+'&'+strArr[2]+'&1b879acf2eb74ce52a6a1c0023cda398'
+        console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`+sortValue) 
+        
+        //结果转换为小写并MD5加密
+        var MD5SortValue =  md5(sortValue).toLowerCase();
+        console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`+MD5SortValue)
+        const TokenApi = 'https://openapi.58.com/v2/auth/access_token?code='+resWuba.code+'&timestamp='+'1496829295748'+'&app_key='+'e36309f80bd9030c879d69ba4155a74b'+'&sig='+MD5SortValue
+        
+        //获取token令牌以及refreshtoken和openId
+         await this.$http.get(TokenApi).then(response => {
+           if(response.code == 0){
+              this.TokenRES = TokenApi.data;
+              this.openId = TokenApi.data.openid;
+              this.access_token = TokenApi.data.access_token;
+              this.refresh_token = TokenApi.data.refresh_token;
+
+              var refreshsortList = [{openid:this.openId},{access_token:this.access_token},{refresh_token:this.refresh_token},{timestamp:'1496829295748'},{app_key:'e36309f80bd9030c879d69ba4155a74b'}];
+              var bb = refreshsortList.sort(function (a,b) {
+                  return Object.keys(a) > Object.keys(b)
+              });
+              var RefreshstrArr = [];
+              bb.forEach(function (value,currentIndex) {
+                  //取出key值和value值
+                  var fresharrValue = Object.keys(value)+'='+value[Object.keys(value)];
+                  RefreshstrArr.push(fresharrValue)
+              });
+              var RefreshsortValue = RefreshstrArr[0]+'&'+RefreshstrArr[1]+'&'+RefreshstrArr[2]+'&'+RefreshstrArr[3]+'&'+RefreshstrArr[4]+'&1b879acf2eb74ce52a6a1c0023cda398'
+              var RefreshMD5SortValue =  md5(RefreshsortValue).toLowerCase();
+              console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`+RefreshMD5SortValue) 
+              const RefreshTokenApi = 'https://openapi.58.com/v2/auth/access_token?openid='+this.openId+'&access_token'+this.access_token+'&refresh_token'+this.refresh_token+'&timestamp='+'1496829295748'+'&app_key='+'e36309f80bd9030c879d69ba4155a74b'+'&sig='+RefreshMD5SortValue
+              
+              this.$http.get(RefreshTokenRES).then(response =>{
+                if(response.code == 0){
+                  this.RefreshTokenRES = response.data;
+                  const data = {
+                    openid: this.RefreshTokenRES.openId,
+                    access_token: this.RefreshTokenRES.access_token,
+                    access_token_expires: this.RefreshTokenRES.access_token_expires,
+                    refresh_token: this.RefreshTokenRES.refresh_token,
+                    refresh_token_expires: this.RefreshTokenRES.refresh_token_expires,
+                    UserName:'15523358281',
+                    WubaPassword:'Admin',
+                    UserId:this.userId,
+                  }
+                  this.$http.post('',data).then(response => {
+                    if(response.data == 200){
+                      console.log('刷新令牌成功')
+                    }
+                  })
+
+                }
+              })
+           }
+         });
+
+
+      
 				const data = {
 					userNameOrEmailAddress: this.user,
 					password: this.password
