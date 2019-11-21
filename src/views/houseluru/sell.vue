@@ -902,7 +902,6 @@
 
     .buttonfang {
         margin-right: 15px;
-        margin-left: 30%
     }
 
     .orangelaber {

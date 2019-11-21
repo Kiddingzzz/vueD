@@ -906,11 +906,6 @@
         padding: 10px 20px;
     }
 
-    .shineipadd{
-        // display: flex;
-        // flex-direction: row;
-    }
-
     .piclaber {
         color: green;
     }
