@@ -362,7 +362,7 @@
                                                     <a-icon type="user" />{{pilaingsy}}</a-menu-item>
                                             </a-menu>
                                             <a-button class="tupianchuli">图片处理
-                                                <a-icon type="up" />
+                                                <a-icon type="down" />
                                             </a-button>
                                         </a-dropdown>
                                     </div>

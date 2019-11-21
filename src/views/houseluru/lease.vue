@@ -94,12 +94,11 @@
         </a-modal>
         <div class="wrap">
             <a-layout style="padding: 24px 24px 24px 24px">
-                <div class="auto">
-                <a-layout-content class="content">
+                <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:"
                             validate-status="" help="">
-                            <a-input id="error" v-model="ref.xiaoquName" placeholder="小区" style="width:50%;" />
+                            <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" />
                             <label class="addshowxq">找不到小区？</label>
                             <a class="addshowxq" @click="addshowxaqu">查看相似小区</a>
                             <a class="addshowxq" @click="addxiaoqu">我要添加小区</a>
@@ -217,12 +216,16 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*合租方式" has-feedback
                             validate-status="">
-                            <a-select default-value="1" class="hezuf marginall">
-
+                            <a-select default-value="0" class="hezuf marginall">
+                                    <a-select-option v-for="(zuf,index) in hzlist" :key="zuf" :value="zuf">
+                                           {{zuf}}
+                                    </a-select-option>
                             </a-select>
                             <label>户合租</label>
-                            <a-select default-value="1" class="hezuf">
-
+                            <a-select default-value="0" class="hezuf">
+                                    <a-select-option v-for="(zuf,index) in hzlist" :key="zuf" :value="zuf">
+                                            {{zuf}}
+                                     </a-select-option>
                             </a-select>
                             <label>户已租</label>
                             <a-select default-value="1" class="hezuf">
@@ -247,7 +250,7 @@
                                 <a-select-option value="3">
                                     限女生
                                 </a-select-option>
-                                <a-select-option value="3">
+                                <a-select-option value="4">
                                     限夫妻
                                 </a-select-option>
                             </a-select>
@@ -264,7 +267,7 @@
                                 <a-select-option value="3">
                                     押一付三
                                 </a-select-option>
-                                <a-select-option value="3">
+                                <a-select-option value="4">
                                     押二付一
                                 </a-select-option>
                             </a-select>
@@ -555,6 +558,7 @@
                 selectedWei:'',
                 selectedTai:'',
                 options:[0,1,2,3,4,5,6,7,8,9,10],
+                hzlist:[0,1,2,3,4],
                 ceng:'',
                 lou:'',
             }

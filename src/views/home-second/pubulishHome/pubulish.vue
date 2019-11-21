@@ -3,10 +3,10 @@
         <div class="wrap">
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-                    <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="data">
+                    <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                         <span slot="operation" slot-scope="text, record">
-                        <a href="javascript:;" @click="onDelete(record.key)">删除</a>
-                        <a href="javascript:;" @click="onfabu(record.key)" >未发布</a>
+                        <a href="javascript:;" @click="onDelete(record.weiYiUrl)">删除</a>
+                        <a href="javascript:;" @click="onfabu(record.weiYiUrl)" >未发布</a>
                         </span>
                     </a-table>
                 </a-layout-content>
@@ -22,15 +22,15 @@
         },
         {
             title: '标题',
-            dataIndex: 'name',
+            dataIndex: 'title',
         },
         {
-            title: '多图',
-            dataIndex: 'imglist',
+            title: '室内图',
+            dataIndex: 'imgHeader',
         },
         {
             title: '房型',
-            dataIndex: 'houseType',
+            dataIndex: 'huxing',
         },
         {
             title: '面积',
@@ -38,11 +38,11 @@
         },
         {
             title: '价格',
-            dataIndex: 'price',
+            dataIndex: 'rice',
         },
         {
             title: '朝向',
-            dataIndex: 'see',
+            dataIndex: 'chaoxiang',
         },
         {
             title: '楼层',
@@ -50,7 +50,7 @@
         },
         {
             title: '更新日期',
-            dataIndex: 'modifyCreationtime',
+            dataIndex: 'creationTime',
         },
         {
             title: '装修',
@@ -58,19 +58,19 @@
         },
         {
             title: '房龄',
-            dataIndex: 'age',
+            dataIndex: 'fangwuDate',
         },
         {
             title: '状态',
-            dataIndex: 'type',
+            dataIndex: 'publishStatus',
         },
         {
             title: '发布历史',
-            dataIndex: 'history',
+            dataIndex: 'houseType',
         },
         {
             title: '均价',
-            dataIndex: 'simplePrice',
+            dataIndex: 'simpleRice',
         },
         {
             title: '操作',
@@ -79,21 +79,21 @@
         },
     ];
 
-    const data = [];
-    for (let i = 0; i < 46; i++) {
-        data.push({
-            key: i,
-            xiaoQuName:'花卉园',
-            name: `Edward King ${i}`,
-            age: 32,
-            simplePrice: ` ${i+1}元`,
-        });
-    }
+    // const data = [];
+    // for (let i = 0; i < 46; i++) {
+    //     data.push({
+    //         key: i,
+    //         xiaoQuName:'花卉园',
+    //         name: `Edward King ${i}`,
+    //         age: 32,
+    //         simplePrice: ` ${i+1}元`,
+    //     });
+    // }
 
     export default {
         data() {
             return {
-                data,
+                list:[],
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
             };
@@ -146,6 +146,9 @@
                 };
             },
         },
+        mounted() {
+           this.seachShow();
+        },
         methods: {
             onSelectChange(selectedRowKeys) {
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -159,6 +162,10 @@
             onfabu(key) {
                 console.log(key);
                
+            },
+            async seachShow(userid){
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/{userId}`);
+                this.list=respones.data;
             },
         },
     };
