@@ -8,12 +8,6 @@
                         <a href="javascript:;" @click="onfabu(record.key)" >未发布</a>
                         </span>
                     </a-table>
-                    <a-table :rowSelection="rowSelection" :columns="columns2" :dataSource="data">
-                        <span slot="operation" slot-scope="text, record">
-                        <a href="javascript:;" @click="onDelete(record.key)">删除</a>
-                        <a href="javascript:;" @click="onfabu(record.key)" >未发布</a>
-                        </span>
-                    </a-table>
                 </a-layout-content>
             </a-layout>
         </div>
@@ -81,29 +75,6 @@
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
         },
-    ];
-
-    const columns2 = [
-        {
-            title: '网站',
-            dataIndex: 'wangzhan',
-        },
-        {
-            title: '账号',
-            dataIndex: 'zhanghao',
-        },
-        {
-            title: '库存满时发送处理',
-            dataIndex: 'imglist',
-        },
-        {
-            title: '房源重复发送处理',
-            dataIndex: 'reprocessing',
-        },
-        {
-            title: '推送设置',
-            dataIndex: 'pushprocessing',
-        }
     ];
 
     const data = [];
