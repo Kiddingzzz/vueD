@@ -8,10 +8,9 @@
       <!-- 登录、注册 -->
       <div class="login">
         <a-button type="link">
-          <router-link to="loginform">登录/注册</router-link>
+          <router-link to="loginform">登录</router-link>
         </a-button>
       </div>
-
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
@@ -47,16 +46,6 @@
             <a-menu-item key="10">
                  <router-link to="sell">售房录入</router-link>
             </a-menu-item>
-<<<<<<< HEAD
-=======
-          </a-sub-menu>
-
-          <a-sub-menu key="sub4">
-            <span slot="title"><a-icon type="cloud" />云发布</span>
-            <a-menu-item key="12">
-              <router-link to="salerelease">出售群发</router-link>
-            </a-menu-item>           
->>>>>>> b2b89d6d7891bca7f27ba41b9e3df119b4c2fd14
           </a-sub-menu>
           <a-sub-menu key="sub4">
             <span slot="title"><a-icon type="setting" />个人管理</span>

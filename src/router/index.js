@@ -7,8 +7,14 @@ import DashBoard from '@/components/Dashboard'
 import Shops from '@/views/home/shop/shops'
 import Lease from '@/views/houseluru/lease'
 import Sell from '@/views/houseluru/Sell'
+<<<<<<< HEAD
 import Zhandian from '@/views/promangr/Zhandian'
 
+=======
+import Loginform from '@/components/loginform'
+import Salerelease from '@/views/cloudrelease/salerelease'
+import vtable from '@/components/vtable'
+>>>>>>> b2b89d6d7891bca7f27ba41b9e3df119b4c2fd14
 
 Vue.use(Router)
 
@@ -54,11 +60,30 @@ export default new Router({
 		path:'/sell',
 		name:'Sell',
 		component:Sell
+<<<<<<< HEAD
 	 },
 	 {
 		path:'/zhandian',
 		name:'Zhandian',
 		component:Zhandian
      },
+=======
+	   },
+	    {
+			path: '/loginform',
+			name: 'Loginform',
+			component: Loginform
+		},
+		{
+			path: '/salerelease',
+			name: 'Salerelease',
+			component: Salerelease
+		},
+		{
+			path: '/vtable',
+			name: 'Vtable',
+			component: vtable
+		},
+>>>>>>> b2b89d6d7891bca7f27ba41b9e3df119b4c2fd14
   ]
 })

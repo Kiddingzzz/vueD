@@ -1,9 +1,9 @@
 <template>
     <div class="ts">
         <div class="filter-wraps" style="padding: 24px 24px 0px 24px;">
-            <div class="search_bds" style="height:110px">
-                <div>
-                    贴心提示:
+            <div class="search_bds">
+                <div class="tishi">
+                    <i class="iconfont icon-tishi"></i>贴心提示:
                 </div>
                 <div>
                     1.随时抓取经纪人在外网发布的任意一套房源信息，方便、快捷、高效。
@@ -23,7 +23,7 @@
             </p>
             <div class="fontU">
                 <ul class="sale-content-tip clear" style="margin:0px">
-                    <li><span>贴心提示:</span></li>
+                    <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
                     <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
                     <li><span>2.秒入图片小于600*450自动过滤;</span></li>
                     <li><span>3.本功能暂时只支持秒录 58同城、安居客、房天下、
@@ -257,8 +257,8 @@
         </div>
         <div class="filter-wraps wrapscolor">
             <div class="search_bds">
-                <div>
-                    贴心提示:
+                <div class="tishi">
+                    <i class="iconfont icon-tishi"></i>贴心提示:
                 </div>
                 <div>
                     1.上传1张房型图，3张室内图，房源描述需要30个字以上的房源，就能获得标签。多图房源能获得比一般房源高出27.3%的点击率。
@@ -282,23 +282,24 @@
                 <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
                     <a-form>
                         <div class="picdivbox divallbox">
-                            <div class="laberbox">上传方式:</div>
+                            <div class="laberboxtit">上传方式:</div>
                             <div class="laberboxla">
                                 <a-radio-group :options="plainOptionsc" :defaultValue="value6" />
                             </div>
                         </div>
                         <div class="picdivbox divallbox">
-                            <div class="laberbox">水印位置:</div>
+                            <div class="laberboxtit">水印位置:</div>
                             <div class="laberboxla">
                                 <a-radio-group :options="plainOptionsy" :defaultValue="value7" />
                             </div>
 
                         </div>
                         <div class="shinei divallbox">
-                            <div class="laberbox">&nbsp;封&nbsp;面&nbsp;图:</div>
-                            <div class="laberboxla">
-                                点击希望设定为封面的图片右下角的封面按钮即可设定。
+                            <div class="laberbox">
+                                <span class="laberboxtitle">&nbsp;封&nbsp;面&nbsp;图:</span>
+                                <div class="laberboxla">点击希望设定为封面的图片右下角的封面按钮即可设定。</div>
                             </div>
+                            
                             <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card"
                                 :fileList="imgHeaderList" @preview="handlePreview" @change="handleChange">
                             </a-upload>
@@ -306,46 +307,67 @@
                                 <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
                             </a-modal>
                         </div>
-                        <div class="shinei divallbox" style="height: 244px !important;">
-                            <div class="laberbox">室内照片: </div>
+                        <div class="shinei divallbox">
+                            <div class="laberbox">
+                                <span class="laberboxtitle">室内照片: </span>
+                                <div class="shineipadd">
+                                    最多10张。您可以<label class="piclaber">从我的图库选择</label>
+                                    <a-button type="" class="buttontuku">我的图库</a-button>
+                                    <a-button type="" class="buttontuku">高清图库</a-button>
+                                    客厅/卧室/厨房等3张以上照片可帮助您获得较好效果！
+                                    <label class="orangelaber">可拖拽交换位置</label>
+                                </div>
+                            </div>
                             <div class="tupianbox">
-                                <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                    listType="picture-card" :fileList="shineiList" @preview="handlePreview"
-                                    @change="handleChange">
-                                    <!-- <a-button class="updatedbutton">
-                                        <a-icon type="upload" />上传图片</a-button> -->
-                                </a-upload>
-                                <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                                    <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
-                                </a-modal>
-                            </div>
-                            <div class="shineipadd">
-                                最多10张。您可以<label class="piclaber">从我的图库选择</label>
-                                <a-button type="" class="buttontuku">我的图库</a-button>
-                                <a-button type="" class="buttontuku">高清图库</a-button>
-                                客厅/卧室/厨房等3张以上照片可帮助您获得较好效果！
-                                <label class="orangelaber">可拖拽交换位置</label>
-                            </div>
+                                    <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                        listType="picture-card" :fileList="shineiList" @preview="handlePreview"
+                                        @change="handleChange">
+                                        <!-- <a-button class="updatedbutton">
+                                            <a-icon type="upload" />上传图片</a-button> -->
+                                    </a-upload>
+                                    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                        <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                                    </a-modal>
+                                </div>
                         </div>
                         <div class="shinei divallbox">
-                            <div class="laberbox">&nbsp;房&nbsp;型&nbsp;图:</div>
+                            <div class="laberbox">
+                                <span class="laberboxtitle">&nbsp;房&nbsp;型&nbsp;图:</span>
+                                <div class="shineipadd">
+                                    <label class="orangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图</label>
+                                    <a-button type="" class="buttontuku">我的图库</a-button>
+                                    <a-button type="" class="orangetuku">房型图库</a-button>
+                                    <a-button type="" class="buttontuku">在线绘制</a-button>
+                                </div>
+                            </div>
                             <div class="tupianbox">
                                 <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     listType="picture-card" :fileList="fangxinlist" @preview="handlePreview"
                                     @change="handleChange">
                                 </a-upload>
                             </div>
-                            <div class="shineipadd">
-                                <label class="orangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图
-                                </label>
-                                <a-button type="" class="buttontuku">我的图库</a-button>
-                                <a-button type="" class="orangetuku">房型图库</a-button>
-                                <a-button type="" class="buttontuku">在线绘制</a-button>
-                            </div>
                         </div>
                         <div class="shinei divallbox">
-                            <div class="laberbox">小区图片:
-                                <div class="radisflex">
+                            <div class="laberbox">
+                                <span class="laberboxtitle">小区图片:</span>
+                                <div class="shineipadd">
+                                    <span>最多10张。您可以</span>
+                                    <label class="piclaber">从我的图库选择</label>
+                                    <span>或者</span>
+                                    <label class="piclaber">从小区图库选择</label>
+                                    <a-button type="" class="buttontuku">我的图库</a-button>
+                                    <a-button type="" class="buttontuku">小区图库</a-button>
+                                </div>
+                                  <div class="xiala">
+                                        <a-dropdown>
+                                            <a-menu slot="overlay">
+                                                <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index"> <a-icon type="user" />{{pilaingsy}}</a-menu-item>
+                                            </a-menu>
+                                            <a-button class="tupianchuli">图片处理<a-icon type="up" /></a-button>
+                                        </a-dropdown>
+                                    </div>
+                            </div>
+                            <div class="radisflex">
                                     <div class="tupianbox">
                                         <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                             listType="picture-card" :fileList="xiaoQuList" @preview="handlePreview"
@@ -355,45 +377,34 @@
                                             <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
                                         </a-modal>
                                     </div>
-                                    <div class="xiala">
+                                    <!-- <div class="xiala">
                                         <a-dropdown>
                                             <a-menu slot="overlay">
                                                 <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
                                                     <a-icon type="user" />{{pilaingsy}}</a-menu-item>
                                             </a-menu>
-                                            <a-button class="tupianchuli">图片处理
-                                                <a-icon type="down" />
+                                             <a-button class="tupianchuli">图片处理
+                                                <a-icon type="up" />
                                             </a-button>
                                         </a-dropdown>
-                                    </div>
+                                    </div> -->
                                 </div>
-                            </div>
-                            <div class="shineipadd">
-
-                                最多10张。您可以<label class="piclaber">从我的图库选择</label>或者<label
-                                    class="piclaber">从小区图库选择</label>
-                                <a-button type="" class="buttontuku">我的图库</a-button>
-                                <a-button type="" class="buttontuku">小区图库</a-button>
-                            </div>
                         </div>
                         <div class="fangyuansp">
-                            <div class="laberbox">房源视频:
-
-                            </div>
-                            <label>
-                                视频大小在300M内，视频长度在1-3分钟为最佳，视频过短新三网审核不予通过。
-                            </label>
-
-                            <div>
-                                <a-upload name="file" :multiple="true"
-                                    action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers">
-                                    <a-button class="updatedspbutton">
-                                        <a-icon type="upload" />添加视频 </a-button>
-                                </a-upload>
+                            <div class="laberbox">
+                                <span class="laberboxtitle">房源视频:</span>
+                                <label> 视频大小在300M内，视频长度在1-3分钟为最佳，视频过短新三网审核不予通过。</label>
+                                <div>
+                                    <a-upload name="file" :multiple="true"
+                                        action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers">
+                                        <a-button class="updatedspbutton">
+                                            <a-icon type="upload" />添加视频 </a-button>
+                                        </a-upload>
+                                </div>
                             </div>
                         </div>
                         <div class="bottomobx">
-                            <a-button type="" class="buttonfang okbutton" @click="saveHouse()">保存房源</a-button>
+                            <a-button type="" class="buttonfang okbutton">保存房源</a-button>
                             <a-button type="" class="okbutton">保存草稿</a-button>
 
                         </div>
@@ -665,7 +676,7 @@
         }
     }
 </script>
-<style lang="less">
+<style lang="less" scoped>
     .wrap {
         width: 100%;
         display: flex;
@@ -716,7 +727,10 @@
         border-radius: 10px;
         border: 1px solid #ebedf0;
     }
-
+    .tishi{
+        display: flex;
+        align-items: center;
+    }
     .filter-wraps .search_bds .secitem dt {
         color: #888;
         width: 36px;
@@ -823,16 +837,22 @@
     }
 
     .picdivbox {
+        display: flex;
         align-items: center;
         height: 40px !important;
+        .laberboxtit{
+            color: red;
+            margin-right: 10px;
+        }
     }
 
     .laberbox {
-        color: red;
-    }
-
-    .laberboxla {
-        margin-left: 10px;
+        display: flex;
+        align-items: center;
+        .laberboxtitle{
+            color: red;
+            margin-right: 10px;
+        }
     }
 
     .tupianbox {
@@ -848,11 +868,6 @@
 
     .piclaber {
         color: green;
-    }
-
-    .shineipadd {
-        padding-left: 60px;
-        margin-top: 15px;
     }
 
     .fangxingtu {
@@ -887,7 +902,6 @@
 
     .buttonfang {
         margin-right: 15px;
-        margin-left: 30%
     }
 
     .orangelaber {

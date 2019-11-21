@@ -113,7 +113,6 @@
         background: #ffffdd;
         display: flex;
         flex-flow: column;
-        height: 110px;
         width: 100%;
         padding: 12px;
         line-height: 26px;
