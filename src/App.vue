@@ -46,13 +46,13 @@
             <a-menu-item key="10">
                  <router-link to="sell">售房录入</router-link>
             </a-menu-item>
-           
           </a-sub-menu>
-          <!-- <a-sub-menu key="sub3">
-            <span slot="title"><a-icon type="notification" />subnav 3</span>
-            <a-menu-item key="9">option9</a-menu-item>
-            <a-menu-item key="10">option10</a-menu-item>
-          </a-sub-menu> -->
+          <a-sub-menu key="sub4">
+            <span slot="title"><a-icon type="setting" />个人管理</span>
+            <a-menu-item key="11">
+              <router-link to="zhandian">站点管理</router-link>
+            </a-menu-item> 
+          </a-sub-menu>
         </a-menu>
       </a-layout-sider>
       <router-view/>

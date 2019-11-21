@@ -7,7 +7,7 @@ import DashBoard from '@/components/Dashboard'
 import Shops from '@/views/home/shop/shops'
 import Lease from '@/views/houseluru/lease'
 import Sell from '@/views/houseluru/Sell'
-import Loginform from '@/components/loginform'
+import Zhandian from '@/views/promangr/Zhandian'
 
 
 Vue.use(Router)
@@ -54,16 +54,11 @@ export default new Router({
 		path:'/sell',
 		name:'Sell',
 		component:Sell
-   },
-	 
-   
-   
-   
-   
-   {
-			path: '/loginform',
-			name: 'Loginform',
-			component: Loginform
-		},
+	 },
+	 {
+		path:'/zhandian',
+		name:'Zhandian',
+		component:Zhandian
+     },
   ]
 })
