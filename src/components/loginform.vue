@@ -8,39 +8,22 @@
       <div class="item-qcode">
         <div v-if="account == 'qcode'">
           <div class="icd">
-            <div class="icons">
-              <!--支付宝  -->
-              <a-popover placement="right" trigger="click" v-model="payvisible">
-                <template @click="hide" slot="content">
-                  <!-- 支付宝二维码 -->
-                  <img src="../assets/pay.png" class="imgs">
-                </template>
-                <img src="../assets/paylogo.png" class="imgs" @click="type = 'pay'">
-              </a-popover>
-              <!--微信  -->
-              <a-popover placement="right" trigger="click" v-model="weixinvisible">
-                <template @click="hide" slot="content">
-                  <!-- 微信二维码 -->
-                  <img src="../assets/weixin.jpg" class="imgs weixin">
-                </template>
-                <img src="../assets/weixinlogo.png" class="imgs"  @click="type = 'weixin'">
-              </a-popover>
-              <!--QQ  -->
-              <a-popover placement="left" trigger="click" v-model="qqvisible">
-                <template @click="hide" slot="content">
-                  <!-- QQ二维码 -->
-                  <img src="../assets/qq.png" class="imgs">
-                </template>
-                <img src="../assets/qqlogo.png" class="imgs" @click="type = 'qq'">
-              </a-popover>
-
-            </div>
             <div class="notification">
-              <div v-if="type == ''"> 请选择扫码登陆</div>
-              <div v-if="type == 'pay'">请打开支付宝验证您的二维码</div>
-              <div v-if="type == 'weixin'">请打开微信验证您的二维码</div>
-              <div v-if="type == 'qq'">请打开QQ验证您的二维码</div>
+              <div v-if="type == 'pay'">
+                <img src="../assets/pay.png" class="maimgs">
+              </div>
+              <div v-if="type == 'weixin'">
+                <img src="../assets/weixin.jpg" class="maimgs">
+              </div>
+              <div v-if="type == 'qq'">
+                <img src="../assets/qq.png" class="maimgs">
+              </div>
             </div>
+            <div class="icons">
+              <img src="../assets/paylogo.png" class="imgs" @click="type = 'pay'">
+              <img src="../assets/weixinlogo.png" class="imgs"  @click="type = 'weixin'">
+              <img src="../assets/qqlogo.png" class="imgs" @click="type = 'qq'">
+            </div>           
           </div>
         </div>
 
@@ -96,7 +79,7 @@ export default {
       payvisible: false,
       weixinvisible: false,
       qqvisible: false,
-      type: "",
+      type: "pay",
       imgType: "",
       account: "qcode",
       sendVal: false,
@@ -252,17 +235,16 @@ export default {
 // @import "../../styles";
  //@import "~@/assets/iconfont.css";
 .wrapper-login {
-  height:80vh;
+  height: 90vh;
   width: 100%;
   display: flex;
   justify-content: center;
   position: absolute;
-  //background: url("../assets/bg1.jpg");
-  //background: #001529;
+  background: url("../assets/bg.png");
   background-size: 100% 100%;
   box-sizing: boder-box;
   .banner-login {
-    width: 650px;
+    width: 550px;
     position: absolute;
     right: 10vw;
     top: 90px;
@@ -270,27 +252,27 @@ export default {
     line-height: 20px;
     border-radius: 10px;
     text-align: center;
+    border: 1px solid #c1c1c1;
     box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.3);
     background-color: #ffffff;
 
     .img {
       width: 150px;
       height: 80px;
-      margin-top: 50px;
+      margin-top: 30px;
 
     }
     .item-qcode {
       margin-top: 55px;
-
       .icons {
         display: flex;
         flex-direction: row;
         justify-content: space-around;
-        margin: 0px 100px;
-        height: 80px;
+        margin: -20px 90px;
+        height: 50px;
         img{
-          width: 80px;
-          height: 80px;
+          width: 50px;
+          height: 50px;
           border-radius: 5px;
         }
       }
@@ -305,6 +287,11 @@ export default {
           flex-direction: column-reverse;
           align-items: center;
           font-family: SourceHanSansSC-regular;
+          .maimgs{
+            margin-top: -55px;
+            height: 230px;
+            width: 230px;
+          }
         }
       }
       .icd {
@@ -329,7 +316,7 @@ export default {
           font-size: 14px;
           border: none;
           text-align: left;
-          margin-bottom: 30px;
+          margin-bottom: 35px;
           font-family: Microsoft Yahei;
         }
         .btns {
@@ -337,7 +324,7 @@ export default {
           height: 36px;
           line-height: 20px;
           border-radius: 5px;
-          background-color: rgba(0, 193, 145, 1);
+          background-color:#023179;
           color: rgba(255, 255, 255, 1);
           font-size: 14px;
           text-align: center;
@@ -352,7 +339,7 @@ export default {
       justify-content: space-between;
       width: 184px;
       height: 36px;
-      margin: 0px 233px;
+      margin: 100px auto;
       .g2-cad {
         width: 72px;
         line-height: 30px;
@@ -375,7 +362,6 @@ export default {
       bottom: 27px;
       height: 21px;
       width: 100%;
-
       .tip2 {
         margin-left: 20px;
         color: #dcdcdc;
