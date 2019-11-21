@@ -8,9 +8,10 @@
       <!-- 登录、注册 -->
       <div class="login">
         <a-button type="link">
-          <router-link to="loginform">登录</router-link>
+          <router-link to="loginform">登录/注册</router-link>
         </a-button>
       </div>
+
     </a-layout-header>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
@@ -48,8 +49,14 @@
             </a-menu-item>  
             <a-menu-item key="11">
                  <router-link to="simple">售房录入</router-link>
-            </a-menu-item>
-           
+            </a-menu-item>          
+          </a-sub-menu>
+
+          <a-sub-menu key="sub4">
+            <span slot="title"><a-icon type="cloud" />云发布</span>
+            <a-menu-item key="12">
+              <router-link to="salerelease">出售群发</router-link>
+            </a-menu-item>           
           </a-sub-menu>
           <!-- <a-sub-menu key="sub3">
             <span slot="title"><a-icon type="notification" />subnav 3</span>
@@ -98,11 +105,9 @@ export default {
   .ant-layout.ant-layout-has-sider{
       height: 100%;
       display: flex;
-      width: 100%;
-      
+      width: 100%;    
   }
   .login{
     float: right;
-
   }
 </style>

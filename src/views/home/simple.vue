@@ -1,9 +1,9 @@
 <template>
     <div class="ts">
         <div class="filter-wraps" style="padding: 24px 24px 0px 24px;">
-            <div class="search_bds" style="height:110px">
-                <div>
-                    贴心提示:
+            <div class="search_bds">
+                <div class="tishi">
+                    <i class="iconfont icon-tishi"></i>贴心提示:
                 </div>
                 <div>
                     1.随时抓取经纪人在外网发布的任意一套房源信息，方便、快捷、高效。
@@ -716,7 +716,10 @@
         border-radius: 10px;
         border: 1px solid #ebedf0;
     }
-
+    .tishi{
+        display: flex;
+        align-items: center;
+    }
     .filter-wraps .search_bds .secitem dt {
         color: #888;
         width: 36px;

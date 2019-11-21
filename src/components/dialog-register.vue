@@ -294,7 +294,7 @@ export default {
           margin-top: 6px;
         }
         a {
-          color: #00c191;
+          color: #023179;
           font-size: 16px;
           font-family: SourceHanSansSC-regular;
           text-decoration: none;
@@ -306,7 +306,7 @@ export default {
         height: 36px;
         line-height: 30px;
         border-radius: 5px;
-        background-color: rgba(0, 193, 145, 1);
+        background-color: #023179;
         color: rgba(255, 255, 255, 1);
         font-size: 14px;
         text-align: center;
