@@ -55,13 +55,8 @@ export default new Router({
 		path:'/sell',
 		name:'Sell',
 		component:Sell
-   },
-	 
-   
-   
-   
-   
-   {
+	   },
+	    {
 			path: '/loginform',
 			name: 'Loginform',
 			component: Loginform
