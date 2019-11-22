@@ -81,3 +81,7 @@ export default new Router({
 
 	]
 })
+if (sessionStorage.getItem('token')) {
+store.commit('set_token', sessionStorage.getItem('token'))
+}
+	

@@ -11,6 +11,7 @@ const store = new Vuex.Store({
 		loginProvider: "",
 		openid: null,
 		user: {},
+		token:'',
 		isUpdateHome: true
 	},
 	mutations: {
@@ -48,7 +49,16 @@ const store = new Vuex.Store({
 		},
 		logout(state) {
 			state.hasLogin = false
-			state.openid = null
+			state.ope
+			nid = null
+		},
+		set_token(state, token) {
+		state.token = token
+		sessionStorage.token = token
+		},
+		del_token(state) {
+		state.token = ''
+		sessionStorage.removeItem('token')
 		},
 		setOpenid(state, openid) {
 			state.openid = openid

@@ -1,13 +1,5 @@
 import axios from "axios";
 
-const server = axios.create({
-    baseURL:"https://shanghai.anjuke.com/sale/?from=navigation#",
-    headers:{
-        "Content-type":"text/plain",
-        "Access-Control-Allow-Cradentials":true
-    }
-})
-
 server.interceptors.request.use(
     config => {
         config.headers.token = localStorage.getItem("token");
