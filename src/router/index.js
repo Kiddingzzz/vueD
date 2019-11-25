@@ -26,25 +26,26 @@ export default new Router({
 		{
 			path:'/index',
 			name:'Index',
+			component: Index,
 			// meta: {
-			// 	lo: true
+			// 	loginRequest: true
 			// }	
     	},
 		{
 			path: "/pubulish",
 			name: "Pubulish",
 			component: Pubulish,
-			meta: {
-				loginRequest: true
-			}
+			// meta: {
+			// 	loginRequest: true
+			// }
 		},
 		{
 			path: "/test",
 			name: "Test",
 			component: Test,
-			meta: {
-				loginRequest: true
-			}
+			// meta: {
+			// 	loginRequest: true
+			// }
 			
 		},
 		{
