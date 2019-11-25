@@ -51,6 +51,9 @@
                       </a-select-option>
                    </a-select>
              </span>
+              <span slot="caozuo" slot-scope="text, record">
+                  <a-button type="primary" @click="fabuok()">确认发布</a-button>
+             </span>
          </a-table>    
      </div>
 </template>
@@ -92,6 +95,11 @@
       key: 'tuiaction',
       scopedSlots: { customRender: 'tuiaction' },
     },
+     {
+      title: '操作',
+      key: 'caozuo',
+      scopedSlots: { customRender: 'caozuo' },
+    },
   ];
 
   const datas = [
@@ -128,15 +136,15 @@
       callback(key) {
         console.log(key);
       },
-      ceshi(){
-          console.log("3333")
-      },
+      fabuok(){
+        console.log("wefaedadsa")
+      }
     },
   };
 </script>
 <style  lang="less">
     .ant-table-tbody>tr>td{  
-          text-align: center;
+        text-align: center;
     }
     .ant-table-thead > tr:first-child > th
     {

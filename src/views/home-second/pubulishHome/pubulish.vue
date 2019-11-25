@@ -6,7 +6,7 @@
                     <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                         <span slot="operation" slot-scope="text, record">
                         <a href="javascript:;" @click="onDelete(record.id)">删除</a>
-                        <a href="javascript:;" @click="onfabu(record.id)" >未发布</a>
+                        <a href="javascript:;" @click="onfabu(record)" >未发布</a>
                         </span>
                     </a-table>
                 </a-layout-content>
@@ -94,17 +94,6 @@
         },
     ];
 
-    // const data = [];
-    // for (let i = 0; i < 46; i++) {
-    //     data.push({
-    //         key: i,
-    //         xiaoQuName:'花卉园',
-    //         name: `Edward King ${i}`,
-    //         age: 32,
-    //         simplePrice: ` ${i+1}元`,
-    //     });
-    // }
-
     export default {
         data() {
             return {
@@ -176,8 +165,6 @@
             },
            async onfabu(id) {
                 //  const res=await this.$http.get('${this.$config.api}/api/cms/pubulish/publishList/{id}')
-
-               
             },
             async seachShow(userid){
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/{userId}`);

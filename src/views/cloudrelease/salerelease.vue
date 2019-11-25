@@ -16,11 +16,6 @@
                         3.在“低分辨率视频”Tab页面，可以快捷查看并处理低分辨率视频。
                     </div>
                 </div>
-                <div id="child2">
-                    <div>
-                     看看有社么，  {{l}}
-                    </div>
-                </div>
             </div>
             <!-- 导航进度条 -->
             <div class="step">
@@ -65,7 +60,7 @@
             </div>
             <!-- tab标签页 -->
             <div class="tabcontent" v-if="current==0">
-                <a-tabs @change="callback" type="card">
+                <a-tabs  type="card">
                     <a-tab-pane tab="住宅" key="1"> 
                         <vtable @getData="getMag"></vtable>
                     </a-tab-pane>
@@ -83,7 +78,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==2">
-                <a-tabs @change="callback" type="card">
+                <a-tabs  type="card">
                     第三步
                 </a-tabs>   
             </div>
@@ -107,39 +102,29 @@ export default {
           current: 0,
            selectedRowKeys: [], // Check here to configure the default column
            list:[],
-           l:'',
+           houselist:[],
       };
     },
     components: {
             vtable,
             seleinter,
-
         },
-    mounted() {
-        
-       
-     
-
-    },
     methods: {
-      callback(key) {
-        console.log(key);
-      },
      next() {
            if (this.current++ > 2) this.current = 0;
       },
        pre() {
         if (this.current-- < 1) this.current = 0;
       },
-      getMag(a){
-          console.log(a)
-           this.l=a;
-           if(this.l!=""&&this.l!=undefined)
+      //接受house对象 
+      getMag(house){
+          console.log(house)
+           this.houselist=house;
+           if( this.houselist!=""&& this.houselist!=undefined)
            {
                this.current = 1;
            }
-          
-      }
+      },
     },
   };
 </script>
