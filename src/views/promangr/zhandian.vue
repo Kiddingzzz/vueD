@@ -34,7 +34,9 @@
                     <a-tab-pane tab="操作日志" key="4">
                        <rizhi></rizhi>
                     </a-tab-pane>
-                <a-tab-pane tab="向平台推荐网站" key="5">Content of Tab Pane 3</a-tab-pane>
+                <a-tab-pane tab="向平台推荐网站" key="5">
+                 
+                </a-tab-pane>
             </a-tabs>
         </div>
     </div>
@@ -48,8 +50,7 @@
     export default {
         data() {
             return {
-                datas,
-                columnss,
+              
                 userName: "admin",
                 pwd: "abc123",
                 keyId: "12345645",
