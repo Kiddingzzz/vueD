@@ -90,6 +90,7 @@
    
 
   export default {
+    name: 'allinter',
     data() {
       return {
         datas,

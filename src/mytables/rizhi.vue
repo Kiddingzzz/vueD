@@ -20,12 +20,13 @@
    const provinceData = ['操作类型', '安卓验证', '发布失效', '安装失效', '签到失效', '账号被挤掉', '房源同步失效', '系统生效', ];
    const wanglodata=['不限','搜狐帮API','安居客','58新版(安居客)','涪风房产网','点击开州','永川在线',];
     export default {
-    data() {
-      return {
-         provinceData, 
-         wanglodata,
-      };
-    },
+      name: 'rizhi',
+      data() {
+        return {
+          provinceData, 
+          wanglodata,
+        };
+      },
   };
 </script>
 <style lang="less">

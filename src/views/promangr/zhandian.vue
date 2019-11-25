@@ -44,14 +44,14 @@
                             <a-modal title="登录账号" v-model="visible" @ok="handleOk">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
-                                    v-model="user"
+                                    v-model="userName"
                                     placeholder="请输入姓名"
                                     class="inputs"
                                     ></el-input>
                                     <el-input
                                     type="password"
                                     placeholder="请输入密码"
-                                    v-model="password"
+                                    v-model="pwd"
                                     class="inputs"
                                     prefix-icon="iconfont icon-mima"
                                     ></el-input>
@@ -66,10 +66,17 @@
                     </a-table>
                 </a-tab-pane>
                 <a-tab-pane tab="已开通网站" key="2">
+                    <allinter></allinter>
                 </a-tab-pane>
-                <a-tab-pane tab="未开通网站" key="3">Content of Tab Pane 3</a-tab-pane>
-                <a-tab-pane tab="操作日志" key="4">Content of Tab Pane 3</a-tab-pane>
-                <a-tab-pane tab="向平台推荐网站" key="5">Content of Tab Pane 3</a-tab-pane>
+                <a-tab-pane tab="未开通网站" key="3">
+                    <allinter></allinter>
+                </a-tab-pane>
+                <a-tab-pane tab="操作日志" key="4">
+                    <rizhi></rizhi>
+                </a-tab-pane>
+                <a-tab-pane tab="向平台推荐网站" key="5">
+                    <tuijian></tuijian>
+                </a-tab-pane>
             </a-tabs>
         </div>
     </div>
@@ -116,14 +123,14 @@
             key: '1',
             name: ['允许发布', '允许推送'],
             inter: '/static/img/logoJXW.2d85d52.png',
-            address: '534653465',
+            address: '',
             tiaojian: ['添加账号', '去注册'],
         },
         {
             key: '2',
             name: ['自动登录', '允许发布'],
             inter: '/static/img/jiemian.f5e0338.jpg',
-            address: '524687',
+            address: '',
             tiaojian: ['添加账号', '去注册'],
         },
 
@@ -132,13 +139,17 @@
     import axios from 'axios';
     import qs from 'qs';
     import { encryptDes, decryptDes } from '../../des.js';
+    import allinter from '../../mytables/allinter';
+    import rizhi from '../../mytables/rizhi';
+    import tuijian from '../../mytables/tuijian';
+
     export default {
         data() {
             return {
                 datas,
                 columnss,
-                userName: "admin",
-                pwd: "abc123",
+                userName: '',
+                pwd: '',
                 keyId: "12345645",
                 bid: "s123",
                 ret: [],
@@ -160,7 +171,13 @@
                 //发布状态：1.已推广，2.未推广，5.房源违规
                 flag: '',
                 visible: false,
+                address: '',
             };
+        },
+        components:{
+            allinter,
+            rizhi,
+            tuijian
         },
         mounted() {
 
@@ -172,13 +189,14 @@
             const userName1 = this.encryptDes('gracemae', '058523bb')
             const pwd1 = this.encryptDes('jiayu6248', '058523bb')
 
-
         },
         methods: {
-            
             handleOk(e) {
                 console.log(e);
                 this.visible = false;
+                console.log(this.userName);
+                this.datas[0].address = this.userName;
+                //console.log(this.datas[tag].address);
             },
             callback(key) {
                 console.log(key);
@@ -186,12 +204,13 @@
             ceshi(tag) {
                 if(tag == '添加账号'){
                     console.log(tag);                  
-                    this.visible = true;                
+                    this.visible = true;            
                 }
                 else{
-                     console.log(tag)
+                    console.log(tag)
                 }
             },
+
             async det() {
 
                 const url = '/unity/authenticate'

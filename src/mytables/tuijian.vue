@@ -37,15 +37,16 @@
   </div>
 </template>
  <script>
-     const tiles=['发布','采集'];
+    const tiles=['发布','采集'];
     export default {
-      data() {
-         return {
-         value1:'发布',
-         tiles,
-         };
-        
-        },
+        name:'tuijian',
+        data() {
+            return {
+                value1:'发布',
+                tiles,
+            };
+            
+            },
        
        
         };
