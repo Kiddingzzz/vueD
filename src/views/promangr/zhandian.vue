@@ -41,7 +41,24 @@
 
                                 {{tag.toUpperCase()}}
                             </a-tag>
-                            <a-modal title="登录账号" v-model="visible" @ok="handleOk">
+                            <a-modal title="登录账号" v-model="visible" @ok="handleOk('房天下')">
+                                <el-input
+                                    prefix-icon="iconfont icon-User"
+                                    v-model="siteUserName"
+                                    placeholder="请输入姓名"
+                                    class="inputs"
+                                    autocomplete="new-siteUserName"
+                                    ></el-input>
+                                    <el-input
+                                    type="password"
+                                    autocomplete="new-password"
+                                    placeholder="请输入密码"
+                                    v-model="sitepwd"
+                                    class="inputs"
+                                    prefix-icon="iconfont icon-mima"
+                                    ></el-input>
+                            </a-modal>
+                            <a-modal title="登录账号" v-model="visible" @ok="handle58">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="siteUserName"
@@ -193,6 +210,7 @@
             const pwd1 = this.encryptDes('jiayu6248', '058523bb')
 
             this.GetSiteList();
+            this.GetSiteList58()
         },
         methods: {
             ///获取站点列表
@@ -208,7 +226,26 @@
 
                 console.log(JSON.stringify(this.item))
             },
+            ///58tongcheng
+            async handle58(e) {
+                console.log(e)
+                const data = {
+                    // userId: this.$store.userId,
+                    userId:'A264FD12-A1C3-B251-4C6B-39F1B37EEB26',
+                    siteUserName: this.siteUserName,
+                    sitePassword: this.sitepwd,
+                    userName: this.siteUserName,
+                    token:'aaa',
+                    biaoshi:'58同城'
+                }
+                
+                var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);
+                this.GetSiteList();
+                this.visible = false;
+            },
+            ///房天下
             async handleOk(e) {
+                console.log(e)
                 const data = {
                     // userId: this.$store.userId,
                     userId:'A264FD12-A1C3-B251-4C6B-39F1B37EEB26',
@@ -223,6 +260,7 @@
                 this.GetSiteList();
                 this.visible = false;
             },
+            
             callback(key) {
                 console.log(key);
             },
