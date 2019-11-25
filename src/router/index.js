@@ -14,6 +14,7 @@ import vtable from '@/components/vtable'
 import Allinter from '@/mytables/allinter'
 import Rizhi from '@/mytables/rizhi'
 import Tuijian from '@/mytables/tuijian'
+import Seleinter from '@/components/seleinter'
 Vue.use(Router)
 
 export default new Router({
@@ -94,6 +95,12 @@ export default new Router({
 			name: 'Tuijian',
 			component: Tuijian
 		},
+		{
+			path: '/seleinter',
+			name: 'Seleinter',
+			component: Seleinter
+		},
+
 	]
 })
 if (sessionStorage.getItem('token')) {

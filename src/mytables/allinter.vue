@@ -112,12 +112,10 @@
 </script>
 <style  lang="less">
     .ant-table-tbody>tr>td{  
-          border:1px  solid rgb(224, 220, 220);
           text-align: center;
     }
     .ant-table-thead > tr:first-child > th
     {
-        border:1px  solid rgb(224, 220, 220);
         text-align: center;
     }
     .wangyeimg{

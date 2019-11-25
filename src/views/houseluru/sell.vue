@@ -303,8 +303,8 @@
                             <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card"
                                 :fileList="imgHeaderList" @preview="handlePreview" @change="handleChange">
                             </a-upload>
-                            <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                                <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                            <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
                             </a-modal>
                         </div>
                         <div class="shinei divallbox">
@@ -325,8 +325,8 @@
                                     <!-- <a-button class="updatedbutton">
                                             <a-icon type="upload" />上传图片</a-button> -->
                                 </a-upload>
-                                <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                                    <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                                <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                    <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
                                 </a-modal>
                             </div>
                         </div>
@@ -377,8 +377,8 @@
                                         listType="picture-card" :fileList="xiaoQuList" @preview="handlePreview"
                                         @change="handleChange">
                                     </a-upload>
-                                    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                                        <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                                    <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                        <img alt="example" style="height:100%; width:100%;"  :src="previewImage" />
                                     </a-modal>
                                 </div>
                                 <!-- <div class="xiala">
@@ -465,6 +465,8 @@
                 },
                 tstyle:{
                     height:'700px'
+                },
+                style:{
                 },
                 ret: {},
                 visible: false,
@@ -635,6 +637,7 @@
                         description:
                             '保存房源成功数据将存入发布房源列表',
                     });
+                    this.$router.replace('/salerelease')
                 }
                 if (type == 'error') {
                     this.$notification[type]({

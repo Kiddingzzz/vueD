@@ -5,8 +5,8 @@
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                         <span slot="operation" slot-scope="text, record">
-                        <a href="javascript:;" @click="onDelete(record.weiYiUrl)">删除</a>
-                        <a href="javascript:;" @click="onfabu(record.weiYiUrl)" >未发布</a>
+                        <a href="javascript:;" @click="onDelete(record.id)">删除</a>
+                        <a href="javascript:;" @click="onfabu(record.id)" >未发布</a>
                         </span>
                     </a-table>
                 </a-layout-content>
@@ -174,8 +174,9 @@
                 const data = [...this.data];
                 this.data = data.filter(item => item.key !== key);
             },
-            onfabu(key) {
-               
+           async onfabu(id) {
+                //  const res=await this.$http.get('${this.$config.api}/api/cms/pubulish/publishList/{id}')
+
                
             },
             async seachShow(userid){
