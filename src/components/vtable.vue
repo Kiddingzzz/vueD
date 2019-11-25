@@ -108,14 +108,16 @@
                     selections: [
                         {
                             key: 'all-data',
-                            text: 'Select All Data',
+                            text: '全选',
+                          
                             onSelect: () => {
                                 this.selectedRowKeys = [...Array(46).keys()]; // 0...45
                             },
                         },
                         {
                             key: 'odd',
-                            text: 'Select Odd Row',
+                            text: '单选',
+                            
                             onSelect: changableRowKeys => {
                                 let newSelectedRowKeys = [];
                                 newSelectedRowKeys = changableRowKeys.filter((key, index) => {
@@ -129,7 +131,8 @@
                         },
                         {
                             key: 'even',
-                            text: 'Select Even Row',
+                            text: '双选',
+                            
                             onSelect: changableRowKeys => {
                                 let newSelectedRowKeys = [];
                                 newSelectedRowKeys = changableRowKeys.filter((key, index) => {

@@ -6,11 +6,20 @@ const path = require('path')
 
 module.exports = {
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {  //将target的值印射为 /mntncar，
+        target: 'https://openapi.fang.com/',
+        secure: true,  // 如果是https接口，需要配置这个参数
+        changeOrigin: true,  //是否跨域
+        pathRewrite: {
+          '^/api': '/'
+        }
+      }
+      
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST

@@ -38,8 +38,8 @@
                 <div>
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区名称:"
-                            validate-status="error" help="">
-                            <a-input id="error" style="width:50%;" />
+                            validate-status="" help="">
+                            <a-input id="" style="width:50%;" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区类型:"
                             validate-status="error" help="">
@@ -96,8 +96,8 @@
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:"
-                            validate-status="" help="">
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:" validate-status=""
+                            help="">
                             <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" />
                             <label class="addshowxq">找不到小区？</label>
                             <a class="addshowxq" @click="addshowxaqu">查看相似小区</a>
@@ -113,7 +113,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="地址" has-feedback
                             validate-status="" help="">
-                            <a-input v-model="ref.address" id="validating" placeholder="房源地址" /> 
+                            <a-input v-model="ref.address" id="validating" placeholder="房源地址" />
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
@@ -299,7 +299,7 @@
                                 <span class="laberboxtitle">&nbsp;封&nbsp;面&nbsp;图:</span>
                                 <div class="laberboxla">点击希望设定为封面的图片右下角的封面按钮即可设定。</div>
                             </div>
-                            
+
                             <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card"
                                 :fileList="imgHeaderList" @preview="handlePreview" @change="handleChange">
                             </a-upload>
@@ -319,22 +319,23 @@
                                 </div>
                             </div>
                             <div class="tupianbox">
-                                    <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                        listType="picture-card" :fileList="shineiList" @preview="handlePreview"
-                                        @change="handleChange">
-                                        <!-- <a-button class="updatedbutton">
+                                <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                    listType="picture-card" :fileList="shineiList" @preview="handlePreview"
+                                    @change="handleChange">
+                                    <!-- <a-button class="updatedbutton">
                                             <a-icon type="upload" />上传图片</a-button> -->
-                                    </a-upload>
-                                    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                                        <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
-                                    </a-modal>
-                                </div>
+                                </a-upload>
+                                <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                    <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                                </a-modal>
+                            </div>
                         </div>
                         <div class="shinei divallbox">
                             <div class="laberbox">
                                 <span class="laberboxtitle">&nbsp;房&nbsp;型&nbsp;图:</span>
                                 <div class="shineipadd">
-                                    <label class="orangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图</label>
+                                    <label
+                                        class="orangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图</label>
                                     <a-button type="" class="buttontuku">我的图库</a-button>
                                     <a-button type="" class="orangetuku">房型图库</a-button>
                                     <a-button type="" class="buttontuku">在线绘制</a-button>
@@ -358,26 +359,29 @@
                                     <a-button type="" class="buttontuku">我的图库</a-button>
                                     <a-button type="" class="buttontuku">小区图库</a-button>
                                 </div>
-                                  <div class="xiala">
-                                        <a-dropdown>
-                                            <a-menu slot="overlay">
-                                                <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index"> <a-icon type="user" />{{pilaingsy}}</a-menu-item>
-                                            </a-menu>
-                                            <a-button class="tupianchuli">图片处理<a-icon type="up" /></a-button>
-                                        </a-dropdown>
-                                    </div>
+                                <div class="xiala">
+                                    <a-dropdown>
+                                        <a-menu slot="overlay">
+                                            <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
+                                                <a-icon type="user" />{{pilaingsy}}</a-menu-item>
+                                        </a-menu>
+                                        <a-button class="tupianchuli">图片处理
+                                            <a-icon type="up" />
+                                        </a-button>
+                                    </a-dropdown>
+                                </div>
                             </div>
                             <div class="radisflex">
-                                    <div class="tupianbox">
-                                        <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                            listType="picture-card" :fileList="xiaoQuList" @preview="handlePreview"
-                                            @change="handleChange">
-                                        </a-upload>
-                                        <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                                            <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
-                                        </a-modal>
-                                    </div>
-                                    <!-- <div class="xiala">
+                                <div class="tupianbox">
+                                    <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                        listType="picture-card" :fileList="xiaoQuList" @preview="handlePreview"
+                                        @change="handleChange">
+                                    </a-upload>
+                                    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                        <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
+                                    </a-modal>
+                                </div>
+                                <!-- <div class="xiala">
                                         <a-dropdown>
                                             <a-menu slot="overlay">
                                                 <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
@@ -388,7 +392,7 @@
                                             </a-button>
                                         </a-dropdown>
                                     </div> -->
-                                </div>
+                            </div>
                         </div>
                         <div class="fangyuansp">
                             <div class="laberbox">
@@ -399,12 +403,12 @@
                                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers">
                                         <a-button class="updatedspbutton">
                                             <a-icon type="upload" />添加视频 </a-button>
-                                        </a-upload>
+                                    </a-upload>
                                 </div>
                             </div>
                         </div>
                         <div class="bottomobx">
-                            <a-button type="" class="buttonfang okbutton">保存房源</a-button>
+                            <a-button type="" class="buttonfang okbutton" @click="saveHouse()">保存房源</a-button>
                             <a-button type="" class="okbutton">保存草稿</a-button>
 
                         </div>
@@ -460,7 +464,7 @@
                     lineHeight: '30px',
                 },
                 ret: {},
-                visible:false,
+                visible: false,
                 wrapperCol: {
                     xs: { span: 24 },
                     sm: { span: 12 },
@@ -491,16 +495,16 @@
                 chaoxiang: '',
                 zhuangxiu: '',
                 gongnuan: '',
-                selectedShi:'',
-                selectedTing:'',
-                selectedChu:'',
-                selectedWei:'',
-                selectedTai:'',
-                options:[0,1,2,3,4,5,6,7,8,9,10],
-                ceng:'',
-                lou:'',
-                weiyiUserId:'',
-                saveRes:{},
+                selectedShi: '',
+                selectedTing: '',
+                selectedChu: '',
+                selectedWei: '',
+                selectedTai: '',
+                options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
+                ceng: '',
+                lou: '',
+                weiyiUserId: '',
+                saveRes: {},
             }
         },
         mounted() {
@@ -590,10 +594,10 @@
                                 XiaoquImg.name = 'xxx.jpg',
                                 XiaoquImg.status = 'done',
                                 this.xiaoQuList.push(XiaoquImg);
-                                setTimeout(() => {
-                                    this.visible = false;
-                                }, 500);
+                            setTimeout(() => {
                                 this.visible = false;
+                            }, 500);
+                            this.visible = false;
                         });
 
                     }
@@ -601,18 +605,17 @@
 
 
             },
-            async saveHouse(){
-                if(this.saveRes.xiaoquName == null && this.saveRes.title == null && 
-                this.saveRes.rice == null && this.saveRes.simpleRice == null && 
-                this.saveRes.square == null && this.saveRes.huxing == null &&
-                this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null  && this.saveRes.imgHeader == null
-                )
-                {
-                   this.openNotificationWithIcon('error') 
+            async saveHouse() {
+                if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
+                    this.saveRes.rice == null && this.saveRes.simpleRice == null &&
+                    this.saveRes.square == null && this.saveRes.huxing == null &&
+                    this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null && this.saveRes.imgHeader == null
+                ) {
+                    this.openNotificationWithIcon('error')
                 }
-                else{
-                    await this.$http.post(`${this.$config.api}/api/cms/pubulish/publishHouse`,this.saveRes).then(response =>{
-                        if(response.status == 200){
+                else {
+                    await this.$http.post(`${this.$config.api}/api/cms/pubulish/publishHouse`, this.saveRes).then(response => {
+                        if (response.status == 200) {
                             this.openNotificationWithIcon('success')
                         }
                     })
@@ -620,24 +623,24 @@
 
             },
             openNotificationWithIcon(type) {
-                if(type == 'success'){
+                if (type == 'success') {
                     this.$notification[type]({
-                    message: '保存成功',
-                    placement: 'bottomRight',
-                    bottom: '50px',
-                    right:'500px',
-                    description:
-                        '保存房源成功数据将存入发布房源列表',
+                        message: '保存成功',
+                        placement: 'bottomRight',
+                        bottom: '50px',
+                        right: '500px',
+                        description:
+                            '保存房源成功数据将存入发布房源列表',
                     });
                 }
-                if(type == 'error'){
+                if (type == 'error') {
                     this.$notification[type]({
-                    message: '保存失败',
-                    placement: 'bottomRight',
-                    bottom: '50px',
-                    right:'500px',
-                    description:
-                        '保存房源失败数据不能为空',
+                        message: '保存失败',
+                        placement: 'bottomRight',
+                        bottom: '50px',
+                        right: '500px',
+                        description:
+                            '保存房源失败数据不能为空',
                     });
                 }
             },
@@ -727,10 +730,12 @@
         border-radius: 10px;
         border: 1px solid #ebedf0;
     }
-    .tishi{
+
+    .tishi {
         display: flex;
         align-items: center;
     }
+
     .filter-wraps .search_bds .secitem dt {
         color: #888;
         width: 36px;
@@ -840,7 +845,8 @@
         display: flex;
         align-items: center;
         height: 40px !important;
-        .laberboxtit{
+
+        .laberboxtit {
             color: red;
             margin-right: 10px;
         }
@@ -849,7 +855,8 @@
     .laberbox {
         display: flex;
         align-items: center;
-        .laberboxtitle{
+
+        .laberboxtitle {
             color: red;
             margin-right: 10px;
         }

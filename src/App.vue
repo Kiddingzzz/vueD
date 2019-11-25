@@ -59,7 +59,10 @@
             <span slot="title"><a-icon type="setting" />个人管理</span>
             <a-menu-item key="11">
               <router-link to="zhandian">站点管理</router-link>
-            </a-menu-item> 
+            </a-menu-item>
+            <a-menu-item key="12">
+              <router-link to="tuijian">站点管理</router-link>
+            </a-menu-item>
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>

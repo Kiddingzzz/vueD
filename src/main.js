@@ -9,6 +9,8 @@ import VueResource from 'vue-resource';
 import ElementUI from 'element-ui';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/iconfont/iconfont.css';
+import { encryptDes, decryptDes } from './des';
+import Axios from 'axios'
 Vue.use(ElementUI);
 Vue.use(Antd) 
 // 对Date的扩展，将 Date 转化为指定格式的String
@@ -39,8 +41,13 @@ Vue.config.productionTip = false;
 Vue.prototype.$config = {
 	api:'http://localhost:57992'
 }
+Vue.prototype.encryptDes=encryptDes;
+Vue.prototype.decryptDes = decryptDes;
 Vue.prototype.$store = store;
-Vue.prototype.$http = axios;
+Vue.prototype.$http = Axios;
+Vue.prototype.$axios=Axios;
+Axios.defaults.baseURL="/api"
+Axios.defaults.headers.post['Content-Type']='application/json';
 router.beforeEach((to, from, next) => {
 	/* 路由发生变化修改页面title */
 	if (to.meta.title) {
@@ -56,5 +63,39 @@ new Vue({
 	store,
 	render: h => h(App)
 }).$mount("#app");
-
+// 添加请求拦截器
+Axios.interceptors.request.use(config => {
+	// 在发送请求之前做些什么
+	//判断是否存在token，如果存在将每个页面header都添加token
+	if(store.state.token){
+	config.headers.common['Authentication-Token']=store.state.token
+	}
+	  
+	return config;
+	}, error => {
+	// 对请求错误做些什么
+	return Promise.reject(error);
+	});
+	  
+	// http response 拦截器
+	Axios.interceptors.response.use(
+	response => {
+	  
+	return response;
+	},
+	error => {
+	  
+	if (error.response) {
+	switch (error.response.status) {
+	case 401:
+	this.$store.commit('del_token');
+	router.replace({
+	path: '/login',
+	query: {redirect: router.currentRoute.fullPath}//登录成功后跳入浏览的当前页面
+	})
+	}
+	}
+	return Promise.reject(error.response.data)
+	});
+	
 // router.push('home');
