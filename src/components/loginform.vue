@@ -292,7 +292,7 @@ export default {
           console.log(JSON.stringify(Response))
           if(Response.status == 200){
 
-            this.$stor.hasLogin = true;
+            this.$store.hasLogin = true;
             this.$store.userId = Response.data.userId; 
             this.$router.replace('/index')
             

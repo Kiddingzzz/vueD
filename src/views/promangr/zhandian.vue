@@ -165,7 +165,10 @@
             },
             ceshi(tag) {
                 if(tag == '添加账号'){
-                    
+                    console.log(tag)
+                }
+                else{
+                    console.log(tag)
                 }
             },
             async det() {
