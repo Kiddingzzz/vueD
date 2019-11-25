@@ -41,6 +41,21 @@
 
                                 {{tag.toUpperCase()}}
                             </a-tag>
+                            <a-modal title="登录账号" v-model="visible" @ok="handleOk">
+                                <el-input
+                                    prefix-icon="iconfont icon-User"
+                                    v-model="user"
+                                    placeholder="请输入姓名"
+                                    class="inputs"
+                                    ></el-input>
+                                    <el-input
+                                    type="password"
+                                    placeholder="请输入密码"
+                                    v-model="password"
+                                    class="inputs"
+                                    prefix-icon="iconfont icon-mima"
+                                    ></el-input>
+                            </a-modal>
                         </span>
                         <span slot="action">
                             <a-button type="primary">删除</a-button>
@@ -144,6 +159,7 @@
                 houseid: '',
                 //发布状态：1.已推广，2.未推广，5.房源违规
                 flag: '',
+                visible: false,
             };
         },
         mounted() {
@@ -159,13 +175,21 @@
 
         },
         methods: {
-
+            
+            handleOk(e) {
+                console.log(e);
+                this.visible = false;
+            },
             callback(key) {
                 console.log(key);
             },
             ceshi(tag) {
                 if(tag == '添加账号'){
-                    
+                    console.log(tag);                  
+                    this.visible = true;                
+                }
+                else{
+                     console.log(tag)
                 }
             },
             async det() {
@@ -490,5 +514,9 @@
         flex-flow: column;
         margin: 0 auto;
         background-color: white;
+    }
+
+    .inputs{
+        margin-bottom: 20px;
     }
 </style>
