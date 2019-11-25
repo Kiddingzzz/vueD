@@ -10,7 +10,7 @@
                         1.带“!”的房源可能图片质量较低，建议点击该符号根据提示修改。
                     </div>
                     <div class="search_bds_red">
-                        2.为判断是否满足新三网视频高质量要求，请点击“一键同步”获取视频质量情况。<a-button type="primary" @click="showModal">一键同步</a-button>
+                        2.为判断是否满足新三网视频高质量要求，请点击“一键同步”获取视频质量情况。<a-button type="primary">一键同步</a-button>
                     </div>
                     <div>
                         3.在“低分辨率视频”Tab页面，可以快捷查看并处理低分辨率视频。

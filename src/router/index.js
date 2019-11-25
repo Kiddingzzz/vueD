@@ -11,7 +11,9 @@ import Zhandian from '@/views/promangr/Zhandian'
 import Loginform from '@/components/loginform'
 import Salerelease from '@/views/cloudrelease/salerelease'
 import vtable from '@/components/vtable'
-
+import Allinter from '@/mytables/allinter'
+import Rizhi from '@/mytables/rizhi'
+import Tuijian from '@/mytables/tuijian'
 Vue.use(Router)
 
 export default new Router({
@@ -56,13 +58,12 @@ export default new Router({
 		path:'/sell',
 		name:'Sell',
 		component:Sell
-
-	  },
-	  {
-		path:'/zhandian',
-		name:'Zhandian',
-		component:Zhandian
-      },
+	 },
+	 {
+			path:'/zhandian',
+			name:'Zhandian',
+			component:Zhandian
+	   },
 	    {
 			path: '/loginform',
 			name: 'Loginform',
@@ -78,7 +79,21 @@ export default new Router({
 			name: 'Vtable',
 			component: vtable
 		},
-
+		{
+			path: '/allinter',
+			name: 'Allinter',
+			component: Allinter
+		},
+		{
+			path: '/rizhi',
+			name: 'Rizhi',
+			component: Rizhi
+		},
+		{
+			path: '/tuijian',
+			name: 'Tuijian',
+			component: Tuijian
+		},
 	]
 })
 if (sessionStorage.getItem('token')) {

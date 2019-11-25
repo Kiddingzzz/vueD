@@ -38,8 +38,8 @@
                 <div>
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区名称:"
-                            validate-status="error" help="">
-                            <a-input id="error" style="width:50%;" />
+                            validate-status="" help="">
+                            <a-input id="" style="width:50%;" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区类型:"
                             validate-status="error" help="">

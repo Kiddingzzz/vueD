@@ -175,7 +175,7 @@
                 this.data = data.filter(item => item.key !== key);
             },
             onfabu(key) {
-                console.log(key);
+               
                
             },
             async seachShow(userid){
