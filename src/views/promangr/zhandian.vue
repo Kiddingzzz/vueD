@@ -1,8 +1,8 @@
 <template>
-    <div class="ts">
+    <div class="ts4">
         <button @click="det()">1124124</button>
-        <div class="filter-wraps" style="padding: 15px 15px 0px 15px;">
-            <div class="search_bds" style="height:180px;">
+        <div class="filter-wraps1" style="padding: 15px 15px 0px 15px;">
+            <div class="search_bds1" style="height:180px;">
                 <div>
                     贴心提示:
                 </div>
@@ -36,13 +36,13 @@
                             <img class="logo" :src="record.inter">
                         </span>
                         <span slot="tiaojian" slot-scope="tiaojian">
-                            <a-tag v-for="tag in tiaojian" @click="ceshi()"
+                            <a-tag v-for="tag in tiaojian" @click="ceshi(tag)"
                                 :color="tag==='loser' ? 'volcano' : (tag.length > 3? 'geekblue' : 'green')" :key="tag">
 
                                 {{tag.toUpperCase()}}
                             </a-tag>
                         </span>
-                        <span slot="action" slot-scope="text, record">
+                        <span slot="action">
                             <a-button type="primary">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary">登陆后台</a-button>
@@ -163,8 +163,10 @@
             callback(key) {
                 console.log(key);
             },
-            ceshi() {
-                console.log("3333")
+            ceshi(tag) {
+                if(tag == '添加账号'){
+                    
+                }
             },
             async det() {
 
@@ -282,12 +284,12 @@
                     keyId: "10568"
                 }
                 const res = await this.$http.get('https://openapi.fang.com/unity/authenticate', data);
-                if (res.code == 1 || res.code == "1") {
+                if (res.code == "1") {
                     console.log("令牌获取成功");
                     this.token = res.returnmsgs.token;
                     this.url = res.url;
                     const houselist = await this.$http.post(this.url + '/agent/house/input?token=' + this.token + '&keyId=' + keyId + '&FangRequestID=' + 'seaname_465436')
-                    if (houselist.code == 1 || houselist.code == "1") {
+                    if (houselist.code == "1") {
 
                         console.log("操作成功");
                     }
@@ -454,7 +456,7 @@
     };
 </script>
 <style>
-    .ant-table-tbody>tr>td {
+    /* .ant-table-tbody>tr>td {
         border: 1px solid rgb(224, 220, 220);
         text-align: center;
     }
@@ -462,9 +464,9 @@
     .ant-table-thead>tr:first-child>th {
         border: 1px solid rgb(224, 220, 220);
         text-align: center;
-    }
+    } */
 
-    .filter-wraps {
+    .filter-wraps1 {
         position: relative;
         z-index: 1;
         display: flex;
@@ -472,17 +474,17 @@
         justify-content: center;
     }
 
-    .search_bds {
+    .search_bds1 {
         background: #ffffdd;
         display: flex;
         flex-flow: column;
         width: 100%;
         padding: 12px;
         line-height: 26px;
-        border: 1px solid #ebedf0;
+        /* border: 1px solid #ebedf0; */
     }
 
-    .ts {
+    .ts4 {
         display: flex;
         width: 100%;
         flex-flow: column;

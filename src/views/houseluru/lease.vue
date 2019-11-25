@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <a-modal title="秒录房源" v-model="visible" @ok="handleOk">
+        <!-- <a-modal title="秒录房源" v-model="visible" @ok="handleOk">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
@@ -91,7 +91,7 @@
                 </div>
 
             </div>
-        </a-modal>
+        </a-modal> -->
         <div class="wrap">
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
@@ -715,9 +715,9 @@
         font-size: 12px;
     }
 
-    .ant-modal-close {
-        display: none;
-    }
+    // .ant-modal-close {
+    //     display: none;
+    // }
 
     .search_bds {
         background: #ffffdd;
@@ -763,18 +763,18 @@
         list-style: none;
     }
 
-    .ant-modal-content {
-        width: 800px;
-        height: 700px;
-    }
+    // .ant-modal-content {
+    //     width: 800px;
+    //     height: 700px;
+    // }
 
     li {
         list-style: none;
     }
 
-    .ant-modal-body {
-        height: 85%;
-    }
+    // .ant-modal-body {
+    //     height: 85%;
+    // }
 
     .shihaow {
         width: 70px;
@@ -957,4 +957,13 @@
         margin-left: 5px;
         font-size: 14px
     }
+    // .ant-modal-content {
+    //     width: 800px;
+    //     height: 700px;
+    // }
+
+
+    // .ant-modal-body {
+    //     height: 85%;
+    // }
 </style>

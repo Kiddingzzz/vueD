@@ -280,12 +280,10 @@
           this.list = res.items;
           return;
         }
-        console.log(pi)
         const data = {
           SearchName:pi
         }
         const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList?Searchname=`+ data.SearchName);
-        console.log(respones)
         const res = respones.data;
         this.list = res.items;
       },

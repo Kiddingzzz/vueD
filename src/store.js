@@ -10,6 +10,7 @@ const store = new Vuex.Store({
 		userName:'',
 		loginProvider: "",
 		openid: null,
+		userId:'',
 		user: {},
 		token:'',
 		isUpdateHome: true

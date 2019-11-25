@@ -148,16 +148,16 @@
         list-style: none;
     }
 
-    .ant-modal-content {
-        width: 800px;
-        height: 700px;
-    }
+    // .ant-modal-content {
+    //     width: 800px;
+    //     height: 700px;
+    // }
 
     li {
         list-style: none;
     }
 
-    .ant-modal-body {
-        height: 85%;
-    }
+    // .ant-modal-body {
+    //     height: 85%;
+    // }
 </style>

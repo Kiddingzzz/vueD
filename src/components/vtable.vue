@@ -17,63 +17,78 @@
         {
             title: '小区',
             dataIndex: 'xiaoQuName',
+            key:'det'
         },
         {
             title: '标题',
             dataIndex: 'name',
+            key:'biaoti'
         },
         {
             title: '多图',
             dataIndex: 'imglist',
+            key:'duotu'
         },
         {
             title: '房型',
             dataIndex: 'houseType',
+            key:'fangwu'
         },
         {
             title: '面积',
             dataIndex: 'square',
+            key:'mianji'
         },
         {
             title: '价格',
             dataIndex: 'price',
+            key:'price'
         },
         {
             title: '朝向',
             dataIndex: 'see',
+            key:'sq'
         },
         {
             title: '楼层',
             dataIndex: 'louceng',
+            key:'louceng'
         },
         {
             title: '更新日期',
             dataIndex: 'modifyCreationtime',
+            key:'update'
         },
         {
             title: '装修',
             dataIndex: 'zhuangxiu',
+            key:'upe'
         },
         {
             title: '房龄',
             dataIndex: 'age',
+            key:'age'
         },
         {
             title: '状态',
             dataIndex: 'type',
+            key:'status'
         },
         {
             title: '发布历史',
             dataIndex: 'history',
+            key:'history'
         },
         {
             title: '均价',
             dataIndex: 'simplePrice',
+            key:'rowt'
         },
         {
             title: '操作',
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
+            key:'donation'
         },
     ];
 

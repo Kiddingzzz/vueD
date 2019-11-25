@@ -19,63 +19,78 @@
         {
             title: '小区',
             dataIndex: 'xiaoQuName',
+            key:'188'
         },
         {
             title: '标题',
             dataIndex: 'title',
+            key:'177'
         },
         {
             title: '室内图',
             dataIndex: 'imgHeader',
+            key:'166'
         },
         {
             title: '房型',
             dataIndex: 'huxing',
+            key:'122'
         },
         {
             title: '面积',
             dataIndex: 'square',
+            key:'144'
         },
         {
             title: '价格',
             dataIndex: 'rice',
+            key:'133'
         },
         {
             title: '朝向',
             dataIndex: 'chaoxiang',
+            key:'125'
         },
         {
             title: '楼层',
             dataIndex: 'louceng',
+            key:'19'
         },
         {
             title: '更新日期',
             dataIndex: 'creationTime',
+            key:'18'
         },
         {
             title: '装修',
             dataIndex: 'zhuangxiu',
+            key:'17'
         },
         {
             title: '房龄',
             dataIndex: 'fangwuDate',
+            key:'16'
         },
         {
             title: '状态',
             dataIndex: 'publishStatus',
+            key:'15'
         },
         {
             title: '发布历史',
             dataIndex: 'houseType',
+            key:'14'
         },
         {
             title: '均价',
             dataIndex: 'simpleRice',
+            key:'13'
         },
         {
             title: '操作',
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
+            key:'12'
         },
     ];
 
