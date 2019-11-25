@@ -210,12 +210,13 @@
             const pwd1 = this.encryptDes('jiayu6248', '058523bb')
 
             this.GetSiteList();
-            this.GetSiteList58()
+            // this.GetSiteList58()
         },
         methods: {
             ///获取站点列表
             async GetSiteList(){
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=A264FD12-A1C3-B251-4C6B-39F1B37EEB26`)
+                console.log(this.$store.userId)
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+this.$store.userId)
                 this.item = query.data.items;
                 this.item[0].name = ['允许发布', '允许推送'];
                 this.item[0].tiaojian = ['添加账号', '去注册'];
@@ -231,7 +232,7 @@
                 console.log(e)
                 const data = {
                     // userId: this.$store.userId,
-                    userId:'A264FD12-A1C3-B251-4C6B-39F1B37EEB26',
+                    userId:this.$store.userId,
                     siteUserName: this.siteUserName,
                     sitePassword: this.sitepwd,
                     userName: this.siteUserName,
@@ -248,7 +249,7 @@
                 console.log(e)
                 const data = {
                     // userId: this.$store.userId,
-                    userId:'A264FD12-A1C3-B251-4C6B-39F1B37EEB26',
+                    userId:this.$store.userId,
                     siteUserName: this.siteUserName,
                     sitePassword: this.sitepwd,
                     userName: this.siteUserName,
