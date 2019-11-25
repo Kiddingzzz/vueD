@@ -169,9 +169,13 @@
                this.$emit("getData",house);
             },
             //
-            async seachShow(userid){
-                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/{userId}`);
-                 this.list=respones.data;
+            async seachShow(){
+                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+                 console.log(JSON.stringify(respones))
+                 if(respones.status == 200)
+                 {
+                    this.list=respones.data.items;
+                 }
                },
         },
     };

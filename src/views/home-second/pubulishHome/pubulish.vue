@@ -166,8 +166,9 @@
            async onfabu(id) {
                 //  const res=await this.$http.get('${this.$config.api}/api/cms/pubulish/publishList/{id}')
             },
-            async seachShow(userid){
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/{userId}`);
+            async seachShow(){
+                console.log(`aaa`+this.$store.userId)
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
                 this.list=respones.data;
             },
         },
