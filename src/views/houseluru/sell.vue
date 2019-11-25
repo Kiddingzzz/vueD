@@ -639,7 +639,7 @@
                     });
                     this.$router.replace('/salerelease')
                 }
-                if (type == 'error') {
+                     if (type == 'error') {
                     this.$notification[type]({
                         message: '保存失败',
                         placement: 'bottomRight',

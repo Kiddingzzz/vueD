@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <!-- <a-modal title="秒录房源" v-model="visible" @ok="handleOk">
+        <!-- <a-modal title="秒录房源" v-model="visible" @ok="handerOk">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
@@ -21,7 +21,7 @@
                 <a-spin :spinning="spinning">
                 </a-spin>
             </p>
-            <div class="fontU">
+            <div class="fontr">
                 <ul class="sale-content-tip clear" style="margin:0px">
                     <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
                     <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
@@ -653,7 +653,7 @@
             addshowxaqu() {
                 this.addshowxqu = true;
             },
-            handleOk(e) {
+            handerOk(e) {
                 console.log(e);
                 this.visible = false;
             },
@@ -745,7 +745,7 @@
         float: left;
     }
 
-    .fontU {
+    .fontr {
         position: absolute;
         bottom: 50px;
         right: 0px;

@@ -2,10 +2,10 @@
         <div class="wrap">
             <a-layout>
                 <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
-                    <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="data">
+                    <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                         <span slot="operation" slot-scope="text, record">
                         <a href="javascript:;" @click="onDelete(record.key)">删除</a>
-                        <a href="javascript:;" @click="onfabu(record.key)" >未发布</a>
+                        <a href="javascript:;" @click="onfabu(record)" >未发布</a>
                         </span>
                     </a-table>
                 </a-layout-content>
@@ -82,7 +82,7 @@
         {
             title: '均价',
             dataIndex: 'simplePrice',
-            key:'rowt'
+            key:'simplePrice'
         },
         {
             title: '操作',
@@ -92,27 +92,12 @@
         },
     ];
 
-    const data = [];
-    for (let i = 0; i < 46; i++) {
-        data.push({
-            key: i,
-            xiaoQuName:'花卉园',
-            name: `Edward King ${i}`,
-            age: 32,
-            simplePrice: ` ${i+1}元`,
-        });
-    }
-
     export default {
-        name: 
-        'vtable',
         data() {
             return {
-                data,
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
-                lsiff:{},
-               
+                list:[],
             };
         },
         computed: {
@@ -166,6 +151,9 @@
                 };
             },
         },
+        mounted() {
+           this.seachShow();
+        },
         methods: {
             onSelectChange(selectedRowKeys) {
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
@@ -173,17 +161,18 @@
             },
             onDelete(key) {
                 console.log(key);
-                const data = [...this.data];
-                this.data = data.filter(item => item.key !== key);
+                const datas = [...this.data];
+                this.datas = datas.filter(item => item.key !== key);
             },
-            onfabu(key) {
-               let a={
-                   a:'111',
-                   n:'222'
-               };
-               this.$emit("getData",a);
-
+            //传房源对象
+            onfabu(house) {
+               this.$emit("getData",house);
             },
+            //
+            async seachShow(userid){
+                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/{userId}`);
+                 this.list=respones.data;
+               },
         },
     };
 </script>
