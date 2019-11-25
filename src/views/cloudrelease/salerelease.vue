@@ -74,7 +74,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==1">
-                <seleinter></seleinter>
+                <seleinter :value="bieshu"></seleinter>
             </div>
 
             <div class="tabcontent" v-if="current==2">
@@ -102,7 +102,8 @@ export default {
           current: 0,
            selectedRowKeys: [], // Check here to configure the default column
            list:[],
-           houselist:[],
+           houselist:{},
+           bieshu:{},
       };
     },
     components: {
@@ -122,7 +123,8 @@ export default {
            this.houselist=house;
            if( this.houselist!=""&& this.houselist!=undefined)
            {
-               this.current = 1;
+                this.bieshu = this.houselist;
+                this.current = 1;
            }
       },
     },

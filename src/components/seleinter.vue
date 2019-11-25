@@ -1,5 +1,5 @@
 <template>
-     <div style="width:100%">
+     <div style="width:100%" @click="$emit('click',value)">
          <a-table :columns="columnss" :dataSource="datas">
                <span slot="inter" slot-scope="res,record">
                      <img class="wangyeimg" :src="record.inter"> 
@@ -125,19 +125,26 @@
       return {
         datas,
         columnss,
-       
+        def:{},
       };
     },
+    props: {
+			value: {
+				type: Object,
+				default: {}
+			}
+		},
     mounted() {
-        
+        this.def = this.value;
+        console.log(`this.def:`+JSON.stringify(this.def));
     },
     methods: {
        
       callback(key) {
         console.log(key);
       },
-      fabuok(){
-        console.log("wefaedadsa")
+      fabuok(e){
+        console.log(e)
       }
     },
   };

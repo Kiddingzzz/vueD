@@ -619,6 +619,7 @@
                     this.openNotificationWithIcon('error')
                 }
                 else {
+                    this.saveRes.urlsId = this.$store.userId;
                     await this.$http.post(`${this.$config.api}/api/cms/pubulish/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
