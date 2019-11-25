@@ -66,6 +66,8 @@
        </div>
 </template>
 <script>
+import cryptoJs from 'crypto-js';
+
      const columnss = [
     {
         title: '权限',
@@ -119,9 +121,6 @@
     },
     
   ];
-   
-
-  import cryptoJs from 'crypto-js';
   export default {
     data() {
       return {
