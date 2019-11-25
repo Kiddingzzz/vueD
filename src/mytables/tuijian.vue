@@ -13,19 +13,19 @@
                         <a-input  class="putbox" placeholder="" />
                </div>
                <div class="rowbox">
-                    <label for="">网站地址:</label>
+                    <label for="">网站地址：</label>
                     <a-input  class="putbox" placeholder="" />
                </div>
                <div class="rowbox">
-                  <label for="">网站账号:L</label>
+                  <label for="">网站账号：</label>
                   <a-input  class="putbox" placeholder="" />
                </div>
                <div class="rowbox">
-                   <label for="">网站密码:</label>
+                   <label for="">网站密码：</label>
                    <a-input  class="putbox" placeholder="" />
                </div> 
                <div class="rowbox">
-                   <label for="">补充说明:</label>
+                   <label for="">补充说明：</label>
                    <a-input  class="putbox" placeholder="" />
                </div>
                <div>
