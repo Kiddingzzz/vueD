@@ -126,6 +126,7 @@
         datas,
         columnss,
         def:{},
+        pdef:,
       };
     },
     props: {
@@ -136,7 +137,7 @@
 		},
     mounted() {
         this.def = this.value;
-        console.log(`this.def:`+JSON.stringify(this.def));
+        this.pdef=JSON.stringify(this.def);
     },
     methods: {
        
@@ -144,7 +145,33 @@
         console.log(key);
       },
       fabuok(e){
-        console.log(e)
+         const list={
+            houseType:"Sale",
+            purposeType:"House",
+            newcode:0,
+            createtime:this.pdef.fangwuDate.Subing(0,4),
+            price:this.pdef.rice,
+            buildingarea:this.pdef.square,,
+            title:this.pdef.title,
+            forward:this.pdef.chaoxiang,
+            payinfo:"个人产权",
+            lookhouse:"随时看房",
+            room:3,
+            toilet:2,
+            hall:1,
+            kitchen:1,
+            balcony:1,
+            floor:18,
+            allfloor:22,
+            fitment:this.pdef.zhuangxiu,
+            ptype:0,
+            image3:this.pdef.imgHeader[{"url":this.pdef.imgHeader,"name":首页图},
+            houseservicelife："满二",
+            landuseyear:this.pdef.fangwuDate,
+            commissionRatio:1.5,
+            ownershipPermitType:1,
+
+         },
       }
     },
   };
