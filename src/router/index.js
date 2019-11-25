@@ -21,23 +21,30 @@ export default new Router({
   routes: [
 		{
 			path: '/',
-			redirect: '/index',
+			redirect: '/Loginform',
 		},
 		{
 			path:'/index',
 			name:'Index',
-			component: Index
+			meta: {
+				loginRequest: true
+			}	
     	},
 		{
 			path: "/pubulish",
 			name: "Pubulish",
-			component: Pubulish
-			
+			component: Pubulish,
+			meta: {
+				loginRequest: true
+			}
 		},
 		{
 			path: "/test",
 			name: "Test",
-			component: Test
+			component: Test,
+			meta: {
+				loginRequest: true
+			}
 			
 		},
 		{
@@ -48,22 +55,34 @@ export default new Router({
 		{
 			 path:'/shops',
 			 name:'Shops',
-			 component:Shops
+			 component:Shops,
+			 meta: {
+				 loginRequest: true
+			 }
 		},
 		{
 			path:'/lease',
 			name:'Lease',
-			component:Lease
+			component:Lease,
+			meta: {
+				loginRequest: true
+			}
 	   },
 	   {
-		path:'/sell',
-		name:'Sell',
-		component:Sell
-	 },
-	 {
+			path:'/sell',
+			name:'Sell',
+			component:Sell,
+			meta: {
+				loginRequest: true
+			}
+		},
+		{
 			path:'/zhandian',
 			name:'Zhandian',
-			component:Zhandian
+			component:Zhandian,
+			meta: {
+				loginRequest: true
+			}
 	   },
 	    {
 			path: '/loginform',
@@ -73,7 +92,10 @@ export default new Router({
 		{
 			path: '/salerelease',
 			name: 'Salerelease',
-			component: Salerelease
+			component: Salerelease,
+			meta: {
+				loginRequest: true
+			}
 		},
 		{
 			path: '/vtable',
@@ -93,7 +115,10 @@ export default new Router({
 		{
 			path: '/tuijian',
 			name: 'Tuijian',
-			component: Tuijian
+			component: Tuijian,
+			meta: {
+				loginRequest: true
+			}
 		},
 		{
 			path: '/seleinter',
