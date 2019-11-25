@@ -52,7 +52,7 @@
                    </a-select>
              </span>
               <span slot="caozuo" slot-scope="text, record">
-                  <a-button type="primary" @click="fabuok()">确认发布</a-button>
+                  <a-button type="primary" @click="fabuok(record)">确认发布</a-button>
              </span>
          </a-table>    
      </div>

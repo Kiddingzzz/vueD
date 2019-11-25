@@ -26,9 +26,9 @@ export default new Router({
 		{
 			path:'/index',
 			name:'Index',
-			meta: {
-				loginRequest: true
-			}	
+			// meta: {
+			// 	lo: true
+			// }	
     	},
 		{
 			path: "/pubulish",
@@ -56,33 +56,33 @@ export default new Router({
 			 path:'/shops',
 			 name:'Shops',
 			 component:Shops,
-			 meta: {
-				 loginRequest: true
-			 }
+			//  meta: {
+			// 	 loginRequest: true
+			//  }
 		},
 		{
 			path:'/lease',
 			name:'Lease',
 			component:Lease,
-			meta: {
-				loginRequest: true
-			}
+			// meta: {
+			// 	loginRequest: true
+			// }
 	   },
 	   {
 			path:'/sell',
 			name:'Sell',
 			component:Sell,
-			meta: {
-				loginRequest: true
-			}
+			// meta: {
+			// 	loginRequest: true
+			// }
 		},
 		{
 			path:'/zhandian',
 			name:'Zhandian',
 			component:Zhandian,
-			meta: {
-				loginRequest: true
-			}
+			// meta: {
+			// 	loginRequest: true
+			// }
 	   },
 	    {
 			path: '/loginform',
@@ -93,9 +93,9 @@ export default new Router({
 			path: '/salerelease',
 			name: 'Salerelease',
 			component: Salerelease,
-			meta: {
-				loginRequest: true
-			}
+			// meta: {
+			// 	loginRequest: true
+			// }
 		},
 		{
 			path: '/vtable',
@@ -116,9 +116,9 @@ export default new Router({
 			path: '/tuijian',
 			name: 'Tuijian',
 			component: Tuijian,
-			meta: {
-				loginRequest: true
-			}
+			// meta: {
+			// 	loginRequest: true
+			// }
 		},
 		{
 			path: '/seleinter',
@@ -128,7 +128,7 @@ export default new Router({
 
 	]
 })
-if (sessionStorage.getItem('token')) {
-store.commit('set_token', sessionStorage.getItem('token'))
-}
+// if (sessionStorage.getItem('token')) {
+// store.commit('set_token', sessionStorage.getItem('token'))
+// }
 	

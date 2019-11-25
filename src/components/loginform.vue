@@ -291,8 +291,7 @@ export default {
         await this.$http.post(statu,datas).then(Response => {
           console.log(JSON.stringify(Response))
           if(Response.status == 200){
-
-            this.$store.hasLogin = true;
+            // this.$store.login(Response.data.userNameOrEmailAddress)
             this.$store.userId = Response.data.userId; 
             this.$router.replace('/index')
             
