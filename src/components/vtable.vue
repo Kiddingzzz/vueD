@@ -111,6 +111,8 @@
                 data,
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
+                lsiff:{},
+               
             };
         },
         computed: {
@@ -175,8 +177,12 @@
                 this.data = data.filter(item => item.key !== key);
             },
             onfabu(key) {
-                console.log(key);
-               
+               let a={
+                   a:'111',
+                   n:'222'
+               };
+               this.$emit("getData",a);
+
             },
         },
     };
