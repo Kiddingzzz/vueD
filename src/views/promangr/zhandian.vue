@@ -26,7 +26,7 @@
         <div style="padding: 15px 15px 0px 15px;">
             <a-tabs defaultActiveKey="1" @change="callback">
                 <a-tab-pane tab="全部网站" key="1">
-                    <a-table :columns="columnss" :dataSource="datas">
+                    <a-table :columns="columnss" :dataSource="item">
                         <span slot="name" slot-scope="name">
                             <a-tag v-for="tag in name" :key="tag">
                                 {{tag.toUpperCase()}}
@@ -44,14 +44,16 @@
                             <a-modal title="登录账号" v-model="visible" @ok="handleOk">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
-                                    v-model="userName"
+                                    v-model="siteUserName"
                                     placeholder="请输入姓名"
                                     class="inputs"
+                                    autocomplete="new-siteUserName"
                                     ></el-input>
                                     <el-input
                                     type="password"
+                                    autocomplete="new-password"
                                     placeholder="请输入密码"
-                                    v-model="pwd"
+                                    v-model="sitepwd"
                                     class="inputs"
                                     prefix-icon="iconfont icon-mima"
                                     ></el-input>
@@ -106,9 +108,9 @@
         },
         {
             title: '账号情况',
-            dataIndex: 'address',
+            dataIndex: 'userName',
             width: '25%',
-            key: 'address',
+            key: 'userName',
         },
 
         {
@@ -148,8 +150,8 @@
             return {
                 datas,
                 columnss,
-                userName: '',
-                pwd: '',
+                siteUserName: '',
+                sitepwd: '',
                 keyId: "12345645",
                 bid: "s123",
                 ret: [],
@@ -172,6 +174,7 @@
                 flag: '',
                 visible: false,
                 address: '',
+                item:[],
             };
         },
         components:{
@@ -189,14 +192,36 @@
             const userName1 = this.encryptDes('gracemae', '058523bb')
             const pwd1 = this.encryptDes('jiayu6248', '058523bb')
 
+            this.GetSiteList();
         },
         methods: {
-            handleOk(e) {
-                console.log(e);
+            ///获取站点列表
+            async GetSiteList(){
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=A264FD12-A1C3-B251-4C6B-39F1B37EEB26`)
+                this.item = query.data.items;
+                this.item[0].name = ['允许发布', '允许推送'];
+                this.item[0].tiaojian = ['添加账号', '去注册'];
+                this.item[0].key = '1';
+                this.item[1].name = ['允许发布', '允许推送'];
+                this.item[1].tiaojian = ['添加账号', '去注册'];
+                this.item[1].key = '2';
+
+                console.log(JSON.stringify(this.item))
+            },
+            async handleOk(e) {
+                const data = {
+                    // userId: this.$store.userId,
+                    userId:'A264FD12-A1C3-B251-4C6B-39F1B37EEB26',
+                    siteUserName: this.siteUserName,
+                    sitePassword: this.sitepwd,
+                    userName: this.siteUserName,
+                    token:'aaa',
+                    biaoshi:'房天下'
+                }
+                
+                var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);
+                this.GetSiteList();
                 this.visible = false;
-                console.log(this.userName);
-                this.datas[0].address = this.userName;
-                //console.log(this.datas[tag].address);
             },
             callback(key) {
                 console.log(key);
