@@ -104,6 +104,7 @@ export default {
            list:[],
            houselist:{},
            bieshu:{},
+           
       };
     },
     components: {
@@ -111,16 +112,16 @@ export default {
             seleinter,
         },
     methods: {
-     next() {
-           if (this.current++ > 2) this.current = 0;
-      },
+        next() {
+            if (this.current++ > 2) this.current = 0;
+        },
        pre() {
         if (this.current-- < 1) this.current = 0;
       },
       //接受house对象 
       getMag(house){
            console.log(`aaa`+JSON.stringify(house))
-           this.houselist=house.data;
+           this.houselist=house;
            if( this.houselist!=""&& this.houselist!=undefined)
            {
                this.current = 1;

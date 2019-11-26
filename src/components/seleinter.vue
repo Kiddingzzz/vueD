@@ -200,6 +200,7 @@
                     keyId: "10568"
                 }
                 const res = await this.$axios.post(urls, data);
+                console.log(`urlssssssssssssssssss:`+res)
                 this.tokens = res.data.returnmsgs.token;
                 console.log('token:' + this.tokens)
                 const userNmae = res.data.returnmsgs.userName;
@@ -261,7 +262,6 @@
                     image3: this.huxingImgList,
               }
             
-                console.log('list:'+JSON.stringify(list));
                 const SaleUrl = '/agent/house/input';
                 // ?token='+this.tokens+'&Content-Type='+'application/json'+'&keyId='+'10568'+'&FangRequestID='+'fangusername_input_410661884'
                 console.log(`this.$axios:`+this.$axios)
