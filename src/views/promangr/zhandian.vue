@@ -3,8 +3,8 @@
         <button @click="det()">1124124</button>
         <div class="filter-wraps1" style="padding: 15px 15px 0px 15px;">
             <div class="search_bds1" style="height:180px;">
-                <div class="tishi">
-                    <i class="iconfont icon-tishi"></i>贴心提示:
+                <div>
+                    贴心提示:
                 </div>
                 <div>
                     1、删除账号后刷新计划要重新设置。
@@ -572,10 +572,7 @@
         border: 1px solid rgb(224, 220, 220);
         text-align: center;
     } */
-    .tishi {
-        display: flex;
-        align-items: center;
-    }
+
     .filter-wraps1 {
         position: relative;
         z-index: 1;

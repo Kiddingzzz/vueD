@@ -7,6 +7,11 @@
                         <a href="javascript:;" @click="onDelete(record.key)">删除</a>
                         <a href="javascript:;" @click="onfabu(record)" >未发布</a>
                         </span>
+                        <span slot="customTitles">
+                        <a-icon type="smile-o" /> 标题</span>
+                        <template slot="titles" slot-scope="text, record">
+                            <a  target="_blank">{{record.title}}</a>
+                        </template>
                     </a-table>
                 </a-layout-content>
             </a-layout>
@@ -16,22 +21,23 @@
     const columns = [
         {
             title: '小区',
-            dataIndex: 'xiaoQuName',
+            dataIndex: 'xiaoquName',
             key:'det'
         },
         {
-            title: '标题',
-            dataIndex: 'name',
-            key:'biaoti'
+            dataIndex: 'title',
+            key:'biaoti',
+            slots: { title: 'customTitles' },
+            scopedSlots: { customRender: 'titles' },
         },
         {
-            title: '多图',
-            dataIndex: 'imglist',
+            title: '首页图',
+            dataIndex: 'img',
             key:'duotu'
         },
         {
             title: '房型',
-            dataIndex: 'houseType',
+            dataIndex: 'huxing',
             key:'fangwu'
         },
         {
@@ -41,12 +47,12 @@
         },
         {
             title: '价格',
-            dataIndex: 'price',
+            dataIndex: 'rice',
             key:'price'
         },
         {
             title: '朝向',
-            dataIndex: 'see',
+            dataIndex: 'chaoxiang',
             key:'sq'
         },
         {
@@ -56,7 +62,7 @@
         },
         {
             title: '更新日期',
-            dataIndex: 'modifyCreationtime',
+            dataIndex: 'creationTime',
             key:'update'
         },
         {
@@ -66,12 +72,12 @@
         },
         {
             title: '房龄',
-            dataIndex: 'age',
+            dataIndex: 'fangwuDate',
             key:'age'
         },
         {
             title: '状态',
-            dataIndex: 'type',
+            dataIndex: 'publishStatus',
             key:'status'
         },
         {
@@ -80,8 +86,8 @@
             key:'history'
         },
         {
-            title: '均价',
-            dataIndex: 'simplePrice',
+            title: '均价/㎡',
+            dataIndex: 'simpleRice',
             key:'simplePrice'
         },
         {
@@ -175,6 +181,7 @@
                  if(respones.status == 200)
                  {
                     this.list=respones.data.items;
+                    console.log('this.list:'+JSON.stringify(this.list))
                  }
                },
         },

@@ -1,8 +1,8 @@
 <template>
-    <div class="ts">
-        <div class="filter-wraps" style="padding: 24px 24px 0px 24px;">
-            <div class="search_bds">
-                <div class="tishi">
+    <div class="leasets">
+        <div class="leasefilter-wraps" style="padding: 24px 24px 0px 24px;">
+            <div class="leasesearch_bds">
+                <div class="leasetishi">
                     <i class="iconfont icon-tishi"></i>贴心提示:
                 </div>
                 <div>
@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <!-- <a-modal title="秒录房源" v-model="visible" @ok="handerOk">
+      <a-modal title="秒录房源" width='800px' height='700px' v-model="visible" @ok="leasehanderOk">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
@@ -21,8 +21,8 @@
                 <a-spin :spinning="spinning">
                 </a-spin>
             </p>
-            <div class="fontr">
-                <ul class="sale-content-tip clear" style="margin:0px">
+            <div class="leasefontr">
+                <ul class="leasesale-content-tip clear" style="margin:0px">
                     <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
                     <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
                     <li><span>2.秒入图片小于600*450自动过滤;</span></li>
@@ -33,7 +33,7 @@
                 </ul>
             </div>
         </a-modal>
-        <a-modal title="添加小区" v-model="addxq" @ok="addok">
+          <!-- <a-modal title="添加小区" v-model="addxq" @ok="addok">
             <div style="width:100%">
                 <div>
                     <a-form>
@@ -255,9 +255,9 @@
                 </a-layout-content>
             </a-layout>
         </div>
-        <div class="filter-wraps wrapscolor">
-            <div class="search_bds">
-                <div class="tishi">
+        <div class="leasefilter-wraps wrapscolor">
+            <div class="leasesearch_bds">
+                <div class="leasetishi">
                     <i class="iconfont icon-tishi"></i>贴心提示:
                 </div>
                 <div>
@@ -653,7 +653,7 @@
             addshowxaqu() {
                 this.addshowxqu = true;
             },
-            handerOk(e) {
+            leasehanderOk(e) {
                 console.log(e);
                 this.visible = false;
             },
@@ -686,7 +686,7 @@
         flex: 0 0 auto;
     }
 
-    .ts {
+    .leasets {
         display: flex;
         width: 100%;
         flex-flow: column;
@@ -694,7 +694,7 @@
 
     }
 
-    .filter-wraps {
+    .leasefilter-wraps {
         position: relative;
         z-index: 1;
         display: flex;
@@ -702,11 +702,11 @@
         justify-content: center;
     }
 
-    .filter-wraps .search_bd .secitem dd a.select {
+    .leasefilter-wraps .search_bd .secitem dd a.select {
         color: #ff552e;
     }
 
-    .sale-content-tip {
+    .leasesale-content-tip {
         margin: 8px 0;
         background-color: #ffffdd;
         padding: 8px;
@@ -719,7 +719,7 @@
     //     display: none;
     // }
 
-    .search_bds {
+    .leasesearch_bds {
         background: #ffffdd;
         display: flex;
         flex-flow: column;
@@ -731,12 +731,12 @@
         border: 1px solid #ebedf0;
     }
 
-    .tishi {
+    .leasetishi {
         display: flex;
         align-items: center;
     }
 
-    .filter-wraps .search_bds .secitem dt {
+    .leasefilter-wraps .leasesearch_bds .secitem dt {
         color: #888;
         width: 36px;
         font-size: 12px;
@@ -745,7 +745,7 @@
         float: left;
     }
 
-    .fontr {
+    .leasefontr {
         position: absolute;
         bottom: 50px;
         right: 0px;
@@ -757,7 +757,7 @@
         justify-content: center;
     }
 
-    .sale-content-tip li {
+    .leasesale-content-tip li {
         line-height: 20px;
         font-size: 12px;
         list-style: none;
@@ -899,12 +899,12 @@
     }
 
     .bottomobx {
-        width: 100% !important;
-        padding: 30px 0;
         display: flex;
-        justify-content: center;
         align-items: center;
         border-bottom: 1px solid #ebedf0;
+        width: 100% !important;
+        padding-left: 20px;
+        height: 40px !important;
     }
 
     .buttonfang {
