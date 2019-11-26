@@ -158,6 +158,7 @@
             },
         },
         mounted() {
+            console.log(123)
            this.seachShow();
         },
         methods: {
@@ -176,8 +177,9 @@
             },
             //
             async seachShow(){
+                 console.log(1)
                  const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
-                 console.log(JSON.stringify(respones))
+                 console.log(`aaaadddd`+JSON.stringify(respones))
                  if(respones.status == 200)
                  {
                     this.list=respones.data.items;
