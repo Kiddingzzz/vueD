@@ -74,7 +74,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==1">
-                <seleinter></seleinter>
+                <seleinter :value="bieshu"></seleinter>
             </div>
 
             <div class="tabcontent" v-if="current==2">
@@ -99,10 +99,11 @@ import seleinter from '../../components/seleinter'
 export default {
     data() {
       return {
-          current: 0,
+           current: 0,
            selectedRowKeys: [], // Check here to configure the default column
            list:[],
-           houselist:[],
+           houselist:{},
+           bieshu:{},
       };
     },
     components: {
@@ -118,11 +119,12 @@ export default {
       },
       //接受house对象 
       getMag(house){
-          console.log(house)
-           this.houselist=house;
+           console.log(`aaa`+JSON.stringify(house))
+           this.houselist=house.data;
            if( this.houselist!=""&& this.houselist!=undefined)
            {
                this.current = 1;
+               this.bieshu = this.houselist;
            }
       },
     },

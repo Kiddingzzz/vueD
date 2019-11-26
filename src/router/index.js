@@ -26,9 +26,9 @@ export default new Router({
 		{
 			path:'/index',
 			name:'Index',
-			component: Index,
-			// meta: {
-			// 	loginRequest: true
+			component:Index,
+			// meta:{
+			// 	requireAuth: true
 			// }	
     	},
 		{
@@ -36,7 +36,7 @@ export default new Router({
 			name: "Pubulish",
 			component: Pubulish,
 			// meta: {
-			// 	loginRequest: true
+			// 	requireAuth: true
 			// }
 		},
 		{
@@ -44,29 +44,32 @@ export default new Router({
 			name: "Test",
 			component: Test,
 			// meta: {
-			// 	loginRequest: true
+			// 	requireAuth: true
 			// }
 			
 		},
 		{
 			path: '/Dashboard',
 			name: 'DashBoard',
-			component: DashBoard
+			component: DashBoard,
+			// meta: {
+			// 	requireAuth: true
+			// }
 		},
 		{
 			 path:'/shops',
 			 name:'Shops',
 			 component:Shops,
 			//  meta: {
-			// 	 loginRequest: true
-			//  }
+			// 	requireAuth: true
+			// }
 		},
 		{
 			path:'/lease',
 			name:'Lease',
 			component:Lease,
 			// meta: {
-			// 	loginRequest: true
+			// 	requireAuth: true
 			// }
 	   },
 	   {
@@ -74,7 +77,7 @@ export default new Router({
 			name:'Sell',
 			component:Sell,
 			// meta: {
-			// 	loginRequest: true
+			// 	requireAuth: true
 			// }
 		},
 		{
@@ -82,7 +85,7 @@ export default new Router({
 			name:'Zhandian',
 			component:Zhandian,
 			// meta: {
-			// 	loginRequest: true
+			// 	requireAuth: true
 			// }
 	   },
 	    {
@@ -95,13 +98,14 @@ export default new Router({
 			name: 'Salerelease',
 			component: Salerelease,
 			// meta: {
-			// 	loginRequest: true
+			// 	requireAuth: true
 			// }
 		},
 		{
 			path: '/vtable',
 			name: 'Vtable',
-			component: vtable
+			component: vtable,
+			
 		},
 		{
 			path: '/allinter',
@@ -117,9 +121,7 @@ export default new Router({
 			path: '/tuijian',
 			name: 'Tuijian',
 			component: Tuijian,
-			// meta: {
-			// 	loginRequest: true
-			// }
+			
 		},
 		{
 			path: '/seleinter',
@@ -128,8 +130,31 @@ export default new Router({
 		},
 
 	]
-})
+	
+});
+
+
+// export default router
+// router.beforeEach((to, from, next) => {
+// 	if (to.meta.requireAuth) { // 判断该路由是否需要登录权限
+// 	  if (sessionStorage.getItem("token") == 'true') { // 判断本地是否存在token
+// 		next()
+// 	  } else {
+// 		// 未登录,跳转到登陆页面
+// 		next({
+// 		  path: '/loginform'
+// 		})
+// 	  }
+// 	} else {
+// 	  if(sessionStorage.getItem("token") == 'true'){
+// 		next('/index');
+// 	  }else{
+// 		next();
+// 	  }
+// 	}
+//   })
+ 
+  //blog.csdn.net/duansamve/article/details/90733884
 // if (sessionStorage.getItem('token')) {
 // store.commit('set_token', sessionStorage.getItem('token'))
 // }
-	

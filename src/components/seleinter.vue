@@ -170,7 +170,6 @@
 
                 var shineiImg = this.pdef.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
                 var ss = shineiImg.split(",")
-                console.log(ss.length)
                 for(let i = 0;i<ss.length;i++){
                     var imgUrl = {};
                     var l = i + 1;
@@ -201,11 +200,9 @@
                     keyId: "10568"
                 }
                 const res = await this.$axios.post(urls, data);
-                console.log(JSON.stringify(res))
                 this.tokens = res.data.returnmsgs.token;
                 console.log('token:' + this.tokens)
                 const userNmae = res.data.returnmsgs.userName;
-                console.log("``````````````" + JSON.stringify(this.pdef));
                 const list = {
                     houseType: "Sale",
                     purposeType: "House",
@@ -267,6 +264,7 @@
                 console.log('list:'+JSON.stringify(list));
                 const SaleUrl = '/agent/house/input';
                 // ?token='+this.tokens+'&Content-Type='+'application/json'+'&keyId='+'10568'+'&FangRequestID='+'fangusername_input_410661884'
+                console.log(`this.$axios:`+this.$axios)
                 const res1 = await this.$axios.post(SaleUrl, list,
                     {
                         headers: {

@@ -92,6 +92,7 @@
 
             </div>
         </a-modal>
+        <!-- 基本信息 -->
         <div class="wrap">
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
@@ -255,6 +256,179 @@
                 </a-layout-content>
             </a-layout>
         </div>
+
+        <!-- 住宅信息 -->
+        <div class="wrap">
+                <a-layout style="padding: 24px 24px 24px 24px">
+                    <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+                        <a-form>
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedback
+                                validate-status="">
+                                <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" />
+                            </a-form-item>
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="住宅子类型：" has-feedback
+                                validate-status="">
+                                <a-select default-value="1" class="huxing " >
+                                    <a-select-option v-for="(zhuzhai,i) in zhuzhaizitype" :key="i" :value="zhuzhai">
+                                        {{zhuzhai}}
+                                    </a-select-option>
+                                </a-select>
+                            </a-form-item>
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋产权：" has-feedback
+                              validate-status="">
+                                <a-select default-value="1" class="huxing " >
+                                    <a-select-option v-for="(root,i) in houseroot" :key="i" :value="root">
+                                        {{root}}
+                                    </a-select-option>
+                                </a-select>
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*产权年限" has-feedback
+                           validate-status="">
+                              <a-radio-group :options="plainOptionnianxian" :defaultValue="value9" />
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑形式" has-feedback
+                           validate-status="">
+                              <a-radio-group :options="plainOptionjianzhutype" :defaultValue="valuetype" />
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑结构" has-feedback
+                           validate-status="">
+                              <a-radio-group :options="plainOptionjianzhutype" :defaultValue="valuejieg" />
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋年限" has-feedback
+                           validate-status="">
+                              <a-radio-group :options="plainOptionroot" :defaultValue="valueroot" />
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*唯一住房" has-feedback
+                           validate-status="">
+                              <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi" />
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*新房/二手房" has-feedback
+                           validate-status="">
+                              <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse" />
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*佣金比例：" has-feedback
+                           validate-status="">
+                              ≤<a-input-number :min="0" :max="10" class="yongjingbox"/>%
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
+                           validate-status="">
+                                <a-checkbox ></a-checkbox>
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
+                           validate-status="">
+                                <a-checkbox >水</a-checkbox>
+                                <a-checkbox >电</a-checkbox>
+                                <a-checkbox >煤气/天然气</a-checkbox>
+                                <a-checkbox >有线电视</a-checkbox>
+                                <a-checkbox >暖气</a-checkbox>
+                                <a-checkbox >车位</a-checkbox>
+                                <a-checkbox >露台</a-checkbox>
+                                <a-checkbox >阁楼</a-checkbox>
+                                <a-checkbox >储藏室/地下室</a-checkbox>
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
+                           validate-status="">
+                                <a-checkbox >电话</a-checkbox>
+                                <a-checkbox >热水器</a-checkbox>
+                                <a-checkbox >彩电</a-checkbox>
+                                <a-checkbox >空调</a-checkbox>
+                                <a-checkbox >冰箱</a-checkbox>
+                                <a-checkbox >洗衣机</a-checkbox>
+                                <a-checkbox >家具</a-checkbox>
+                                <a-checkbox >床</a-checkbox>
+                                <a-checkbox >宽带网</a-checkbox>
+                                <a-checkbox >微波炉</a-checkbox>
+                                <a-checkbox >衣柜</a-checkbox>
+                                <a-checkbox >沙发</a-checkbox>
+                                <a-checkbox >厨具（可做饭）</a-checkbox>
+                                <a-checkbox >独立卫生间</a-checkbox>
+                           </a-form-item>
+                        </a-form>
+                    </a-layout-content>
+                </a-layout>
+        </div>
+        <div class="filter-wraps wrapscolor">
+            <div class="search_bds">
+                <div class="tishi">
+                    <i class="iconfont icon-tishi"></i>贴心提示:
+                </div>
+                <div>
+                    1.房源标题目的：突出房子的主要特点，吸引客户，增加点击量和电话量。
+                </div>
+                <div>
+                    2.完整的房源标题应该是：商圈+卖点+楼盘名称+户型+卖点。
+                </div>
+                <div>
+                    3.小蜜书会自动检测标题与描述中的敏感词,查看敏感词(继续修改时，房源描述中的敏感词会“标红”)
+                </div>
+            </div>
+        </div>
+        <!-- 房源介绍 -->
+        <div class="wrap">
+           <a-layout class="res" style="padding:24px;">
+                <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
+                    <a-form>
+                         <div class="tilerbox">
+                             <div class="tiler-firstbox">
+                                <label class="labeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
+                             </div>
+                             <div>
+                                  <a-input  placeholder="字数限制10-30" style="width:50%;" />
+                             </div>
+                         </div>
+                         <div class="tilerbox">
+                             <div class="tiler-firstbox">
+                                <label class="labeltle">*信息描述：</label><label>30-300字效果为最佳</label>
+                             </div>
+                             <div>
+                                   <a-textarea  :rows="6" />
+                                   <div>
+                                      <label class="minganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
+                                   </div>
+                             </div>
+                         </div>
+                         <div class="tilerbox">
+                                <div class="tiler-firstbox">
+                                    <label class="labeltle">*业主心态：</label><label>从房东卖房原因、是否急售等方面进行描述</label><label class="putnumber">(字数限制20-300)</label>
+                                </div>
+                                <div>
+                                    <a-textarea value="房东置换，诚心出售，欢迎看房，随时恭候您的到来。" :rows="5" />
+                                    <div>
+                                    <label class="minganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
+                                    </div>
+                                </div>
+                         </div>
+                         <div class="tilerbox">
+                                <div class="tiler-firstbox">
+                                    <label class="labeltle">服务介绍:</label>
+                                    <label>多角度描述您的服务优势，例如：行业年限、专业经验、服务态度、可提供的服务种类等</label>
+                                    <label class="putnumber">(字数限制20-300)</label>
+                                </div>
+                                <div>
+                                    <a-textarea :rows="5"  value="本人从事房地产多年，公司有大量好房源，欢迎进入我的店铺查看，欢迎随时电话咨询，相信我的专业，为您置业安家保驾护航。"/>
+                                </div>
+                         </div>
+                         <div class="tilerbox">
+                                <div class="tiler-firstbox">
+                                    <label class="labeltle">*小区配套:</label><label>从交通、教育、医疗、内部环境、车位情况、安保措施方面来描述</label>
+                                </div>
+                                <div>
+                                    <a-textarea :rows="5" />
+                                </div>
+                         </div>
+                         <div class="tilerbox">
+                                <div class="tiler-firstbox">
+                                    <label class="labeltle">税费信息:</label><label>相关费用，描述越详尽您的房源质量就会越高，展示给网友的机会就会增加(仅搜房帮)</label>
+                                </div>
+                                <div>
+                                    <a-textarea :rows="5" />
+                                </div>
+                         </div>
+                   
+                    </a-form>
+                </a-layout-content>
+            </a-layout>
+        </div>
         <div class="filter-wraps wrapscolor">
             <div class="search_bds">
                 <div class="tishi">
@@ -277,6 +451,7 @@
                 </div>
             </div>
         </div>
+        <!-- 图片信息 -->
         <div class="wrap">
             <a-layout class="res" style="padding:24px;">
                 <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
@@ -431,7 +606,15 @@
     const plainOptionsc = ['普通上传', '批量上传', '大图压缩批量上传'];
     const plainOptionsy = ['不加水印', '添加水印'];
     const pilianglist = ['批量水印', '批量美颜', '批量水印美颜', '批量恢复原图', '批量调整大小', '批量下载图片'];
-
+    const plainOptionfwlb=['公寓','普通住宅','平房','其他'];
+    const zhuzhaizitype=['多层[1-7层]','多层[带电梯]','小高层[8-20层]','高层[20以上]'];
+    const houseroot=['商品房','商住两用','经济适用房','使用权','公房','其他'];
+    const plainOptionnianxian=['70年产权','50年产权','40年产权'];
+    const plainOptionjianzhutype=['板楼','塔楼','板塔结合','砖混','其他',];
+    const plainOptionjianzhujiegou=['平层','错层','跃层','复式','开间',];
+    const plainOptionroot=['满五年','满二年','不满二年'];
+    const plainOptionweiyi=['是','否'];
+    const plainOptionhouse=['新房','二手房'];
     export default {
         data() {
             return {
@@ -452,12 +635,28 @@
                 plainOptiongn,
                 plainOptionsc,
                 plainOptionsy,
+                plainOptionnianxian,
+                plainOptionfwlb,
+                zhuzhaizitype,
+                houseroot,
+                plainOptionjianzhutype,
+                plainOptionjianzhujiegou,
+                plainOptionroot,
+                plainOptionweiyi,
+                plainOptionhouse,
                 value2: '东',
                 value3: '随时看房',
                 value4: '豪华装修',
                 value5: '集体供暖',
                 value6: '普通上传',
                 value7: '不加水印',
+                value8:'普通住宅',
+                value9:'70年产权',
+                valuetype:'板楼',
+                valuejieg:'平板',
+                valueroot:'满五年',
+                valueweiyi:'是',
+                valuehouse:'二手房',
                 radioStyle: {
                     display: 'block',
                     height: '30px',
@@ -969,4 +1168,27 @@
         width:800px !important;
         height: 700px !important;
     }
+    .labeltle{
+        font-weight:bold;
+        color:black;
+    }
+    .tilerbox{
+        padding-left: 20px;
+        padding-top:20px;
+    }
+    .tiler-firstbox
+    {
+        margin-bottom:10px;
+        
+    }
+    .minganlabel{
+        color:darkgrey;
+    }
+    .putnumber{
+        color: orange;
+     }
+     .yongjingbox{
+         margin-left: 5px;
+         margin-right: 5px;
+     }
 </style>
