@@ -34,10 +34,7 @@
            </a-tab-pane>
            <a-tab-pane tab="历史推荐" key="2">
                <a-table :columns="columns" :dataSource="data">
-                   <!-- <span slot="ation" slot-scope="text, record">
-                        <a href="javascript:;" @click="onDelete(record.key)">删除</a>
-                        <a href="javascript:;" @click="onfabu(record.key)" >未发布</a>
-                         </span> -->
+                   <a slot="action" slot-scope="text" href="javascript:;">取消</a>
                 </a-table>
            </a-tab-pane>
         </a-tabs>
@@ -49,26 +46,32 @@
         {
             title: '网站名称',
             dataIndex: 'name',
+            key:'name',
         },
         {
             title: '网站地址',
             dataIndex: 'url',
+            key:'url',
         },
         {
             title: '网站账号',
             dataIndex: 'wzzhanghao',
+            key:'wzzhanghao',
         },
         {
             title: '推荐时间',
             dataIndex: 'time',
+            key:'time',
         },
         {
             title: '审核状态',
             dataIndex: 'auditstatus',
+            key:'auditstatus',
         },
         {
             title: '操作',
             dataIndex: 'active',
+            key:'active',
             scopedSlots: { customRender: 'action' },
         },
     ];

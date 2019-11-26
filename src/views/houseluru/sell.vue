@@ -905,12 +905,12 @@
     }
 
     .bottomobx {
+        width: 100% !important;
+        padding: 30px 0;
         display: flex;
+        justify-content: center;
         align-items: center;
         border-bottom: 1px solid #ebedf0;
-        width: 100% !important;
-        padding-left: 20px;
-        height: 40px !important;
     }
 
     .buttonfang {
