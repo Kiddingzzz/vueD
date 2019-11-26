@@ -60,7 +60,7 @@
             <a-menu-item key="11">
               <router-link to="zhandian">站点管理</router-link>
             </a-menu-item>
-            <a-menu-item key="12">
+            <a-menu-item key="13">
               <router-link to="tuijian">站点管理</router-link>
             </a-menu-item>
           </a-sub-menu>

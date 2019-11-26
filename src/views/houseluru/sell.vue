@@ -510,6 +510,7 @@
                 lou: '',
                 weiyiUserId: '',
                 saveRes: {},
+                imgH: {},
             }
         },
         mounted() {
@@ -577,12 +578,11 @@
                                 imgUrl.status = 'done';
                                 this.shineiList.push(imgUrl);
                             }
-                            var imgH = {};
-                            imgH.url = ss[0],
-                                imgH.uid = '-1',
-                                imgH.name = 'xxx.jpg',
-                                imgH.status = 'done',
-                                this.imgHeaderList.push(imgH);
+                            this.imgH.url = ss[0],
+                                this.imgH.uid = '-1',
+                                this.imgH.name = 'xxx.jpg',
+                                this.imgH.status = 'done',
+                                this.imgHeaderList.push(this.imgH);
 
 
                             var imgFangxing = {};
@@ -619,6 +619,8 @@
                     this.openNotificationWithIcon('error')
                 }
                 else {
+                    this.saveRes.urlsId = this.$store.userId;
+                    this.saveRes.imgHeader = this.imgH.url;
                     await this.$http.post(`${this.$config.api}/api/cms/pubulish/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
@@ -905,12 +907,12 @@
     }
 
     .bottomobx {
-        width: 100% !important;
-        padding: 30px 0;
         display: flex;
-        justify-content: center;
         align-items: center;
         border-bottom: 1px solid #ebedf0;
+        width: 100% !important;
+        padding-left: 20px;
+        height: 40px !important;
     }
 
     .buttonfang {
