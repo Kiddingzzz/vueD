@@ -313,11 +313,13 @@ export default {
 // @import "../../styles";
  //@import "~@/assets/iconfont.css";
 .wrapper-login {
-  height: 90vh;
+  height: 100%;
   width: 100%;
   display: flex;
   justify-content: center;
   position: absolute;
+  top: 0;
+  right: 0;
   background: url("../assets/bg.png");
   background-size: 100% 100%;
   box-sizing: boder-box;
@@ -325,8 +327,8 @@ export default {
     width: 550px;
     position: absolute;
     right: 10vw;
-    top: 90px;
-    bottom: 90px;
+    // top: 130px;
+    bottom: 130px;
     line-height: 20px;
     border-radius: 10px;
     text-align: center;
