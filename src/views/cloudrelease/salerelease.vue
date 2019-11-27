@@ -65,7 +65,7 @@
                         <vtable @getData="getMag"></vtable>
                     </a-tab-pane>
                     <a-tab-pane tab="别墅" key="2">
-                        <vtable></vtable>
+                        <vtable ></vtable>
                     </a-tab-pane>
                     <a-tab-pane tab="写字楼" key="3">
                         <vtable></vtable>
@@ -74,7 +74,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==1">
-                <seleinter :value="bieshu"></seleinter>
+                <seleinter @getSeconde="getSeconds" :value="bieshu"></seleinter>
             </div>
 
             <div class="tabcontent" v-if="current==2">
@@ -127,6 +127,13 @@ export default {
                this.bieshu = this.houselist;
            }
       },
+      //第二步操作跳转第三步
+      getSeconds(message){
+          console.log(`bbbbbbbbbbbbbbba`+JSON.stringify(message))
+        if(message == 'a'){
+            this.current = 2;
+        }
+      }
     },
   };
 </script>

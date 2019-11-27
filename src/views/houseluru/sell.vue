@@ -203,7 +203,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncx" :defaultValue="value2" v-model="chaoxiang" />
+                            <a-radio-group :options="plainOptioncx" :defaultValue="value2" v-model="ref.chaoxiang" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
@@ -353,7 +353,7 @@
                                 <label class="selllabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
                              </div>
                              <div>
-                                  <a-input  placeholder="字数限制10-30" style="width:50%;" />
+                                  <a-input v-model="ref.title"  placeholder="字数限制10-30" style="width:50%;" />
                              </div>
                          </div>
                          <div class="selltilerbox">
@@ -361,7 +361,7 @@
                                 <label class="selllabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
                              </div>
                              <div>
-                                   <a-textarea  :rows="6" />
+                                   <a-textarea v-model="ref.note"  style="width:50%;" :rows="6" />
                                    <div>
                                       <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
                                    </div>
@@ -372,7 +372,7 @@
                                     <label class="selllabeltle">*业主心态：</label><label>从房东卖房原因、是否急售等方面进行描述</label><label class="putnumber">(字数限制20-300)</label>
                                 </div>
                                 <div>
-                                    <a-textarea value="房东置换，诚心出售，欢迎看房，随时恭候您的到来。" :rows="5" />
+                                    <a-textarea :value="ref.atittude" style="width:50%;" :rows="5" />
                                     <div>
                                     <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
                                     </div>
@@ -385,7 +385,7 @@
                                     <label class="sellputnumber">(字数限制20-300)</label>
                                 </div>
                                 <div>
-                                    <a-textarea :rows="5"  value="本人从事房地产多年，公司有大量好房源，欢迎进入我的店铺查看，欢迎随时电话咨询，相信我的专业，为您置业安家保驾护航。"/>
+                                    <a-textarea :rows="5" style="width:50%;" :value="ref.fuwuCondition"/>
                                 </div>
                          </div>
                          <div class="selltilerbox">
@@ -393,7 +393,7 @@
                                     <label class="selllabeltle">*小区配套:</label><label>从交通、教育、医疗、内部环境、车位情况、安保措施方面来描述</label>
                                 </div>
                                 <div>
-                                    <a-textarea :rows="5" />
+                                    <a-textarea :rows="5" style="width:50%;"/>
                                 </div>
                          </div>
                          <div class="selltilerbox">
@@ -401,7 +401,7 @@
                                     <label class="selllabeltle">税费信息:</label><label>相关费用，描述越详尽您的房源质量就会越高，展示给网友的机会就会增加(仅搜房帮)</label>
                                 </div>
                                 <div>
-                                    <a-textarea :rows="5" />
+                                    <a-textarea :rows="5" style="width:50%;" />
                                 </div>
                          </div>
                    

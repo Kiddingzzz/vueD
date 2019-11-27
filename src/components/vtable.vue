@@ -174,7 +174,7 @@
         },
         mounted() {
             console.log(123)
-           this.seachShow();
+            this.seachShow();
         },
         methods: {
             onSelectChange(selectedRowKeys) {
@@ -188,6 +188,7 @@
             },
             //传房源对象
             onfabu(house) {
+                console.log("respones.house:"+JSON.stringify(house))
                this.$emit("getData",house);
             },
             //
@@ -195,6 +196,7 @@
                  const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
                  if(respones.status == 200)
                  {
+                     console.log("respones.status:"+JSON.stringify(respones))
                     this.list=respones.data.items;
                  }
                },

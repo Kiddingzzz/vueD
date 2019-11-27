@@ -49,6 +49,8 @@
             </span>
             <span slot="caozuo" slot-scope="text, record">
                 <a-button type="primary" @click="fabuok(record)">确认发布</a-button>
+                <a-spin :spinning="spinning">
+                </a-spin>
             </span>
         </a-table>
     </div>
@@ -105,13 +107,7 @@
             acctionkey: ['15624687', '可用'],
             leibie: ['第一个', '第二个'],
 
-        },
-        {
-            key: '2',
-            inter: '/static/img/logoJXW.2d85d52.png',
-            acctionkey: ['451245', '不可用'],
-            leibie: ['第一个', '第二个'],
-        },
+        }
 
     ];
 
@@ -122,10 +118,12 @@
                 datas,
                 columnss,
                 def: {},
+                spinning: false,
                 pdef: {},
                 shineiImgList:[],
                 xiaoquImgList:[],
                 huxingImgList:[],
+                bid:'a'
             };
         },
         props: {
@@ -144,6 +142,7 @@
                 console.log(key);
             },
             async fabuok(e) {
+                this.spinning = true;
                 this.pdef = this.value;
                 var end =  this.pdef.address.indexOf('－');
                 this.pdef.addressDetail = this.pdef.address.substring(end+1,this.pdef.address.length);
@@ -199,7 +198,6 @@
                     pwd: datas.passWord,
                     keyId: "10568"
                 }
-                console.log(`aaaaaaaaaaaaa`+data)
                 const res = await this.$axios.post(urls, data);
                 console.log('token:' + this.tokens)
                 const userName = res.data.returnmsgs.userName;
@@ -273,19 +271,43 @@
                         }
                     }
                 ).then(res1 => {
-                    console.log(`出售住宅房源:` + JSON.stringify(res1));
-                    if (res1.code == 1) {
-                        console.log("操作成功")
-                        this.innerid = res.returnmsgs.innerid;
-                        this.houseurl = res.returnmsgs.houseurl;
-                        this.flag = res.returnmsgs.flag;
-                        this.houseid = res.returnmsgs.houseid;
-                        
-
+                    // console.log(`出售住宅房源:` + JSON.stringify(res1));
+                    if (res1.data.code == "1") {
+                        // this.innerid = res1.returnmsgs.innerid;
+                        // this.houseurl = res1.returnmsgs.houseurl;
+                        // this.flag = res1.returnmsgs.flag;
+                        // this.houseid = res1.returnmsgs.houseid;
+                        var renders = this.$http.post(`${this.$config.api}/api/cms/pubulish/modifyHouseStatus/`+this.value.id)
+                        this.openNotificationWithIcon('success')
                     }
                 })
-            }
+            },
+           
+            //aaa
+            openNotificationWithIcon(type) {
+                if (type == 'success') {
+                    this.spinning = false;
+                    this.$notification[type]({
+                    message: '发布成功',
+                    description:
+                        '房源发布成功请在网站后台查看',
+                    });
+                    
+                    this.$emit("getSeconde",this.bid);
+                }
+                if (type == 'error') {
+                    this.$notification[type]({
+                        message: '发布失败',
+                        placement: 'bottomRight',
+                        bottom: '50px',
+                        right: '500px',
+                        description:
+                            '房源失败数据不能为空',
+                    });
+                }
+            },
         },
+        
     };
 </script>
 <style lang="less">
