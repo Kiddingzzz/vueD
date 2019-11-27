@@ -144,7 +144,7 @@
             </dl>
             </div>
           </div>
-          <div class="wrap">
+          <div class="shopwrap">
             <a-layout style="padding: 24px 24px 24px 24px">
               <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                 <a-table :columns="columns" :dataSource="list">
@@ -180,19 +180,19 @@
             title: '用途',
             dataIndex: 'yongtu',
             key: 'yongtu',
-            width: 80
+            width: 70
           },
           {
             title: '小区',
             dataIndex: 'xiaoquName',
-            width:100,
+            width:140,
             key: 'xiaoquName',
             
           },
           {
             dataIndex: 'title',
             key: 'title',
-            width: 140,
+            width: 190,
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
           },
@@ -200,7 +200,7 @@
             title: '价格/万',
             dataIndex: 'rice',
             key: 'rice',
-            width: 80
+            width: 90
           },
           {
             title: '面积㎡',
@@ -212,12 +212,12 @@
             title: '户型',
             dataIndex: 'huxing',
             key: 'chaoxiang',
-            width: 80
+            width: 120
           },
           {
             title: '楼层',
             dataIndex: 'louceng',
-            width:100,
+            width:80,
             key: 'louceng',
           },
           {
@@ -237,6 +237,7 @@
             dataIndex: 'phone',
             key: 'phone',
             scopedSlots: { customRender: 'phones' },
+            width:90
           },
           {
             title: '地址',
@@ -288,7 +289,7 @@
         }
       </script>
       <style lang="less">
-        .wrap {
+        .shopwrap {
           width: 100%;
           display: flex;
           flex: 0 0 auto;

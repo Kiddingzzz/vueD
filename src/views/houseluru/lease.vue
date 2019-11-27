@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-      <a-modal title="秒录房源" width='800px' height='700px' v-model="visible" @ok="leasehanderOk">
+      <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
@@ -21,7 +21,7 @@
                 <a-spin :spinning="spinning">
                 </a-spin>
             </p>
-            <div class="leasefontr">
+            <div class="leasefilter">
                 <ul class="leasesale-content-tip clear" style="margin:0px">
                     <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
                     <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
@@ -92,7 +92,7 @@
 
             </div>
         </a-modal> -->
-        <div class="wrap">
+        <div class="sealewrap">
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
@@ -132,7 +132,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">
-                            <a-input id="error2" placeholder="" class="shihaow" />
+                            <a-input  placeholder="" class="shihaow" />
                             <a-select default-value="1" class="shihaoselw mianji">
                                 <a-select-option value="1">
                                     栋
@@ -171,7 +171,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*户型" has-feedback
                             validate-status="">
-                            <a-select default-value="1" class="huxing marginall" v-model="selectedShi">
+                            <a-select default-value="1" class="sealefirhuxing " v-model="selectedShi">
                                 <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
@@ -206,23 +206,35 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
                             <a-input type="number" id="" v-model="ref.rice" placeholder="" class="mianji" />
-                            <label>元/月</label>
+                            <label class="laberall" >元/月</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
                             validate-status="" help="
                             ">
-                            <a-input-number :min="1950" :max="2019" v-model="ref.fangwuDate" />
+                            <a-input-number :min="1950" :max="2019" v-model="ref.fangwuDate" class="mianji" />
                             <label class="laberall">年</label>
                         </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所在楼层" has-feedback
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所在楼层：" has-feedback
                             validate-status="" help="">
-                            <a-input-number :min="1" :max="100" v-model="ceng" />
+                            <a-input-number :min="1" :max="100" v-model="ceng"  />
                             <label class="laberall">楼</label>
                             <label class="glaber">共</label>
                             <a-input-number :min="1" :max="100" v-model="lou" />
                             <label class="laberall">楼</label>
                         </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向" has-feedback
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*租赁方式：" has-feedback
+                            validate-status="">
+                            <a-radio-group :options="hezu" :defaultValue="valuehz"  />
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*支付方式：" has-feedback
+                            validate-status="">
+                            <a-select default-value="" class="zhuzhaibox " >
+                                    <a-select-option v-for="(zf,i) in zhifu" :key="i" :value="zf">
+                                        {{zf}}
+                                    </a-select-option>
+                            </a-select>
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向：" has-feedback
                             validate-status="">
                             <a-radio-group :options="plainOptioncx" :defaultValue="value2" v-model="chaoxiang" />
                         </a-form-item>
@@ -255,7 +267,94 @@
                 </a-layout-content>
             </a-layout>
         </div>
-        <div class="leasefilter-wraps wrapscolor">
+        <!-- 住宅信息 -->
+        <div class="sealewrap">
+                <a-layout style="padding: 24px 24px 24px 24px">
+                    <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+                        <a-form>
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedback
+                                validate-status="">
+                                <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" />
+                            </a-form-item>
+                            
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
+                           validate-status="">
+                                <a-checkbox >水</a-checkbox>
+                                <a-checkbox >电</a-checkbox>
+                                <a-checkbox >煤气/天然气</a-checkbox>
+                                <a-checkbox >有线电视</a-checkbox>
+                                <a-checkbox >暖气</a-checkbox>
+                                <a-checkbox >车位</a-checkbox>
+                                <a-checkbox >露台</a-checkbox>
+                                <a-checkbox >阁楼</a-checkbox>
+                                <a-checkbox >储藏室/地下室</a-checkbox>
+                           </a-form-item>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套设施" has-feedback
+                           validate-status="">
+                                <a-checkbox >电话</a-checkbox>
+                                <a-checkbox >热水器</a-checkbox>
+                                <a-checkbox >彩电</a-checkbox>
+                                <a-checkbox >空调</a-checkbox>
+                                <a-checkbox >冰箱</a-checkbox>
+                                <a-checkbox >洗衣机</a-checkbox>
+                                <a-checkbox >家具</a-checkbox>
+                                <a-checkbox >床</a-checkbox>
+                                <a-checkbox >宽带网</a-checkbox>
+                                <a-checkbox >微波炉</a-checkbox>
+                                <a-checkbox >衣柜</a-checkbox>
+                                <a-checkbox >沙发</a-checkbox>
+                                <a-checkbox >厨具（可做饭）</a-checkbox>
+                                <a-checkbox >独立卫生间</a-checkbox>
+                           </a-form-item>
+                        </a-form>
+                    </a-layout-content>
+                </a-layout>
+        </div>
+        <div class="leasefilter-wraps sealewrapscolor">
+            <div class="leasesearch_bds">
+                <div class="leasetishi">
+                    <i class="iconfont icon-tishi"></i>贴心提示:
+                </div>
+                <div>
+                    1.房源标题目的：突出房子的主要特点，吸引客户，增加点击量和电话量。
+                </div>
+                <div>
+                    2.完整的房源标题应该是：商圈+卖点+楼盘名称+户型+卖点。
+                </div>
+                <div>
+                    3.小蜜书会自动检测标题与描述中的敏感词,查看敏感词(继续修改时，房源描述中的敏感词会“标红”)
+                </div>
+            </div>
+        </div>
+        <!-- 房源介绍 -->
+        <div class="sealewrap">
+           <a-layout class="res" style="padding:24px;">
+                <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
+                    <a-form>
+                         <div class="sealetilerbox">
+                             <div class="sealetiler-firstbox">
+                                <label class="sealelabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
+                             </div>
+                             <div>
+                                  <a-input  placeholder="字数限制10-30" style="width:50%;" />
+                             </div>
+                         </div>
+                         <div class="sealetilerbox">
+                             <div class="sealetiler-firstbox">
+                                <label class="sealelabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
+                             </div>
+                             <div>
+                                   <a-textarea  :rows="6" />
+                                   <div>
+                                      <label class="sealeminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
+                                   </div>
+                             </div>
+                         </div>
+                    </a-form>
+                </a-layout-content>
+            </a-layout>
+        </div>
+        <div class="leasefilter-wraps sealewrapscolor">
             <div class="leasesearch_bds">
                 <div class="leasetishi">
                     <i class="iconfont icon-tishi"></i>贴心提示:
@@ -277,7 +376,7 @@
                 </div>
             </div>
         </div>
-        <div class="wrap">
+        <div class="sealewrap">
             <a-layout class="res" style="padding:24px;">
                 <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
                     <a-form>
@@ -431,7 +530,9 @@
     const plainOptionsc = ['普通上传', '批量上传', '大图压缩批量上传'];
     const plainOptionsy = ['不加水印', '添加水印'];
     const pilianglist = ['批量水印', '批量美颜', '批量水印美颜', '批量恢复原图', '批量调整大小', '批量下载图片'];
-
+    const plainOptionfwlb=['公寓','普通住宅','平房','其他'];
+    const zhifu=['押一付一','押一付二','押一付三','押二付一','押二付二','押三付三',];
+    const hezu=['合租','整租'];
     export default {
         data() {
             return {
@@ -452,12 +553,17 @@
                 plainOptiongn,
                 plainOptionsc,
                 plainOptionsy,
+                plainOptionfwlb,
+                hezu,
+                zhifu,
                 value2: '东',
                 value3: '随时看房',
                 value4: '豪华装修',
                 value5: '集体供暖',
                 value6: '普通上传',
                 value7: '不加水印',
+                value8:'普通住宅',
+                valuehz:'合租',
                 radioStyle: {
                     display: 'block',
                     height: '30px',
@@ -505,6 +611,9 @@
                 lou: '',
                 weiyiUserId: '',
                 saveRes: {},
+                leasestyle:{
+                    height:'700px'
+                }
             }
         },
         mounted() {
@@ -680,7 +789,7 @@
     }
 </script>
 <style lang="less" scoped>
-    .wrap {
+    .sealewrap {
         width: 100%;
         display: flex;
         flex: 0 0 auto;
@@ -745,7 +854,7 @@
         float: left;
     }
 
-    .leasefontr {
+     .leasefilter {
         position: absolute;
         bottom: 50px;
         right: 0px;
@@ -777,45 +886,49 @@
     // }
 
     .shihaow {
-        width: 70px;
-        margin-right: 8px
+        width: 70px !important;
+        padding-right: 8px
     }
 
     .smianij {
 
-        margin-left: 5px
+        padding-left: 5px
     }
 
     .mianji {
-        width: 100px !important;
+        width: 120px !important;
     }
 
     .huxing {
-        width: 100px !important;
-        margin-right: 5px;
-        margin-left: 15px
+        width: 90px !important;
+        padding-right: 5px;
+        padding-left: 25px
     }
-
+    .sealefirhuxing{
+         width: 75px !important;
+        padding-right: 5px;
+   }
+  .shihaow {
+        width: 70px;
+        padding-right: 8px;
+    }
     .shihaoselw {
-        margin-right: 22px;
+       padding-right: 22px;
+        padding-left: 8px;
     }
 
     .jiage {
         width: 80px;
-        margin-right: 5px
-    }
-
-    .marginall {
-        margin-left: 0px;
+        padding-right: 5px
     }
 
     .laberall {
-        margin-left: 5px;
+        padding-left: 5px;
     }
 
     .glaber {
-        margin-left: 15px;
-        margin-right: 5px;
+        padding-left: 15px;
+        padding-right: 5px;
     }
 
     .radisflex {
@@ -825,10 +938,10 @@
     .neibula {
         font-size: 12px;
         color: red;
-        margin-left: 5px;
+        padding-left: 5px;
     }
 
-    .wrapscolor {
+    .sealewrapscolor {
         padding: 0px 24px 0px 24px;
         background: #f0f2f5;
     }
@@ -848,7 +961,7 @@
 
         .laberboxtit {
             color: red;
-            margin-right: 10px;
+            padding-right: 10px;
         }
     }
 
@@ -858,12 +971,11 @@
 
         .laberboxtitle {
             color: red;
-            margin-right: 10px;
+            padding-right: 10px;
         }
     }
 
     .tupianbox {
-        margin-left: 10px;
         padding-left: 60px;
     }
 
@@ -908,7 +1020,7 @@
     }
 
     .buttonfang {
-        margin-right: 15px;
+        padd-right: 15px;
     }
 
     .orangelaber {
@@ -941,7 +1053,7 @@
     }
 
     .xiala {
-        margin-left: 28%;
+        padding-left: 28%;
     }
 
     .okbutton {
@@ -953,10 +1065,29 @@
         background-color: #f0f2f5;
     }
 
-    .addshowxq {
-        margin-left: 5px;
-        font-size: 14px
+    // .addshowxq {
+    //     margin-left: 5px;
+    //     font-size: 14px
+    // }
+    .sealetilerbox{
+        padding-left: 20px;
+        padding-top:20px;
     }
+     .sealetiler-firstbox
+    {
+        padding-bottom:10px;
+        
+    }
+     .sealelabeltle{
+        font-weight:bold;
+        color:black;
+    }
+     .sealeminganlabel{
+        color:darkgrey;
+    }
+     .zhuzhaibox{
+        width: 140px !important;
+     }
     // .ant-modal-content {
     //     width: 800px;
     //     height: 700px;

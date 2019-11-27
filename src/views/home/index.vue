@@ -180,7 +180,7 @@
       title: '用途',
       dataIndex: 'yongtu',
       key: 'yongtu',
-      width: 80
+      width: 70
     },
     {
       title: '小区',
@@ -193,12 +193,13 @@
       key: 'title',
       slots: { title: 'customTitles' },
       scopedSlots: { customRender: 'titles' },
+      width:190
     },
     {
       title: '价格/万',
       dataIndex: 'rice',
       key: 'rice',
-      width: 80
+      width: 90
     },
     {
       title: '单价/元',
@@ -210,7 +211,7 @@
       title: '面积㎡',
       dataIndex: 'square',
       key: 'square',
-      width: 80
+      width: 90
     },
     {
       title: '朝向',
@@ -222,30 +223,32 @@
       title: '户型',
       dataIndex: 'huxing',
       key: 'huxing',
-      width: 120
+      width: 130
     },
     {
       title: '楼层',
       dataIndex: 'louceng',
       key: 'louceng',
+      width:50
     },
     {
       title: '装修',
       dataIndex: 'zhuangxiu',
       key: 'zhuangxiu',
-      width: 100
+      width: 110
     },
     {
       title: '联系人',
       dataIndex: 'lianxiPeople',
       key: 'lianxiPeople',
-      width: 80
+      width: 90
     },
     {
       title: '电话',
       dataIndex: 'phone',
       key: 'phone',
       scopedSlots: { customRender: 'phones' },
+      width:90
     },
     {
       title: '地址',
@@ -257,7 +260,7 @@
       title: '来源',
       dataIndex: 'source',
       key: 'source',
-      width: 100
+      width: 90
     },
   ];
   export default {

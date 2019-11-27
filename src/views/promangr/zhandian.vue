@@ -79,6 +79,8 @@
                         <span slot="action">
                             <a-button type="primary">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
+                        </span>
+                         <span slot="pwdaction">
                             <a-button type="primary">登陆后台</a-button>
                             <a-button type="primary">查看密码</a-button>
                         </span>
@@ -113,7 +115,7 @@
             title: '网页',
             dataIndex: 'inter',
             key: 'inter',
-            width: '25%',
+            width: '20%',
             scopedSlots: { customRender: 'inter' },
         },
         {
@@ -126,14 +128,18 @@
         {
             title: '账号情况',
             dataIndex: 'userName',
-            width: '25%',
+            width: '20%',
             key: 'userName',
         },
-
         {
-            title: '操作',
+            title: '操作1',
             key: 'action',
             scopedSlots: { customRender: 'action' },
+        },
+         {
+            title: '操作2',
+            key: 'pwdaction',
+            scopedSlots: { customRender: 'pwdaction' },
         },
     ];
 

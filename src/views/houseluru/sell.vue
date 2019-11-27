@@ -1,8 +1,8 @@
 <template>
-    <div class="ts">
-        <div class="filter-wraps" style="padding: 24px 24px 0px 24px;">
-            <div class="search_bds">
-                <div class="tishi">
+    <div class="sellts">
+        <div class="sellfilter-wraps" style="padding: 24px 24px 0px 24px;">
+            <div class="sellsearch_bds">
+                <div class="selltishi">
                     <i class="iconfont icon-tishi"></i>贴心提示:
                 </div>
                 <div>
@@ -21,8 +21,8 @@
                 <a-spin :spinning="spinning">
                 </a-spin>
             </p>
-            <div class="fontU">
-                <ul class="sale-content-tip clear" style="margin:0px">
+            <div class="sellfontU">
+                <ul class="sellsale-content-tip clear" style="margin:0px">
                     <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
                     <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
                     <li><span>2.秒入图片小于600*450自动过滤;</span></li>
@@ -43,7 +43,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区类型:"
                             validate-status="error" help="">
-                            <a-select default-value="1" class="shihaoselw mianji" style="width:50%">
+                            <a-select default-value="1" class="sellshihaoselw sellmianji" style="width:50%">
                                 <a-select-option value="1">
                                     住宅
                                 </a-select-option>
@@ -93,16 +93,16 @@
             </div>
         </a-modal>
         <!-- 基本信息 -->
-        <div class="wrap">
+        <div class="sellwrap">
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:" validate-status=""
                             help="">
                             <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" />
-                            <label class="addshowxq">找不到小区？</label>
-                            <a class="addshowxq" @click="addshowxaqu">查看相似小区</a>
-                            <a class="addshowxq" @click="addxiaoqu">我要添加小区</a>
+                            <label class="selladdshowxq">找不到小区？</label>
+                            <a class="selladdshowxq" @click="addshowxaqu">查看相似小区</a>
+                            <a class="selladdshowxq" @click="addxiaoqu">我要添加小区</a>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
                             <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="address">
@@ -119,84 +119,63 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
                             validate-status="">
-                            <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积"
-                                class="mianji" />
-                            <label class="smianij">平方米</label>
+                                <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积"
+                                    class="sellmianji" />
+                                <label class="sellsmianij" style="">平方米</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
                             validate-status="">
                             <a-input type="number" v-model="ref.square" id="warning2" placeholder="活动面积"
-                                class="mianji" />
-                            <label class="smianij">平方米</label>
+                                class="sellmianji" />
+                            <label class="sellsmianij">平方米</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">
-                            <a-input id="error2" placeholder="" class="shihaow" />
-                            <a-select default-value="1" class="shihaoselw mianji">
-                                <a-select-option value="1">
-                                    栋
-                                </a-select-option>
-                                <a-select-option value="2">
-                                    弄
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    座
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    号
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    号楼
-                                </a-select-option>
-                                <a-select-option v-model="hutong" value="3">
-                                    胡同
+                            <a-input id="error2" placeholder="" class="sellshihaow"  />
+                            <a-select default-value="单元" class="sellshihaoselw sellmianji" >
+                                <a-select-option  v-for="(index,i) in danyuan" :key="i" :value="index">
+                                    {{index}}
                                 </a-select-option>
                             </a-select>
-                            <a-input id="" placeholder="" class="shihaow" />
-                            <a-select default-value="1" class="shihaoselw mianji">
-                                <a-select-option value="1">
-                                    西永
-                                </a-select-option>
-                                <a-select-option value="2">
-                                    磁器口
-                                </a-select-option>
-                                <a-select-option value="3">
-                                    大学城
-                                </a-select-option>
+                            <a-input id="" placeholder="" class="sellshihaow" />
+                            <a-select default-value="栋"  class="sellshihaoselw sellmianji">
+                                    <a-select-option v-for="(index,i) in zhuang" :key="i" :value="index">
+                                            {{index}}
+                                    </a-select-option>
                             </a-select>
-                            <a-input id="" placeholder="" class="shihaow" />
-                            <label>室</label>
+                            <a-input id="" placeholder="" class="sellshihaow" />
+                            <label class="sellsmianij">室</label>
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*户型" has-feedback
-                            validate-status="">
-                            <a-select default-value="1" class="huxing marginall" v-model="selectedShi">
+                            validate-status="" width='100%'>
+                            <a-select default-value="1" class="firhuxing" v-model="selectedShi">
                                 <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
                             </a-select>
                             <label>室</label>
-                            <a-select default-value="1" class="huxing" v-model="selectedTing">
+                            <a-select default-value="1" class="sellhuxing" v-model="selectedTing">
                                 <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
                             </a-select>
                             <label>厅</label>
-                            <a-select default-value="1" class="huxing" v-model="selectedChu">
+                            <a-select default-value="1" class="sellhuxing" v-model="selectedChu">
                                 <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
                             </a-select>
                             <label>厨</label>
-                            <a-select default-value="1" class="huxing" v-model="selectedWei">
+                            <a-select default-value="1" class="sellhuxing" v-model="selectedWei">
                                 <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
                             </a-select>
                             <label>卫</label>
-                            <a-select default-value="1" class="huxing" v-model="selectedTai">
+                            <a-select default-value="1" class="sellhuxing" v-model="selectedTai">
                                 <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
@@ -206,22 +185,21 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
-                            <a-input type="number" id="" v-model="ref.rice" placeholder="" class="mianji" />
-                            <label>元/月</label>
+                            <a-input type="number" id="" v-model="ref.rice" placeholder="" class="sellmianji" />
+                            <label class="sellsmianij">万</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
-                            validate-status="" help="
-                            ">
-                            <a-input-number :min="1950" :max="2019" v-model="ref.fangwuDate" />
-                            <label class="laberall">年</label>
+                            validate-status="" >
+                            <a-input-number :min="1950" :max="2019" v-model="ref.fangwuDate" class="sellmianji" />
+                            <label class="sellsmianij">年</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所在楼层" has-feedback
                             validate-status="" help="">
                             <a-input-number :min="1" :max="100" v-model="ceng" />
-                            <label class="laberall">楼</label>
-                            <label class="glaber">共</label>
+                            <label class="sellsmianij">楼</label>
+                            <label class="sellglaber">共</label>
                             <a-input-number :min="1" :max="100" v-model="lou" />
-                            <label class="laberall">楼</label>
+                            <label class="sellsmianij">楼</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向" has-feedback
                             validate-status="">
@@ -241,8 +219,8 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
-                            <a-input id="" placeholder="" class="mianji" />
-                            <label class="neibula">内部编号为0~20位,只能由数字和字母组成</label>
+                            <a-input id="" placeholder="" class="sellmianji" />
+                            <label class="sellneibula">内部编号为0~20位,只能由数字和字母组成</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房源标签:" validate-status=""
                             help="">
@@ -258,7 +236,7 @@
         </div>
 
         <!-- 住宅信息 -->
-        <div class="wrap">
+        <div class="sellwrap">
                 <a-layout style="padding: 24px 24px 24px 24px">
                     <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                         <a-form>
@@ -268,7 +246,7 @@
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="住宅子类型：" has-feedback
                                 validate-status="">
-                                <a-select default-value="1" class="huxing " >
+                                <a-select default-value="" class="zhuzhaibox " >
                                     <a-select-option v-for="(zhuzhai,i) in zhuzhaizitype" :key="i" :value="zhuzhai">
                                         {{zhuzhai}}
                                     </a-select-option>
@@ -276,7 +254,7 @@
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋产权：" has-feedback
                               validate-status="">
-                                <a-select default-value="1" class="huxing " >
+                                <a-select default-value="" class="zhuzhaibox " >
                                     <a-select-option v-for="(root,i) in houseroot" :key="i" :value="root">
                                         {{root}}
                                     </a-select-option>
@@ -292,7 +270,7 @@
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑结构" has-feedback
                            validate-status="">
-                              <a-radio-group :options="plainOptionjianzhutype" :defaultValue="valuejieg" />
+                              <a-radio-group :options="plainOptionjianzhujiegou" :defaultValue="valuejieg" />
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋年限" has-feedback
                            validate-status="">
@@ -308,7 +286,9 @@
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*佣金比例：" has-feedback
                            validate-status="">
-                              ≤<a-input-number :min="0" :max="10" class="yongjingbox"/>%
+                             <label class="yongjinlabel">≤</label>
+                             <a-input-number :min="0" :max="10"/>
+                             <label class="sellyongjingbox">%</label>
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
                            validate-status="">
@@ -326,7 +306,7 @@
                                 <a-checkbox >阁楼</a-checkbox>
                                 <a-checkbox >储藏室/地下室</a-checkbox>
                            </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套设施" has-feedback
                            validate-status="">
                                 <a-checkbox >电话</a-checkbox>
                                 <a-checkbox >热水器</a-checkbox>
@@ -347,8 +327,8 @@
                     </a-layout-content>
                 </a-layout>
         </div>
-        <div class="filter-wraps wrapscolor">
-            <div class="search_bds">
+        <div class="sellfilter-wraps sellwrapscolor">
+            <div class="sellsearch_bds">
                 <div class="tishi">
                     <i class="iconfont icon-tishi"></i>贴心提示:
                 </div>
@@ -364,61 +344,61 @@
             </div>
         </div>
         <!-- 房源介绍 -->
-        <div class="wrap">
+        <div class="sellwrap">
            <a-layout class="res" style="padding:24px;">
                 <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
                     <a-form>
-                         <div class="tilerbox">
-                             <div class="tiler-firstbox">
-                                <label class="labeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
+                         <div class="selltilerbox">
+                             <div class="selltiler-firstbox">
+                                <label class="selllabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
                              </div>
                              <div>
                                   <a-input  placeholder="字数限制10-30" style="width:50%;" />
                              </div>
                          </div>
-                         <div class="tilerbox">
-                             <div class="tiler-firstbox">
-                                <label class="labeltle">*信息描述：</label><label>30-300字效果为最佳</label>
+                         <div class="selltilerbox">
+                             <div class="selltiler-firstbox">
+                                <label class="selllabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
                              </div>
                              <div>
                                    <a-textarea  :rows="6" />
                                    <div>
-                                      <label class="minganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
+                                      <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
                                    </div>
                              </div>
                          </div>
-                         <div class="tilerbox">
-                                <div class="tiler-firstbox">
-                                    <label class="labeltle">*业主心态：</label><label>从房东卖房原因、是否急售等方面进行描述</label><label class="putnumber">(字数限制20-300)</label>
+                         <div class="selltilerbox">
+                                <div class="selltiler-firstbox">
+                                    <label class="selllabeltle">*业主心态：</label><label>从房东卖房原因、是否急售等方面进行描述</label><label class="putnumber">(字数限制20-300)</label>
                                 </div>
                                 <div>
                                     <a-textarea value="房东置换，诚心出售，欢迎看房，随时恭候您的到来。" :rows="5" />
                                     <div>
-                                    <label class="minganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
+                                    <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
                                     </div>
                                 </div>
                          </div>
-                         <div class="tilerbox">
-                                <div class="tiler-firstbox">
-                                    <label class="labeltle">服务介绍:</label>
+                         <div class="selltilerbox">
+                                <div class="selltiler-firstbox">
+                                    <label class="selllabeltle">服务介绍:</label>
                                     <label>多角度描述您的服务优势，例如：行业年限、专业经验、服务态度、可提供的服务种类等</label>
-                                    <label class="putnumber">(字数限制20-300)</label>
+                                    <label class="sellputnumber">(字数限制20-300)</label>
                                 </div>
                                 <div>
                                     <a-textarea :rows="5"  value="本人从事房地产多年，公司有大量好房源，欢迎进入我的店铺查看，欢迎随时电话咨询，相信我的专业，为您置业安家保驾护航。"/>
                                 </div>
                          </div>
-                         <div class="tilerbox">
-                                <div class="tiler-firstbox">
-                                    <label class="labeltle">*小区配套:</label><label>从交通、教育、医疗、内部环境、车位情况、安保措施方面来描述</label>
+                         <div class="selltilerbox">
+                                <div class="selltiler-firstbox">
+                                    <label class="selllabeltle">*小区配套:</label><label>从交通、教育、医疗、内部环境、车位情况、安保措施方面来描述</label>
                                 </div>
                                 <div>
                                     <a-textarea :rows="5" />
                                 </div>
                          </div>
-                         <div class="tilerbox">
-                                <div class="tiler-firstbox">
-                                    <label class="labeltle">税费信息:</label><label>相关费用，描述越详尽您的房源质量就会越高，展示给网友的机会就会增加(仅搜房帮)</label>
+                         <div class="selltilerbox">
+                                <div class="selltiler-firstbox">
+                                    <label class="selllabeltle">税费信息:</label><label>相关费用，描述越详尽您的房源质量就会越高，展示给网友的机会就会增加(仅搜房帮)</label>
                                 </div>
                                 <div>
                                     <a-textarea :rows="5" />
@@ -429,8 +409,8 @@
                 </a-layout-content>
             </a-layout>
         </div>
-        <div class="filter-wraps wrapscolor">
-            <div class="search_bds">
+        <div class="sellfilter-wraps sellwrapscolor">
+            <div class="sellsearch_bds">
                 <div class="tishi">
                     <i class="iconfont icon-tishi"></i>贴心提示:
                 </div>
@@ -452,48 +432,48 @@
             </div>
         </div>
         <!-- 图片信息 -->
-        <div class="wrap">
+        <div class="sellwrap">
             <a-layout class="res" style="padding:24px;">
                 <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
                     <a-form>
-                        <div class="picdivbox divallbox">
-                            <div class="laberboxtit">上传方式:</div>
+                        <div class="picdivbox selldivallbox">
+                            <div class="selllaberboxtitle">上传方式:</div>
                             <div class="laberboxla">
                                 <a-radio-group :options="plainOptionsc" :defaultValue="value6" />
                             </div>
                         </div>
-                        <div class="picdivbox divallbox">
-                            <div class="laberboxtit">水印位置:</div>
+                        <div class="picdivbox selldivallbox">
+                            <div class="selllaberboxtitle">水印位置:</div>
                             <div class="laberboxla">
                                 <a-radio-group :options="plainOptionsy" :defaultValue="value7" />
                             </div>
 
                         </div>
-                        <div class="shinei divallbox">
-                            <div class="laberbox">
-                                <span class="laberboxtitle">&nbsp;封&nbsp;面&nbsp;图:</span>
+                        <div class="sellshinei selldivallbox">
+                            <div class="selllaberbox">
+                                <span class="selllaberboxtitle">&nbsp;封&nbsp;面&nbsp;图:</span>
                                 <div class="laberboxla">点击希望设定为封面的图片右下角的封面按钮即可设定。</div>
                             </div>
 
                             <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card"
                                 :fileList="imgHeaderList" @preview="handlePreview" @change="handleChange">
                             </a-upload>
-                            <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
                                 <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
-                            </a-modal>
+                                </a-modal>
                         </div>
-                        <div class="shinei divallbox">
-                            <div class="laberbox">
-                                <span class="laberboxtitle">室内照片: </span>
+                        <div class="sellshinei selldivallbox">
+                            <div class="selllaberbox">
+                                <span class="selllaberboxtitle">室内照片: </span>
                                 <div class="shineipadd">
-                                    最多10张。您可以<label class="piclaber">从我的图库选择</label>
-                                    <a-button type="" class="buttontuku">我的图库</a-button>
-                                    <a-button type="" class="buttontuku">高清图库</a-button>
+                                    最多20张。您可以<label class="sellpiclaber">从我的图库选择</label>
+                                    <a-button type="" class="sellbuttontuku">我的图库</a-button>
+                                    <a-button type="" class="sellbuttontuku">高清图库</a-button>
                                     客厅/卧室/厨房等3张以上照片可帮助您获得较好效果！
                                     <label class="orangelaber">可拖拽交换位置</label>
                                 </div>
                             </div>
-                            <div class="tupianbox">
+                            <div class="selltupianbox">
                                 <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     listType="picture-card" :fileList="shineiList" @preview="handlePreview"
                                     @change="handleChange">
@@ -505,49 +485,49 @@
                                 </a-modal>
                             </div>
                         </div>
-                        <div class="shinei divallbox">
-                            <div class="laberbox">
-                                <span class="laberboxtitle">&nbsp;房&nbsp;型&nbsp;图:</span>
+                        <div class="sellshinei selldivallbox">
+                            <div class="selllaberbox">
+                                <span class="selllaberboxtitle">&nbsp;房&nbsp;型&nbsp;图:</span>
                                 <div class="shineipadd">
                                     <label
                                         class="orangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图</label>
-                                    <a-button type="" class="buttontuku">我的图库</a-button>
-                                    <a-button type="" class="orangetuku">房型图库</a-button>
-                                    <a-button type="" class="buttontuku">在线绘制</a-button>
+                                    <a-button type="" class="sellbuttontuku">我的图库</a-button>
+                                    <a-button type="" class="sellorangetuku">房型图库</a-button>
+                                    <a-button type="" class="sellbuttontuku">在线绘制</a-button>
                                 </div>
                             </div>
-                            <div class="tupianbox">
+                            <div class="selltupianbox">
                                 <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     listType="picture-card" :fileList="fangxinlist" @preview="handlePreview"
                                     @change="handleChange">
                                 </a-upload>
                             </div>
                         </div>
-                        <div class="shinei divallbox">
-                            <div class="laberbox">
-                                <span class="laberboxtitle">小区图片:</span>
+                        <div class="sellshinei selldivallbox">
+                            <div class="selllaberbox">
+                                <span class="selllaberboxtitle">小区图片:</span>
                                 <div class="shineipadd">
                                     <span>最多10张。您可以</span>
-                                    <label class="piclaber">从我的图库选择</label>
+                                    <label class="sellpiclaber">从我的图库选择</label>
                                     <span>或者</span>
-                                    <label class="piclaber">从小区图库选择</label>
-                                    <a-button type="" class="buttontuku">我的图库</a-button>
-                                    <a-button type="" class="buttontuku">小区图库</a-button>
+                                    <label class="sellpiclaber">从小区图库选择</label>
+                                    <a-button type="" class="sellbuttontuku">我的图库</a-button>
+                                    <a-button type="" class="sellbuttontuku">小区图库</a-button>
                                 </div>
-                                <div class="xiala">
+                                <div class="sellxiala">
                                     <a-dropdown>
                                         <a-menu slot="overlay">
                                             <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
                                                 <a-icon type="user" />{{pilaingsy}}</a-menu-item>
                                         </a-menu>
-                                        <a-button class="tupianchuli">图片处理
+                                        <a-button class="selltupianchuli">图片处理
                                             <a-icon type="up" />
                                         </a-button>
                                     </a-dropdown>
                                 </div>
                             </div>
-                            <div class="radisflex">
-                                <div class="tupianbox">
+                            <div class="sellradisflex">
+                                <div class="selltupianbox">
                                     <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                         listType="picture-card" :fileList="xiaoQuList" @preview="handlePreview"
                                         @change="handleChange">
@@ -569,23 +549,22 @@
                                     </div> -->
                             </div>
                         </div>
-                        <div class="fangyuansp">
-                            <div class="laberbox">
-                                <span class="laberboxtitle">房源视频:</span>
+                        <div class="sellfangyuansp">
+                            <div class="selllaberbox">
+                                <span class="selllaberboxtitle">房源视频:</span>
                                 <label> 视频大小在300M内，视频长度在1-3分钟为最佳，视频过短新三网审核不予通过。</label>
                                 <div>
                                     <a-upload name="file" :multiple="true"
                                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers">
-                                        <a-button class="updatedspbutton">
+                                        <a-button class="sellupdatedspbutton">
                                             <a-icon type="upload" />添加视频 </a-button>
                                     </a-upload>
                                 </div>
                             </div>
                         </div>
-                        <div class="bottomobx">
-                            <a-button type="" class="buttonfang okbutton" @click="saveHouse()">保存房源</a-button>
-                            <a-button type="" class="okbutton">保存草稿</a-button>
-
+                        <div class="sellbottomobx">
+                            <a-button type="" class="sellbuttonfang sellokbutton" @click="saveHouse()" >保存房源</a-button>
+                            <a-button type="" class="sellokbutton">保存草稿</a-button>
                         </div>
                     </a-form>
                 </a-layout-content>
@@ -615,6 +594,8 @@
     const plainOptionroot=['满五年','满二年','不满二年'];
     const plainOptionweiyi=['是','否'];
     const plainOptionhouse=['新房','二手房'];
+    const zhuang=['单元','号','幢','栋','号楼'];
+    const danyuan=['栋','号','弄','座','号楼','胡同'];
     export default {
         data() {
             return {
@@ -644,6 +625,8 @@
                 plainOptionroot,
                 plainOptionweiyi,
                 plainOptionhouse,
+                danyuan,
+                zhuang,
                 value2: '东',
                 value3: '随时看房',
                 value4: '豪华装修',
@@ -653,7 +636,7 @@
                 value8:'普通住宅',
                 value9:'70年产权',
                 valuetype:'板楼',
-                valuejieg:'平板',
+                valuejieg:'平层',
                 valueroot:'满五年',
                 valueweiyi:'是',
                 valuehouse:'二手房',
@@ -887,13 +870,13 @@
     }
 </script>
 <style lang="less" scoped>
-    .wrap {
+    .sellwrap {
         width: 100%;
         display: flex;
         flex: 0 0 auto;
     }
 
-    .ts {
+    .sellts {
         display: flex;
         width: 100%;
         flex-flow: column;
@@ -901,7 +884,7 @@
 
     }
 
-    .filter-wraps {
+    .sellfilter-wraps {
         position: relative;
         z-index: 1;
         display: flex;
@@ -909,11 +892,11 @@
         justify-content: center;
     }
 
-    .filter-wraps .search_bd .secitem dd a.select {
+    .sellfilter-wraps .search_bd .secitem dd a.select {
         color: #ff552e;
     }
 
-    .sale-content-tip {
+    .sellsale-content-tip {
         margin: 8px 0;
         background-color: #ffffdd;
         padding: 8px;
@@ -922,11 +905,11 @@
         font-size: 12px;
     }
 
-    // .ant-modal-close {
+    /* // .ant-modal-close {
     //     display: none;
-    // }
+    // } */
 
-    .search_bds {
+    .sellsearch_bds {
         background: #ffffdd;
         display: flex;
         flex-flow: column;
@@ -938,12 +921,12 @@
         border: 1px solid #ebedf0;
     }
 
-    .tishi {
+    .selltishi {
         display: flex;
         align-items: center;
     }
 
-    .filter-wraps .search_bds .secitem dt {
+    .sellfilter-wraps .sellsearch_bds .secitem dt {
         color: #888;
         width: 36px;
         font-size: 12px;
@@ -952,95 +935,88 @@
         float: left;
     }
 
-    .fontU {
+    .sellfontU {
         position: absolute;
         bottom: 50px;
         right: 0px;
     }
 
-    .ant-table-row ant-table-row-level-0 {
+    /* .ant-table-row ant-table-row-level-0 {
         display: flex;
         align-items: center;
         justify-content: center;
-    }
+    } */
 
-    .sale-content-tip li {
+    .sellsale-content-tip li {
         line-height: 20px;
         font-size: 12px;
         list-style: none;
     }
 
-    .ant-modal-content {
+    /* .ant-modal-content {
         width: 800px !important;
         height: 700px !important;
-    }
+    } */
 
     li {
         list-style: none;
     }
 
-    .ant-modal-body {
+    /* .ant-modal-body {
         height: 85%;
+    } */
+
+    .sellshihaow {
+        width: 70px !important;
+        padding-right: 8px;
     }
 
-    .shihaow {
-        width: 70px;
-        margin-right: 8px
+    .sellsmianij {
+        padding-left: 8px;
     }
 
-    .smianij {
-
-        margin-left: 5px
+    .sellmianji {
+        width: 120px !important;
     }
 
-    .mianji {
-        width: 100px !important;
+    .sellhuxing {
+        width: 90px !important;
+        padding-right: 5px;
+        padding-left: 25px
+    }
+    .zhuzhaibox{
+        width: 180px !important;
+        padding-left: 25px
+    }
+   .firhuxing{
+         width: 65px !important;
+        padding-right: 5px;
+   }
+    .sellshihaoselw {
+        padding-right: 22px;
+        padding-left: 8px;
+    }
+    .sellglaber {
+        padding-left: 17px;
+        padding-right: 5px;
     }
 
-    .huxing {
-        width: 100px !important;
-        margin-right: 5px;
-        margin-left: 15px
-    }
-
-    .shihaoselw {
-        margin-right: 22px;
-    }
-
-    .jiage {
-        width: 80px;
-        margin-right: 5px
-    }
-
-    .marginall {
-        margin-left: 0px;
-    }
-
-    .laberall {
-        margin-left: 5px;
-    }
-
-    .glaber {
-        margin-left: 15px;
-        margin-right: 5px;
-    }
-
-    .radisflex {
+    .sellradisflex {
         display: flex;
     }
 
-    .neibula {
+    .sellneibula {
         font-size: 12px;
         color: red;
-        margin-left: 5px;
+        padding-left: 5px;
     }
 
-    .wrapscolor {
+    .sellwrapscolor {
         padding: 0px 24px 0px 24px;
         background: #f0f2f5;
     }
 
-    .divallbox {
+    .selldivallbox {
         display: flex;
         border-bottom: 1px solid #ebedf0;
         width: 100% !important;
@@ -1048,64 +1024,57 @@
 
     }
 
-    .picdivbox {
+    .sellpicdivbox {
         display: flex;
         align-items: center;
         height: 40px !important;
-
-        .laberboxtit {
-            color: red;
-            margin-right: 10px;
-        }
     }
-
-    .laberbox {
+    .selllaberbox {
         display: flex;
         align-items: center;
-
-        .laberboxtitle {
-            color: red;
-            margin-right: 10px;
-        }
     }
+    .selllaberboxtitle {
+            color: red;
+            padding-right: 10px;
+        }
 
-    .tupianbox {
-        margin-left: 10px;
+    .selltupianbox {
+       
         padding-left: 60px;
     }
 
-    .shinei {
-        height: 180px !important;
+    .sellshinei {
+        min-height: 180px !important;
         flex-flow: column;
         flex: 0 0 auto;
     }
 
-    .piclaber {
+    .sellpiclaber {
         color: green;
     }
 
-    .fangxingtu {
+    /* .sellfangxingtu {
 
         flex-flow: column;
         height: 140px !important;
         flex: 0 0 auto;
 
-    }
+    } */
 
-    .xiaoqupic {
+    /* .sellxiaoqupic {
         flex-flow: column;
         height: 140px !important;
         flex: 0 0 auto;
-    }
+    } */
 
-    .fangyuansp {
+    .sellfangyuansp {
         display: flex;
         width: 100% !important;
         padding-left: 20px;
         height: 70px !important;
     }
 
-    .bottomobx {
+    .sellbottomobx {
         display: flex;
         align-items: center;
         border-bottom: 1px solid #ebedf0;
@@ -1114,81 +1083,85 @@
         height: 40px !important;
     }
 
-    .buttonfang {
+    .sellbuttonfang {
         margin-right: 15px;
     }
 
-    .orangelaber {
+    .sellorangelaber {
         color: orange;
     }
 
-    .buttontuku {
+    .sellbuttontuku {
         background-color: green;
         color: white;
         margin-right: 5px;
     }
 
-    .orangetuku {
+    .sellorangetuku {
         background-color: orange;
         color: white;
         margin-right: 5px;
     }
 
-    .updatedbutton {
+    /* .sellupdatedbutton {
         background-color: green;
         color: white;
         border-radius: 20px;
-    }
+    } */
 
-    .updatedspbutton {
+    .sellupdatedspbutton {
         background-color: green;
         color: white;
         height: 30px !important;
         width: 100px !important;
     }
 
-    .xiala {
-        margin-left: 28%;
+    .sellxiala {
+        padding-left: 28%;
     }
 
-    .okbutton {
+    .sellokbutton {
         background-color: red;
         color: white;
     }
 
-    .tupianchuli {
+    .selltupianchuli {
         background-color: #f0f2f5;
     }
 
-    .addshowxq {
-        margin-left: 5px;
+    .selladdshowxq {
+        padding-left: 5px;
         font-size: 14px
     }
-    .ant-modal{
+    .sellant-modal{
         width:800px !important;
         height: 700px !important;
     }
-    .labeltle{
+    .selllabeltle{
         font-weight:bold;
         color:black;
     }
-    .tilerbox{
+    .selltilerbox{
         padding-left: 20px;
         padding-top:20px;
     }
-    .tiler-firstbox
+    .selltiler-firstbox
     {
-        margin-bottom:10px;
+        padding-bottom:10px;
         
     }
-    .minganlabel{
+    .sellminganlabel{
         color:darkgrey;
     }
-    .putnumber{
+    .sellputnumber{
         color: orange;
      }
-     .yongjingbox{
-         margin-left: 5px;
-         margin-right: 5px;
+     .sellyongjingbox{
+         padding-left: 5px;
+         font-size:16px;
+     }
+     .yongjinlabel{
+         font-size:16px;
+         padding-right:8px;
      }
 </style>
