@@ -22,79 +22,94 @@
         {
             title: '小区',
             dataIndex: 'xiaoquName',
-            key:'det'
+            key:'det',
+            width:'7%'
         },
         {
             dataIndex: 'title',
             key:'biaoti',
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
+            width:'13%'
         },
-        {
-            title: '首页图',
-            dataIndex: 'img',
-            key:'duotu'
-        },
+        // {
+        //     title: '首页图',
+        //     dataIndex: 'img',
+        //     key:'duotu',
+        //     width:90
+        // },
         {
             title: '房型',
             dataIndex: 'huxing',
-            key:'fangwu'
+            key:'fangwu',
+            width:'8%'
         },
         {
             title: '面积',
             dataIndex: 'square',
-            key:'mianji'
+            key:'mianji',
+            width:'2%'
         },
         {
             title: '价格',
             dataIndex: 'rice',
-            key:'price'
+            key:'rice',
+            width:'5%'
         },
         {
             title: '朝向',
             dataIndex: 'chaoxiang',
-            key:'sq'
+            key:'sq',
+            width:'5%'
         },
         {
             title: '楼层',
             dataIndex: 'louceng',
-            key:'louceng'
+            key:'louceng',
+            width:'5%'
         },
         {
             title: '更新日期',
             dataIndex: 'creationTime',
-            key:'update'
+            key:'update',
+            width:'8%'
         },
         {
             title: '装修',
             dataIndex: 'zhuangxiu',
-            key:'upe'
+            key:'upe',
+            width:'8%'
         },
         {
             title: '房龄',
             dataIndex: 'fangwuDate',
-            key:'age'
+            key:'age',
+            width:'8%'
         },
         {
             title: '状态',
             dataIndex: 'publishStatus',
-            key:'status'
+            key:'status',
+            width:'8%'
         },
-        {
-            title: '发布历史',
-            dataIndex: 'history',
-            key:'history'
-        },
+        // {
+        //     title: '发布历史',
+        //     dataIndex: 'history',
+        //     key:'history',
+        //     width:100
+        // },
         {
             title: '均价/㎡',
             dataIndex: 'simpleRice',
-            key:'simplePrice'
+            key:'simplePrice',
+            width:'8%'
         },
         {
             title: '操作',
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
-            key:'donation'
+            key:'donation',
+          
         },
     ];
 

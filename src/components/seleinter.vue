@@ -280,6 +280,7 @@
                         this.houseurl = res.returnmsgs.houseurl;
                         this.flag = res.returnmsgs.flag;
                         this.houseid = res.returnmsgs.houseid;
+                        
 
                     }
                 })
@@ -288,13 +289,13 @@
     };
 </script>
 <style lang="less">
-    .ant-table-tbody>tr>td {
-        text-align: center;
-    }
+    // .ant-table-tbody>tr>td {
+    //     text-align: center;
+    // }
 
-    .ant-table-thead>tr:first-child>th {
-        text-align: center;
-    }
+    // .ant-table-thead>tr:first-child>th {
+    //     text-align: center;
+    // }
 
     .wangyeimg {
         width: 200px;

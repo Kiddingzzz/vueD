@@ -24,16 +24,18 @@
             </div>
         </div>
         <div style="padding: 15px 15px 0px 15px;">
-            <a-tabs defaultActiveKey="1" @change="callback">
+            <a-tabs defaultActiveKey="1" @change="callback" style=" border-bottom: none;">
                 <a-tab-pane tab="全部网站" key="1">
                     <a-table :columns="columnss" :dataSource="item">
                         <span slot="name" slot-scope="name">
-                            <a-tag v-for="tag in name" :key="tag">
+                            <a-tag v-for="tag in name" :key="tag"
+                              :color="tag==='loser' ? 'volcano' : (tag.toUpperCase()!='允许发布'? 'rosybrown' : 'skyblue')"
+                            >
                                 {{tag.toUpperCase()}}
                             </a-tag>
                         </span>
-                        <span slot="inter" slot-scope="text, record">
-                            <img class="logo" :src="record.inter">
+                        <span slot="inter" slot-scope="text, record" >
+                           <img class="logo" :src="record.inter"/>
                         </span>
                         <span slot="tiaojian" slot-scope="tiaojian">
                             <a-tag v-for="tag in tiaojian" @click="ceshi(tag)"
@@ -76,11 +78,12 @@
                                     ></el-input>
                             </a-modal>
                         </span>
+                        <span slot="userName" slot-scope="text, record">
+                                <a>{{record.userName}}</a>
+                        </span>
                         <span slot="action">
                             <a-button type="primary">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
-                        </span>
-                         <span slot="pwdaction">
                             <a-button type="primary">登陆后台</a-button>
                             <a-button type="primary">查看密码</a-button>
                         </span>
@@ -108,39 +111,35 @@
             title: '权限',
             dataIndex: 'name',
             key: 'name',
-            width: '10%',
+            width: '18%',
             scopedSlots: { customRender: 'name' },
         },
         {
             title: '网页',
             dataIndex: 'inter',
             key: 'inter',
-            width: '20%',
+            width: '19%',
             scopedSlots: { customRender: 'inter' },
         },
         {
             title: '条件',
             key: 'tiaojian',
             dataIndex: 'tiaojian',
-            width: '15%',
+            width: '18%',
             scopedSlots: { customRender: 'tiaojian' },
         },
         {
             title: '账号情况',
             dataIndex: 'userName',
-            width: '20%',
+            width: '18%',
             key: 'userName',
+            scopedSlots: { customRender: 'userName' },
         },
         {
-            title: '操作1',
+            title: '操作',
             key: 'action',
             scopedSlots: { customRender: 'action' },
-        },
-         {
-            title: '操作2',
-            key: 'pwdaction',
-            scopedSlots: { customRender: 'pwdaction' },
-        },
+        }
     ];
 
     const datas = [

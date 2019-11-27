@@ -612,7 +612,7 @@
                 weiyiUserId: '',
                 saveRes: {},
                 leasestyle:{
-                    height:'700px'
+                    height:'470px'
                 }
             }
         },

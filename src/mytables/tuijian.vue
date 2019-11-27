@@ -101,13 +101,11 @@
     
  </script>
  <style>
-       .ant-layout, .ant-layout *{
-           border-bottom: none;
-       }
+       
        .heardbox{
            margin: 10px;
            width:100%;
-           border-color: red;
+          
        }
        .latitle{
            color: green;

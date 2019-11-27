@@ -22,7 +22,10 @@
                                        
                      {{tag.toUpperCase()}}
                   </a-tag>
-             </span>
+              </span>
+             <span slot="zhanghao" slot-scope="text, record">
+                     <a>{{record.zhanghao}}</a>
+              </span>
              <span slot="action" slot-scope="text, record">
                   <a-button type="primary">删除</a-button>
                   <a-button type="primary" >修改密码</a-button>
@@ -38,28 +41,29 @@
       title: '权限',
       dataIndex: 'name',
       key: 'name',
-      width:'5%',
+      width:'17%',
       scopedSlots: { customRender: 'name' },
     },
     {
       title: '网页',
       dataIndex: 'inter',
       key: 'inter',
-      width:'20%',
+      width:'18%',
       scopedSlots: { customRender: 'inter' },
     },
     {
       title: '条件',
       key: 'tiaojian',
       dataIndex: 'tiaojian',
-      width:'20%',
+      width:'18%',
       scopedSlots: { customRender: 'tiaojian' },
     },
     {
       title: '账号情况',
       dataIndex: 'zhanghao',
-      width:'20%',
+      width:'18%',
       key: 'zhanghao',
+      scopedSlots: { customRender: 'zhanghao' },
     },
    
     {

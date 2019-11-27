@@ -134,13 +134,13 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">
                             <a-input id="error2" placeholder="" class="sellshihaow"  />
-                            <a-select default-value="单元" class="sellshihaoselw sellmianji" >
+                            <a-select default-value="栋" class="sellshihaoselw sellmianji" >
                                 <a-select-option  v-for="(index,i) in danyuan" :key="i" :value="index">
                                     {{index}}
                                 </a-select-option>
                             </a-select>
                             <a-input id="" placeholder="" class="sellshihaow" />
-                            <a-select default-value="栋"  class="sellshihaoselw sellmianji">
+                            <a-select default-value="单元"  class="sellshihaoselw sellmianji">
                                     <a-select-option v-for="(index,i) in zhuang" :key="i" :value="index">
                                             {{index}}
                                     </a-select-option>
@@ -646,7 +646,7 @@
                     lineHeight: '30px',
                 },
                 tstyle:{
-                    height:'700px'
+                    height:'470px'
                 },
                 style:{
                 },
