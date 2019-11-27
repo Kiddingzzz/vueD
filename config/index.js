@@ -17,8 +17,15 @@ module.exports = {
         pathRewrite: {
           '^/api': '/'
         }
+      },
+      '/prod': {  //将target的值印射为 /mntncar，
+        target: 'https://openapi.fang.com/',
+        secure: true,  // 如果是https接口，需要配置这个参数
+        changeOrigin: true,  //是否跨域
+        pathRewrite: {
+          '^/prod': '/'
+        }
       }
-      
     },
 
     // Various Dev Server settings
@@ -52,7 +59,7 @@ module.exports = {
     // Paths
     assetsRoot: path.resolve(__dirname, '../dist'),
     assetsSubDirectory: 'static',
-    assetsPublicPath: '/',
+    assetsPublicPath: './',
 
     /**
      * Source Maps

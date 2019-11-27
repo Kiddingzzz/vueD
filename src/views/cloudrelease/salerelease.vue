@@ -120,7 +120,6 @@ export default {
       },
       //接受house对象 
       getMag(house){
-           console.log(`aaa`+JSON.stringify(house))
            this.houselist=house;
            if( this.houselist!=""&& this.houselist!=undefined)
            {

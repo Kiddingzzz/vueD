@@ -177,12 +177,10 @@
             },
             //
             async seachShow(){
-                 console.log(1)
                  const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
                  if(respones.status == 200)
                  {
                     this.list=respones.data.items;
-                    console.log('this.list:'+JSON.stringify(this.list))
                  }
                },
         },
