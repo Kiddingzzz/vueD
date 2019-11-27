@@ -28,7 +28,6 @@
                   <a-button type="primary" >修改密码</a-button>
                   <a-button type="primary" >登陆后台</a-button>
                   <a-button type="primary" >查看密码</a-button>
-                                           
              </span>
          </a-table>    
      </div>
@@ -39,27 +38,27 @@
       title: '权限',
       dataIndex: 'name',
       key: 'name',
-      width:'10%',
+      width:'5%',
       scopedSlots: { customRender: 'name' },
     },
     {
       title: '网页',
       dataIndex: 'inter',
       key: 'inter',
-      width:'25%',
+      width:'20%',
       scopedSlots: { customRender: 'inter' },
     },
     {
       title: '条件',
       key: 'tiaojian',
       dataIndex: 'tiaojian',
-      width:'15%',
+      width:'20%',
       scopedSlots: { customRender: 'tiaojian' },
     },
     {
       title: '账号情况',
       dataIndex: 'zhanghao',
-      width:'25%',
+      width:'20%',
       key: 'zhanghao',
     },
    
@@ -111,13 +110,13 @@
   };
 </script>
 <style  lang="less">
-    .ant-table-tbody>tr>td{  
-          text-align: center;
-    }
-    .ant-table-thead > tr:first-child > th
-    {
-        text-align: center;
-    }
+    // .ant-table-tbody>tr>td{  
+    //       text-align: center;
+    // }
+    // .ant-table-thead > tr:first-child > th
+    // {
+    //     text-align: center;
+    // }
     .wangyeimg{
       width: 200px;
       height: 70px;
