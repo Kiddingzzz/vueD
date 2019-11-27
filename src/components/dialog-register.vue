@@ -150,13 +150,14 @@ export default {
         return;
       }
       const data = {
-        UserName: this.phoneNumber,
+        //userNameOrEmailAddress: this.phoneNumber,
+        userNameOrEmailAddress: this.userName,
         password: this.password,
-        sendCode: this.sendCode,
-        surname: this.phoneNumber
+        // sendCode: this.sendCode,
+        // surname: this.phoneNumber
       };
       try {
-        const Statu = `${this.$config.api}/api/Account/Register`;
+        const Statu = `${this.$config.api}/api/cms/acount/register`;
         const res = await this.$http.post(Statu, data);
         console.log(res);
         console.log(this.phoneNumber);
@@ -189,8 +190,8 @@ export default {
   background: rgba(0, 0, 0, 0.6);
   z-index: 9999;
   .dialog-container {
-    width: 650px;
-    height: 732px;
+    width: 550px;
+    height: 632px;
     line-height: 20px;
     border-radius: 10px;
     text-align: center;
@@ -207,7 +208,7 @@ export default {
       font-size: 18px;
       font-weight: 600;
       color: #696969;
-      padding: 100px 0px 0 0px;
+      padding: 50px 0px 0 0px;
       box-sizing: border-box;
     }
     .content {

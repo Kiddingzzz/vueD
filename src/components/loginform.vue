@@ -7,7 +7,8 @@
 
       <div class="item-qcode">
         <div v-if="account == 'qcode'">
-          <div class="icd">
+                <img src="../assets/weixin.jpg" class="maimgs">
+          <!-- <div class="icd">
             <div class="notification">
               <div v-if="type == 'pay'">
                 <img src="../assets/pay.png" class="maimgs">
@@ -24,7 +25,7 @@
               <img src="../assets/weixinlogo.png" class="imgs"  @click="type = 'weixin'">
               <img src="../assets/qqlogo.png" class="imgs" @click="type = 'qq'">
             </div>           
-          </div>
+          </div> -->
         </div>
 
         <div v-if="account == 'username'">
@@ -59,7 +60,7 @@
 
       <div class="btm">
         <div class="tip2">开单网</div>
-        <div class="pwd">
+        <div class="pwd" v-if="account == 'username'">
           <div @click="openMask" class="reg">注册</div>
           <div class="forget">忘记密码</div>
         </div>
@@ -316,34 +317,30 @@ export default {
   height: 100%;
   width: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   position: absolute;
   top: 0;
   right: 0;
-  background: url("../assets/bg.png");
+  background: url("../assets/bg.jpg");
   background-size: 100% 100%;
   box-sizing: boder-box;
   .banner-login {
-    width: 550px;
+    width: 450px;
+    height: 505px;
     position: absolute;
     right: 10vw;
-    // top: 130px;
-    bottom: 130px;
     line-height: 20px;
     border-radius: 10px;
     text-align: center;
-    border: 1px solid #c1c1c1;
     box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.3);
-    background-color: #ffffff;
-
+    background-color: rgba(255,255,255,0.6);
     .img {
       width: 150px;
       height: 80px;
-      margin-top: 30px;
-
+      margin: 30px 0;
     }
     .item-qcode {
-      margin-top: 55px;
       .icons {
         display: flex;
         flex-direction: row;
@@ -356,42 +353,45 @@ export default {
           border-radius: 5px;
         }
       }
-      .notification {
-        div {
-          margin-top: 78px;
-          margin-bottom: 60px;
-          color: rgba(181, 181, 181, 1);
-          font-size: 14px;
-          text-align: center;
-          display: flex;
-          flex-direction: column-reverse;
-          align-items: center;
-          font-family: SourceHanSansSC-regular;
-          .maimgs{
-            margin-top: -55px;
-            height: 230px;
-            width: 230px;
-          }
-        }
+      .maimgs{
+        height: 230px;
+        width: 230px;
       }
+      // .notification {
+      //   div {
+      //     margin-top: 78px;
+      //     margin-bottom: 60px;
+      //     color: rgba(181, 181, 181, 1);
+      //     font-size: 14px;
+      //     text-align: center;
+      //     display: flex;
+      //     flex-direction: column-reverse;
+      //     align-items: center;
+      //     font-family: SourceHanSansSC-regular;
+      //     .maimgs{
+      //       margin-top: -55px;
+      //       height: 230px;
+      //       width: 230px;
+      //     }
+      //   }
+      // }
       .icd {
-        height: 228px;
+        height: 230px;
       }
       .logins {
         display: flex;
         flex-flow: column;
         align-items: center;
-        height: 228px;
+        height: 230px;
 
         .el-input__inner {
-          background-color: rgba(245, 245, 245, 1);
+          background-color: rgba(255, 255, 255, 1);
           border: none;
         }
         .inputs {
           width: 350px;
           height: 36px;
           border-radius: 0px 5px 5px 0px;
-          // background-color: rgba(245, 245, 245, 1);
           color: rgba(135, 135, 135, 1);
           font-size: 14px;
           border: none;
@@ -419,27 +419,24 @@ export default {
       justify-content: space-between;
       width: 184px;
       height: 36px;
-      margin: 100px auto;
+      margin: 35px auto;
       .g2-cad {
         width: 72px;
-        line-height: 30px;
+        line-height: 34px;
         border-radius: 5px;
-        color: rgba(135, 135, 135, 1);
+        color: rgba(2, 49, 121, 0.8);
         font-size: 14px;
         text-align: center;
         font-family: Roboto;
-
         &.active {
-          border: 1px solid rgba(135, 135, 135, 1);
+          border: 1px solid rgba(2, 49, 121, 0.8);;
         }
       }
     }
     .btm {
-      position: absolute;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
-      bottom: 27px;
       height: 21px;
       width: 100%;
       .tip2 {
