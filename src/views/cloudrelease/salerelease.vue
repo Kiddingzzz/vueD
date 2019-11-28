@@ -84,7 +84,6 @@
             </div>
             <!-- 上/下一步 -->
             <div class="pre">
-                <a-button class="next" type="" @click="next" v-if="current<2" >发布</a-button>
                 <a-button type="primary" @click="pre" v-if="current>0">上一步</a-button>
             </div>
             
@@ -112,9 +111,7 @@ export default {
             seleinter,
         },
     methods: {
-        next() {
-            if (this.current++ > 2) this.current = 0;
-        },
+      
        pre() {
         if (this.current-- < 1) this.current = 0;
       },
@@ -161,7 +158,7 @@ export default {
      background: #ffffdd;
      width: 100%;
      padding: 12px;
-    line-height: 26px;
+     line-height: 26px;
      border-radius: 10px;
      border: 1px solid #ebedf0;
     }

@@ -35,15 +35,17 @@
               v-model="user"
               placeholder="请输入姓名"
               class="inputs"
+              @keyup.enter.native="doLogin()"
             ></el-input>
             <el-input
               type="password"
               placeholder="请输入密码"
               v-model="password"
               class="inputs"
+              @keyup.enter.native="doLogin()"
               prefix-icon="iconfont icon-mima"
             ></el-input>
-            <button class="btns" @click="doLogin()">登陆</button>
+            <button class="btns" @click="doLogin()">登录</button>
           </div>
         </div>
       </div>
@@ -289,15 +291,24 @@ export default {
 					password: this.password
 				};
         const statu = `${this.$config.api}/api/cms/acount/loginAuthentic`;
-        await this.$http.post(statu,datas).then(Response => {
-          console.log(JSON.stringify(Response))
-          if(Response.status == 200){
-            // this.$store.login(Response.data.userNameOrEmailAddress)
-            this.$store.userId = Response.data.userId; 
-            this.$router.replace('/index')
+       try{
+          await this.$http.post(statu,datas).then(Response => {
+            console.log(JSON.stringify(Response))
+            if(Response.status == 200){
+              // this.$store.login(Response.data.userNameOrEmailAddress)
+              this.$store.userId = Response.data.userId; 
+              this.$router.replace('/index')
+            }
             
-          }
-        })
+          })
+       }
+       catch(e)
+       {
+         this.$error({
+          title: '提示',
+          content: '账号或密码错误！！！',
+        });
+       }
 
 				// uni.setStorageSync('UserInfo', res.user);
 			

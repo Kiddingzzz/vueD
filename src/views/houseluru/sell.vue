@@ -33,7 +33,7 @@
                 </ul>
             </div>
         </a-modal>
-        <a-modal title="添加小区" v-model="addxq" @ok="addok">
+     <!--   <a-modal title="添加小区" v-model="addxq" @ok="addok">
             <div style="width:100%">
                 <div>
                     <a-form>
@@ -91,7 +91,7 @@
                 </div>
 
             </div>
-        </a-modal>
+        </a-modal>-->
         <!-- 基本信息 -->
         <div class="sellwrap">
             <a-layout style="padding: 24px 24px 24px 24px">
@@ -100,9 +100,9 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:" validate-status=""
                             help="">
                             <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" />
-                            <label class="selladdshowxq">找不到小区？</label>
+                            <!--<label class="selladdshowxq">找不到小区？</label>
                             <a class="selladdshowxq" @click="addshowxaqu">查看相似小区</a>
-                            <a class="selladdshowxq" @click="addxiaoqu">我要添加小区</a>
+                            <a class="selladdshowxq" @click="addxiaoqu">我要添加小区</a>-->
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
                             <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="address">
@@ -244,7 +244,7 @@
                                 validate-status="">
                                 <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" />
                             </a-form-item>
-                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="住宅子类型：" has-feedback
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="住宅类型：" has-feedback
                                 validate-status="">
                                 <a-select default-value="" class="zhuzhaibox " >
                                     <a-select-option v-for="(zhuzhai,i) in zhuzhaizitype" :key="i" :value="zhuzhai">
@@ -287,7 +287,7 @@
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*佣金比例：" has-feedback
                            validate-status="">
                              <label class="yongjinlabel">≤</label>
-                             <a-input-number :min="0" :max="10"/>
+                             <a-input-number :min="0" :max="10" :step="0.5" />
                              <label class="sellyongjingbox">%</label>
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
@@ -579,7 +579,7 @@
     const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北', '南北'];
-    const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛胚'];
+    const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛坯'];
     const plainOptioncf = ['随时看房', '非工作时间', '电话预约', '其他'];
     const plainOptiongn = ['集体供暖', '自供暖', '不供暖'];
     const plainOptionsc = ['普通上传', '批量上传', '大图压缩批量上传'];
@@ -837,12 +837,12 @@
             showModal() {
                 this.visible = true;
             },
-            addxiaoqu() {
-                this.addxq = true;
-            },
-            addshowxaqu() {
-                this.addshowxqu = true;
-            },
+            // addxiaoqu() {
+            //     this.addxq = true;
+            // },
+            // addshowxaqu() {
+            //     this.addshowxqu = true;
+            // },
             handleOk(e) {
                 console.log(e);
                 this.visible = false;

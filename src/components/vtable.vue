@@ -30,7 +30,7 @@
             key:'biaoti',
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
-            width:'13%'
+            width:'12%'
         },
         // {
         //     title: '首页图',
@@ -60,7 +60,7 @@
             title: '朝向',
             dataIndex: 'chaoxiang',
             key:'sq',
-            width:'5%'
+            width:'4.5%'
         },
         {
             title: '楼层',
@@ -72,7 +72,7 @@
             title: '更新日期',
             dataIndex: 'creationTime',
             key:'update',
-            width:'8%'
+            width:'9%'
         },
         {
             title: '装修',
@@ -84,7 +84,7 @@
             title: '房龄',
             dataIndex: 'fangwuDate',
             key:'age',
-            width:'8%'
+            width:'7%'
         },
         {
             title: '状态',
@@ -109,6 +109,7 @@
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
             key:'donation',
+            width:'10%'
           
         },
     ];

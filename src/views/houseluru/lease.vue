@@ -99,9 +99,9 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:" validate-status=""
                             help="">
                             <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" />
-                            <label class="addshowxq">找不到小区？</label>
+                            <!--<label class="addshowxq">找不到小区？</label>
                             <a class="addshowxq" @click="addshowxaqu">查看相似小区</a>
-                            <a class="addshowxq" @click="addxiaoqu">我要添加小区</a>
+                            <a class="addshowxq" @click="addxiaoqu">我要添加小区</a>-->
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
                             <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="address">
@@ -524,7 +524,7 @@
     const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北', '南北'];
-    const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛胚'];
+    const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛坯'];
     const plainOptioncf = ['随时看房', '非工作时间', '电话预约', '其他'];
     const plainOptiongn = ['集体供暖', '自供暖', '不供暖'];
     const plainOptionsc = ['普通上传', '批量上传', '大图压缩批量上传'];
@@ -756,12 +756,12 @@
             showModal() {
                 this.visible = true;
             },
-            addxiaoqu() {
-                this.addxq = true;
-            },
-            addshowxaqu() {
-                this.addshowxqu = true;
-            },
+            // addxiaoqu() {
+            //     this.addxq = true;
+            // },
+            // addshowxaqu() {
+            //     this.addshowxqu = true;
+            // },
             leasehanderOk(e) {
                 console.log(e);
                 this.visible = false;
