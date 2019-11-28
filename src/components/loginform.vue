@@ -340,6 +340,7 @@ export default {
     width: 450px;
     height: 505px;
     position: absolute;
+    top: 22vh;
     right: 10vw;
     line-height: 20px;
     border-radius: 10px;

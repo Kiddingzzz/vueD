@@ -1,8 +1,8 @@
 <template>
 <div class="res ant-layout">
     <div class="tsall">
-           <div class="filter-wraps" v-if="current==0">
-                <div class="search_bds" >
+           <div class="tsfilter-wraps" v-if="current==0">
+                <div class="tssearch_bds" >
                     <div class="tishi">
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
@@ -26,8 +26,8 @@
                 </a-steps>
             </div>
             <!-- 2、3步提示 -->
-            <div class="filter-wraps" v-if="current==1">
-                <div class="search_bds" >
+            <div class="tsfilter-wraps" v-if="current==1">
+                <div class="tssearch_bds" >
                     <div class="tishi"> 
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
@@ -42,8 +42,8 @@
                     </div>
                 </div>
             </div>
-            <div class="filter-wraps" v-if="current==2">
-                <div class="search_bds" >
+            <div class="tsfilter-wraps" v-if="current==2">
+                <div class="tssearch_bds" >
                     <div class="tishi">
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
@@ -144,7 +144,7 @@ export default {
         padding: 24px 24px 0px 24px;
      
         }
-    .filter-wraps{
+    .tsfilter-wraps{
          padding: 24px 0px;
          position: relative;
          display: flex;
@@ -152,7 +152,7 @@ export default {
         justify-content: center;
            
      }
-    .search_bds{
+    .tssearch_bds{
     display: flex;
      flex-direction: column;
      background: #ffffdd;
