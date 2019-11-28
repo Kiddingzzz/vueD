@@ -15,7 +15,7 @@
         <div>
           <label>登录密码:</label>
           <input
-            type="text"
+            type="password"
             class="inputs"
             placeholder="请输入6-20个由大小字母、数字、标点组成的密码"
             v-model="password"
@@ -23,7 +23,7 @@
         </div>
         <div>
           <label>确认密码:</label>
-          <input type="text" class="inputs" placeholder="请确认您的登录密码" v-model="respassword">
+          <input type="password" class="inputs" placeholder="请确认您的登录密码" v-model="respassword">
         </div>
         <div>
           <label>手机号码:</label>
@@ -94,56 +94,56 @@ export default {
       this.showMask = false;
     },
 
-    async sendcode() {
-      if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber)) {
-        this.$message({
-          title: "请填写正确手机号码",
-          icon: "none"
-        });
-        return false;
-      }
-      const data = {
-        phoneNumber: this.phoneNumber,
-        type: 10
-      };
-      // const res = this.$http.post('api/Account/SendCode', data);
-      const Statu = `${this.$config.api}/api/Account/SendCode`;
-      const res = await this.$http.post(Statu, data);
-      console.log(123);
-      this.getCodeText = "发送中...";
-      this.disabled = true;
-      this.getCodeisWaiting = true;
-      this.getCodeBtnColor = "rgba(135,135,135,1)";
-      //示例用定时器模拟请求效果
-      setTimeout(() => {
-        this.$message({
-          title: "验证码已发送",
-          icon: "none"
-        });
-        this.disabled = false;
-        //示例默认1234，生产中请删除这一句。
-        //this.code=1234;
-        this.setTimer();
-      }, 1000);
-    },
-    setTimer() {
-      let holdTime = 60;
-      this.getCodeText = "重新获取(60)";
-      this.Timer = setInterval(() => {
-        if (holdTime <= 0) {
-          this.getCodeisWaiting = false;
-          this.getCodeBtnColor = "#878787";
-          this.getCodeText = "获取验证码";
-          clearInterval(this.Timer);
-          return;
-        }
-        this.getCodeText = "重新获取(" + holdTime + ")";
-        holdTime--;
-      }, 1000);
-    },
+    // async sendcode() {
+    //   if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber)) {
+    //     this.$error({
+    //       title: "请填写正确手机号码",
+    //       icon: "none"
+    //     });
+    //     return false;
+    //   }
+    //   const data = {
+    //     phoneNumber: this.phoneNumber,
+    //     type: 10
+    //   };
+    //   // const res = this.$http.post('api/Account/SendCode', data);
+    //   const Statu = `${this.$config.api}/api/Account/SendCode`;
+    //   const res = await this.$http.post(Statu, data);
+    //   console.log(123);
+    //   this.getCodeText = "发送中...";
+    //   this.disabled = true;
+    //   this.getCodeisWaiting = true;
+    //   this.getCodeBtnColor = "rgba(135,135,135,1)";
+    //   //示例用定时器模拟请求效果
+    //   setTimeout(() => {
+    //     this.$success({
+    //       title: "验证码已发送",
+    //       icon: "none"
+    //     });
+    //     this.disabled = false;
+    //     //示例默认1234，生产中请删除这一句。
+    //     //this.code=1234;
+    //     this.setTimer();
+    //   }, 1000);
+    // },
+    // setTimer() {
+    //   let holdTime = 60;
+    //   this.getCodeText = "重新获取(60)";
+    //   this.Timer = setInterval(() => {
+    //     if (holdTime <= 0) {
+    //       this.getCodeisWaiting = false;
+    //       this.getCodeBtnColor = "#878787";
+    //       this.getCodeText = "获取验证码";
+    //       clearInterval(this.Timer);
+    //       return;
+    //     }
+    //     this.getCodeText = "重新获取(" + holdTime + ")";
+    //     holdTime--;
+    //   }, 1000);
+    // },
     async doregister() {
       if (this.password.length < 6) {
-        this.$message({
+        this.$error({
           icon: "none",
           title: "密码最短为 6 个字符"
         });
