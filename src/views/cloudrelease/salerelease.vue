@@ -78,13 +78,12 @@
             </div>
 
             <div class="tabcontent" v-if="current==2">
-                <a-tabs  type="card">
-                    第三步
-                </a-tabs>   
+                <susstable></susstable>   
             </div>
             <!-- 上/下一步 -->
             <div class="pre">
-                <a-button type="primary" @click="pre" v-if="current>0">上一步</a-button>
+                <a-button type="primary" @click="pre" v-if="current==1">上一步</a-button>
+                <a-button type="primary"  @click="goon" v-if="current==2">继续发布</a-button>
             </div>
             
     </div>
@@ -93,7 +92,7 @@
 <script>
 import vtable from '../../components/vtable'
 import seleinter from '../../components/seleinter'
- 
+import susstable from '../../components/susstable'
 
 export default {
     data() {
@@ -109,7 +108,7 @@ export default {
     components: {
             vtable,
             seleinter,
-           
+            susstable
         },
     methods: {
         adduser(){
@@ -118,6 +117,10 @@ export default {
       
        pre() {
         if (this.current-- < 1) this.current = 0;
+      },
+      //继续发布
+      goon(){           
+            this.current = 0;
       },
       //接受house对象 
       getMag(house){

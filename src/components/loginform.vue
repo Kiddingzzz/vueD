@@ -1,70 +1,72 @@
 <template>
-  <div class="wrapper-login">
-    <div class="banner-login">
-      <div class="imgs">
-        <img src="../assets/logoJXW.png" class="img">
-      </div>
-
-      <div class="item-qcode">
-        <div v-if="account == 'qcode'">
-                <img src="../assets/weixin.jpg" class="maimgs">
-          <!-- <div class="icd">
-            <div class="notification">
-              <div v-if="type == 'pay'">
-                <img src="../assets/pay.png" class="maimgs">
-              </div>
-              <div v-if="type == 'weixin'">
-                <img src="../assets/weixin.jpg" class="maimgs">
-              </div>
-              <div v-if="type == 'qq'">
-                <img src="../assets/qq.png" class="maimgs">
-              </div>
-            </div>
-            <div class="icons">
-              <img src="../assets/paylogo.png" class="imgs" @click="type = 'pay'">
-              <img src="../assets/weixinlogo.png" class="imgs"  @click="type = 'weixin'">
-              <img src="../assets/qqlogo.png" class="imgs" @click="type = 'qq'">
-            </div>           
-          </div> -->
+<div class="loginbg">
+    <div class="wrapper-login">
+      <div class="banner-login">
+        <div class="imgs">
+          <img src="../assets/logoJXW.png" class="img">
         </div>
 
-        <div v-if="account == 'username'">
-          <div class="logins">
-            <el-input
-              prefix-icon="iconfont icon-User"
-              v-model="user"
-              placeholder="请输入姓名"
-              class="inputs"
-              @keyup.enter.native="doLogin()"
-            ></el-input>
-            <el-input
-              type="password"
-              placeholder="请输入密码"
-              v-model="password"
-              class="inputs"
-              @keyup.enter.native="doLogin()"
-              prefix-icon="iconfont icon-mima"
-            ></el-input>
-            <button class="btns" @click="doLogin()">登录</button>
+        <div class="item-qcode">
+          <div v-if="account == 'qcode'">
+                  <img src="../assets/weixin.jpg" class="maimgs">
+            <!-- <div class="icd">
+              <div class="notification">
+                <div v-if="type == 'pay'">
+                  <img src="../assets/pay.png" class="maimgs">
+                </div>
+                <div v-if="type == 'weixin'">
+                  <img src="../assets/weixin.jpg" class="maimgs">
+                </div>
+                <div v-if="type == 'qq'">
+                  <img src="../assets/qq.png" class="maimgs">
+                </div>
+              </div>
+              <div class="icons">
+                <img src="../assets/paylogo.png" class="imgs" @click="type = 'pay'">
+                <img src="../assets/weixinlogo.png" class="imgs"  @click="type = 'weixin'">
+                <img src="../assets/qqlogo.png" class="imgs" @click="type = 'qq'">
+              </div>           
+            </div> -->
+          </div>
+
+          <div v-if="account == 'username'">
+            <div class="logins">
+              <el-input
+                prefix-icon="iconfont icon-User"
+                v-model="user"
+                placeholder="请输入姓名"
+                class="inputs"
+                @keyup.enter.native="doLogin()"
+              ></el-input>
+              <el-input
+                type="password"
+                placeholder="请输入密码"
+                v-model="password"
+                class="inputs"
+                @keyup.enter.native="doLogin()"
+                prefix-icon="iconfont icon-mima"
+              ></el-input>
+              <button class="btns" @click="doLogin()">登录</button>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="account">
-        <div class="g2-cad" :class="{'active':account == 'qcode'}" @click="account = 'qcode'">二维码</div>
-        <div
-          class="g2-cad"
-          :class="{'active':account == 'username'}"
-          @click="account = 'username'"
-        >账号</div>
-      </div>
+        <div class="account">
+          <div class="g2-cad" :class="{'active':account == 'qcode'}" @click="account = 'qcode'">二维码</div>
+          <div
+            class="g2-cad"
+            :class="{'active':account == 'username'}"
+            @click="account = 'username'"
+          >账号</div>
+        </div>
 
-      <dialog-register v-model="sendVal" type="danger" title="欢迎注册开单网"></dialog-register>
+        <dialog-register v-model="sendVal" @childByValue="getDate" type="danger" title="欢迎注册开单网"></dialog-register>
 
-      <div class="btm">
-        <div class="tip2">开单网</div>
-        <div class="pwd" v-if="account == 'username'">
-          <div @click="openMask" class="reg">注册</div>
-          <div class="forget">忘记密码</div>
+        <div class="btm">
+          <div class="tip2">开单网</div>
+          <div class="pwd" v-if="account == 'username'">
+            <div @click="openMask" class="reg">注册</div>
+            <div class="forget">忘记密码</div>
+          </div>
         </div>
       </div>
     </div>
@@ -180,6 +182,11 @@ export default {
         //  });
         },
   methods: {
+    getDate(userName,password) {
+        // childValue就是子组件传过来的值
+        this.user = userName;
+        this.password = password;
+      },
      hide() {
         console.log(111);
         this.payvisible = false;
@@ -325,6 +332,14 @@ export default {
 <style lang="less">
 // @import "../../styles";
  //@import "~@/assets/iconfont.css";
+.loginbg{
+  height: 100%;
+  width: 100%;
+  background: white;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
 .wrapper-login {
   height: 100%;
   width: 100%;

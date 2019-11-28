@@ -15,6 +15,7 @@ import Allinter from '@/mytables/allinter'
 import Rizhi from '@/mytables/rizhi'
 import Tuijian from '@/mytables/tuijian'
 import Seleinter from '@/components/seleinter'
+import Susstable from '@/components/susstable'
 Vue.use(Router)
 
 export default new Router({
@@ -127,6 +128,11 @@ export default new Router({
 			path: '/seleinter',
 			name: 'Seleinter',
 			component: Seleinter
+		},
+		{
+			path: '/susstable',
+			name: 'Susstable',
+			component: Susstable
 		},
 
 	]
