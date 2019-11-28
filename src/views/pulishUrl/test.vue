@@ -67,7 +67,6 @@
         methods: {
             async GetList() {
                 var res = await this.$http.get(`${this.$config.api}/api/cms/urls/urllist`)
-                console.log(JSON.stringify(res.data.items))
                 this.list = res.data.items;
             }
         },

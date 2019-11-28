@@ -278,7 +278,6 @@
       async getDashboard(pi) {
         if(pi == undefined){
           const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList`);
-          console.log(respones)
           const res = respones.data;
           this.list = res.items;
           return;
@@ -291,7 +290,6 @@
         this.list = res.items;
       },
       reset(data){
-        console.log(data)
         this.getDashboard(data)
       }
     }

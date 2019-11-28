@@ -155,11 +155,9 @@
         },
         methods: {
             onSelectChange(selectedRowKeys) {
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
             onDelete(key) {
-                console.log(key);
                 const data = [...this.data];
                 this.data = data.filter(item => item.key !== key);
             },
@@ -167,7 +165,6 @@
                 //  const res=await this.$http.get('${this.$config.api}/api/cms/pubulish/publishList/{id}')
             },
             async seachShow(){
-                console.log(`aaa`+this.$store.userId)
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
                 this.list=respones.data;
             },

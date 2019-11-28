@@ -8,7 +8,7 @@
       <!-- 登录、注册 -->
       <div class="login">
         <a-button type="link">
-          <router-link to="loginform">登录/注册</router-link>
+          <router-link v-if="$store.hasLogin != true" to="loginform">登录/注册</router-link>
         </a-button>
       </div>
 

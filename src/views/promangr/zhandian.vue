@@ -219,7 +219,6 @@
         methods: {
             ///获取站点列表
             async GetSiteList(){
-                console.log(this.$store.userId)
                 var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+this.$store.userId)
                 this.item = query.data.items;
                 this.item[0].name = ['允许发布', '允许推送'];
@@ -229,11 +228,9 @@
                 this.item[1].tiaojian = ['添加账号', '去注册'];
                 this.item[1].key = '2';
 
-                console.log(JSON.stringify(this.item))
             },
             ///58tongcheng
             async handle58(e) {
-                console.log(e)
                 const data = {
                     // userId: this.$store.userId,
                     userId:this.$store.userId,
@@ -250,7 +247,6 @@
             },
             ///房天下
             async handleOk(e) {
-                console.log(e)
                 const data = {
                     // userId: this.$store.userId,
                     userId:this.$store.userId,
@@ -267,15 +263,12 @@
             },
             
             callback(key) {
-                console.log(key);
             },
             ceshi(tag) {
                 if(tag == '添加账号'){
-                    console.log(tag);                  
                     this.visible = true;            
                 }
                 else{
-                    console.log(tag)
                 }
             },
 
@@ -284,7 +277,6 @@
             async pdetelezhusu() {
                 const res = $http.post(url + '/agent/house/delete?token=' + token + '&Content-Type=' + 'application/json' + '&keyId=' + keyId + '&FangRequestID=' + 'fang123' + '&houseType=' + houseType + '&houseid=' + houseid);
                 if (res.code == 1 || res.code == "1") {
-                    Console.log("删除成功")
                 }
             },
         },

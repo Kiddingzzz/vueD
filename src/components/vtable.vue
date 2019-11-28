@@ -51,7 +51,7 @@
             width:'2%'
         },
         {
-            title: '价格',
+            title: '价格/万',
             dataIndex: 'rice',
             key:'rice',
             width:'5%'
@@ -174,22 +174,18 @@
             },
         },
         mounted() {
-            console.log(123)
             this.seachShow();
         },
         methods: {
             onSelectChange(selectedRowKeys) {
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
             onDelete(key) {
-                console.log(key);
                 const datas = [...this.data];
                 this.datas = datas.filter(item => item.key !== key);
             },
             //传房源对象
             onfabu(house) {
-                console.log("respones.house:"+JSON.stringify(house))
                this.$emit("getData",house);
             },
             //
@@ -197,7 +193,6 @@
                  const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
                  if(respones.status == 200)
                  {
-                     console.log("respones.status:"+JSON.stringify(respones))
                     this.list=respones.data.items;
                  }
                },

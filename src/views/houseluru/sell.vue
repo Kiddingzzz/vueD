@@ -63,7 +63,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所属区域:"
                             validate-status="error" help="">
-                            <a-select :defaultValue="proquyuseData[0]" style="width: 120px">
+                            <a-select :defaultValue="proquyuseData[0]" :value="refQuyu" style="width: 120px">
                                 <a-select-option v-for="proquyuse in proquyuseData" :key="proquyuse">{{proquyuse}}
                                 </a-select-option>
                             </a-select>
@@ -105,7 +105,7 @@
                             <a class="selladdshowxq" @click="addxiaoqu">我要添加小区</a>-->
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
-                            <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="address">
+                            <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="refQuyu">
                                 <a-select-option v-for="(province,index) of provinceData" :key="index"
                                     :value="province">{{province}}
                                 </a-select-option>
@@ -211,7 +211,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptionzx" :defaultValue="value4" v-model="zhuangxiu" />
+                            <a-radio-group :options="plainOptionzx" :defaultValue="value4" v-model="laf.zhuangxiu"/>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
@@ -240,7 +240,7 @@
                 <a-layout style="padding: 24px 24px 24px 24px">
                     <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                         <a-form>
-                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedback
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedback v-model="ref.fangwuLeixing"
                                 validate-status="">
                                 <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" />
                             </a-form-item>
@@ -252,17 +252,17 @@
                                     </a-select-option>
                                 </a-select>
                             </a-form-item>
-                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋产权：" has-feedback
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋产权：" has-feedback 
                               validate-status="">
-                                <a-select default-value="" class="zhuzhaibox " >
-                                    <a-select-option v-for="(root,i) in houseroot" :key="i" :value="root">
+                                <a-select default-value="" class="zhuzhaibox " v-model="ref.fangwuChanquan">
+                                    <a-select-option v-for="(root,i) in houseroot" :key="i" :value="root" >
                                         {{root}}
                                     </a-select-option>
                                 </a-select>
                            </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*产权年限" has-feedback
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*产权年限" has-feedback 
                            validate-status="">
-                              <a-radio-group :options="plainOptionnianxian" :defaultValue="value9" />
+                              <a-radio-group :options="plainOptionnianxian" v-model="laf.chanquanNianxian" />
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑形式" has-feedback
                            validate-status="">
@@ -272,7 +272,7 @@
                            validate-status="">
                               <a-radio-group :options="plainOptionjianzhujiegou" :defaultValue="valuejieg" />
                            </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋年限" has-feedback
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋年限" has-feedback v-model="ref.weiyizhufang"
                            validate-status="">
                               <a-radio-group :options="plainOptionroot" :defaultValue="valueroot" />
                            </a-form-item>
@@ -280,7 +280,7 @@
                            validate-status="">
                               <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi" />
                            </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*新房/二手房" has-feedback
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*新房/二手房" has-feedback v-model="ref.houseType"
                            validate-status="">
                               <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse" />
                            </a-form-item>
@@ -588,7 +588,7 @@
     const plainOptionfwlb=['公寓','普通住宅','平房','其他'];
     const zhuzhaizitype=['多层[1-7层]','多层[带电梯]','小高层[8-20层]','高层[20以上]'];
     const houseroot=['商品房','商住两用','经济适用房','使用权','公房','其他'];
-    const plainOptionnianxian=['70年产权','50年产权','40年产权'];
+    const plainOptionnianxian=['70年','50年','40年'];
     const plainOptionjianzhutype=['板楼','塔楼','板塔结合','砖混','其他',];
     const plainOptionjianzhujiegou=['平层','错层','跃层','复式','开间',];
     const plainOptionroot=['满五年','满二年','不满二年'];
@@ -693,6 +693,8 @@
                 weiyiUserId: '',
                 saveRes: {},
                 imgH: {},
+                refQuyu:'',
+                laf:{},
             }
         },
         mounted() {
@@ -714,7 +716,6 @@
 
                 var uuid = s.join("");
                 this.text = uuid
-                console.log(this.text)
             },
             //插入一条url数据链接
             async onSearch(params) {
@@ -728,17 +729,17 @@
                 };
                 await this.$http.post(`${this.$config.api}/api/cms/urls/url`, data).then(response => {
                     this.spinning = true;
-                    console.log(JSON.stringify(response))
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
-                            console.log(`222` + JSON.stringify(res))
+                            console.log(`抓取数据:`+JSON.stringify(res.data))
+                            this.laf = res.data;
                             var ret = res.data.address;
+                            var refQu = ret.indexOf('－');
+                            this.refQuyu = ret.substring(0,refQu);
                             this.saveRes = res.data;
-                            this.address = ret.split("-")[0];
                             this.chaoxiang = ret.chaoxiang;
                             this.spinning = false;
                             this.ref = res.data;
-                            console.log(`222` + JSON.stringify(this.ref))
                             //字符串
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                             this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);

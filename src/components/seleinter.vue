@@ -199,7 +199,6 @@
                     keyId: "10568"
                 }
                 const res = await this.$axios.post(urls, data);
-                console.log('token:' + this.tokens)
                 const userName = res.data.returnmsgs.userName;
                 this.tokens = res.data.returnmsgs.token;
                 const list = {

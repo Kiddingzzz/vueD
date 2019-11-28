@@ -126,7 +126,6 @@ export default {
       },
       //第二步操作跳转第三步
       getSeconds(message){
-          console.log(`bbbbbbbbbbbbbbba`+JSON.stringify(message))
         if(message == 'a'){
             this.current = 2;
         }
