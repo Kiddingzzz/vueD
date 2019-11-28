@@ -244,14 +244,6 @@
                                 validate-status="">
                                 <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" />
                             </a-form-item>
-                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="住宅类型：" has-feedback
-                                validate-status="">
-                                <a-select default-value="" class="zhuzhaibox " >
-                                    <a-select-option v-for="(zhuzhai,i) in zhuzhaizitype" :key="i" :value="zhuzhai">
-                                        {{zhuzhai}}
-                                    </a-select-option>
-                                </a-select>
-                            </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋产权：" has-feedback 
                               validate-status="">
                                 <a-select default-value="" class="zhuzhaibox " v-model="ref.fangwuChanquan">
@@ -586,7 +578,6 @@
     const plainOptionsy = ['不加水印', '添加水印'];
     const pilianglist = ['批量水印', '批量美颜', '批量水印美颜', '批量恢复原图', '批量调整大小', '批量下载图片'];
     const plainOptionfwlb=['公寓','普通住宅','平房','其他'];
-    const zhuzhaizitype=['多层[1-7层]','多层[带电梯]','小高层[8-20层]','高层[20以上]'];
     const houseroot=['商品房','商住两用','经济适用房','使用权','公房','其他'];
     const plainOptionnianxian=['70年','50年','40年'];
     const plainOptionjianzhutype=['板楼','塔楼','板塔结合','砖混','其他',];
@@ -618,7 +609,6 @@
                 plainOptionsy,
                 plainOptionnianxian,
                 plainOptionfwlb,
-                zhuzhaizitype,
                 houseroot,
                 plainOptionjianzhutype,
                 plainOptionjianzhujiegou,

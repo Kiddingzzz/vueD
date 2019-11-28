@@ -4,7 +4,7 @@
                 <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
                     <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                         <span slot="operation" slot-scope="text, record">
-                        <a href="javascript:;" @click="onDelete(record.key)">删除</a>
+                        <a href="javascript:;" @click="onDelete(record.id)">删除</a>
                         <a href="javascript:;" @click="onfabu(record)" >未发布</a>
                         </span>
                         <span slot="customTitles">
@@ -48,10 +48,10 @@
             title: '面积',
             dataIndex: 'square',
             key:'mianji',
-            width:'4%'
+            width:'6%'
         },
         {
-            title: '价格/万',
+            title: '价格',
             dataIndex: 'rice',
             key:'rice',
             width:'5%'
@@ -60,19 +60,19 @@
             title: '朝向',
             dataIndex: 'chaoxiang',
             key:'sq',
-            width:'4.5%'
+            width:'5.5%'
         },
         {
             title: '楼层',
             dataIndex: 'louceng',
             key:'louceng',
-            width:'5%'
+            width:'6%'
         },
         {
             title: '更新日期',
             dataIndex: 'creationTime',
             key:'update',
-            width:'9%'
+            width:'10%'
         },
         {
             title: '装修',
@@ -90,7 +90,7 @@
             title: '状态',
             dataIndex: 'publishStatus',
             key:'status',
-            width:'8%'
+            width:'7.5%'
         },
         // {
         //     title: '发布历史',
@@ -102,7 +102,7 @@
             title: '均价/㎡',
             dataIndex: 'simpleRice',
             key:'simplePrice',
-            width:'8%'
+            width:'7.5%'
         },
         {
             title: '操作',
@@ -174,30 +174,70 @@
             },
         },
         mounted() {
+            console.log(123)
             this.seachShow();
         },
         methods: {
             onSelectChange(selectedRowKeys) {
+                console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
-            onDelete(key) {
-                const datas = [...this.data];
-                this.datas = datas.filter(item => item.key !== key);
+
+            //删除
+            async  onDelete(id) {
+                try{
+                   await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                       if(Response.status==200)
+                       {
+                        const datas = [...this.data];
+                        this.datas = datas.filter(item => item.key !== key)
+                        this.$message.success('删除成功！！！');
+                        
+                       }   
+                   })
+                }
+                catch(e){    
+                    this.$message.warning('系统繁忙，请稍后再试！！！');
+                }
+
             },
-            //传房源对象
-            onfabu(house) {
-               this.$emit("getData",house);
+            //传房源对象并判断此账号是否已有添加网站
+          async  onfabu(house) {
+                  try{
+                       await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                       if(Response.status==200)
+                       {
+                            if(Response.items.length!=0){
+                              console.log("respones.house:"+JSON.stringify(house))
+                              this.$emit("getData",house);
+                            }
+                            else{
+                                const h = this.$createElement;
+                                this.$info({ title: '提示', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'), ]),
+                                onOk() {},
+                                });
+                            }
+                          
+                       }   
+                   })
+                }
+                catch(e){    
+                   this.$message.warning('哦，没有属于你的站点呢，快去添加吧');
+                }
             },
             //
             async seachShow(){
                  const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
                  if(respones.status == 200)
                  {
+                     console.log("respones.status:"+JSON.stringify(respones))
                     this.list=respones.data.items;
                  }
                },
         },
-    };
+              
+    }
+           
 </script>
 <style scoped lang="less">
 

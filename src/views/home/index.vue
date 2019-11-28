@@ -145,7 +145,7 @@
       </div>
     </div>
     <div class="wrap">
-      <a-layout style="padding: 24px 24px 24px 24px">
+      <a-layout style="padding: 20px 20px 20px 20px">
         <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
           <a-table :columns="columns" :dataSource="list">
             <span slot="customTitle">
@@ -174,93 +174,94 @@
       key: 'def',
       slots: { title: 'customTitle' },
       scopedSlots: { customRender: 'def' },
-      width: 100
+      width:'8%'
     },
     {
       title: '用途',
       dataIndex: 'yongtu',
       key: 'yongtu',
-      width: 70
+      width:'6%'
     },
     {
       title: '小区',
       dataIndex: 'xiaoquName',
       key: 'xiaoquName',
-      width: 140
+      width:'7%'
     },
     {
       dataIndex: 'title',
       key: 'title',
       slots: { title: 'customTitles' },
       scopedSlots: { customRender: 'titles' },
-      width:190
+      width:'8%'
     },
     {
       title: '价格/万',
       dataIndex: 'rice',
       key: 'rice',
-      width: 90
+      width:'7.1%'
     },
     {
       title: '单价/元',
       dataIndex: 'simpleRice',
       key: 'simpleRice',
-      width: 80
+      width:'7.1%'
     },
     {
       title: '面积㎡',
       dataIndex: 'square',
       key: 'square',
-      width: 90
+      width:'6.8%'
     },
     {
       title: '朝向',
       dataIndex: 'chaoxiang',
       key: 'chaoxiang',
-      width: 80
+      width:'5.5%'
     },
     {
       title: '户型',
       dataIndex: 'huxing',
       key: 'huxing',
-      width: 130
+      width:'7%'
     },
     {
       title: '楼层',
       dataIndex: 'louceng',
       key: 'louceng',
-      width:50
+      width:'5.5%'
     },
     {
       title: '装修',
       dataIndex: 'zhuangxiu',
       key: 'zhuangxiu',
-      width: 110
+      width:'7%'
     },
     {
       title: '联系人',
       dataIndex: 'lianxiPeople',
       key: 'lianxiPeople',
-      width: 90
+      width:'7%'
     },
     {
       title: '电话',
       dataIndex: 'phone',
       key: 'phone',
       scopedSlots: { customRender: 'phones' },
-      width:90
+      width:'6%'
+     
     },
     {
       title: '地址',
       dataIndex: 'address',
       key: 'address',
-      width: 180
+      width:'6%'
     },
     {
       title: '来源',
       dataIndex: 'source',
       key: 'source',
-      width: 90
+      width:''
     },
   ];
   export default {
@@ -296,6 +297,7 @@
   }
 </script>
 <style lang="less">
+
   .wrap {
     width: 100%;
     display: flex;

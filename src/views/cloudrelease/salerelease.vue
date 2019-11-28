@@ -32,7 +32,7 @@
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
                     <div>
-                        1.如果您希望使用的账号不在其中，您可以马上<a-button type="link">添加账号</a-button> 。
+                        1.如果您希望使用的账号不在其中，您可以马上<a-button type="link" @click="adduser">添加账号</a-button> 。
                     </div>
                     <div>
                         2.如果您希望修改"库存满时"与"房源重复"的发送处理方式，请进入<a-button type="link">个人设置</a-button>。
@@ -48,7 +48,7 @@
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
                     <div>
-                        1.如果您希望使用的账号不在其中，您可以马上<a-button type="link">添加账号</a-button> 。
+                        1.如果您希望使用的账号不在其中，您可以马上<a-button type="link" >添加账号</a-button> 。
                     </div>
                     <div>
                         2.如果您希望修改"库存满时"与"房源重复"的发送处理方式，请进入<a-button type="link">个人设置</a-button>。
@@ -109,8 +109,12 @@ export default {
     components: {
             vtable,
             seleinter,
+           
         },
     methods: {
+        adduser(){
+             this.$router.replace('/zhandian')
+        },
       
        pre() {
         if (this.current-- < 1) this.current = 0;
