@@ -48,7 +48,7 @@
             title: '面积',
             dataIndex: 'square',
             key:'mianji',
-            width:'2%'
+            width:'4%'
         },
         {
             title: '价格/万',
