@@ -1,16 +1,13 @@
 <template>
   <div id="app">
-    <a-layout id="components-layout-demo-top-side-2">
+    <a-layout id="components-layout-demo-top-side-2" v-if="$route.meta.keepAlive">
     <a-layout-header class="header">
       <div class="logo">
         <img class="logo" src="../static/logoJXW.png">
       </div>
-      <!-- 登录、注册 -->
-      <div class="login">
-        <a-button type="link">
-          <!-- <router-link v-if="$store.hasLogin != true" to="loginform">登录/注册</router-link> -->
-          <router-link v-if="$store.hasLogin != false">登录成功</router-link>
-        </a-button>
+      <div class="login" v-if="$store.hasLogin != false">
+            <!-- 登录成功 -->
+             欢迎<span type="text">{{user}}</span>
       </div>
 
     </a-layout-header>
@@ -70,6 +67,8 @@
       <router-view/>
     </a-layout>
   </a-layout>
+  <!-- 登录页 -->
+    <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
@@ -79,12 +78,16 @@ export default {
   data() {
       return {
         collapsed: false,
+        user:'',
       };
     },
+    mounted(){
+      this.user = this.$store.userName;
+    }
 }
 </script>
 
-<style>
+<style lang="less" scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -102,7 +105,6 @@ export default {
     float: left;
     border-radius: 5px;
     background: #e7e7e7;
-    margin: 3px 0px 0px 0px;
   }
   .ant-layout.ant-layout-has-sider{
       height: 100%;
@@ -110,8 +112,15 @@ export default {
       width: 100%;
       
   }
+  .header{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+  }
   .login{
-    float: right;
-
+    color: white;
+    span{
+      margin-left: 10px;
+    }
   }
 </style>

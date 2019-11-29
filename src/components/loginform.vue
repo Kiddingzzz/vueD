@@ -304,7 +304,8 @@ export default {
             if(Response.status == 200){
               // this.$store.login(Response.data.userNameOrEmailAddress)
               this.$store.userId = Response.data.userId; 
-	            this.$store.hasLogin = true;
+              this.$store.hasLogin = true;
+              this.$store.userName = Response.data.username;
               this.$router.replace('/index')
             }
             

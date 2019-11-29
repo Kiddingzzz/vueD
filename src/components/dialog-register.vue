@@ -180,7 +180,12 @@ export default {
           }, 500);
           this.$emit('childByValue',this.userName,this.password)
 
-      } catch (error) {}
+      } catch (error) {
+        this.$error({
+          icon: "none",
+          title: "注册失败"
+        });
+      }
     }
   },
   mounted() {

@@ -20,9 +20,14 @@ Vue.use(Router)
 
 export default new Router({
   routes: [
+
+	   //页面
 		{
 			path: '/',
 			redirect: '/Loginform',
+			meta: {
+				keepAlive: false
+			  }		
 		},
 		{
 			path:'/index',
@@ -31,7 +36,21 @@ export default new Router({
 			// meta:{
 			// 	requireAuth: true
 			// }	
-    	},
+			meta: {
+				keepAlive: true
+			  }		
+		},
+		{
+			path:'/shops',
+			name:'Shops',
+			component:Shops,
+		   //  meta: {
+		   // 	requireAuth: true
+		   // }
+		   meta: {
+			   keepAlive: true
+			 }
+	    },
 		{
 			path: "/pubulish",
 			name: "Pubulish",
@@ -39,6 +58,9 @@ export default new Router({
 			// meta: {
 			// 	requireAuth: true
 			// }
+			meta: {
+				keepAlive: true
+			  }
 		},
 		{
 			path: "/test",
@@ -47,23 +69,10 @@ export default new Router({
 			// meta: {
 			// 	requireAuth: true
 			// }
+			meta: {
+				keepAlive: true
+			  }
 			
-		},
-		{
-			path: '/Dashboard',
-			name: 'DashBoard',
-			component: DashBoard,
-			// meta: {
-			// 	requireAuth: true
-			// }
-		},
-		{
-			 path:'/shops',
-			 name:'Shops',
-			 component:Shops,
-			//  meta: {
-			// 	requireAuth: true
-			// }
 		},
 		{
 			path:'/lease',
@@ -72,27 +81,20 @@ export default new Router({
 			// meta: {
 			// 	requireAuth: true
 			// }
-	   },
-	   {
+			meta: {
+				keepAlive: true
+			  }
+		},
+		{
 			path:'/sell',
 			name:'Sell',
 			component:Sell,
 			// meta: {
 			// 	requireAuth: true
 			// }
-		},
-		{
-			path:'/zhandian',
-			name:'Zhandian',
-			component:Zhandian,
-			// meta: {
-			// 	requireAuth: true
-			// }
-	   },
-	    {
-			path: '/loginform',
-			name: 'Loginform',
-			component: Loginform
+			meta: {
+				keepAlive: true
+			  }
 		},
 		{
 			path: '/salerelease',
@@ -101,12 +103,47 @@ export default new Router({
 			// meta: {
 			// 	requireAuth: true
 			// }
+			meta: {
+				keepAlive: true
+			  }
 		},
+		{
+			path:'/zhandian',
+			name:'Zhandian',
+			component:Zhandian,
+			// meta: {
+			// 	requireAuth: true
+			// }
+			meta: {
+				keepAlive: true
+			  }
+		},
+		{
+			path: '/tuijian',
+			name: 'Tuijian',
+			component: Tuijian,
+			meta: {
+				keepAlive: true
+			  }
+		},
+
+		//组件
+		{
+			path: '/Dashboard',
+			name: 'DashBoard',
+			component: DashBoard,
+		},
+		
+	    {
+			path: '/loginform',
+			name: 'Loginform',
+			component: Loginform
+		},
+		
 		{
 			path: '/vtable',
 			name: 'Vtable',
-			component: vtable,
-			
+			component: vtable,			
 		},
 		{
 			path: '/allinter',
@@ -117,12 +154,6 @@ export default new Router({
 			path: '/rizhi',
 			name: 'Rizhi',
 			component: Rizhi
-		},
-		{
-			path: '/tuijian',
-			name: 'Tuijian',
-			component: Tuijian,
-			
 		},
 		{
 			path: '/seleinter',
