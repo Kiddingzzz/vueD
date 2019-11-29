@@ -78,12 +78,12 @@
             </div>
 
             <div class="tabcontent" v-if="current==2">
-                <susstable></susstable>   
+                <susstable @goonfun="getcurrentFormSon"></susstable>   
             </div>
             <!-- 上/下一步 -->
             <div class="pre">
                 <a-button type="primary" @click="pre" v-if="current==1">上一步</a-button>
-                <a-button type="primary"  @click="goon" v-if="current==2">继续发布</a-button>
+                <!-- <a-button type="primary"  @click="goon" v-if="current==2">继续发布</a-button> -->
             </div>
             
     </div>
@@ -97,12 +97,11 @@ import susstable from '../../components/susstable'
 export default {
     data() {
       return {
-           current: 0,
+           current: 2,
            selectedRowKeys: [], // Check here to configure the default column
            list:[],
            houselist:{},
            bieshu:{},
-           
       };
     },
     components: {
@@ -119,9 +118,12 @@ export default {
         if (this.current-- < 1) this.current = 0;
       },
       //继续发布
-      goon(){           
-            this.current = 0;
-      },
+    //   goon(){           
+    //         this.current = 0;
+    //   },
+        getcurrentFormSon(data){
+            this.current = data
+        },
       //接受house对象 
       getMag(house){
            this.houselist=house;

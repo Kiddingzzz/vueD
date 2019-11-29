@@ -83,6 +83,7 @@ export default {
     },
     mounted(){
       this.user = this.$store.userName;
+      console.log(this.user)
     }
 }
 </script>
