@@ -312,10 +312,23 @@ export default {
        }
        catch(e)
        {
-         this.$error({
-          title: '提示',
-          content: '账号或密码错误！！！',
-        });
+          //  try{
+          //      await this.$http.post(statu,datas).then(Response => {
+          //        if(Response.status==200)
+          //        {
+                    this.$error({
+                    title: '提示',
+                    content: '账号或密码错误！！！',});
+          //        }
+          //      })
+          //  }
+          //  watch(e){
+          //        this.$error({
+          //        title: '提示',
+          //        content: '您是新用户，请先登录',
+          //     });
+          //  }
+             
        }
 
 				// uni.setStorageSync('UserInfo', res.user);

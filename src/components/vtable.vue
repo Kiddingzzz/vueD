@@ -23,14 +23,14 @@
             title: '小区',
             dataIndex: 'xiaoquName',
             key:'det',
-            width:'7%'
+            width:'7.5%'
         },
         {
             dataIndex: 'title',
             key:'biaoti',
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
-            width:'12%'
+            width:'14%'
         },
         // {
         //     title: '首页图',
@@ -42,13 +42,13 @@
             title: '房型',
             dataIndex: 'huxing',
             key:'fangwu',
-            width:'8%'
+            width:'7%'
         },
         {
             title: '面积',
             dataIndex: 'square',
             key:'mianji',
-            width:'6%'
+            width:'5.5%'
         },
         {
             title: '价格',
@@ -84,7 +84,7 @@
             title: '房龄',
             dataIndex: 'fangwuDate',
             key:'age',
-            width:'7%'
+            width:'6%'
         },
         {
             title: '状态',
@@ -102,14 +102,14 @@
             title: '均价/㎡',
             dataIndex: 'simpleRice',
             key:'simplePrice',
-            width:'7.5%'
+            width:'7.1%'
         },
         {
             title: '操作',
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
             key:'donation',
-            width:'10%'
+            width:'11%'
           
         },
     ];
@@ -222,7 +222,7 @@
                    })
                 }
                 catch(e){    
-                   this.$message.warning('哦，没有属于你的站点呢，快去添加吧');
+                   this.$message.warning('系统遇到了点问题，请重试');
                 }
             },
             //

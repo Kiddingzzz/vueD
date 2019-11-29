@@ -41,27 +41,27 @@
       title: '权限',
       dataIndex: 'name',
       key: 'name',
-      width:'17%',
+      width:'25%',
       scopedSlots: { customRender: 'name' },
     },
     {
       title: '网页',
       dataIndex: 'inter',
       key: 'inter',
-      width:'18%',
+      width:'17%',
       scopedSlots: { customRender: 'inter' },
     },
     {
       title: '条件',
       key: 'tiaojian',
       dataIndex: 'tiaojian',
-      width:'18%',
+      width:'17%',
       scopedSlots: { customRender: 'tiaojian' },
     },
     {
       title: '账号情况',
       dataIndex: 'zhanghao',
-      width:'18%',
+      width:'17%',
       key: 'zhanghao',
       scopedSlots: { customRender: 'zhanghao' },
     },
@@ -70,6 +70,7 @@
       title: '操作',
       key: 'action',
       scopedSlots: { customRender: 'action' },
+      width:'24%'
     },
   ];
 
