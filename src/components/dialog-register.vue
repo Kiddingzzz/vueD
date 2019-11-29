@@ -178,6 +178,10 @@ export default {
         setTimeout(() => {
             this.showMask = false;
           }, 500);
+          this.$success({
+            icon: "none",
+            title: "注册成功"
+          });
           this.$emit('childByValue',this.userName,this.password)
 
       } catch (error) {}
