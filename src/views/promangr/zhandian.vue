@@ -89,10 +89,10 @@
                     </a-table>
                 </a-tab-pane>
                 <a-tab-pane tab="已开通网站" key="2">
-                    <allinter></allinter>
+                  
                 </a-tab-pane>
                 <a-tab-pane tab="未开通网站" key="3">
-                    <allinter></allinter>
+                    
                 </a-tab-pane>
                 <a-tab-pane tab="操作日志" key="4">
                     <rizhi></rizhi>
@@ -110,21 +110,21 @@
             title: '权限',
             dataIndex: 'name',
             key: 'name',
-            width: '18%',
+            width: '12%',
             scopedSlots: { customRender: 'name' },
         },
         {
             title: '网页',
             dataIndex: 'inter',
             key: 'inter',
-            width: '19%',
+            width: '20%',
             scopedSlots: { customRender: 'inter' },
         },
         {
             title: '条件',
             key: 'tiaojian',
             dataIndex: 'tiaojian',
-            width: '18%',
+            width: '20%%',
             scopedSlots: { customRender: 'tiaojian' },
         },
         {
@@ -138,6 +138,7 @@
             title: '操作',
             key: 'action',
             scopedSlots: { customRender: 'action' },
+            width:'30%'
         }
     ];
 

@@ -174,7 +174,7 @@
             key: 'def',
             slots: { title: 'customTitle' },
             scopedSlots: { customRender: 'def' },
-            width: 100
+            width: 110
           },
           {
             title: '用途',
@@ -200,13 +200,13 @@
             title: '价格/万',
             dataIndex: 'rice',
             key: 'rice',
-            width: 90
+            width: 100
           },
           {
             title: '面积㎡',
             dataIndex: 'square',
             key: 'square',
-            width: 80
+            width: 120
           },
           {
             title: '户型',
@@ -230,7 +230,7 @@
             title: '联系人',
             dataIndex: 'lianxiPeople',
             key: 'lianxiPeople',
-            width: 80
+            width: 110
           },
           {
             title: '电话',

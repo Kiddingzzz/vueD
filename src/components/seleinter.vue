@@ -68,7 +68,7 @@
             title: '账号状态',
             dataIndex: 'acctionkey',
             key: 'acctionkey',
-            width: '25%',
+            width: '20%',
             scopedSlots: { customRender: 'acctionkey' },
         },
         {
@@ -81,22 +81,26 @@
         {
             title: '库存满时发送处理',
             key: 'kumansing',
-            scopedSlots: { customRender: 'kumansing' },
+            scopedSlots: { customRender: 'kumansing' }, 
+            width:'15%'
         },
         {
             title: '房源重复发送处理',
             key: 'houschongfu',
             scopedSlots: { customRender: 'houschongfu' },
+            width:'15%'
         },
         {
             title: '推送设置',
             key: 'tuiaction',
             scopedSlots: { customRender: 'tuiaction' },
+            width:'15%'
         },
         {
             title: '操作',
             key: 'caozuo',
             scopedSlots: { customRender: 'caozuo' },
+            width:'10%'
         },
     ];
 

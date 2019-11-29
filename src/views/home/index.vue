@@ -174,7 +174,7 @@
       key: 'def',
       slots: { title: 'customTitle' },
       scopedSlots: { customRender: 'def' },
-      width:'8%'
+      width:'7.5%'
     },
     {
       title: '用途',
