@@ -23,7 +23,7 @@
             </div>
         </div>
         <div style="padding: 15px 15px 0px 15px;">
-            <a-tabs defaultActiveKey="1" @change="callback" style=" border-bottom: none;">
+            <a-tabs defaultActiveKey="1" @change="callback"  >
                 <a-tab-pane tab="全部网站" key="1">
                     <a-table :columns="columnss" :dataSource="item">
                         <span slot="name" slot-scope="name">

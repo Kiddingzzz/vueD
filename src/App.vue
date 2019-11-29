@@ -64,11 +64,14 @@
           </a-sub-menu>
           <a-sub-menu key="sub5">
             <span slot="title"><a-icon type="setting" />个人管理</span>
-            <a-menu-item key="11">
+            <a-menu-item key="13">
               <router-link to="zhandian">站点管理</router-link>
             </a-menu-item>
-            <a-menu-item key="13">
+            <a-menu-item key="14">
               <router-link to="tuijian">站点管理</router-link>
+            </a-menu-item>
+             <a-menu-item key="15">
+              <router-link to="loginform">退出登录</router-link>
             </a-menu-item>
           </a-sub-menu>
         </a-menu>
