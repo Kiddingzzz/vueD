@@ -4,7 +4,15 @@
                 <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
                     <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                         <span slot="operation" slot-scope="text, record">
-                        <a href="javascript:;" @click="onDelete(record.id)">删除</a>
+                        <a-popconfirm
+                            title="确定删除么？"
+                            @confirm="confirm(record.id)"
+                            @cancel="cancel"
+                            okText="确认"
+                            cancelText="取消"
+                        >
+                           <a href="#" >删除</a>
+                        </a-popconfirm>
                         <a href="javascript:;" @click="onfabu(record)" >未发布</a>
                         </span>
                         <span slot="customTitles">
@@ -30,7 +38,7 @@
             key:'biaoti',
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
-            width:'14%'
+            width:'13%'
         },
         // {
         //     title: '首页图',
@@ -54,7 +62,7 @@
             title: '价格',
             dataIndex: 'rice',
             key:'rice',
-            width:'5.5%'
+            width:'5.3%'
         },
         {
             title: '朝向',
@@ -66,13 +74,13 @@
             title: '楼层',
             dataIndex: 'louceng',
             key:'louceng',
-            width:'6%'
+            width:'6.7%'
         },
         {
             title: '更新日期',
             dataIndex: 'creationTime',
             key:'update',
-            width:'10%'
+            width:'9.8%'
         },
         {
             title: '装修',
@@ -84,13 +92,13 @@
             title: '房龄',
             dataIndex: 'fangwuDate',
             key:'age',
-            width:'6%'
+            width:'7.3%'
         },
         {
             title: '状态',
             dataIndex: 'publishStatus',
             key:'status',
-            width:'7.5%'
+            width:'7%'
         },
         // {
         //     title: '发布历史',
@@ -102,14 +110,14 @@
             title: '均价/㎡',
             dataIndex: 'simpleRice',
             key:'simplePrice',
-            width:'7.1%'
+            width:'7.2%'
         },
         {
             title: '操作',
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
             key:'donation',
-            width:'11%'
+            width:'12%'
           
         },
     ];
@@ -234,6 +242,9 @@
                     this.list=respones.data.items;
                  }
                },
+             confirm(id) {
+                this.onDelete(id)
+            }
         },
               
     }

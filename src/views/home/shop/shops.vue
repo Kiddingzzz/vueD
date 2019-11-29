@@ -174,82 +174,82 @@
             key: 'def',
             slots: { title: 'customTitle' },
             scopedSlots: { customRender: 'def' },
-            width: 110
+            width: '8%'
           },
           {
             title: '用途',
             dataIndex: 'yongtu',
             key: 'yongtu',
-            width: 70
+            width:'7%'
           },
           {
             title: '小区',
             dataIndex: 'xiaoquName',
-            width:140,
             key: 'xiaoquName',
+            width:'8%'
             
           },
           {
             dataIndex: 'title',
             key: 'title',
-            width: 190,
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
+            width:'10%'
           },
           {
             title: '价格/万',
             dataIndex: 'rice',
             key: 'rice',
-            width: 100
+            width:'7%'
           },
           {
             title: '面积㎡',
             dataIndex: 'square',
             key: 'square',
-            width: 120
+             width:'7%'
           },
           {
             title: '户型',
             dataIndex: 'huxing',
             key: 'chaoxiang',
-            width: 120
+             width:'8%'
           },
           {
             title: '楼层',
             dataIndex: 'louceng',
-            width:80,
             key: 'louceng',
+             width:'6%'
           },
           {
             title: '装修',
             dataIndex: 'zhuangxiu',
             key: 'zhuangxiu',
-            width: 100
+            width:'8%'
           },
           {
             title: '联系人',
             dataIndex: 'lianxiPeople',
             key: 'lianxiPeople',
-            width: 110
+            width:'7%'
           },
           {
             title: '电话',
             dataIndex: 'phone',
             key: 'phone',
             scopedSlots: { customRender: 'phones' },
-            width:90
+            width:'9%'
           },
           {
             title: '地址',
             dataIndex: 'address',
             key: 'address',
-            width: 180
+            width:'8%'
           },
           {
             title: '来源',
             dataIndex: 'source',
             key: 'source',
-            width: 100
+            width:'6%'
           },
         ];
         export default {

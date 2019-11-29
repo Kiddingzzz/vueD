@@ -12,13 +12,12 @@
             </span>
             <span slot="leibie" slot-scope="leibie">
                 <a-checkbox v-for="tag in leibie" :key="tag">
-
                     {{tag.toUpperCase()}}
                 </a-checkbox>
 
             </span>
             <span slot="kumansing" slot-scope="text, record">
-                <a-select default-value="2">
+                <a-select default-value="2" class="opseles">
                     <a-select-option value="1">
                         不发送
                     </a-select-option>
@@ -28,7 +27,7 @@
                 </a-select>
             </span>
             <span slot="houschongfu" slot-scope="text, record">
-                <a-select default-value="2">
+                <a-select default-value="2" class="opseles">
                     <a-select-option value="1">
                         不发送
                     </a-select-option>
@@ -38,7 +37,7 @@
                 </a-select>
             </span>
             <span slot="tuiaction" slot-scope="text, record">
-                <a-select default-value="2">
+                <a-select default-value="2" class="seleshangjia">
                     <a-select-option value="1">
                         上架
                     </a-select-option>
@@ -61,7 +60,7 @@
             title: '网站',
             dataIndex: 'inter',
             key: 'inter',
-            width: '10%',
+            width: '8%',
             scopedSlots: { customRender: 'inter' },
         },
         {
@@ -75,32 +74,32 @@
             title: '类别',
             key: 'leibie',
             dataIndex: 'leibie',
-            width: '15%',
+            width: '17%',
             scopedSlots: { customRender: 'leibie' },
         },
         {
             title: '库存满时发送处理',
             key: 'kumansing',
             scopedSlots: { customRender: 'kumansing' }, 
-            width:'15%'
+            width:'13%'
         },
         {
             title: '房源重复发送处理',
             key: 'houschongfu',
             scopedSlots: { customRender: 'houschongfu' },
-            width:'15%'
+            width:'13%'
         },
         {
             title: '推送设置',
             key: 'tuiaction',
             scopedSlots: { customRender: 'tuiaction' },
-            width:'15%'
+            width:'12%'
         },
         {
             title: '操作',
             key: 'caozuo',
             scopedSlots: { customRender: 'caozuo' },
-            width:'10%'
+            width:'9%'
         },
     ];
 
@@ -314,14 +313,6 @@
     };
 </script>
 <style lang="less">
-    // .ant-table-tbody>tr>td {
-    //     text-align: center;
-    // }
-
-    // .ant-table-thead>tr:first-child>th {
-    //     text-align: center;
-    // }
-
     .wangyeimg {
         width: 200px;
         height: 70px;
@@ -330,4 +321,13 @@
     .organlabel {
         color: orange;
     }
+    .opseles{
+      width:160px;
+    }
+    .seleshangjia{
+        width:90px;
+    }
+    .ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0px;
+}
 </style>

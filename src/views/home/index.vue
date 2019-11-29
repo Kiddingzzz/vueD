@@ -1,6 +1,6 @@
 <template>
   <div class="ts">
-    <div class="filter-wrap" style="padding: 24px 24px 0px 24px;">
+    <div class="filter-wrap" style="padding: 20px 20px 0px 20px;">
     <div class="search_bd">
       <dl class="secitem secitem_fist">
         <dt class="fl">区域：</dt>
@@ -193,19 +193,19 @@
       key: 'title',
       slots: { title: 'customTitles' },
       scopedSlots: { customRender: 'titles' },
-      width:'8%'
+      width:'10%'
     },
     {
       title: '价格/万',
       dataIndex: 'rice',
       key: 'rice',
-      width:'7.1%'
+      width:'7%'
     },
     {
       title: '单价/元',
       dataIndex: 'simpleRice',
       key: 'simpleRice',
-      width:'7.1%'
+      width:'7%'
     },
     {
       title: '面积㎡',
@@ -223,7 +223,7 @@
       title: '户型',
       dataIndex: 'huxing',
       key: 'huxing',
-      width:'7%'
+      width:'6%'
     },
     {
       title: '楼层',
@@ -261,7 +261,7 @@
       title: '来源',
       dataIndex: 'source',
       key: 'source',
-      width:''
+      width:'11%'
     },
   ];
   export default {
