@@ -9,10 +9,10 @@
             <!-- 登录成功 -->
              <span type="text">
                <a-dropdown>
-                <a class="ant-dropdown-link" href="#"> {{_user}} <a-icon type="down" /> </a>
+                <a class="ant-dropdown-link" href="#">{{_user}} <a-icon type="down" /> </a>
                 <a-menu slot="overlay">
                   <a-menu-item>
-                    <a href="javascript:;" @click="logout">退出登录</a>
+                     <a  @click="showModal">退出登录</a>
                   </a-menu-item>
                 </a-menu>
               </a-dropdown>
@@ -70,9 +70,6 @@
             <a-menu-item key="14">
               <router-link to="tuijian">站点管理</router-link>
             </a-menu-item>
-             <a-menu-item key="15">
-              <router-link to="loginform">退出登录</router-link>
-            </a-menu-item>
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
@@ -96,15 +93,21 @@ export default {
     computed:{
       _user(){
        // console.log("````````````````````"+this.$store.userName)
-        return this.$store.hasLogin == true?this.$store.userName:'';
+        return this.$store.hasLogin == true?"欢迎您，"+this.$store.userName:'';
       }
     },
     methods: {
-       logout(){
-                // 清空数据
-                //,,,
-                this.$router.replace('/loginform');
-            },
+         showModal() {
+            this.$store.userName='';
+            this.$store.userId='';
+            this.$store.hasLogin = false;
+            localStorage.clear()
+            this.$router.options.routes = [];
+            this.$router.addRoutes([]);
+            this.$router.replace('/loginform')
+            console.log(this.$store.hasLogin)
+         },
+        
     },
 }
 </script>
