@@ -97,7 +97,7 @@ import susstable from '../../components/susstable'
 export default {
     data() {
       return {
-           current: 2,
+           current: 0,
            selectedRowKeys: [], // Check here to configure the default column
            list:[],
            houselist:{},

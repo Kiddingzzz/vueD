@@ -7,7 +7,16 @@
       </div>
       <div class="login" v-if="$store.hasLogin != false">
             <!-- 登录成功 -->
-             欢迎<span type="text">{{user}}</span>
+             <span type="text">
+               <a-dropdown>
+                <a class="ant-dropdown-link" href="#"> {{_user}} <a-icon type="down" /> </a>
+                <a-menu slot="overlay">
+                  <a-menu-item>
+                    <a href="javascript:;" @click="logout">退出登录</a>
+                  </a-menu-item>
+                </a-menu>
+              </a-dropdown>
+             </span>
       </div>
 
     </a-layout-header>
@@ -81,10 +90,19 @@ export default {
         user:'',
       };
     },
-    mounted(){
-      this.user = this.$store.userName;
-      console.log(this.user)
-    }
+    computed:{
+      _user(){
+       // console.log("````````````````````"+this.$store.userName)
+        return this.$store.hasLogin == true?this.$store.userName:'';
+      }
+    },
+    methods: {
+       logout(){
+                // 清空数据
+                //,,,
+                this.$router.replace('/loginform');
+            },
+    },
 }
 </script>
 
@@ -119,9 +137,10 @@ export default {
     align-items: center;
   }
   .login{
-    color: white;
     span{
-      margin-left: 10px;
+      .ant-dropdown-link{
+        color: white;
+      }
     }
   }
 </style>

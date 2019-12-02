@@ -2,45 +2,71 @@
   <div class="dialog" v-show="showMask">
     <div class="dialog-container">
       <div class="dialog-title">{{title}}</div>
-      <div class="content">
-        <div>
+      <a-form class="content" :form="form"  @submit="handleSubmit">
+        <a-form-item>
           <label>会员名称:</label>
-          <input
+          <a-input
             type="text"
             class="inputs"
             placeholder="请输入5-25个字符组成的会员名，推荐使用中文"
-            v-model="userName"
+            v-decorator="['userName', { 
+              rules: [
+                { required: true, message: '会员名不能为空' },
+                { min: 5, max:25, message: '请输入5-25个字符组成的会员名' }
+              ] }]"
           >
-        </div>
-        <div>
+          </a-input>
+          <!-- <span class="message" v-if="!$v.userName.required">会员名不能为空</span>
+          <span class="message" v-if="!$v.userName.minLength">fgdf</span> -->
+        </a-form-item>
+        <a-form-item>
           <label>登录密码:</label>
-          <input
+          <a-input
             type="password"
             class="inputs"
             placeholder="请输入6-20个由大小字母、数字、标点组成的密码"
-            v-model="password"
+            v-decorator="['password', { 
+              rules: [
+                { required: true, message: '密码不能为空' },
+                { min: 6, max:20, message: '请输入6-20个由大小字母、数字、标点组成的密码' }
+              ] }]"
           >
-        </div>
-        <div>
+        </a-input>
+        </a-form-item>
+        <a-form-item>
           <label>确认密码:</label>
-          <input type="password" class="inputs" placeholder="请确认您的登录密码" v-model="respassword">
-        </div>
-        <div>
+          <a-input 
+            type="password" 
+            class="inputs" 
+            placeholder="请确认您的登录密码" 
+            v-decorator="['respassword', { 
+              rules: [
+                { required: true, message: '密码不能为空' },
+                {
+                  validator: compareToFirstPassword,
+                },
+              ] }]"
+              @blur="handleConfirmBlur"
+            ></a-input>
+        </a-form-item>
+        <a-form-item>
           <label>手机号码:</label>
-          <input type="text" class="inputs-code" placeholder="请输入您的手机号码" v-model="phoneNumber">
+          <a-input type="text" class="inputs-code" placeholder="请输入您的手机号码" v-model="phoneNumber"></a-input>
           <button class="btns-code" @click="sendcode()">发送验证</button>
-        </div>
-        <div>
+        </a-form-item>
+        <a-form-item>
           <label class="codecomfire">验证码:</label>
-          <input type="text" class="inputs-number" placeholder="请确认您手机收到的验证码" v-model="sendCode">
-        </div>
-        <div class="font-size">
-          <input type="checkbox" v-model="hobby2" value="游泳" class="checkout">
-          我同意开单网的
-          <a href="#">《商家合作协议》</a>
-        </div>
-        <button class="btn-register" @click="doregister()">完成注册</button>
-      </div>
+          <a-input type="text" class="inputs-number" placeholder="请确认您手机收到的验证码" v-model="sendCode"></a-input>
+        </a-form-item>
+        <a-form-item class="font-size">
+          <a-checkbox   v-decorator="['agreement', {valuePropName: 'checked',initialValue: false,}]">
+            我同意开单网的
+            <a href="#">《商家合作协议》</a>
+          </a-checkbox>
+        </a-form-item>
+        <!-- <button class="btn-register" @click="doregister()">完成注册</button> -->
+        <button class="btn-register" html-type="submit">完成注册</button>
+      </a-form>
       <div class="close-btn" @click="closeMask">
         <i class="iconfont icon-guanbi"></i>
       </div>
@@ -88,11 +114,83 @@ export default {
       surname: '',
       respassword:'',
     };
-  },
+  }, 
+  beforeCreate() {
+    this.form = this.$form.createForm(this, { name: 'normal_login' });
+  },  
+  mounted() {
+    this.showMask = this.value;
+  },   
   methods: {
     closeMask() {
       this.showMask = false;
     },
+    handleSubmit(e) {
+      e.preventDefault();
+      this.form.validateFields((err, values) => {
+        if (!err) {
+          //console.log('正确', values);
+          this.doregister();
+        }
+      });
+    },
+    handleConfirmBlur(e) {
+      const value = e.target.value;
+      this.confirmDirty = this.confirmDirty || !!value;
+    },
+    compareToFirstPassword(rule, value, callback) {
+      const form = this.form;
+      if (value && value !== form.getFieldValue('password')) {
+        callback('两次输入密码不一致!');
+      } else {
+        callback();
+      }
+    },
+    // userblur(){ 
+    //   if(this.userName.length < 5){
+    //       this.$error({
+    //       icon: "none",
+    //       title: "会员名称长度不够"
+    //     });
+    //   }else{
+    //     this.register = true;
+    //   }
+    // },
+    // passblur(){ 
+    //   if (this.password.length < 6){
+    //     this.$error({
+    //       icon: "none",
+    //       title: "密码最短为 6 个字符"
+    //     });
+    //   }else{
+    //     this.register = true;
+    //   }
+    // },
+    // repassblur(){
+    //   if(this.respassword == ''){
+    //     this.$error({
+    //       icon: "none",
+    //       title: "确认密码不能为空"
+    //     });
+    //   }else if (this.password != this.respassword) {
+    //     this.$error({
+    //       icon: "none",
+    //       title: "两次输入密码不一致"
+    //     });
+    //   }else{
+    //     this.register = true;
+    //   }
+    // },
+    // checkagree(){
+    //   if (!this.hobby2) {
+    //     this.register = true;
+    //   }else{
+    //     this.$error({
+    //       icon: "none",
+    //       title: "请勾选同意"
+    //     });
+    //   }
+    // },
 
     // async sendcode() {
     //   if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber)) {
@@ -142,27 +240,6 @@ export default {
     //   }, 1000);
     // },
     async doregister() {
-      if (this.userName.length < 5) {
-        this.$error({
-          icon: "none",
-          title: "会员名称长度不够"
-        });
-        return;
-      }
-      if (this.password.length < 6) {
-        this.$error({
-          icon: "none",
-          title: "密码最短为 6 个字符"
-        });
-        return;
-      }
-      if (this.password != this.respassword) {
-        this.$error({
-          icon: "none",
-          title: "两次输入密码不一致"
-        });
-        return;
-      }
       const data = {
         //userNameOrEmailAddress: this.phoneNumber,
         userNameOrEmailAddress: this.userName,
@@ -188,9 +265,6 @@ export default {
       }
     }
   },
-  mounted() {
-    this.showMask = this.value;
-  },
   watch: {
     value(newVal, oldVal) {
       this.showMask = newVal;
@@ -202,6 +276,7 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+
 .dialog {
   position: fixed;
   top: 0;
@@ -244,8 +319,7 @@ export default {
       div {
         display: flex;
         justify-content: center;
-        margin-bottom: 30px;
-
+        // margin-bottom: 30px;
         .codecomfire {
           margin-left: 10px;
         }

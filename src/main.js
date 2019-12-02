@@ -39,8 +39,8 @@ Date.prototype.Format = function (fmt) { //author: meizz
 
 Vue.config.productionTip = false;
 Vue.prototype.$config = {
-	//api:'http://localhost:57992'
-	 api:'http://47.108.24.104:8072'
+	api:'http://localhost:57992'
+	//api:'http://47.108.24.104:8072'
 }
 Vue.prototype.encryptDes=encryptDes;
 Vue.prototype.decryptDes = decryptDes;

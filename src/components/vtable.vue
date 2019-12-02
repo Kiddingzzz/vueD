@@ -62,7 +62,7 @@
             title: '价格',
             dataIndex: 'rice',
             key:'rice',
-            width:'5.3%'
+            width:'5.5%'
         },
         {
             title: '朝向',
