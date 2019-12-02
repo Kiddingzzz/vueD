@@ -34,7 +34,7 @@
                             </a-tag>
                         </span>
                         <span slot="inter" slot-scope="text, record" >
-                           <img class="logo" :src="record.inter"/>
+                           <img class="interimg"" :src="record.inter"/>
                         </span>
                         <span slot="tiaojian" slot-scope="tiaojian">
                             <a-tag v-for="tag in tiaojian" @click="ceshi(tag)"
@@ -110,21 +110,21 @@
             title: '权限',
             dataIndex: 'name',
             key: 'name',
-            width: '15%',
+             width: '17%',
             scopedSlots: { customRender: 'name' },
         },
         {
             title: '网页',
             dataIndex: 'inter',
             key: 'inter',
-            width: '18%',
+             width: '17%',
             scopedSlots: { customRender: 'inter' },
         },
         {
             title: '条件',
             key: 'tiaojian',
             dataIndex: 'tiaojian',
-            width: '18%',
+            width: '17%',
             scopedSlots: { customRender: 'tiaojian' },
         },
         {
@@ -322,5 +322,9 @@
 
     .inputs{
         margin-bottom: 20px;
+    }
+    .interimg{
+      width:160px;
+       height:55px;
     }
 </style>

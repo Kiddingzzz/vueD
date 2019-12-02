@@ -7,7 +7,6 @@
                         <a-popconfirm
                             title="确定删除么？"
                             @confirm="confirm(record.id)"
-                            @cancel="cancel"
                             okText="确认"
                             cancelText="取消"
                         >
