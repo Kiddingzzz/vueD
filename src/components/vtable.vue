@@ -221,7 +221,7 @@
                             else{
                                 let that = this;
                                 const h = that.$createElement;
-                                that.$info({ title: '提示', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'), ]),
+                                that.$info({ title: '提示', okText:'去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'), ]),
                                 onOk() {
                                     that.$router.replace('/zhandian')
                                 },
@@ -232,7 +232,7 @@
                    })
                 }
                 catch(e){    
-                    this.$message.warning('系统遇到了点问题，请重试');             
+                    this.$message.warning('系统遇到了点问题，请重试');         
                 }
             },
             //

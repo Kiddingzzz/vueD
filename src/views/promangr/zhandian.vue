@@ -1,7 +1,7 @@
 <template>
     <div class="ts4">
         <div class="filter-wraps1" style="padding: 15px 15px 0px 15px;">
-            <div class="search_bds1" style="height:180px;">
+            <div class="search_bds1" >
                 <div>
                     贴心提示:
                 </div>

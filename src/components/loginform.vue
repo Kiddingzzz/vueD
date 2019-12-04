@@ -306,7 +306,9 @@ export default {
             if(Response.status == 200){
               //this.$store.login(Response.data.userNameOrEmailAddress)
               this.$store.userId = Response.data.userId; 
-              this.$store.hasLogin = true; 
+              this.$store.commit('hasLogin',true);
+           //   this.$store.hasLogin = true; 
+           console.log("成功================================="+this.$store.hasLogin);
               this.$store.userName = Response.data.username;
             //  this.update({
             //     hasLogin: true,
@@ -389,11 +391,12 @@ export default {
     box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.3);
     background-color: rgba(255,255,255,0.6);
     .img {
-      width: 150px;
-      height: 80px;
-      margin: 30px 0;
+      width: 300px;
+      height: 150px;
+     // margin: 30px 0;
     }
     .item-qcode {
+      margin-top: -10px;
       .icons {
         display: flex;
         flex-direction: row;
