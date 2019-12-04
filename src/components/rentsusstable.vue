@@ -15,7 +15,7 @@
                     </a-table> -->
                     <div class="content_suss">
                         <i class="iconfont icon-chenggong"></i>
-                        <div>您填写的房源出售信息已经发布成功！</div>
+                        <div>您填写的房源出租信息已经发布成功！</div>
                     </div>
                     <div class="content_btn">
                         <a-button class="goon_btn" type="primary" @click="goon">继续发布</a-button>
@@ -72,7 +72,7 @@
     // ];
 
     export default {
-        name: 'susstable',
+        name: 'rentsusstable',
         data() {
             return {
                 // columns,
@@ -93,7 +93,7 @@
                 this.$emit('goonfun',this.current)
             },
             redirct(){
-                this.$router.replace('/sell')
+                this.$router.replace('/lease')
             },
         },
     };

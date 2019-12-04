@@ -9,6 +9,7 @@ import Lease from '@/views/houseluru/lease'
 import Sell from '@/views/houseluru/Sell'
 import Zhandian from '@/views/promangr/Zhandian'
 import Loginform from '@/components/loginform'
+import Rentrelease from '@/views/cloudrelease/rentrelease'
 import Salerelease from '@/views/cloudrelease/salerelease'
 import vtable from '@/components/vtable'
 import Allinter from '@/mytables/allinter'
@@ -16,6 +17,9 @@ import Rizhi from '@/mytables/rizhi'
 import Tuijian from '@/mytables/tuijian'
 import Seleinter from '@/components/seleinter'
 import Susstable from '@/components/susstable'
+import Rentusstable from '@/components/rentsusstable'
+import Rentvtable from '@/components/rentvtable'
+import Rentinter from '@/components/rentinter'
 Vue.use(Router)
 
 export default new Router({
@@ -97,6 +101,17 @@ export default new Router({
 			  }
 		},
 		{
+			path: '/rentrelease',
+			name: 'Rentrelease',
+			component: Rentrelease,
+			// meta: {
+			// 	requireAuth: true
+			// }
+			meta: {
+				keepAlive: true
+			  }
+		},
+		{
 			path: '/salerelease',
 			name: 'Salerelease',
 			component: Salerelease,
@@ -164,6 +179,21 @@ export default new Router({
 			path: '/susstable',
 			name: 'Susstable',
 			component: Susstable
+		},
+		{
+			path: '/rentsusstable',
+			name: 'Rentusstable',
+			component: Rentusstable
+		},
+		{
+			path: '/rentvtable',
+			name: 'Rentvtable',
+			component: Rentvtable,			
+		},
+		{
+			path: '/rentinter',
+			name: 'Rentinter',
+			component: Rentinter
 		},
 
 	]

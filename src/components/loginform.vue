@@ -74,6 +74,7 @@
 </template>
 <script>
 import dialogRegister from "./dialog-register.vue";
+//import { mapState, mapMutations } from 'vuex';
 import md5 from 'js-md5';
 export default {
   components: {
@@ -98,6 +99,7 @@ export default {
     };
   },
   computed: {
+    //...mapMutations(['login', 'update','hasLogins']),
     alipay() {
       return this.type == "pay"
         ? "/assets/v2_prlna1.png"
@@ -302,10 +304,19 @@ export default {
           await this.$http.post(statu,datas).then(Response => {
             console.log(JSON.stringify(Response))
             if(Response.status == 200){
-              // this.$store.login(Response.data.userNameOrEmailAddress)
+              //this.$store.login(Response.data.userNameOrEmailAddress)
               this.$store.userId = Response.data.userId; 
-              this.$store.hasLogin = true;
+              this.$store.hasLogin = true; 
               this.$store.userName = Response.data.username;
+            //  this.update({
+            //     hasLogin: true,
+            //     userName:Response.data.username,
+            //     loginProvider: "",
+            //     openid: null,
+            //     userId:Response.data.userId,
+            //     user: {},
+            //     isUpdateHome: true,
+            //   });
               this.$router.replace('/index')
             }
             

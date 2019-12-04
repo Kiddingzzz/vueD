@@ -28,7 +28,10 @@
             v-decorator="['password', { 
               rules: [
                 { required: true, message: '密码不能为空' },
-                { min: 6, max:20, message: '请输入6-20个由大小字母、数字、标点组成的密码' }
+                { min: 6, max:20, message: '请输入6-20个由大小字母、数字、标点组成的密码' },
+                {
+                  validator: validateToNextPassword,
+                },
               ] }]"
           >
         </a-input>
@@ -41,7 +44,7 @@
             placeholder="请确认您的登录密码" 
             v-decorator="['respassword', { 
               rules: [
-                { required: true, message: '密码不能为空' },
+                { required: true, message: '确认密码不能为空' },
                 {
                   validator: compareToFirstPassword,
                 },
@@ -145,6 +148,13 @@ export default {
       } else {
         callback();
       }
+    },
+    validateToNextPassword(rule, value, callback) {
+      const form = this.form;
+      if (value && this.confirmDirty) {
+        form.validateFields(['respassword'], { force: true });
+      }
+      callback();
     },
     // userblur(){ 
     //   if(this.userName.length < 5){
@@ -276,6 +286,13 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+/deep/.ant-form-item-children{
+  bottom: 4px;
+}
+/deep/.ant-form-explain{
+  margin-left: 75px;
+  display: flex;
+}
 
 .dialog {
   position: fixed;

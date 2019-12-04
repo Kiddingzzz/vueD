@@ -364,7 +364,7 @@
                                     <label class="selllabeltle">*业主心态：</label><label>从房东卖房原因、是否急售等方面进行描述</label><label class="putnumber">(字数限制20-300)</label>
                                 </div>
                                 <div>
-                                    <a-textarea :value="ref.atittude" style="width:50%;" :rows="5" />
+                                    <a-textarea v-model="ref.atittude" style="width:50%;" :rows="5" />
                                     <div>
                                     <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
                                     </div>
@@ -377,7 +377,7 @@
                                     <label class="sellputnumber">(字数限制20-300)</label>
                                 </div>
                                 <div>
-                                    <a-textarea :rows="5" style="width:50%;" :value="ref.fuwuCondition"/>
+                                    <a-textarea :rows="5" style="width:50%;"  v-model="ref.fuwuCondition"/>
                                 </div>
                          </div>
                          <div class="selltilerbox">

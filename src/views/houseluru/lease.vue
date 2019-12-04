@@ -639,6 +639,13 @@
             },
             //插入一条url数据链接
             async onSearch(params) {
+                //判断URL网址输入是否正确
+                var strRegex ='(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
+                var re=new RegExp(strRegex); 
+                if (params==""||!re.test(params)) { 
+                    alert("请输入正确的url地址");
+                    return; 
+                }
                 this.uuid()
                 this.urlss = params;
                 const data = {

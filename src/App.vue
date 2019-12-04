@@ -5,14 +5,14 @@
       <div class="logo">
         <img class="logo" src="../static/logoJXW.png">
       </div>
-      <div class="login" v-if="$store.hasLogin != false">
+      <div class="login" v-if="this.$store.hasLogin != false">
             <!-- 登录成功 -->
-             <span type="text">
+             <span>
                <a-dropdown>
-                <a class="ant-dropdown-link" href="#">{{_user}} <a-icon type="down" /> </a>
+                <a class="ant-dropdown-link" href="#"> {{_user}} <a-icon type="down"/> </a>
                 <a-menu slot="overlay">
                   <a-menu-item>
-                     <a  @click="showModal">退出登录</a>
+                    <a href="javascript:;" @click="logout">退出登录</a>
                   </a-menu-item>
                 </a-menu>
               </a-dropdown>
@@ -58,6 +58,9 @@
 
           <a-sub-menu key="sub4">
             <span slot="title"><a-icon type="cloud" />云发布</span>
+            <a-menu-item key="11">
+              <router-link to="rentrelease">出租群发</router-link>
+            </a-menu-item>  
             <a-menu-item key="12">
               <router-link to="salerelease">出售群发</router-link>
             </a-menu-item>           
@@ -69,6 +72,9 @@
             </a-menu-item>
             <a-menu-item key="14">
               <router-link to="tuijian">站点管理</router-link>
+            </a-menu-item>
+             <a-menu-item key="15">
+              <router-link to="loginform">退出登录</router-link>
             </a-menu-item>
           </a-sub-menu>
         </a-menu>
@@ -90,24 +96,34 @@ export default {
         user:'',
       };
     },
+    created(){
+        // 在页面加载时读取sessionStorage里的状态信息
+        // if (sessionStorage.getItem("store") ) {
+        //   this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(sessionStorage.getItem("store"))))
+        // }
+
+        // 在页面刷新时将vuex里的信息保存到sessionStorage里
+        // window.addEventListener("beforeunload",()=>{
+        //   sessionStorage.setItem("store",JSON.stringify(this.$store.state))
+        // })
+    },
+    mounted(){
+
+    },
     computed:{
       _user(){
-       // console.log("````````````````````"+this.$store.userName)
-        return this.$store.hasLogin == true?"欢迎您，"+this.$store.userName:'';
-      }
+        console.log("首页`````````````````"+this.$store.state);
+        return this.$store.hasLogin != false ? "欢迎您，"+this.$store.userName : "请登录";
+      },
     },
+
     methods: {
-         showModal() {
-            this.$store.userName='';
-            this.$store.userId='';
-            this.$store.hasLogin = false;
-            localStorage.clear()
-            this.$router.options.routes = [];
-            this.$router.addRoutes([]);
-            this.$router.replace('/loginform')
-            console.log(this.$store.hasLogin)
-         },
-        
+       logout(){
+                // 清空数据
+                //,,,
+                this.$store.hasLogin = false;
+                this.$router.replace('/loginform');
+            },
     },
 }
 </script>
@@ -144,6 +160,9 @@ export default {
   }
   .login{
     span{
+      .a{
+        color: white !important;
+      }
       .ant-dropdown-link{
         color: white;
       }

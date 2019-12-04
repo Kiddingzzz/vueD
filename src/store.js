@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'Vuex';
-// import createPersistedState from 'vuex-persistedstate'
+//import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);
 
@@ -50,8 +50,7 @@ const store = new Vuex.Store({
 		},
 		logout(state) {
 			state.hasLogin = false
-			state.ope
-			nid = null
+			state.openid = null
 		},
 		set_token(state, token) {
 		state.token = token
@@ -66,14 +65,15 @@ const store = new Vuex.Store({
 		}
 	},
 	plugins: [
-		// createPersistedState({
+		// createPersistedState({ 
+		// 	storage: window.sessionStorage,
+		// })
+
+		//  createPersistedState({
 		// 	storage: {
-		// 		getItem: key => uni.getStorageSync(key),
-		// 		setItem: (key, value) => {
-		// 			// console.log(`${key}-${value}`);
-		// 			uni.setStorageSync(key, value);
-		// 		},
-		// 		removeItem: key => uni.removeStorageSync(key)
+		// 		getItem: key => Cookies.get(key),
+		// 		setItem: (key, value) => Cookies.set(key, value, { expires: 3, secure: true }),
+		// 		removeItem: key => Cookies.remove(key)
 		// 	  }
 		// })
 	]
