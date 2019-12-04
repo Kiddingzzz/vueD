@@ -1,6 +1,6 @@
 <template>
-     <div style="max-width:100%">
-         <a-table  :columns="columns" :dataSource="siteitem">
+     <div style="width:100%">
+         <a-table  :columns="column" :dataSource="closesiteitem">
                         <span slot="name" slot-scope="name">
                             <a-tag v-for="tag in name" :key="tag"
                               :color="tag==='loser' ? 'volcano' : (tag.toUpperCase()!='允许发布'? 'rosybrown' : 'skyblue')"
@@ -9,7 +9,7 @@
                             </a-tag>
                         </span>
                         <span slot="inter" slot-scope="text, record" >
-                           <img class="openinterimg"" :src="record.inter"/>
+                           <img class="closeinterimg"" :src="record.inter"/>
                         </span>
                         <span slot="tiaojian" slot-scope="tiaojian">
                             <a-tag v-for="tag in tiaojian" @click="openceshi(tag)"
@@ -17,37 +17,37 @@
 
                                 {{tag.toUpperCase()}}
                             </a-tag>
-                            <a-modal title="登录账号" v-model="openvisible" @ok="openhandleOk('房天下')">
+                            <a-modal title="登录账号" v-model="closevisible" @ok="closehandleOk('房天下')">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
-                                    v-model="opensiteUserName"
+                                    v-model="closesiteUserName"
                                     placeholder="请输入姓名"
-                                    class="openinputs"
-                                    autocomplete="new-opensiteUserName"
+                                    class="closeinputs"
+                                    autocomplete="new-closesiteUserName"
                                     ></el-input>
                                     <el-input
                                     type="password"
                                     autocomplete="new-password"
                                     placeholder="请输入密码"
-                                    v-model="opensitepwd"
-                                    class="openinputs"
+                                    v-model="closesitepwd"
+                                    class="closeinputs"
                                     prefix-icon="iconfont icon-mima"
                                     ></el-input>
                             </a-modal>
-                            <a-modal title="登录账号" v-model="openvisible" @ok="openhandle58">
+                            <a-modal title="登录账号" v-model="closevisible" @ok="closehandle58">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
-                                    v-model="opensiteUserName"
+                                    v-model="closesiteUserName"
                                     placeholder="请输入姓名"
-                                    class="openinputs"
-                                    autocomplete="new-opensiteUserName"
+                                    class="closeinputs"
+                                    autocomplete="new-closesiteUserName"
                                     ></el-input>
                                     <el-input
                                     type="password"
                                     autocomplete="new-password"
                                     placeholder="请输入密码"
-                                    v-model="opensitepwd"
-                                    class="openinputs"
+                                    v-model="closesitepwd"
+                                    class="closeinputs"
                                     prefix-icon="iconfont icon-mima"
                                     ></el-input>
                             </a-modal>
@@ -55,8 +55,8 @@
                         <span slot="userName" slot-scope="text, record">
                                 <a>{{record.userName}}</a>
                         </span>
-                        <span slot="action">
-                            <a-button type="primary">删除</a-button>
+                        <span slot="action" slot-scope="text, record" >
+                            <a-button type="primary" @click="DeleteSite(record.id)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary">登陆后台</a-button>
                             <a-button type="primary">查看密码</a-button>
@@ -65,7 +65,7 @@
      </div>
 </template>
 <script>
-     const columns = [
+     const column = [
         {
             title: '权限',
             dataIndex: 'name',
@@ -104,118 +104,111 @@
   export default {
     data() {
       return {
-          columns,
-          opensiteUserName: '',
-          opensitepwd: '',
-          openkeyId: "12345645",
-          openbid: "s123",
-          openret: [],
-          openbyte: [],
-          opentokens: '',
-          opendespwd: '',
+          column,
+          closesiteUserName: '',
+          closesitepwd: '',
+          closekeyId: "12345645",
+         closebid: "s123",
+          closeret: [],
+         closebyte: [],
+         closetokens: '',
+         closedespwd: '',
           //房源类型 售 或 租
-          houseType: '',
+          closehouseType: '',
           //请求API的授权码 令牌  
-          opentoken: '',
+          closetoken: '',
           //请求API的服务域名
-           openurl: '',
+           closeurl: '',
           //企业内部房源ID
-          openinnerid: '',
+          closeinnerid: '',
           //房源详情页URL
-          openhouseurl: '',
+          closehouseurl: '',
           // 房天下房源ID   
-          openhouseid: '',
+          closehouseid: '',
           //发布状态：1.已推广，2.未推广，5.房源违规
-          openflag: '',
-          openvisible: false,
-          openaddress: '',
-          siteitem:[],
+         closeflag: '',
+          closevisible: false,
+          closeaddress: '',
+          closesiteitem:[],
        
       };
     },
    mounted() {
       let pwd = this.pwd;
-      let openkeyId = this.openkeyId;
-      const ddd = openkeyId.toString();
+      let closekeyId = this.closekeyId;
+      const ddd = closekeyId.toString();
       // console.log(ddd);
      // const KeyHex =cryptoJs.enc.utf8.parse(ddd);
       const userName1 = this.encryptDes('gracemae', '058523bb')
        const pwd1 = this.encryptDes('jiayu6248', '058523bb')
 
-      this.GetOpenSiteList();
+      this.GetCloseSiteList();
    },
     methods: {
         ///获取站点列表
-            async GetOpenSiteList(){
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+this.$store.userId)
-                this.siteitem = query.data.items;
-                this.siteitem[0].name = ['允许发布', '允许推送'];
-                this.siteitem[0].tiaojian = ['添加账号', '去注册'];
-                this.siteitem[0].key = '1';
-                this.siteitem[1].name = ['允许发布', '允许推送'];
-                this.siteitem[1].tiaojian = ['添加账号', '去注册'];
-                this.siteitem[1].key = '2';
-
+            async GetCloseSiteList(){
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
+                console.log("fasdfasdfa:"+JSON.stringify(query.data.items))
+                this.closesiteitem = query.data.items; 
+                this.closesiteitem[0].name = ['允许发布', '允许推送'];
+                this.closesiteitem[0].tiaojian = ['添加账号', '去注册'];
+                this.closesiteitem[0].key = '1';
+                this.closesiteitem[1].name = ['允许发布', '允许推送'];
+                this.closesiteitem[1].tiaojian = ['添加账号', '去注册'];
+                this.closesiteitem[1].key = '2';
             },
             ///58tongcheng
-            async openhandle58(e) {
+            async closehandle58(e) {
                 const data = {
                     // userId: this.$store.userId,
                     userId:this.$store.userId,
-                    opensiteUserName: this.opensiteUserName,
-                    sitePassword: this.opensitepwd,
-                    userName: this.opensiteUserName,
+                    closesiteUserName: this.closesiteUserName,
+                    sitePassword: this.closesitepwd,
+                    userName: this.closesiteUserName,
                     opentoken:'aaa',
                     biaoshi:'58同城'
                 }
                 
                 var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);
-                this.GetOpenSiteList();
-                this.openvisible = false;
+                this.GetCloseSiteList();
+                this.closevisible = false;
             },
             ///房天下
-            async openhandleOk(e) {
+            async closehandleOk(e) {
                 const data = {
                     // userId: this.$store.userId,
                     userId:this.$store.userId,
-                    opensiteUserName: this.opensiteUserName,
-                    sitePassword: this.opensitepwd,
-                    userName: this.opensiteUserName,
+                    closesiteUserName: this.closesiteUserName,
+                    sitePassword: this.closesitepwd,
+                    userName: this.closesiteUserName,
                     opentoken:'aaa',
                     biaoshi:'房天下'
                 }
                 
                 var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);
-                this.GetOpenSiteList();
-                this.openvisible = false;
+                this.GetCloseSiteList();
+                this.closevisible = false;
             },
             openceshi(tag) {
                 if(tag == '添加账号'){
-                    this.openvisible = true;            
+                    this.closevisible = true;            
                 }
                 else{
                 }
             },
+            //删除站点账号
+          
+          
      
     },
   };
 </script>
 <style  lang="less">
-    // .ant-table-tbody>tr>td{  
-    //       text-align: center;
-    // }
-    // .ant-table-thead > tr:first-child > th
-    // {
-    //     text-align: center;
-    // }
-    .wangyeimg{
-      width: 200px;
-      height: 70px;
-    }
-      .openinputs{
+   
+    .closeinputs{
         margin-bottom: 20px;
     }
-    .openinterimg{
+    .closeinterimg{
       width:160px;
        height:65px;
     }

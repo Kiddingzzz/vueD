@@ -306,7 +306,6 @@ export default {
             if(Response.status == 200){
               //this.$store.login(Response.data.userNameOrEmailAddress)
               this.$store.userId = Response.data.userId; 
-              this.$store.commit('hasLogin',true);
            //   this.$store.hasLogin = true; 
            console.log("成功================================="+this.$store.hasLogin);
               this.$store.userName = Response.data.username;

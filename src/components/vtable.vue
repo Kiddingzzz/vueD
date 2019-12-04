@@ -181,7 +181,6 @@
             },
         },
         mounted() {
-            console.log(123)
             this.seachShow();
         },
         methods: {
@@ -192,12 +191,14 @@
 
             //删除
             async  onDelete(id) {
+                 console.log(id)
                 try{
-                   await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                   await this.$http.post(`${this.$config.api}/api/cms/house/`+id+`/publishDelete`).then(Response=>{
                        if(Response.status==200)
                        {
-                        const datas = [...this.data];
-                        this.datas = datas.filter(item => item.key !== key)
+                           console.log(Response)
+                        // const datas = [...this.data];
+                        // this.datas = datas.filter(item => item.key !== key)
                         this.$message.success('删除成功！！！');
                         
                        }   
@@ -209,14 +210,16 @@
 
             },
             //传房源对象并判断此账号是否已有添加网站
-          async  onfabu(house) {
+          async  onfabu(record) {
+               console.log("respones.house222:"+this.$store.userId)
                   try{
-                       await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                       await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
+                     console.log("respones.house2222:"+JSON.stringify(Response))
                        if(Response.status==200)
                        {
-                            if(Response.items.length!=0){
-                              console.log("respones.house:"+JSON.stringify(house))
-                              this.$emit("getData",house);
+                            if(Response.data=="yes"){
+                              console.log("respones.house:"+JSON.stringify(record))
+                              this.$emit("getData",record);
                             }
                             else{
                                 let that = this;
@@ -235,16 +238,18 @@
                     this.$message.warning('系统遇到了点问题，请重试');         
                 }
             },
-            //
+            //获取房源列表
             async seachShow(){
-                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+                 const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishList/`+this.$store.userId);
                  if(respones.status == 200)
                  {
-                     console.log("respones.status:"+JSON.stringify(respones))
+                     //console.log("respones.status:"+JSON.stringify(respones))
                     this.list=respones.data.items;
+                    
                  }
                },
              confirm(id) {
+                
                 this.onDelete(id)
             }
         },

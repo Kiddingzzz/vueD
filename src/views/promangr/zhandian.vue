@@ -23,9 +23,9 @@
             </div>
         </div>
         <div style="padding: 15px 15px 0px 15px;">
-            <a-tabs defaultActiveKey="1" @change="callback"  >
+             <a-tabs type="card">
                 <a-tab-pane tab="全部网站" key="1">
-                    <a-table :columns="columnss" :dataSource="item">
+                    <a-table width="1120px" :columns="columnss" :dataSource="item">
                         <span slot="name" slot-scope="name">
                             <a-tag v-for="tag in name" :key="tag"
                               :color="tag==='loser' ? 'volcano' : (tag.toUpperCase()!='允许发布'? 'rosybrown' : 'skyblue')"
@@ -34,32 +34,15 @@
                             </a-tag>
                         </span>
                         <span slot="inter" slot-scope="text, record" >
-                           <img class="interimg"" :src="record.inter"/>
+                           <img class="interimg" :src="record.inter"/>
                         </span>
-                        <span slot="tiaojian" slot-scope="tiaojian">
-                            <a-tag v-for="tag in tiaojian" @click="ceshi(tag)"
+                        <span slot="tiaojian" slot-scope="text, record">
+                            <a-tag v-for="tag in record.tiaojian" @click="ceshi(tag,record.siteName)"
                                 :color="tag==='loser' ? 'volcano' : (tag.length > 3? 'geekblue' : 'green')" :key="tag">
 
                                 {{tag.toUpperCase()}}
                             </a-tag>
-                            <a-modal title="登录账号" v-model="visible" @ok="handleOk('房天下')">
-                                <el-input
-                                    prefix-icon="iconfont icon-User"
-                                    v-model="siteUserName"
-                                    placeholder="请输入姓名"
-                                    class="inputs"
-                                    autocomplete="new-siteUserName"
-                                    ></el-input>
-                                    <el-input
-                                    type="password"
-                                    autocomplete="new-password"
-                                    placeholder="请输入密码"
-                                    v-model="sitepwd"
-                                    class="inputs"
-                                    prefix-icon="iconfont icon-mima"
-                                    ></el-input>
-                            </a-modal>
-                            <a-modal title="登录账号" v-model="visible" @ok="handle58">
+                            <a-modal title="登录账号" v-model="visible" @ok="handleOk()">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="siteUserName"
@@ -80,8 +63,8 @@
                         <span slot="userName" slot-scope="text, record">
                                 <a>{{record.userName}}</a>
                         </span>
-                        <span slot="action">
-                            <a-button type="primary">删除</a-button>
+                        <span slot="action" slot-scope="text, record" >
+                            <a-button type="primary" @click="DeleteSite(record.id)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary">登陆后台</a-button>
                             <a-button type="primary">查看密码</a-button>
@@ -89,10 +72,10 @@
                     </a-table>
                 </a-tab-pane>
                 <a-tab-pane tab="已开通网站" key="2">
-                  
+                   <allinter></allinter>
                 </a-tab-pane>
                 <a-tab-pane tab="未开通网站" key="3">
-                    
+                    <closeinter></closeinter>
                 </a-tab-pane>
                 <a-tab-pane tab="操作日志" key="4">
                     <rizhi></rizhi>
@@ -137,6 +120,7 @@
         {
             title: '操作',
             key: 'action',
+            dataIndex: 'action',
             scopedSlots: { customRender: 'action' },
             width:'32%'
         }
@@ -164,6 +148,7 @@
     import qs from 'qs';
     import { encryptDes, decryptDes } from '../../des.js';
     import allinter from '../../mytables/allinter';
+    import closeinter from '../../mytables/closeinter';
     import rizhi from '../../mytables/rizhi';
     import tuijian from '../../mytables/tuijian';
 
@@ -197,16 +182,18 @@
                 visible: false,
                 address: '',
                 item:[],
+                siteName:'',
             };
         },
         components:{
             allinter,
             rizhi,
-            tuijian
+            tuijian,
+            closeinter,
         },
         mounted() {
 
-            let pwd = this.pwd;
+            let sitepwd = this.sitepwd;
             let keyId = this.keyId;
             const ddd = keyId.toString();
             // console.log(ddd);
@@ -221,6 +208,7 @@
             ///获取站点列表
             async GetSiteList(){
                 var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+this.$store.userId)
+                 console.log(query.data.items);
                 this.item = query.data.items;
                 this.item[0].name = ['允许发布', '允许推送'];
                 this.item[0].tiaojian = ['添加账号', '去注册'];
@@ -230,24 +218,9 @@
                 this.item[1].key = '2';
 
             },
-            ///58tongcheng
-            async handle58(e) {
-                const data = {
-                    // userId: this.$store.userId,
-                    userId:this.$store.userId,
-                    siteUserName: this.siteUserName,
-                    sitePassword: this.sitepwd,
-                    userName: this.siteUserName,
-                    token:'aaa',
-                    biaoshi:'58同城'
-                }
-                
-                var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);
-                this.GetSiteList();
-                this.visible = false;
-            },
             ///房天下
-            async handleOk(e) {
+            async handleOk() {
+                console.log(this.siteName)
                 const data = {
                     // userId: this.$store.userId,
                     userId:this.$store.userId,
@@ -255,31 +228,46 @@
                     sitePassword: this.sitepwd,
                     userName: this.siteUserName,
                     token:'aaa',
-                    biaoshi:'房天下'
+                    biaoshi:this.siteName,
                 }
                 
                 var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);
                 this.GetSiteList();
                 this.visible = false;
             },
-            
-            callback(key) {
-            },
-            ceshi(tag) {
+            ceshi(tag,hname) {
+                console.log("网站是："+hname)
+                this.siteName=hname;
                 if(tag == '添加账号'){
                     this.visible = true;            
                 }
                 else{
                 }
+
             },
-
-
             //删除房源
-            async pdetelezhusu() {
-                const res = $http.post(url + '/agent/house/delete?token=' + token + '&Content-Type=' + 'application/json' + '&keyId=' + keyId + '&FangRequestID=' + 'fang123' + '&houseType=' + houseType + '&houseid=' + houseid);
-                if (res.code == 1 || res.code == "1") {
-                }
+            async DeleteSite(sid){
+                console.log("Id:"+sid)
+                 await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow`).then(Response=>{
+                    if(Response.status==200) {
+                         if(Response.data=="yes"){
+                             //this.Deletesiteuser(id);
+                              this.$message.success('删除成功！！');
+                         }
+                          else{
+                              this.$message.success('您还没有添加网站的账号，请先添加！');
+                         }
+
+                           
+                    }
+                    else{
+                        this.$message.success('删除错误，请重新删除！');
+                    }   
+
+                 })
             },
+          
+        
         },
     };
 </script>
@@ -325,6 +313,6 @@
     }
     .interimg{
       width:160px;
-       height:55px;
+       height:65px;
     }
 </style>

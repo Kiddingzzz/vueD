@@ -226,6 +226,38 @@
                             validate-status="">
                             <a-radio-group :options="hezu" :defaultValue="valuehz"  />
                         </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="待合租面积:" has-feedback
+                            validate-status="">
+                            <a-input type="number" v-model="ref.square"  placeholder="待合租面积"
+                                class="mianji" />
+                            <label class="smianij">平方米</label>
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*合租方式" has-feedback
+                            validate-status="">
+                            <a-select default-value="1" class="sealefirhuxing " v-model="selectedShi">
+                                <a-select-option v-for="(option,i) in options" :key="i" :value="option">
+                                    {{option}}
+                                </a-select-option>
+                            </a-select>
+                            <label>户合租</label>
+                            <a-select default-value="1" class="huxing" v-model="selectedTing">
+                                <a-select-option v-for="(option,i) in options" :key="i" :value="option">
+                                    {{option}}
+                                </a-select-option>
+                            </a-select>
+                            <label>户已租</label>
+                            <a-select default-value="" class="hzsty" v-model="selectedChu">
+                                <a-select-option v-for="(option,i) in optionaddress" :key="i" :value="option">
+                                    {{option}}
+                                </a-select-option>
+                            </a-select>
+                            <a-select default-value="性别不限" class="hzsty" v-model="selectedWei">
+                                <a-select-option v-for="(option,i) in optionsex" :key="i" :value="option">
+                                    {{option}}
+                                </a-select-option>
+                            </a-select>
+                            
+                        </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*支付方式：" has-feedback
                             validate-status="">
                             <a-select default-value="" class="zhuzhaibox " >
@@ -533,6 +565,8 @@
     const plainOptionfwlb=['公寓','普通住宅','平房','其他'];
     const zhifu=['押一付一','押一付二','押一付三','押二付一','押二付二','押三付三',];
     const hezu=['合租','整租'];
+    const optionaddress=['主卧','次卧','床位','隔断间'];
+    const optionsex=['性别不限','限男生','限女生','限夫妻',];
     export default {
         data() {
             return {
@@ -554,8 +588,10 @@
                 plainOptionsc,
                 plainOptionsy,
                 plainOptionfwlb,
+                optionaddress,
                 hezu,
                 zhifu,
+                optionsex,
                 value2: '东',
                 value3: '随时看房',
                 value4: '豪华装修',
@@ -910,6 +946,11 @@
         width: 90px !important;
         padding-right: 5px;
         padding-left: 25px
+    }
+    .hzsty{
+        width: 130px !important;
+        padding-right: 5px;
+        padding-left: 17px
     }
     .sealefirhuxing{
          width: 75px !important;

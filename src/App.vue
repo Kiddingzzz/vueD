@@ -5,7 +5,7 @@
       <div class="logo">
         <img class="logo" src="../static/logoJXW.png">
       </div>
-      <div class="login" v-if="this.$store.hasLogin != false">
+      <div class="login" v-if="$store.hasLogin != false">
             <!-- 登录成功 -->
              <span>
                <a-dropdown>
