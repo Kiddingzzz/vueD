@@ -126,7 +126,7 @@
               <a-menu-item key="9" @click="reset('东北')"><a-icon type="user" />东北</a-menu-item>
               <a-menu-item key="10" @click="reset('西北')"><a-icon type="user" />西北</a-menu-item>
             </a-menu>
-            <a-button style="margin-left: 8px"> 朝向不限 <a-icon type="down" /> </a-button>
+            <a-button style="margin-left: 8px"> {{chaoxiangselect}} <a-icon type="down" /> </a-button>
           </a-dropdown>
           </div><!-- moniselectcon -->
           <div class="moniselectcon">
@@ -137,7 +137,7 @@
               <a-menu-item key="13" @click="reset('精装修')"><a-icon type="user" />精装修</a-menu-item>
               <a-menu-item key="14" @click="reset('豪华装修')"><a-icon type="user" />豪华装修</a-menu-item>
             </a-menu>
-            <a-button style="margin-left: 8px"> 装修不限 <a-icon type="down" /> </a-button>
+            <a-button style="margin-left: 8px"> {{zhuangxiuselect}} <a-icon type="down" /> </a-button>
           </a-dropdown>
           </div><!-- moniselectcon -->
         </dd>
@@ -149,9 +149,9 @@
         <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
           <a-table :columns="columns" :dataSource="list">
             <span slot="customTitle">
-              <a-icon type="smile-o" /> 时间</span>
+              <!-- <a-icon type="smile-o"/> --> 时间</span>
             <span slot="customTitles">
-              <a-icon type="smile-o" /> 标题</span>
+              <!-- <a-icon type="smile-o"/> --> 标题</span>
             <template slot="phones" slot-scope="text, record">
               <a :href="record.url" target="_blank">{{record.phone}}</a>
             </template>
@@ -174,7 +174,7 @@
       key: 'def',
       slots: { title: 'customTitle' },
       scopedSlots: { customRender: 'def' },
-      width:'7.5%'
+      width:'6.5%'
     },
     {
       title: '用途',
@@ -205,7 +205,7 @@
       title: '单价/元',
       dataIndex: 'simpleRice',
       key: 'simpleRice',
-      width:'7%'
+      width:'6.5%'
     },
     {
       title: '面积㎡',
@@ -255,7 +255,7 @@
       title: '地址',
       dataIndex: 'address',
       key: 'address',
-      width:'6%'
+      width:'7.5%'
     },
     {
       title: '来源',
@@ -270,6 +270,8 @@
         columns,
         list: [],
         searchName:'11',
+        chaoxiangselect: '朝向不限',
+        zhuangxiuselect: '装修不限',
       };
     },
     mounted() {
@@ -291,13 +293,24 @@
         this.list = res.items;
       },
       reset(data){
+        //确定选项里的值是属于装修还是朝向
+        const  hh = data
+        const str = "毛坯简单装修精装修豪华装修";
+        const reg = new RegExp(hh);
+        if(reg.test(str)){
+          this.zhuangxiuselect = data;
+        }else{
+          this.chaoxiangselect = data;
+        }
         this.getDashboard(data)
       }
     }
   }
 </script>
-<style lang="less">
-
+<style lang="less" scoped>
+  .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+      padding: 10px 10px;
+  }
   .wrap {
     width: 100%;
     display: flex;

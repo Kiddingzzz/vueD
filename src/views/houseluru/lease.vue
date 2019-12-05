@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-      <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk">
+      <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk" :destroyOnClose="true">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />

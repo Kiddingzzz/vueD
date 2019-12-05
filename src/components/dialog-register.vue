@@ -228,6 +228,8 @@ export default {
 
     closeMask() {
       this.showMask = false;
+      this.form.resetFields();
+      console.log("手动关闭后重置输入")
     },
     handleSubmit(e) {
       e.preventDefault();
@@ -380,10 +382,12 @@ export default {
         const res = await this.$http.post(Statu, data);
         console.log(res);
         console.log(this.phoneNumber);
+        this.$emit('childByValue',e.userName,e.password)
         setTimeout(() => {
             this.showMask = false;
+            this.form.resetFields();
+            console.log("注册成功后后重置输入")
           }, 500);
-          this.$emit('childByValue',e.userName,e.password)
       } catch (error) {
         this.$error({
           icon: "none",

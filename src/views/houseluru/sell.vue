@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @ok="handleOk">
+        <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @ok="handleOk" :destroyOnClose="true">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
@@ -224,7 +224,8 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房源标签:" validate-status=""
                             help="">
-                            <a-input id="" v-model="ref.fangyuanBiaoqian" placeholder="" />
+                            <!-- <a-input id="" v-model="ref.fangyuanBiaoqian" placeholder="" /> -->
+                            <a-input id="" v-model="fangyuanBiaoqian" placeholder="" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套标签:" validate-status=""
                             help="">
@@ -680,6 +681,7 @@
                 options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                 ceng: '',
                 lou: '',
+                fangyuanBiaoqian: '',
                 weiyiUserId: '',
                 saveRes: {},
                 imgH: {},
@@ -738,6 +740,9 @@
                             this.spinning = false;
                             this.ref = res.data;
                             //字符串
+                            console.log("房源标签是否含有html标签？=========="+this.ref.fangyuanBiaoqian);
+                            this.fangyuanBiaoqian = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"");
+                            console.log("去掉房源标签含有的html标签成功？=========="+this.fangyuanBiaoqian);
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                             this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
                             let shi = this.ref.huxing.indexOf("室");
