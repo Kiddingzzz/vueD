@@ -2,7 +2,7 @@
   <div class="dialog" v-show="showMask">
     <div class="dialog-container">
       <div class="dialog-title">{{title}}</div>
-      <a-form class="content" :form="form"  @submit="handleSubmit">
+      <a-form class="content" :form="form"  @submit="handleSubmit"> 
         <a-form-item>
           <label>会员名称:</label>
           <a-input
@@ -233,8 +233,8 @@ export default {
       e.preventDefault();
       this.form.validateFields((err, values) => {
         if (!err) {
-          //console.log('正确', values);
-          this.doregister();
+          console.log('正确', values);
+          this.doregister(values);
         }
       });
     },
@@ -365,14 +365,16 @@ export default {
     //     holdTime--;
     //   }, 1000);
     // },
-    async doregister() {
+    async doregister(e) {
       const data = {
         //userNameOrEmailAddress: this.phoneNumber,
-        userNameOrEmailAddress: this.userName,
-        password: this.password,
+        userNameOrEmailAddress: e.userName,
+        password: e.password,
+        phoneNumber:e.phoneNumber
         // sendCode: this.sendCode,
         // surname: this.phoneNumber
       };
+      console.log(`aaaaaaaaaaaaaaaaa`+data)
       try {
         const Statu = `${this.$config.api}/api/cms/acount/register`;
         const res = await this.$http.post(Statu, data);

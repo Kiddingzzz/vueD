@@ -116,14 +116,35 @@ export default {
         return this.$store.hasLogin != false ? "欢迎您，"+this.$store.userName : "请登录";
       },
     },
-
+    watch:{
+      '$route.path':function(newVal,oldVal){
+        console.log(newVal+"---"+oldVal);
+        if(newVal === '/loginform'){
+          console.log('欢迎进入登录页面');
+        }
+        if(newVal === '/index'){
+          console.log('欢迎进入二手房页面');
+          this.$router.replace('/index');
+        }
+        if(newVal === '/sell'){
+          console.log('欢迎进入二手房页面');
+          this.$router.push({path:'sell'});
+        }
+      }
+    },
+    created () {// 每次路由变化dom重新加载都会执行该方法
+      this.historyWatch();
+    },
     methods: {
-       logout(){
-                // 清空数据
-                //,,,
-                this.$store.hasLogin = false;
-                this.$router.replace('/loginform');
-            },
+      historyWatch () {
+        this.news = (this.$route.path === '/sell' ? 1 : 0);
+      },
+      logout(){
+              // 清空数据
+              //,,,
+              this.$store.hasLogin = false;
+              this.$router.replace('/loginform');
+      },
     },
 }
 </script>
