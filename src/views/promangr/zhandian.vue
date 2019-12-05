@@ -64,10 +64,33 @@
                                 <a>{{record.userName}}</a>
                         </span>
                         <span slot="action" slot-scope="text, record" >
-                            <a-button type="primary" @click="DeleteSite(record.id)">删除</a-button>
+                            <a-button type="primary" @click="DeleteSite(record.id,record.siteName)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
-                            <a-button type="primary">登陆后台</a-button>
-                            <a-button type="primary">查看密码</a-button>
+                            <a-button type="primary" @click="lookpwdbotton()">查看密码</a-button>
+                            <a-modal title="查看密码" v-model="lookvisible" @ok="lookpwd(record.id,record.siteName)">
+                                <label>为了您的账户安全，请输入您在开单王的登陆密码</label>
+                                <el-input
+                                    prefix-icon="iconfont icon-User"
+                                    v-model="lookpwdput"
+                                    placeholder="请输入密码"
+                                    class="inputs"
+                                    autocomplete="new-lookpwdput"
+                                    ></el-input>
+                            </a-modal>
+                            <a-modal title="查看密码" v-model="lookpwdvisible" @ok="lookpwdoks()">
+                                <el-input
+                                    prefix-icon="iconfont icon-User"
+                                    v-model="loolnameok"
+                                    class="inputs"
+                                    autocomplete="new-loolnameok"
+                                    ></el-input>
+                                <el-input
+                                    prefix-icon="iconfont icon-User"
+                                    v-model="lookpwdok"
+                                    class="inputs"
+                                    autocomplete="new-lookpwdok"
+                                    ></el-input>
+                            </a-modal>
                         </span>
                     </a-table>
                 </a-tab-pane>
@@ -159,6 +182,9 @@
                 columnss,
                 siteUserName: '',
                 sitepwd: '',
+                lookpwdput:'',
+                loolnameok:'',
+                lookpwdok:'',
                 keyId: "12345645",
                 bid: "s123",
                 ret: [],
@@ -180,6 +206,8 @@
                 //发布状态：1.已推广，2.未推广，5.房源违规
                 flag: '',
                 visible: false,
+                lookvisible:false,
+                lookpwdvisible:false,
                 address: '',
                 item:[],
                 siteName:'',
@@ -234,27 +262,48 @@
                     biaoshi:this.siteName,
                 }
                 
-                var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);
-                this.GetSiteList();
-                this.visible = false;
+               try{
+                     var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
+                        if(Response.status==200)
+                        {
+                            this.$message.success('添加账号成功');
+                            this.visible = false;
+                            this.GetSiteList();
+                
+                        }
+                    });
+               }
+               catch(e){
+                   console.log(e)
+                    this.$message.success('您已添加账号');
+                     this.visible = false;
+               }
+               
             },
             ceshi(tag,hname) {
-                console.log("网站是："+hname)
                 this.siteName=hname;
                 if(tag == '添加账号'){
                     this.visible = true;            
                 }
                 else{
+                    if(hname=="房天下")
+                    {
+                        window.open('https://passport.fang.com/NewRegister.aspx?backurl=https://cq.fang.com/');
+                    }
+                    else if(hname=="58同城")
+                    {
+                        window.open('https://passport.58.com/reg/?path=https%3A//cq.58.com/%3Futm_source%3Dmarket%26spm%3Du-2d2yxv86y3v43nkddh1.BDPCPZ_BT&utm_source=market&spm=u-2d2yxv86y3v43nkddh1.BDPCPZ_BT&PGTID=0d100000-0002-567b-16c7-57dafcb3c605&ClickID=2');
+                    }
                 }
-
             },
             //删除房源
-            async DeleteSite(sid){
-                console.log("Id:"+sid)
-                 await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow`).then(Response=>{
+            async DeleteSite(sid,gname){
+                console.log("Id:"+gname)
+                 await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow?name=`+gname).then(Response=>{
                     if(Response.status==200) {
                          if(Response.data=="yes"){
                              //this.Deletesiteuser(id);
+                              this.GetSiteList();
                               this.$message.success('删除成功！！');
                          }
                           else{
@@ -269,8 +318,42 @@
 
                  })
             },
-          
-        
+            lookpwdbotton(){
+                    this.lookvisible=true;
+            },
+
+
+            //查看密码
+            async lookpwd(pid,lsitename)
+            {
+                const data={
+                     userid:this.$store.userId,
+                     password:this.lookpwdput,
+                     lookpid:pid,
+                     looksitename:lsitename,
+                };
+              console.log("id:"+this.$store.userId+"密码："+this.lookpwdput)
+                try{
+                        await this.$http.post(`${this.$config.api}/api/cms/acount/lookPwd`,data).then(Response=>{
+                        console.log(Response)
+                        if(Response.status==200)
+                        {
+                            this.loolnameok=Response.data.username;
+                            this.lookpwdok=Response.data.userpwd;
+                            this.lookvisible=false;
+                            this.lookpwdvisible=true;
+                            
+                        }
+                })
+                }
+                catch(e)
+                {
+                    this.$message.success('密码输入错误');
+                }
+            },
+           lookpwdoks(){
+               this.lookpwdvisible=false;
+           }
         },
     };
 </script>

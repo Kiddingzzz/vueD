@@ -58,7 +58,6 @@
                         <span slot="action" slot-scope="text, record" >
                             <a-button type="primary" @click="DeleteSite(record.id)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
-                            <a-button type="primary">登陆后台</a-button>
                             <a-button type="primary">查看密码</a-button>
                         </span>
                     </a-table>   
