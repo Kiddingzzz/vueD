@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import Vuex from 'Vuex';
+import Vuex from 'vuex';
 //import createPersistedState from 'vuex-persistedstate'
 
 Vue.use(Vuex);
@@ -37,6 +37,7 @@ const store = new Vuex.Store({
 			Object.keys(config).map((item, key) => {
 				state[item] = config[item];
 			})
+			window.localStorage.setItem(update-state,JSON.stringify(config))
 		},
 		remove(state, props) {
 			props.map((item) => {
@@ -62,6 +63,20 @@ const store = new Vuex.Store({
 		},
 		setOpenid(state, openid) {
 			state.openid = openid
+		}
+	},
+	actions: {
+		// lazy loading openid
+		getUserOpenId: async function({
+			commit,
+			state
+		}) {
+			return await new Promise((resolve, reject) => {
+				if (state.openid) {
+					resolve(state.openid)
+				} else {
+				}
+			})
 		}
 	},
 	plugins: [

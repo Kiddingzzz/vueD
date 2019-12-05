@@ -73,12 +73,12 @@
   </div>
 </template>
 <script>
+import { mapState, mapMutations } from 'vuex';
 import dialogRegister from "./dialog-register.vue";
-//import { mapState, mapMutations } from 'vuex';
 import md5 from 'js-md5';
 export default {
   components: {
-    dialogRegister
+    dialogRegister,
   },
   data() {
     return {
@@ -99,7 +99,6 @@ export default {
     };
   },
   computed: {
-    //...mapMutations(['login', 'update','hasLogins']),
     alipay() {
       return this.type == "pay"
         ? "/assets/v2_prlna1.png"
@@ -184,6 +183,7 @@ export default {
         //  });
         },
   methods: {
+    ...mapMutations(['login', 'update']),
     getDate(userName,password) {
         // childValue就是子组件传过来的值
         this.user = userName;
@@ -302,45 +302,34 @@ export default {
         const statu = `${this.$config.api}/api/cms/acount/loginAuthentic`;
        try{
           await this.$http.post(statu,datas).then(Response => {
+            let that = this;
             console.log(JSON.stringify(Response))
             if(Response.status == 200){
               //this.$store.login(Response.data.userNameOrEmailAddress)
-              this.$store.userId = Response.data.userId; 
-           //   this.$store.hasLogin = true; 
-           console.log("成功================================="+this.$store.hasLogin);
-              this.$store.userName = Response.data.username;
-            //  this.update({
-            //     hasLogin: true,
-            //     userName:Response.data.username,
-            //     loginProvider: "",
-            //     openid: null,
-            //     userId:Response.data.userId,
-            //     user: {},
-            //     isUpdateHome: true,
-            //   });
-              this.$router.replace('/index')
+              // this.$store.userId = Response.data.userId; 
+              // this.$store.hasLogin = true; 
+              // this.$store.userName = Response.data.username;
+              var update={
+                  hasLogin: true,
+                  userName:Response.data.username,
+                  userId:Response.data.userId,
+              }
+              localStorage.setItem('update', JSON.stringify(update));
+              // this.update({
+              //     hasLogin: true,
+              //     userName:Response.data.username,
+              //     userId:Response.data.userId,
+              //   });
+                this.$router.replace('/index')
             }
-            
           })
        }
        catch(e)
        {
-          //  try{
-          //      await this.$http.post(statu,datas).then(Response => {
-          //        if(Response.status==200)
-          //        {
-                    this.$error({
-                    title: '提示',
-                    content: '账号或密码错误！！！',});
-          //        }
-          //      })
-          //  }
-          //  watch(e){
-          //        this.$error({
-          //        title: '提示',
-          //        content: '您是新用户，请先登录',
-          //     });
-          //  }
+          console.log(e)
+          this.$error({
+          title: '提示',
+          content: '账号或密码错误！！！',});
              
        }
 

@@ -77,6 +77,22 @@ new Vue({
 	store,
 	render: h => h(App)
 }).$mount("#app");
+if (sessionStorage.getItem("update")) {
+	this.$store.replaceState(
+	  Object.assign(
+		{},
+		this.$store.state,
+		JSON.parse(sessionStorage.getItem("update"))
+	  )
+	);
+	sessionStorage.removeItem("update")
+  }
+
+  //在页面刷新时将vuex里的信息保存到sessionStorage里
+  window.addEventListener("beforeunload", () => {
+	sessionStorage.setItem("update", JSON.stringify(this.$store.state));
+  });
+
 // 添加请求拦截器
 // Axios.interceptors.request.use(config => {
 // 	// 在发送请求之前做些什么

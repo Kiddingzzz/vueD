@@ -112,8 +112,9 @@ export default {
     },
     computed:{
       _user(){
-        console.log("首页`````````````````"+this.$store.state);
-        return this.$store.hasLogin != false ? "欢迎您，"+this.$store.userName : "请登录";
+        let update = JSON.parse(localStorage.getItem('update'));
+        console.log("首页`````````````````"+JSON.stringify(update));
+        return update.hasLogin != false ? "欢迎您，"+update.userName : "请登录";
       },
     },
     watch:{
@@ -134,6 +135,11 @@ export default {
     },
     created () {// 每次路由变化dom重新加载都会执行该方法
       this.historyWatch();
+      window.addEventListener('beforeunload', e => {
+      localStorage.setItem("store",JSON.stringify(this.$store.state))
+
+    });
+    
     },
     methods: {
       historyWatch () {
@@ -142,7 +148,18 @@ export default {
       logout(){
               // 清空数据
               //,,,
-              this.$store.hasLogin = false;
+              var update={
+                  hasLogin: false,
+                  userName:'',
+                  loginProvider: "",
+                  openid: null,
+                  userId:'',
+                  user: {},
+                  token:'',
+                  isUpdateHome: true
+              }
+              //存入数据
+              localStorage.setItem('update', JSON.stringify(update));
               this.$router.replace('/loginform');
       },
     },
