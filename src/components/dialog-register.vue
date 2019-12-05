@@ -383,8 +383,7 @@ export default {
         setTimeout(() => {
             this.showMask = false;
           }, 500);
-          this.$emit('childByValue',this.userName,this.password)
-
+          this.$emit('childByValue',e.userName,e.password)
       } catch (error) {
         this.$error({
           icon: "none",

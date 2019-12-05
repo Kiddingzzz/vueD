@@ -364,7 +364,7 @@ export default {
   position: absolute;
   top: 0;
   right: 0;
-  background: url("/static/bg.jpg");
+  background: url("/static/bg1.jpg");
   background-size: 100% 100%;
   box-sizing: boder-box;
   .banner-login {

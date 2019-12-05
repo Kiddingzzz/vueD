@@ -27,50 +27,51 @@
           :defaultSelectedKeys="['1']"
           :defaultOpenKeys="['sub1']"
           :style="{ height: '100%', borderRight: 0 }"
+          :selectedKeys="[this.$route.path]"
         >
           <a-sub-menu key="sub1">
             <span slot="title"><a-icon type="user" />个人房源</span>
-            <a-menu-item key="1">
+            <a-menu-item key="/index">
               <router-link to="index">二手房</router-link>
             </a-menu-item>
-            <a-menu-item key="2">
+            <a-menu-item key="/shops">
               <router-link to="shops">商铺</router-link>
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub2">
             <span slot="title"><a-icon type="laptop" />房源管理</span>
-            <a-menu-item key="6">
+            <a-menu-item key="/pubulish">
               <router-link to="pubulish">发布房源</router-link>
             </a-menu-item> 
-            <a-menu-item key="8">
+            <a-menu-item key="/test">
                 <router-link to="test">url链接列表</router-link>
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub3">
             <span slot="title"><a-icon type="inbox" />房源录入</span>
-            <a-menu-item key="9">
+            <a-menu-item key="/lease">
               <router-link to="lease">租房录入</router-link>
             </a-menu-item>  
-            <a-menu-item key="10">
+            <a-menu-item key="/sell">
                  <router-link to="sell">售房录入</router-link>
             </a-menu-item>
           </a-sub-menu>
 
           <a-sub-menu key="sub4">
             <span slot="title"><a-icon type="cloud" />云发布</span>
-            <a-menu-item key="11">
+            <a-menu-item key="/rentrelease">
               <router-link to="rentrelease">出租群发</router-link>
             </a-menu-item>  
-            <a-menu-item key="12">
+            <a-menu-item key="/salerelease">
               <router-link to="salerelease">出售群发</router-link>
             </a-menu-item>           
           </a-sub-menu>
           <a-sub-menu key="sub5">
             <span slot="title"><a-icon type="setting" />个人管理</span>
-            <a-menu-item key="13">
+            <a-menu-item key="/zhandian">
               <router-link to="zhandian">站点管理</router-link>
             </a-menu-item>
-            <a-menu-item key="14">
+            <a-menu-item key="/tuijian">
               <router-link to="tuijian">站点管理</router-link>
             </a-menu-item>
              <a-menu-item key="15">
@@ -118,23 +119,23 @@ export default {
       },
     },
     watch:{
-      '$route.path':function(newVal,oldVal){
-        console.log(newVal+"---"+oldVal);
-        if(newVal === '/loginform'){
-          console.log('欢迎进入登录页面');
-        }
-        if(newVal === '/index'){
-          console.log('欢迎进入二手房页面');
-          this.$router.replace('/index');
-        }
-        if(newVal === '/sell'){
-          console.log('欢迎进入二手房页面');
-          this.$router.push({path:'sell'});
-        }
-      }
+      // '$route.path':function(newVal,oldVal){
+      //   console.log(newVal+"---"+oldVal);
+      //   if(newVal === '/loginform'){
+      //     console.log('欢迎进入登录页面');
+      //   }
+      //   if(newVal === '/index'){
+      //     console.log('欢迎进入二手房页面');
+      //     this.$router.replace('/index');
+      //   }
+      //   if(newVal === '/sell'){
+      //     console.log('欢迎进入二手房页面');
+      //     this.$router.push({path:'sell'});
+      //   }
+      // }
     },
     created () {// 每次路由变化dom重新加载都会执行该方法
-      this.historyWatch();
+      // this.historyWatch();
       window.addEventListener('beforeunload', e => {
       localStorage.setItem("store",JSON.stringify(this.$store.state))
 
@@ -142,9 +143,9 @@ export default {
     
     },
     methods: {
-      historyWatch () {
-        this.news = (this.$route.path === '/sell' ? 1 : 0);
-      },
+      // historyWatch () {
+      //   this.news = (this.$route.path === '/sell' ? 1 : 0);
+      // },
       logout(){
               // 清空数据
               //,,,
