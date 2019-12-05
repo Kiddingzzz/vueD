@@ -147,7 +147,8 @@
     methods: {
         ///获取站点列表
             async GetCloseSiteList(){
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
+                //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+update.userId)
                 console.log("fasdfasdfa:"+JSON.stringify(query.data.items))
                 this.closesiteitem = query.data.items; 
                 this.closesiteitem[0].name = ['允许发布', '允许推送'];
@@ -161,7 +162,7 @@
             async closehandle58(e) {
                 const data = {
                     // userId: this.$store.userId,
-                    userId:this.$store.userId,
+                    userId:update.userId,
                     closesiteUserName: this.closesiteUserName,
                     sitePassword: this.closesitepwd,
                     userName: this.closesiteUserName,
@@ -177,7 +178,7 @@
             async closehandleOk(e) {
                 const data = {
                     // userId: this.$store.userId,
-                    userId:this.$store.userId,
+                    userId:update.userId,
                     closesiteUserName: this.closesiteUserName,
                     sitePassword: this.closesitepwd,
                     userName: this.closesiteUserName,

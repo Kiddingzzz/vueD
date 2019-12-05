@@ -207,7 +207,8 @@
         methods: {
             ///获取站点列表
             async GetSiteList(){
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+this.$store.userId)
+                //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+this.$store.userId)
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+update.userId)
                  console.log(query.data.items);
                 this.item = query.data.items;
                 this.item[0].name = ['允许发布', '允许推送'];
@@ -223,7 +224,7 @@
                 console.log(this.siteName)
                 const data = {
                     // userId: this.$store.userId,
-                    userId:this.$store.userId,
+                    userId:update.userId,
                     siteUserName: this.siteUserName,
                     sitePassword: this.sitepwd,
                     userName: this.siteUserName,

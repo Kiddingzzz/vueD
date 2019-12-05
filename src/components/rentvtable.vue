@@ -193,7 +193,8 @@
             //删除
             async  onDelete(id) {
                 try{
-                   await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                   //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                    await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId).then(Response=>{
                        if(Response.status==200)
                        {
                         const datas = [...this.data];
@@ -211,7 +212,8 @@
             //传房源对象并判断此账号是否已有添加网站
           async  onfabu(house) {
                   try{
-                       await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                       //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                    await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId).then(Response=>{
                        if(Response.status==200)
                        {
                             if(Response.items.length!=0){
@@ -237,7 +239,8 @@
             },
             //
             async seachShow(){
-                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+                 //const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId);
                  if(respones.status == 200)
                  {
                      console.log("respones.status:"+JSON.stringify(respones))

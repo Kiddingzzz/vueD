@@ -165,7 +165,8 @@
                 //  const res=await this.$http.get('${this.$config.api}/api/cms/pubulish/publishList/{id}')
             },
             async seachShow(){
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+                //const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId);
                 this.list=respones.data;
             },
         },

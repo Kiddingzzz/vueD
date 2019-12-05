@@ -147,7 +147,8 @@
     methods: {
         ///获取站点列表
             async GetOpenSiteList(){
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+this.$store.userId)
+               // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+this.$store.userId)
+               var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+update.userId)
                 this.siteitem = query.data.items;
                 this.siteitem[0].name = ['允许发布', '允许推送'];
                 this.siteitem[0].tiaojian = ['添加账号', '去注册'];
@@ -161,7 +162,7 @@
             async openhandle58(e) {
                 const data = {
                     // userId: this.$store.userId,
-                    userId:this.$store.userId,
+                    userId:update.userId,
                     opensiteUserName: this.opensiteUserName,
                     sitePassword: this.opensitepwd,
                     userName: this.opensiteUserName,
@@ -177,7 +178,7 @@
             async openhandleOk(e) {
                 const data = {
                     // userId: this.$store.userId,
-                    userId:this.$store.userId,
+                    userId:update.userId,
                     opensiteUserName: this.opensiteUserName,
                     sitePassword: this.opensitepwd,
                     userName: this.opensiteUserName,

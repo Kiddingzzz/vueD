@@ -799,7 +799,8 @@
                     this.openNotificationWithIcon('error')
                 }
                 else {
-                    this.saveRes.urlsId = this.$store.userId;
+                    //this.saveRes.urlsId = this.$store.userId;
+                    this.saveRes.urlsId = update.userId;
                     this.saveRes.imgHeader = this.imgH.url;
                     await this.$http.post(`${this.$config.api}/api/cms/pubulish/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {

@@ -211,9 +211,11 @@
             },
             //传房源对象并判断此账号是否已有添加网站
           async onfabu(record) {
-               console.log("respones.house222:"+this.$store.userId)
+              // console.log("respones.house222:"+this.$store.userId)
+               console.log("respones.house222:"+update.userId)
                   try{
-                       await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
+                      // await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
+                          await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+update.userId).then(Response=>{
                      console.log("respones.house2222:"+JSON.stringify(Response))
                        if(Response.status==200)
                        {
@@ -240,7 +242,8 @@
             },
             //获取房源列表
             async seachShow(){
-                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+                // const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId);
                  if(respones.status == 200)
                  {
                      //console.log("respones.status:"+JSON.stringify(respones))
