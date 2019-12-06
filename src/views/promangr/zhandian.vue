@@ -220,7 +220,7 @@
             closeinter,
         },
         mounted() {
-
+            let update = JSON.parse(localStorage.getItem('update'));
             let sitepwd = this.sitepwd;
             let keyId = this.keyId;
             const ddd = keyId.toString();
@@ -327,12 +327,12 @@
             async lookpwd(pid,lsitename)
             {
                 const data={
-                     userid:this.$store.userId,
+                     userid:update.userid,
                      password:this.lookpwdput,
                      lookpid:pid,
                      looksitename:lsitename,
                 };
-              console.log("id:"+this.$store.userId+"密码："+this.lookpwdput)
+              console.log("id:"+update.userid+"密码："+this.lookpwdput)
                 try{
                         await this.$http.post(`${this.$config.api}/api/cms/acount/lookPwd`,data).then(Response=>{
                         console.log(Response)

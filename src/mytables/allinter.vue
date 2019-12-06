@@ -209,7 +209,7 @@
                     if(Response.status==200) {
                          if(Response.data=="yes"){
                              //this.Deletesiteuser(id);
-                    userId:this.$store.userId,
+                        
                               this.GetOpenSiteList();
                               this.$message.success('删除成功！！');
                          }
@@ -251,12 +251,12 @@
              async openlookpwd(pid,lsitename)
             {
                 const data={
-                     userid:this.$store.userId,
+                     userid:update.userid,
                      password:this.openlookpwdput,
                      lookpid:pid,
                      looksitename:lsitename,
                 };
-              console.log("id:"+this.$store.userId+"密码："+this.lookpwdput)
+              console.log("id:"+update.userid+"密码："+this.lookpwdput)
                 try{
                         await this.$http.post(`${this.$config.api}/api/cms/acount/lookPwd`,data).then(Response=>{
                         console.log(Response)
