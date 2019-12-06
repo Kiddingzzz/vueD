@@ -10,6 +10,7 @@
             class="inputs"
             placeholder="请输入5-25个字符组成的会员名，推荐使用中文"
             v-decorator="['userName', { 
+              validateTrigger: 'blur',
               rules: [
                 { required: true, message: '会员名不能为空' },
                 { min: 5, max:25, message: '请输入5-25个字符组成的会员名' }
@@ -26,6 +27,7 @@
             class="inputs"
             placeholder="请输入6-20个由大小字母、数字、标点组成的密码"
             v-decorator="['password', { 
+              validateTrigger: 'blur',
               rules: [
                 { required: true, message: '密码不能为空' },
                 { min: 6, max:20, message: '请输入6-20个由大小字母、数字、标点组成的密码' },
@@ -43,6 +45,7 @@
             class="inputs" 
             placeholder="请确认您的登录密码" 
             v-decorator="['respassword', { 
+              validateTrigger: 'blur',
               rules: [
                 { required: true, message: '确认密码不能为空' },
                 {
@@ -59,6 +62,7 @@
             class="inputs-code" 
             placeholder="请输入您的手机号码" 
             v-decorator="['phoneNumber', { 
+                validateTrigger: 'blur',
                 rules: [
                   {
                     validator: checkphoneNumber,
@@ -380,7 +384,6 @@ export default {
       try {
         const Statu = `${this.$config.api}/api/cms/acount/register`;
         const res = await this.$http.post(Statu, data);
-        console.log(res);
         console.log(this.phoneNumber);
         this.$emit('childByValue',e.userName,e.password)
         setTimeout(() => {

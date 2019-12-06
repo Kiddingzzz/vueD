@@ -12,7 +12,7 @@
                 <a class="ant-dropdown-link" href="#"> {{_user}} <a-icon type="down"/> </a>
                 <a-menu slot="overlay">
                   <a-menu-item>
-                    <a href="javascript:;" @click="logout">退出登录</a>
+                    <a href="javascript:;" @click="logout">{{_logouttxt}}</a>
                   </a-menu-item>
                 </a-menu>
               </a-dropdown>
@@ -24,7 +24,7 @@
       <a-layout-sider width="200" style="background: #fff">
         <a-menu
           mode="inline"
-          :defaultSelectedKeys="['1']"
+          :defaultSelectedKeys="[this.$route.path]"
           :defaultOpenKeys="['sub1']"
           :style="{ height: '100%', borderRight: 0 }"
           :selectedKeys="[this.$route.path]"
@@ -95,6 +95,7 @@ export default {
       return {
         collapsed: false,
         user:'',
+        OpenKeys: '',
       };
     },
     created(){
@@ -117,6 +118,11 @@ export default {
         console.log("首页`````````````````"+JSON.stringify(update));
         return update.hasLogin != false ? "欢迎您，"+update.userName : "请登录";
       },
+      _logouttxt(){
+        let update = JSON.parse(localStorage.getItem('update'));
+        console.log("首页`````````````````"+JSON.stringify(update));
+        return update.hasLogin != false ? "退出登录" : "登录";
+      }
     },
     watch:{
       // '$route.path':function(newVal,oldVal){
@@ -146,6 +152,16 @@ export default {
       // historyWatch () {
       //   this.news = (this.$route.path === '/sell' ? 1 : 0);
       // },
+      // click(e){
+      //   let str = e.keyPath
+      //   let hh = str.lastIndexOf(",");
+      //   // this.OpenKeys = str.substring(hh+1);
+      //   //  console.log("点击的父亲"+this.OpenKeys)
+      // },
+      // onChange(e){
+      //   console.log("改变"+e.length)
+      // },
+
       logout(){
               // 清空数据
               //,,,
