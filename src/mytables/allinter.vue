@@ -148,6 +148,7 @@
         ///获取站点列表
             async GetOpenSiteList(){
                // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+this.$store.userId)
+               let update = JSON.parse(localStorage.getItem('update'));
                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+update.userId)
                 this.siteitem = query.data.items;
                 this.siteitem[0].name = ['允许发布', '允许推送'];
@@ -160,6 +161,7 @@
             },
             ///58tongcheng
             async openhandle58(e) {
+                let update = JSON.parse(localStorage.getItem('update'));
                 const data = {
                     // userId: this.$store.userId,
                     userId:update.userId,
@@ -176,6 +178,7 @@
             },
             ///房天下
             async openhandleOk(e) {
+                let update = JSON.parse(localStorage.getItem('update'));
                 const data = {
                     // userId: this.$store.userId,
                     userId:update.userId,

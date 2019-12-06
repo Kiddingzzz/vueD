@@ -194,6 +194,7 @@
                 this.pdef.chanquanNianxian = this.pdef.chanquanNianxian.substring(0,chanquanLength);
 
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + this.$store.userId);
+                let update = JSON.parse(localStorage.getItem('update'));
                 var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + update.userId);
                 let datas = query.data;
                 const urls = 'unity/authenticate';

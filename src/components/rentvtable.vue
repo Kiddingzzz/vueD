@@ -194,6 +194,7 @@
             async  onDelete(id) {
                 try{
                    //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                    let update = JSON.parse(localStorage.getItem('update'));
                     await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId).then(Response=>{
                        if(Response.status==200)
                        {
@@ -213,6 +214,7 @@
           async  onfabu(house) {
                   try{
                        //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+                    let update = JSON.parse(localStorage.getItem('update'));  
                     await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId).then(Response=>{
                        if(Response.status==200)
                        {
@@ -240,6 +242,7 @@
             //
             async seachShow(){
                  //const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+                 let update = JSON.parse(localStorage.getItem('update'));
                  const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId);
                  if(respones.status == 200)
                  {

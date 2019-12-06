@@ -208,6 +208,7 @@
             ///获取站点列表
             async GetSiteList(){
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+this.$store.userId)
+                let update = JSON.parse(localStorage.getItem('update'));
                 var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+update.userId)
                  console.log(query.data.items);
                 this.item = query.data.items;
@@ -222,6 +223,7 @@
             ///房天下
             async handleOk() {
                 console.log(this.siteName)
+                let update = JSON.parse(localStorage.getItem('update'));
                 const data = {
                     // userId: this.$store.userId,
                     userId:update.userId,

@@ -148,6 +148,7 @@
         ///获取站点列表
             async GetCloseSiteList(){
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
+                let update = JSON.parse(localStorage.getItem('update'));
                 var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+update.userId)
                 console.log("fasdfasdfa:"+JSON.stringify(query.data.items))
                 this.closesiteitem = query.data.items; 
@@ -160,6 +161,7 @@
             },
             ///58tongcheng
             async closehandle58(e) {
+                let update = JSON.parse(localStorage.getItem('update'));
                 const data = {
                     // userId: this.$store.userId,
                     userId:update.userId,
@@ -176,6 +178,7 @@
             },
             ///房天下
             async closehandleOk(e) {
+                let update = JSON.parse(localStorage.getItem('update'));
                 const data = {
                     // userId: this.$store.userId,
                     userId:update.userId,
