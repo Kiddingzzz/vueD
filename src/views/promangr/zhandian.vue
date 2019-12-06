@@ -220,7 +220,7 @@
             closeinter,
         },
         mounted() {
-            let update = JSON.parse(localStorage.getItem('update'));
+            
             let sitepwd = this.sitepwd;
             let keyId = this.keyId;
             const ddd = keyId.toString();
@@ -302,9 +302,8 @@
                  await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow?name=`+gname).then(Response=>{
                     if(Response.status==200) {
                          if(Response.data=="yes"){
-                             //this.Deletesiteuser(id);
-                              this.GetSiteList();
                               this.$message.success('删除成功！！');
+                              this.GetSiteList();
                          }
                           else{
                               this.$message.success('您还没有添加网站的账号，请先添加！');
@@ -326,8 +325,9 @@
             //查看密码
             async lookpwd(pid,lsitename)
             {
+                 let update = JSON.parse(localStorage.getItem('update'));
                 const data={
-                     userid:update.userid,
+                     userid:update.userId,
                      password:this.lookpwdput,
                      lookpid:pid,
                      looksitename:lsitename,

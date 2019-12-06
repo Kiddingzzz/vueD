@@ -58,32 +58,13 @@
       <dl id="secitem-rent" class="secitem">
         <dt class="fl" style="margin-top:2px;">租金：</dt>
         <dd>
-          <a class='select' @click="getDashboard()">不限</a>
-          <a href="https://cq.58.com/chuzu/0/b1/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Zujin_0_500')">500元以下</a>
-          <a href="https://cq.58.com/chuzu/0/b2/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Zujin_500_1000')">500-1000元</a>
-          <a href="https://cq.58.com/chuzu/0/b3/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Zujin_1000_1500')">1000-1500元</a>
-          <a href="https://cq.58.com/chuzu/0/b4/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Zujin_1500_2000')">1500-2000元</a>
-          <a href="https://cq.58.com/chuzu/0/b5/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Zujin_2000_3000')">2000-3000元</a>
-          <a href="https://cq.58.com/chuzu/0/b6/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Zujin_3000_4500')">3000-4500元</a>
-          <a href="https://cq.58.com/chuzu/0/b7/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Zujin_4500_9999999')">4500元以上</a>
-          <span class="prifilter">
-            <span class="text">
-              <input type="text" para="minprice" muti="1" min="0" max="999999" name="b_q" autocomplete="off">
-            </span>
-            <span class="dev"> - </span>
-            <span class="text">
-              <input type="text" para="minprice" muti="1" min="0" max="999999" name="b_q" autocomplete="off">
-            </span>
-            <span class="dev">元</span>
+          <a class='select' @click="reset()">不限</a>
+          <a @click="reset('0-80')">80万以下</a>
+          <a @click="reset('80-130')">80-130万</a>
+          <a @click="reset('130-180')">130-180万</a>
+          <a @click="reset('180以上')">180万以上</a>
             <span class="shaixuanbtn none">
-              <a rel='nofollow' href="javascript:;" onClick="clickLog('from=fcpc_list_cq_Zujin_shaixuan')">价格筛选</a>
+              <a rel='nofollow' href="javascript:;" onClick="clickLog('from=fcpc_list_cq_Zujin_shaixuan')">万元/户</a>
             </span>
           </span>
         </dd>
@@ -93,18 +74,12 @@
       <dl class="secitem">
         <dt>厅室：</dt>
         <dd id="secitem-room">
-          <a rel='nofollow' href="https://cq.58.com/chuzu/0/?pagetype=area" class='select'
-            onClick="clickLog('from=fcpc_list_cq_Tingshi_')">不限</a>
-          <a rel='nofollow' href="https://cq.58.com/chuzu/0/j1/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Tingshi_j1')">一室</a>
-          <a rel='nofollow' href="https://cq.58.com/chuzu/0/j2/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Tingshi_j2')">两室</a>
-          <a rel='nofollow' href="https://cq.58.com/chuzu/0/j3/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Tingshi_j3')">三室</a>
-          <a rel='nofollow' href="https://cq.58.com/chuzu/0/j4/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Tingshi_j4')">四室</a>
-          <a rel='nofollow' href="https://cq.58.com/chuzu/0/j5/?pagetype=area"
-            onClick="clickLog('from=fcpc_list_cq_Tingshi_j5')">四室以上</a>
+          <a rel='nofollow' @click="reset()" class='select'>不限</a>
+          <a rel='nofollow'  @click="reset('一室')">一室</a>
+          <a rel='nofollow' @click="reset('两室')">两室</a>
+          <a rel='nofollow' @click="reset('三室')">三室</a>
+          <a rel='nofollow' @click="reset('四室')">四室</a>
+          <a rel='nofollow' @click="reset('四室以上')">四室以上</a>
         </dd>
       </dl>
 
@@ -115,6 +90,7 @@
           <div class="moniselectcon">
             <a-dropdown>
             <a-menu slot="overlay">
+            <a-menu-item key="1" @click="reset()"><a-icon type="user" />朝向不限</a-menu-item>
               <a-menu-item key="1" @click="reset('东')"><a-icon type="user" />东</a-menu-item>
               <a-menu-item key="2" @click="reset('南')"><a-icon type="user" />南</a-menu-item>
               <a-menu-item key="3" @click="reset('西')"><a-icon type="user" />西</a-menu-item>
@@ -132,6 +108,7 @@
           <div class="moniselectcon">
             <a-dropdown>
             <a-menu slot="overlay">
+              <a-menu-item key="11" @click="reset()"><a-icon type="user" />装修不限</a-menu-item>
               <a-menu-item key="11" @click="reset('毛坯')"><a-icon type="user" />毛坯</a-menu-item>
               <a-menu-item key="12" @click="reset('简单装修')"><a-icon type="user" />简单装修</a-menu-item>
               <a-menu-item key="13" @click="reset('精装修')"><a-icon type="user" />精装修</a-menu-item>
@@ -174,13 +151,13 @@
       key: 'def',
       slots: { title: 'customTitle' },
       scopedSlots: { customRender: 'def' },
-      width:'6.5%'
+      width:'6.7%'
     },
     {
       title: '用途',
       dataIndex: 'yongtu',
       key: 'yongtu',
-      width:'6%'
+      width:'5.7%'
     },
     {
       title: '小区',
@@ -199,25 +176,25 @@
       title: '价格/万',
       dataIndex: 'rice',
       key: 'rice',
-      width:'7%'
+      width:'7.5%'
     },
     {
       title: '单价/元',
       dataIndex: 'simpleRice',
       key: 'simpleRice',
-      width:'6.5%'
+      width:'7.2%'
     },
     {
       title: '面积㎡',
       dataIndex: 'square',
       key: 'square',
-      width:'6.8%'
+      width:'7%'
     },
     {
       title: '朝向',
       dataIndex: 'chaoxiang',
       key: 'chaoxiang',
-      width:'5.5%'
+      width:'5.7%'
     },
     {
       title: '户型',
@@ -241,7 +218,7 @@
       title: '联系人',
       dataIndex: 'lianxiPeople',
       key: 'lianxiPeople',
-      width:'7%'
+      width:'7.2%'
     },
     {
       title: '电话',
@@ -261,7 +238,7 @@
       title: '来源',
       dataIndex: 'source',
       key: 'source',
-      width:'11%'
+      width:'11.5%'
     },
   ];
   export default {
@@ -281,6 +258,7 @@
       async getDashboard(pi) {
         if(pi == undefined){
           const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList`);
+          console.log(respones)
           const res = respones.data;
           this.list = res.items;
           return;
@@ -294,14 +272,14 @@
       },
       reset(data){
         //确定选项里的值是属于装修还是朝向
-        const  hh = data
-        const str = "毛坯简单装修精装修豪华装修";
-        const reg = new RegExp(hh);
-        if(reg.test(str)){
-          this.zhuangxiuselect = data;
-        }else{
-          this.chaoxiangselect = data;
-        }
+        // const  hh = data
+        // const str = "毛坯简单装修精装修豪华装修";
+        // const reg = new RegExp(hh);
+        // if(reg.test(str)){
+        //   this.zhuangxiuselect = data;
+        // }else{
+        //   this.chaoxiangselect = data;
+        // }
         this.getDashboard(data)
       }
     }
