@@ -281,7 +281,7 @@
                         // this.houseurl = res1.returnmsgs.houseurl;
                         // this.flag = res1.returnmsgs.flag;
                         // this.houseid = res1.returnmsgs.houseid;
-                        var renders = this.$http.post(`${this.$config.api}/api/cms/pubulish/modifyHouseStatus/`+this.value.id)
+                        var renders = this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/`+this.value.id)
                         this.openNotificationWithIcon('success')
                     }
                 })

@@ -195,7 +195,7 @@
                 try{
                    //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
                     let update = JSON.parse(localStorage.getItem('update'));
-                    await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId).then(Response=>{
+                    await this.$http.get(`${this.$config.api}/api/cms/house/publishList/`+update.userId).then(Response=>{
                        if(Response.status==200)
                        {
                         const datas = [...this.data];
@@ -215,7 +215,7 @@
                   try{
                        //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
                     let update = JSON.parse(localStorage.getItem('update'));  
-                    await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId).then(Response=>{
+                    await this.$http.get(`${this.$config.api}/api/cms/house/publishList/`+update.userId).then(Response=>{
                        if(Response.status==200)
                        {
                             if(Response.items.length!=0){
@@ -243,7 +243,7 @@
             async seachShow(){
                  //const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
                  let update = JSON.parse(localStorage.getItem('update'));
-                 const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId);
+                 const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishList/`+update.userId);
                  if(respones.status == 200)
                  {
                      console.log("respones.status:"+JSON.stringify(respones))

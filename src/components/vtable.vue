@@ -245,7 +245,7 @@
             async seachShow(){
                 // const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
                 let update = JSON.parse(localStorage.getItem('update'));
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+update.userId);
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishList/`+update.userId);
                  if(respones.status == 200)
                  {
                      //console.log("respones.status:"+JSON.stringify(respones))
