@@ -1,8 +1,8 @@
 <template>
-<div class="res ant-layout">
-    <div class="tsall">
-           <div class="tsfilter-wraps" v-if="current==0">
-                <div class="tssearch_bds" >
+    <div class="res ant-layout">
+        <div class="tsall">
+            <div class="tsfilter-wraps" v-if="current==0">
+                <div class="tssearch_bds">
                     <div class="tishi">
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
@@ -19,7 +19,7 @@
             </div>
             <!-- 导航进度条 -->
             <div class="step">
-                <a-steps :current="current" >
+                <a-steps :current="current">
                     <a-step title="第一步" description="选择房源" />
                     <a-step title="第二步" description="选择网站" />
                     <a-step title="第三步" description="操作完成" />
@@ -27,8 +27,8 @@
             </div>
             <!-- 2、3步提示 -->
             <div class="tsfilter-wraps" v-if="current==1">
-                <div class="tssearch_bds" >
-                    <div class="tishi"> 
+                <div class="tssearch_bds">
+                    <div class="tishi">
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
                     <div>
@@ -43,12 +43,12 @@
                 </div>
             </div>
             <div class="tsfilter-wraps" v-if="current==2">
-                <div class="tssearch_bds" >
+                <div class="tssearch_bds">
                     <div class="tishi">
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
                     <div>
-                        1.如果您希望使用的账号不在其中，您可以马上<a-button type="link" >添加账号</a-button> 。
+                        1.如果您希望使用的账号不在其中，您可以马上<a-button type="link">添加账号</a-button> 。
                     </div>
                     <div>
                         2.如果您希望修改"库存满时"与"房源重复"的发送处理方式，请进入<a-button type="link">个人设置</a-button>。
@@ -60,17 +60,17 @@
             </div>
             <!-- tab标签页 -->
             <div class="tabcontent" v-if="current==0">
-                <a-tabs  type="card">
-                    <a-tab-pane tab="住宅" key="1"> 
+                <a-tabs type="card">
+                    <a-tab-pane tab="住宅" key="1">
                         <vtable @getData="getMag"></vtable>
                     </a-tab-pane>
                     <a-tab-pane tab="别墅" key="2">
-                        <vtable ></vtable>
+                        <vtable></vtable>
                     </a-tab-pane>
                     <a-tab-pane tab="写字楼" key="3">
                         <vtable></vtable>
                     </a-tab-pane>
-                </a-tabs>   
+                </a-tabs>
             </div>
 
             <div class="tabcontent" v-if="current==1">
@@ -78,69 +78,68 @@
             </div>
 
             <div class="tabcontent" v-if="current==2">
-                <susstable @goonfun="getcurrentFormSon"></susstable>   
+                <susstable @goonfun="getcurrentFormSon"></susstable>
             </div>
             <!-- 上/下一步 -->
             <div class="pre">
                 <a-button type="primary" @click="pre" v-if="current==1">上一步</a-button>
                 <!-- <a-button type="primary"  @click="goon" v-if="current==2">继续发布</a-button> -->
             </div>
-            
+
+        </div>
     </div>
-  </div>
 </template>
 <script>
-import vtable from '../../components/vtable'
-import seleinter from '../../components/seleinter'
-import susstable from '../../components/susstable'
+    import vtable from '../../components/vtable'
+    import seleinter from '../../components/seleinter'
+    import susstable from '../../components/susstable'
 
-export default {
-    data() {
-      return {
-           current: 0,
-           selectedRowKeys: [], // Check here to configure the default column
-           list:[],
-           houselist:{},
-           bieshu:{},
-      };
-    },
-    components: {
+    export default {
+        data() {
+            return {
+                current: 0,
+                selectedRowKeys: [], // Check here to configure the default column
+                list: [],
+                houselist: {},
+                bieshu: {},
+            };
+        },
+        components: {
             vtable,
             seleinter,
             susstable
         },
-    methods: {
-        adduser(){
-             this.$router.replace('/zhandian')
+        methods: {
+            adduser() {
+                this.$router.replace('/zhandian')
+            },
+
+            pre() {
+                if (this.current-- < 1) this.current = 0;
+            },
+            //继续发布
+            //   goon(){           
+            //         this.current = 0;
+            //   },
+            getcurrentFormSon(data) {
+                this.current = data
+            },
+            //接受house对象 
+            getMag(house) {
+                this.houselist = house;
+                if (this.houselist != "" && this.houselist != undefined) {
+                    this.current = 1;
+                    this.bieshu = this.houselist;
+                }
+            },
+            //第二步操作跳转第三步
+            getSeconds(message) {
+                if (message == 'a') {
+                    this.current = 2;
+                }
+            }
         },
-      
-       pre() {
-        if (this.current-- < 1) this.current = 0;
-      },
-      //继续发布
-    //   goon(){           
-    //         this.current = 0;
-    //   },
-        getcurrentFormSon(data){
-            this.current = data
-        },
-      //接受house对象 
-      getMag(house){
-           this.houselist=house;
-           if( this.houselist!=""&& this.houselist!=undefined)
-           {
-               this.current = 1;
-               this.bieshu = this.houselist;
-           }
-      },
-      //第二步操作跳转第三步
-      getSeconds(message){
-        if(message == 'a'){
-            this.current = 2;
-        }
-      }
-    },
-  };
+    };
 </script>
 
 <style lang="less">
@@ -150,54 +149,57 @@ export default {
         flex-flow: column;
         margin: 0 auto;
         padding: 24px 24px 0px 24px;
-     
-        }
-    .tsfilter-wraps{
-         padding: 24px 0px;
-         position: relative;
-         display: flex;
+
+    }
+
+    .tsfilter-wraps {
+        padding: 24px 0px;
+        position: relative;
+        display: flex;
         flex: 0 0 auto;
         justify-content: center;
-           
-     }
-    .tssearch_bds{
-    display: flex;
-     flex-direction: column;
-     background: #ffffdd;
-     width: 100%;
-     padding: 12px;
-     line-height: 26px;
-     border-radius: 10px;
-     border: 1px solid #ebedf0;
+
     }
-    .search_bds_red{
-          color: red;
+
+    .tssearch_bds {
+        display: flex;
+        flex-direction: column;
+        background: #ffffdd;
+        width: 100%;
+        padding: 12px;
+        line-height: 26px;
+        border-radius: 10px;
+        border: 1px solid #ebedf0;
     }
-    .step{
+
+    .search_bds_red {
+        color: red;
+    }
+
+    .step {
         padding: 25px 15px 20px 15px;
-        background:#ffffff;
+        background: #ffffff;
         border-radius: 10px;
     }
-    .tabcontent{
+
+    .tabcontent {
         padding: 25px 15px;
         border-radius: 10px;
         background: #ffffff;
         margin-top: 20px;
         margin-bottom: 24px;
-     }
-      
-    .pre{
-         height: 60px ;
-         width: 100% ;
-        margin: 20px 24px 50px 0 ;
+    }
+
+    .pre {
+        height: 60px;
+        width: 100%;
+        margin: 20px 24px 50px 0;
         display: flex;
         justify-content: flex-end;
         align-items: center;
     }
-            
-     .next{
-          margin-right: 20px;
-     }
-     
-   
+
+    .next {
+        margin-right: 20px;
+    }
 </style>

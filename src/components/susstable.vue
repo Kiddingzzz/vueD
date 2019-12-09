@@ -1,29 +1,29 @@
 <template>
-        <div class="susswrap">
-            <a-layout>
-                <a-layout-content class="content" :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
-                    <!-- <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
-                        <span slot="inter" slot-scope="res,record">
-                            <img class="wangyeimg" :src="record.inter">
-                        </span>
-                        <span slot="customTitles">
-                            <a-icon type="smile-o" /> 标题
-                        </span>
-                        <template slot="titles" slot-scope="text, record">
-                            <a  target="_blank">{{record.title}}</a>
-                        </template>
-                    </a-table> -->
-                    <div class="content_suss">
-                        <i class="iconfont icon-chenggong"></i>
-                        <div>您填写的房源出售信息已经发布成功！</div>
-                    </div>
-                    <div class="content_btn">
-                        <a-button class="goon_btn" type="primary" @click="goon">继续发布</a-button>
-                        <a-button @click="redirct()" type="primary">一键录入</a-button>
-                    </div>
-                </a-layout-content>
-            </a-layout>
-        </div>
+    <div class="susswrap">
+        <a-layout>
+            <a-layout-content class="content" :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
+                <!-- <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
+                    <span slot="inter" slot-scope="res,record">
+                        <img class="wangyeimg" :src="record.inter">
+                    </span>
+                    <span slot="customTitles">
+                        <a-icon type="smile-o" /> 标题
+                    </span>
+                    <template slot="titles" slot-scope="text, record">
+                        <a  target="_blank">{{record.title}}</a>
+                    </template>
+                </a-table> -->
+                <div class="content_suss">
+                    <i class="iconfont icon-chenggong"></i>
+                    <div>您填写的房源出售信息已经发布成功！</div>
+                </div>
+                <div class="content_btn">
+                    <a-button class="goon_btn" type="primary" @click="goon">继续发布</a-button>
+                    <a-button @click="redirct()" type="primary">一键录入</a-button>
+                </div>
+            </a-layout-content>
+        </a-layout>
+    </div>
 </template>
 <script>
     // const columns = [
@@ -37,32 +37,32 @@
     //         title: '小区',
     //         dataIndex: 'xiaoquName',
     //         key:'det',
-            
+
     //     },
     //     {
     //         dataIndex: 'title',
     //         key:'biaoti',
     //         slots: { title: 'customTitles' },
     //         scopedSlots: { customRender: 'titles' },
-           
+
     //     },
     //     {
     //         title: '面积',
     //         dataIndex: 'square',
     //         key:'mianji',
-         
+
     //     },
     //     {
     //         title: '价格/万',
     //         dataIndex: 'rice',
     //         key:'rice',
-            
+
     //     },
     //     {
     //         title: '更新日期',
     //         dataIndex: 'creationTime',
     //         key:'update',
-           
+
     //     },
     //     {
     //         title: '状态',
@@ -89,36 +89,39 @@
             //     const datas = [...this.data];
             //     this.datas = datas.filter(item => item.key !== key);
             // },
-            goon(){           
-                this.$emit('goonfun',this.current)
+            goon() {
+                this.$emit('goonfun', this.current)
             },
-            redirct(){
+            redirct() {
                 this.$router.replace('/sell')
             },
         },
     };
 </script>
 <style scoped lang="less">
-
     .susswrap {
         width: 100%;
         margin: 0 auto;
         display: flex;
         flex: 0 0 auto;
-        .content{
+
+        .content {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: space-around;
-            .content_suss{
+
+            .content_suss {
                 display: flex;
                 flex-direction: column;
                 align-items: center;
                 font-size: 25px;
             }
-            .content_btn{
+
+            .content_btn {
                 display: flex;
-                .goon_btn{
+
+                .goon_btn {
                     margin-right: 20px;
                 }
             }

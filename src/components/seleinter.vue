@@ -80,26 +80,26 @@
         {
             title: '库存满时发送处理',
             key: 'kumansing',
-            scopedSlots: { customRender: 'kumansing' }, 
-            width:'13%'
+            scopedSlots: { customRender: 'kumansing' },
+            width: '13%'
         },
         {
             title: '房源重复发送处理',
             key: 'houschongfu',
             scopedSlots: { customRender: 'houschongfu' },
-            width:'13%'
+            width: '13%'
         },
         {
             title: '推送设置',
             key: 'tuiaction',
             scopedSlots: { customRender: 'tuiaction' },
-            width:'12%'
+            width: '12%'
         },
         {
             title: '操作',
             key: 'caozuo',
             scopedSlots: { customRender: 'caozuo' },
-            width:'9%'
+            width: '9%'
         },
     ];
 
@@ -123,10 +123,10 @@
                 def: {},
                 spinning: false,
                 pdef: {},
-                shineiImgList:[],
-                xiaoquImgList:[],
-                huxingImgList:[],
-                bid:'a'
+                shineiImgList: [],
+                xiaoquImgList: [],
+                huxingImgList: [],
+                bid: 'a'
             };
         },
         props: {
@@ -147,35 +147,35 @@
             async fabuok(e) {
                 this.spinning = true;
                 this.pdef = this.value;
-                var end =  this.pdef.address.indexOf('－');
-                this.pdef.addressDetail = this.pdef.address.substring(end+1,this.pdef.address.length);
-                this.pdef.address = this.pdef.address.substring(0,end)
-                this.pdef.fangwuDate = this.pdef.fangwuDate.substring(0,this.pdef.fangwuDate.length-1);
+                var end = this.pdef.address.indexOf('－');
+                this.pdef.addressDetail = this.pdef.address.substring(end + 1, this.pdef.address.length);
+                this.pdef.address = this.pdef.address.substring(0, end)
+                this.pdef.fangwuDate = this.pdef.fangwuDate.substring(0, this.pdef.fangwuDate.length - 1);
                 var roomLength = this.pdef.huxing.indexOf('室');
-                var room = this.pdef.huxing.substring(0,roomLength);
+                var room = this.pdef.huxing.substring(0, roomLength);
                 var toiletLength = this.pdef.huxing.indexOf('厅')
-                var toilet = this.pdef.huxing.substring(roomLength+1,toiletLength)
+                var toilet = this.pdef.huxing.substring(roomLength + 1, toiletLength)
                 var hallLength = this.pdef.huxing.indexOf('卫')
-                var hall = this.pdef.huxing.substring(toiletLength+1,hallLength)
-                if(this.pdef.fangyuanBiaoqian.indexOf('唯一住房') != -1){
+                var hall = this.pdef.huxing.substring(toiletLength + 1, hallLength)
+                if (this.pdef.fangyuanBiaoqian.indexOf('唯一住房') != -1) {
                     this.pdef.fangyuanBiaoqian = '不满二';
                 }
-                if(this.pdef.fangyuanBiaoqian.indexOf('满两年') != -1 || this.pdef.fangyuanBiaoqian.indexOf('满二唯一') != -1){
+                if (this.pdef.fangyuanBiaoqian.indexOf('满两年') != -1 || this.pdef.fangyuanBiaoqian.indexOf('满二唯一') != -1) {
                     this.pdef.fangyuanBiaoqian = '满二';
                 }
-                if(this.pdef.fangyuanBiaoqian.indexOf('满五') != -1){
+                if (this.pdef.fangyuanBiaoqian.indexOf('满五') != -1) {
                     this.pdef.fangyuanBiaoqian = '满五';
                 }
                 var cengshuLength = this.pdef.louceng.indexOf('/');
-                var cengshu = this.pdef.louceng.substring(0,cengshuLength);
-                var zongceng = this.pdef.louceng.substring(cengshuLength+1,this.pdef.louceng.length);
+                var cengshu = this.pdef.louceng.substring(0, cengshuLength);
+                var zongceng = this.pdef.louceng.substring(cengshuLength + 1, this.pdef.louceng.length);
 
                 var shineiImg = this.pdef.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
                 var ss = shineiImg.split(",")
-                for(let i = 0;i<ss.length;i++){
+                for (let i = 0; i < ss.length; i++) {
                     var imgUrl = {};
                     var l = i + 1;
-                    imgUrl.name = "室内图"+l;
+                    imgUrl.name = "室内图" + l;
                     imgUrl.url = ss[i];
                     this.shineiImgList.push(imgUrl);
                 }
@@ -191,7 +191,7 @@
                 this.huxingImgList.push(HuxingImg);
 
                 var chanquanLength = this.pdef.chanquanNianxian.indexOf('年');
-                this.pdef.chanquanNianxian = this.pdef.chanquanNianxian.substring(0,chanquanLength);
+                this.pdef.chanquanNianxian = this.pdef.chanquanNianxian.substring(0, chanquanLength);
 
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + this.$store.userId);
                 let update = JSON.parse(localStorage.getItem('update'));
@@ -229,8 +229,8 @@
                     forward: this.pdef.chaoxiang,
                     payInfo: this.pdef.fangwuChanquan,
                     lookhouse: "随时看房",
-                    room:room,
-                    toilet:toilet,
+                    room: room,
+                    toilet: toilet,
                     hall: hall,
                     kitchen: 1,
                     balcony: 1,
@@ -262,7 +262,7 @@
                     image1: this.shineiImgList,
                     image2: this.xiaoquImgList,
                     image3: this.huxingImgList,
-              }
+                }
                 const SaleUrl = '/agent/house/input';
                 // ?token='+this.tokens+'&Content-Type='+'application/json'+'&keyId='+'10568'+'&FangRequestID='+'fangusername_input_410661884'
                 const res1 = await this.$axios.post(SaleUrl, list,
@@ -281,23 +281,23 @@
                         // this.houseurl = res1.returnmsgs.houseurl;
                         // this.flag = res1.returnmsgs.flag;
                         // this.houseid = res1.returnmsgs.houseid;
-                        var renders = this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/`+this.value.id)
+                        var renders = this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id)
                         this.openNotificationWithIcon('success')
                     }
                 })
             },
-           
+
             //aaa
             openNotificationWithIcon(type) {
                 if (type == 'success') {
                     this.spinning = false;
                     this.$notification[type]({
-                    message: '发布成功',
-                    description:
-                        '房源发布成功请在网站后台查看',
+                        message: '发布成功',
+                        description:
+                            '房源发布成功请在网站后台查看',
                     });
-                    
-                    this.$emit("getSeconde",this.bid);
+
+                    this.$emit("getSeconde", this.bid);
                 }
                 if (type == 'error') {
                     this.$notification[type]({
@@ -311,7 +311,7 @@
                 }
             },
         },
-        
+
     };
 </script>
 <style lang="less">
@@ -323,13 +323,16 @@
     .organlabel {
         color: orange;
     }
-    .opseles{
-      width:160px;
+
+    .opseles {
+        width: 160px;
     }
-    .seleshangjia{
-        width:90px;
+
+    .seleshangjia {
+        width: 90px;
     }
-    .ant-checkbox-wrapper + .ant-checkbox-wrapper {
-    margin-left: 0px;
-}
+
+    .ant-checkbox-wrapper+.ant-checkbox-wrapper {
+        margin-left: 0px;
+    }
 </style>
