@@ -55,6 +55,9 @@
             <a-menu-item key="/sell">
                  <router-link to="sell">售房录入</router-link>
             </a-menu-item>
+            <a-menu-item key="/shangpuluru">
+                 <router-link to="shangpuluru">商铺录入</router-link>
+            </a-menu-item>
           </a-sub-menu>
 
           <a-sub-menu key="sub4">

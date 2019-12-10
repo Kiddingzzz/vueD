@@ -35,6 +35,7 @@
                                 @keyup.enter.native="doLogin()"></el-input>
                             <el-input type="password" placeholder="请输入密码" v-model="password" class="inputs"
                                 @keyup.enter.native="doLogin()" prefix-icon="iconfont icon-mima"></el-input>
+              		    <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
                             <button class="btns" @click="doLogin()">登录</button>
                         </div>
                     </div>
@@ -62,12 +63,14 @@
     import { mapState, mapMutations } from 'vuex';
     import dialogRegister from "./dialog-register.vue";
     import md5 from 'js-md5';
+
     export default {
         components: {
             dialogRegister,
         },
         data() {
             return {
+      		checked: false,
                 payvisible: false,
                 weixinvisible: false,
                 qqvisible: false,
@@ -92,6 +95,11 @@
             }
         },
         mounted() {
+	    // 如果存在赋值给表单，并且将记住密码勾选
+	    if(localStorage.getItem("siteName") != ''){
+	      this.getlocalStorage()
+	      this.checked = true
+	    }
             //获取58令牌
             // const WuBaApi = 'https://openapi.58.com/v2/auth/show?app_key=e36309f80bd9030c879d69ba4155a74b&redirect_uri=http://972133.vip'
 
@@ -170,6 +178,9 @@
         },
         methods: {
             ...mapMutations(['login', 'update']),
+	    onChange(e) {
+	        console.log(e.target.checked);
+	    },
             getDate(userName, password) {
                 // childValue就是子组件传过来的值
                 this.user = userName;
@@ -301,12 +312,19 @@
                                 userId: Response.data.userId,
                             }
                             localStorage.setItem('update', JSON.stringify(update));
+		              this.$router.replace('/index')
+		              // 当记住密码的checbox选中时，像localStorage里存入一下用户输入的用户名和密码
+		              if (this.checked==true) {
+		                console.log("记住密码")
+		                this.setlocalStorage(this.user, this.password)
+		              } else {
+		               this.clear()
+		              }
                             // this.update({
                             //     hasLogin: true,
                             //     userName:Response.data.username,
                             //     userId:Response.data.userId,
                             //   });
-                            this.$router.replace('/index')
                         }
                     })
                 }
@@ -321,7 +339,21 @@
 
                 // uni.setStorageSync('UserInfo', res.user);
 
-            },
+		},
+		setlocalStorage(c_name, c_pwd) {
+			localStorage.siteName = c_name
+			localStorage.sitePassword =  c_pwd
+		},
+	    getlocalStorage() {
+	        this.user = localStorage.getItem("siteName");//保存到保存数据的地方
+	        this.password = localStorage.getItem("sitePassword");
+	    },
+	    // 点击忘记密码，清空localStorage里的存储
+    
+	    clear() {
+	      this.setlocalStorage('', '')
+	    }
+
             // toMain() {
             // 	uni.reLaunch({
             // 		url: '/pages/tabBar/home'
@@ -330,9 +362,14 @@
         }
     };
 </script>
-<style lang="less">
+<style lang="less" scoped>
     // @import "../../styles";
     //@import "~@/assets/iconfont.css";
+.el-checkbox{
+    width: 350px;
+    display: flex;
+    align-items: center;
+ }
     .loginbg {
         height: 100%;
         width: 100%;
@@ -451,6 +488,7 @@
                         text-align: center;
                         font-family: Roboto;
                         border: none;
+          margin-top: 30px;
                     }
                 }
             }

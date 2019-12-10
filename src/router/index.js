@@ -20,6 +20,7 @@ import Susstable from '@/components/susstable'
 import Rentusstable from '@/components/rentsusstable'
 import Rentvtable from '@/components/rentvtable'
 import Rentinter from '@/components/rentinter'
+import Shangpuluru from '@/views/houseluru/shangpuluru'
 Vue.use(Router)
 
 export default new Router({
@@ -137,6 +138,14 @@ export default new Router({
 			path: '/tuijian',
 			name: 'Tuijian',
 			component: Tuijian,
+			meta: {
+				keepAlive: true
+			  }
+		},
+		{
+			path: '/shangpuluru',
+			name: 'Shangpuluru',
+			component: Shangpuluru,
 			meta: {
 				keepAlive: true
 			  }
