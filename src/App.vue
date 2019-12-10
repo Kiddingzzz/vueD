@@ -97,51 +97,27 @@ export default {
   data() {
       return {
         collapsed: false,
-        user:'',
+        // user:'',
+        // logouttxt:'',
         OpenKeys: '',
       };
     },
-    created(){
-        // 在页面加载时读取sessionStorage里的状态信息
-        // if (sessionStorage.getItem("store") ) {
-        //   this.$store.replaceState(Object.assign({}, this.$store.state,JSON.parse(sessionStorage.getItem("store"))))
-        // }
-
-        // 在页面刷新时将vuex里的信息保存到sessionStorage里
-        // window.addEventListener("beforeunload",()=>{
-        //   sessionStorage.setItem("store",JSON.stringify(this.$store.state))
-        // })
-    },
     mounted(){
-
     },
     computed:{
       _user(){
         let update = JSON.parse(localStorage.getItem('update'));
-        console.log("首页`````````````````"+JSON.stringify(update));
+        console.log("登录到首页=========="+JSON.stringify(update));
+         console.log("登录成功名字=============="+update.userName);
         return update.hasLogin != false ? "欢迎您，"+update.userName : "请登录";
       },
       _logouttxt(){
         let update = JSON.parse(localStorage.getItem('update'));
-        console.log("首页`````````````````"+JSON.stringify(update));
         return update.hasLogin != false ? "退出登录" : "登录";
       }
     },
     watch:{
-      // '$route.path':function(newVal,oldVal){
-      //   console.log(newVal+"---"+oldVal);
-      //   if(newVal === '/loginform'){
-      //     console.log('欢迎进入登录页面');
-      //   }
-      //   if(newVal === '/index'){
-      //     console.log('欢迎进入二手房页面');
-      //     this.$router.replace('/index');
-      //   }
-      //   if(newVal === '/sell'){
-      //     console.log('欢迎进入二手房页面');
-      //     this.$router.push({path:'sell'});
-      //   }
-      // }
+
     },
     created () {// 每次路由变化dom重新加载都会执行该方法
       // this.historyWatch();
@@ -180,6 +156,7 @@ export default {
               }
               //存入数据
               localStorage.setItem('update', JSON.stringify(update));
+              console.log("退出成功======="+localStorage.getItem('update'))
               this.$router.replace('/loginform');
       },
     },

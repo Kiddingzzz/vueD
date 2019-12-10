@@ -65,12 +65,12 @@
                                 <label class="lurusmianij" style="">平方米</label>
                         </a-form-item>
 
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
+                        <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
                             validate-status="">
                             <a-input type="number" v-model="ref.square" id="warning2" placeholder="活动面积"
                                 class="lurumianji" />
                             <label class="lurusmianij">平方米</label>
-                        </a-form-item>
+                        </a-form-item> -->
 
                         <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">
@@ -266,6 +266,15 @@
                                 <a-checkbox >可外摆</a-checkbox>
                            </a-form-item>
                         </a-form>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*面宽:" validate-status="">
+                            <a-input id="" placeholder="" class="luruwuyemoney" />米 
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*层高:" validate-status="">
+                            <a-input id="" placeholder="" class="luruwuyemoney" />米 
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*进深:" validate-status="">
+                            <a-input id="" placeholder="" class="luruwuyemoney" />米
+                        </a-form-item>
                     </a-layout-content>
                 </a-layout>
         </div>
@@ -641,7 +650,9 @@ export default {
             this.gongnuan = "自供暖";
         },
         methods: {
-
+                onSearch(){
+                    console.log("等待接入后台中")
+                },
             // uuid() {
             //     var s = [];
             //     var hexDigits = "0123456789abcdef";

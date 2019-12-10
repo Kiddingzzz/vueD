@@ -124,12 +124,12 @@
                                 <label class="sellsmianij" style="">平方米</label>
                         </a-form-item>
 
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
+                        <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
                             validate-status="">
                             <a-input type="number" v-model="ref.square" id="warning2" placeholder="活动面积"
                                 class="sellmianji" />
                             <label class="sellsmianij">平方米</label>
-                        </a-form-item>
+                        </a-form-item> -->
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">

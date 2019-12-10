@@ -178,9 +178,9 @@
         },
         methods: {
             ...mapMutations(['login', 'update']),
-	    onChange(e) {
-	        console.log(e.target.checked);
-	    },
+            onChange(e) {
+                console.log(e.target.checked);
+            },
             getDate(userName, password) {
                 // childValue就是子组件传过来的值
                 this.user = userName;
@@ -312,14 +312,14 @@
                                 userId: Response.data.userId,
                             }
                             localStorage.setItem('update', JSON.stringify(update));
-		              this.$router.replace('/index')
-		              // 当记住密码的checbox选中时，像localStorage里存入一下用户输入的用户名和密码
-		              if (this.checked==true) {
-		                console.log("记住密码")
-		                this.setlocalStorage(this.user, this.password)
-		              } else {
-		               this.clear()
-		              }
+                            this.$router.replace('/index')
+                            // 当记住密码的checbox选中时，像localStorage里存入一下用户输入的用户名和密码
+                            if (this.checked==true) {
+                              console.log("记住密码")
+                              this.setlocalStorage(this.user, this.password)
+                            } else {
+                            this.clear()
+                            }
                             // this.update({
                             //     hasLogin: true,
                             //     userName:Response.data.username,
@@ -333,32 +333,29 @@
                     this.$error({
                         title: '提示',
                         content: '账号或密码错误！！！',
-                    });
-
+                        });
+                    }
+                      // uni.setStorageSync('UserInfo', res.user);
+                },
+                setlocalStorage(c_name, c_pwd) {
+                    localStorage.siteName = c_name
+                    localStorage.sitePassword =  c_pwd
+                },
+                getlocalStorage() {
+                    this.user = localStorage.getItem("siteName");//保存到保存数据的地方
+                    this.password = localStorage.getItem("sitePassword");
+                },
+                    // 清空localStorage里的存储
+                    
+                clear() {
+                    this.setlocalStorage('', '')
                 }
 
-                // uni.setStorageSync('UserInfo', res.user);
-
-		},
-		setlocalStorage(c_name, c_pwd) {
-			localStorage.siteName = c_name
-			localStorage.sitePassword =  c_pwd
-		},
-	    getlocalStorage() {
-	        this.user = localStorage.getItem("siteName");//保存到保存数据的地方
-	        this.password = localStorage.getItem("sitePassword");
-	    },
-	    // 点击忘记密码，清空localStorage里的存储
-    
-	    clear() {
-	      this.setlocalStorage('', '')
-	    }
-
-            // toMain() {
-            // 	uni.reLaunch({
-            // 		url: '/pages/tabBar/home'
-            // 	});
-            // }
+                // toMain() {
+                // 	uni.reLaunch({
+                // 		url: '/pages/tabBar/home'
+                // 	});
+                // }
         }
     };
 </script>
