@@ -188,7 +188,7 @@
             async onDelete(id) {
                 console.log(id)
                 try {
-                    await this.$http.post(`${this.$config.api}/api/cms/pubulish/` + id + `/publishDelete`).then(Response => {
+                    await this.$http.post(`${this.$config.api}/api/cms/house/` + id + `/publishDelete`).then(Response => {
                         if (Response.status == 200) {
                             console.log(Response)
                             // const datas = [...this.data];
