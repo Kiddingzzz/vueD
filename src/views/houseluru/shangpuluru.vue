@@ -45,10 +45,11 @@
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:" validate-status=""
                             help="">
-                            <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" />
+                            <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" @blur="blur('xiaoquName')" />
                             <!--<label class="selladdshowxq">找不到小区？</label>
                             <a class="selladdshowxq" @click="addshowxaqu">查看相似小区</a>
                             <a class="selladdshowxq" @click="addxiaoqu">我要添加小区</a>-->
+                            <span class="errormsg" v-if="xiaoquNameerror">小区不能为空</span>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
                             <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="refQuyu">
@@ -644,9 +645,6 @@ export default {
                 imgH: {},
                 refQuyu:'',
                 laf:{},
-                // leasestyle:{
-                //     height:'470px'
-                // }
         }
     },
     mounted() {
@@ -674,7 +672,7 @@ export default {
             // //插入一条url数据链接
             // async onSearch(params) {
             //     //判断URL网址输入是否正确
-            //     var strRegex ='(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
+            //     var strRegex ='^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
             //     var re=new RegExp(strRegex); 
             //     if (params==""||!re.test(params)) { 
             //         alert("请输入正确的url地址");

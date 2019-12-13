@@ -1,10 +1,10 @@
 <template>
     <div class="ts4">
-        <div class="filter-wraps1" style="padding: 15px 15px 0px 15px;">
+        <div class="filter-wraps1" style="padding: 24px 24px 0px;">
             <div class="search_bds1" >
-                <div>
-                    贴心提示:
-                </div>
+                <div class="zhandiantishi">
+                        <i class="iconfont icon-tishi"></i>贴心提示:
+                    </div>
                 <div>
                     1、删除账号后刷新计划要重新设置。
                 </div>
@@ -22,7 +22,7 @@
                 </div>
             </div>
         </div>
-        <div style="padding: 15px 15px 0px 15px;">
+        <div style="padding: 24px 24px 0px;">
              <a-tabs type="card">
                 <a-tab-pane tab="全部网站" key="1">
                     <a-table width="1120px" :columns="columnss" :dataSource="item">
@@ -34,7 +34,8 @@
                             </a-tag>
                         </span>
                         <span slot="inter" slot-scope="text, record" >
-                           <img class="interimg" :src="record.inter"/>
+                           <!-- <img class="interimg" :src="record.inter"/> -->
+                           <a>{{record.inter}}</a>
                         </span>
                         <span slot="tiaojian" slot-scope="text, record">
                             <a-tag v-for="tag in record.tiaojian" @click="ceshi(tag,record.siteName)"
@@ -153,14 +154,16 @@
         {
             key: '1',
             name: ['允许发布', '允许推送'],
-            inter: '/static/img/logoJXW.2d85d52.png',
+            // inter: '/static/img/logoJXW.2d85d52.png',
+            inter: '房天下',
             address: '',
             tiaojian: ['添加账号', '去注册'],
         },
         {
             key: '2',
             name: ['自动登录', '允许发布'],
-            inter: '/static/img/jiemian.f5e0338.jpg',
+            // inter: '/static/img/jiemian.f5e0338.jpg',
+            inter: '58同城',
             address: '',
             tiaojian: ['添加账号', '去注册'],
         },
@@ -367,7 +370,10 @@
         border: 1px solid rgb(224, 220, 220);
         text-align: center;
     } */
-
+    .zhandiantishi {
+        display: flex;
+        align-items: center;
+    }
     .filter-wraps1 {
         position: relative;
         z-index: 1;

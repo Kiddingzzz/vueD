@@ -21,6 +21,7 @@ import Rentinter from '@/components/rentinter'
 import Shangpuluru from '@/views/houseluru/shangpuluru'
 import Zufang from '@/views/home/zufang'
 import Rentshangpu from '@/views/cloudrelease/components/rentshangpu'
+import Saleshangpu from '@/views/cloudrelease/components/saleshangpu'
 import Shangpuzuluru from '@/views/houseluru/shangpuzuluru'
 Vue.use(Router)
 
@@ -202,6 +203,11 @@ export default new Router({
 			path: '/rentshangpu',
 			name: 'Rentshangpu',
 			component: Rentshangpu,			
+		},
+		{
+			path: '/saleshangpu',
+			name: 'Saleshangpu',
+			component: Saleshangpu,			
 		},
 
 	]

@@ -3,7 +3,7 @@
         <div class="rentall">
             <div class="rentfilter-wraps" v-if="current==0">
                 <div class="rentsearch_bds">
-                    <div class="tishi">
+                    <div class="renttishi">
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
                     <div>
@@ -144,7 +144,11 @@
     };
 </script>
 
-<style lang="less">
+<style lang="less" >
+    .renttishi {
+        display: flex;
+        align-items: center;
+    }
     .rentall {
         display: flex;
         width: 100%;
@@ -160,7 +164,6 @@
         display: flex;
         flex: 0 0 auto;
         justify-content: center;
-
     }
 
     .rentsearch_bds {

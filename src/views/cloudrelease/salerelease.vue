@@ -3,7 +3,7 @@
         <div class="tsall">
             <div class="tsfilter-wraps" v-if="current==0">
                 <div class="tssearch_bds">
-                    <div class="tishi">
+                    <div class="saletishi">
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
                     <div>
@@ -64,8 +64,8 @@
                     <a-tab-pane tab="住宅" key="1">
                         <vtable @getData="getMag"></vtable>
                     </a-tab-pane>
-                    <a-tab-pane tab="别墅" key="2">
-                        <vtable></vtable>
+                    <a-tab-pane tab="商铺" key="2">
+                        <saleshangpu></saleshangpu>
                     </a-tab-pane>
                     <a-tab-pane tab="写字楼" key="3">
                         <vtable></vtable>
@@ -93,6 +93,7 @@
     import vtable from '../../components/vtable'
     import seleinter from '../../components/seleinter'
     import susstable from '../../components/susstable'
+    import saleshangpu from '../cloudrelease/components/saleshangpu'
 
     export default {
         data() {
@@ -107,7 +108,8 @@
         components: {
             vtable,
             seleinter,
-            susstable
+            susstable,
+            saleshangpu
         },
         methods: {
             adduser() {
@@ -143,6 +145,10 @@
 </script>
 
 <style lang="less">
+    .saletishi {
+        display: flex;
+        align-items: center;
+    }
     .tsall {
         display: flex;
         width: 100%;
