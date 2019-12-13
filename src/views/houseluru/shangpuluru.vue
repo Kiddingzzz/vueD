@@ -43,7 +43,7 @@
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*小区:" validate-status=""
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*标题:" validate-status=""
                             help="">
                             <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" @blur="blur('xiaoquName')" />
                             <!--<label class="selladdshowxq">找不到小区？</label>
@@ -52,7 +52,7 @@
                             <span class="errormsg" v-if="xiaoquNameerror">小区不能为空</span>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
-                            <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="refQuyu">
+                            <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="shoprefQuyu">
                                 <a-select-option v-for="(province,index) of provinceData" :key="index"
                                     :value="province">{{province}}
                                 </a-select-option>
@@ -61,12 +61,12 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="地址" has-feedback
                             validate-status="" help="">
-                            <a-input v-model="ref.address" id="validating" placeholder="房源地址" />
+                            <a-input v-model="shopref.shopAdress" id="validating" placeholder="房源地址" />
                         </a-form-item>
 
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*面积:" has-feedback
                             validate-status="">
-                                <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积"
+                                <a-input type="number" v-model="shopref.shopSquare" id="success" 
                                     class="lurumianji" />
                                 <label class="lurusmianij" style="">平方米</label>
                         </a-form-item>
@@ -132,30 +132,31 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
-                            <a-input type="number" id="" v-model="ref.rice" placeholder="" class="lurumianji" />
+                            <a-input type="number" id="" v-model="shopref.shopRice" placeholder="" class="lurumianji" />
                             <label class="lurusmianij">万</label>
                         </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
+                       <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
                             validate-status="" >
                             <a-input-number :min="1950" :max="2019" v-model="ref.fangwuDate" class="lurumianji" />
                             <label class="lurusmianij">年</label>
-                        </a-form-item>
+                        </a-form-item>-->
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所在楼层" has-feedback
                             validate-status="" help="">
-                            <a-input-number :min="1" :max="100" v-model="ceng" />
+                            <a-input-number :min="1" :max="100" v-model="shopceng" />
                             <label class="lurusmianij">楼</label>
                             <label class="luruglaber">共</label>
-                            <a-input-number :min="1" :max="100" v-model="lou" />
+                            <a-input-number :min="1" :max="100" v-model="shoplou" />
                             <label class="lurusmianij">楼</label>
                         </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向" has-feedback
+                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncx" :defaultValue="chaoxiangvalue" v-model="ref.chaoxiang" />
+                            <a-radio-group :options="plainOptioncf" :defaultValue="cfvalue" v-model="shopref.lookShop" />
                         </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
+                        <!--<a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncf" :defaultValue="cfvalue" v-model="kanfang" />
+                            <a-radio-group :options="plainOptioncx" :defaultValue="chaoxiangvalue" v-model="shopref.chaoxiang" />
                         </a-form-item>
+                       
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status="">
                             <a-radio-group :options="plainOptionzx" :defaultValue="zxvalue" v-model="laf.zhuangxiu"/>
@@ -163,7 +164,7 @@
                         <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
                             <a-radio-group :options="plainOptiongn" :defaultValue="value5" v-model="gongnuan" />
-                        </a-form-item> -->
+                        </a-form-item> 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
                             <a-input id="" placeholder="" class="lurumianji" />
@@ -171,13 +172,13 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房源标签:" validate-status=""
                             help="">
-                            <!-- <a-input id="" v-model="ref.fangyuanBiaoqian" placeholder="" /> -->
+                           
                             <a-input id="" v-model="fangyuanBiaoqian" placeholder="" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套标签:" validate-status=""
                             help="">
                             <a-input id="" v-model="ref.peitaoBiaoqain" placeholder="" />
-                        </a-form-item>
+                        </a-form-item>-->
                     </a-form>
                 </a-layout-content>
             </a-layout>
@@ -189,15 +190,15 @@
                         <a-form>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*商铺类型：" has-feedback 
                               validate-status="">
-                                <a-select default-value="" class="zhuzhaibox " v-model="ref.fangwuChanquan">
+                                <a-select default-value="" class="zhuzhaibox" v-model="shopref.shoptype">
                                     <a-select-option v-for="(root,i) in houseroot" :key="i" :value="root" >
                                         {{root}}
                                     </a-select-option>
                                 </a-select>
                            </a-form-item>
-                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*商铺状态：" has-feedback v-model="ref.fangwuLeixing"
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*商铺状态：" has-feedback 
                                 validate-status="">
-                                <a-radio-group :options="plainOptionzhuangtai" :defaultValue="zhuangtaivalue" />
+                                <a-radio-group :options="plainOptionzhuangtai" :defaultValue="zhuangtaivalue"  v-model="shopref.jingyingZt"/>
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="目标业态" has-feedback
                            validate-status="">
@@ -213,15 +214,14 @@
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="客流人群" has-feedback
                            validate-status="">
-                                <a-checkbox >办公人群</a-checkbox>
-                                <a-checkbox >学生人群</a-checkbox>
-                                <a-checkbox >居民人群</a-checkbox>
-                                <a-checkbox >旅游人群</a-checkbox>
+                                <a-checkbox >办公</a-checkbox>
+                                <a-checkbox >学生</a-checkbox>
+                                <a-checkbox >居民</a-checkbox>
+                                <a-checkbox >旅游</a-checkbox>
                                 <a-checkbox >其它</a-checkbox>
                            </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="物业费:" validate-status="">
-                                <a-input id="" placeholder="" class="luruwuyemoney" />元/平米·月
-                                <label class="luruneibula">注：若没有物业费时，为0。</label>
+                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="相关费用:" validate-status="">
+                                <a-input id="" v-model="shopref.xiangguanFy" class="luruwuyemoney" />元/m²/天
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="电费:" validate-status="">
                                 <a-input id="" placeholder="" class="luruwuyemoney" />元/度 
@@ -230,7 +230,7 @@
                                 <a-input id="" placeholder="" class="luruwuyemoney" />元/吨 
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="预期租金收益:" validate-status="">
-                                <a-input id="" placeholder="" class="luruwuyemoney" />元
+                                <a-input id="" v-model="shopref.yuqiShouyi" class="luruwuyemoney" />元
                             </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="商铺性质" has-feedback 
                            validate-status="">
@@ -242,7 +242,7 @@
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="是否临街" has-feedback
                            validate-status="">
-                              <a-radio-group :options="plainOptionlinjie" :defaultValue="linjievalue" />
+                              <a-radio-group :options="plainOptionlinjie" :defaultValue="linjievalue" v-model="shifoulj" />
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="增值税" has-feedback
                            validate-status="">
@@ -254,13 +254,13 @@
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="配套设施" has-feedback
                            validate-status="">
-                                <a-checkbox >客梯</a-checkbox>
+                                <a-checkbox checked:true>客梯</a-checkbox>
                                 <a-checkbox >货梯</a-checkbox>
                                 <a-checkbox >扶梯</a-checkbox>
                                 <a-checkbox >暖气</a-checkbox>
                                 <a-checkbox >空调</a-checkbox>
                                 <a-checkbox >停车位</a-checkbox>
-                                <a-checkbox >上水</a-checkbox>
+                                <a-checkbox  >上水</a-checkbox>
                                 <a-checkbox >燃气</a-checkbox>
                                 <a-checkbox >网络</a-checkbox>
                                 <a-checkbox >下水</a-checkbox>
@@ -273,13 +273,13 @@
                            </a-form-item>
                         </a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*面宽:" validate-status="">
-                            <a-input id="" placeholder="" class="luruwuyemoney" />米 
+                            <a-input id="" v-model="wid" class="luruwuyemoney" />米 
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*层高:" validate-status="">
-                            <a-input id="" placeholder="" class="luruwuyemoney" />米 
+                            <a-input id="" v-model="cenhig" class="luruwuyemoney" />米 
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*进深:" validate-status="">
-                            <a-input id="" placeholder="" class="luruwuyemoney" />米
+                            <a-input id="" v-model="jinshen" class="luruwuyemoney" />米
                         </a-form-item>
                     </a-layout-content>
                 </a-layout>
@@ -310,7 +310,7 @@
                                 <label class="lurulabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
                              </div>
                              <div>
-                                  <a-input v-model="ref.title"  placeholder="字数限制10-30" style="width:50%;" />
+                                  <a-input v-model="shopref.shopTitle"  placeholder="字数限制10-30" style="width:50%;" />
                              </div>
                          </div>
                          <div class="lurutilerbox">
@@ -318,7 +318,7 @@
                                 <label class="lurulabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
                              </div>
                              <div>
-                                   <a-textarea v-model="ref.note"  style="width:50%;" :rows="6" />
+                                   <a-textarea v-model="shopref.shopmiaoshu"  style="width:50%;" :rows="6" />
                                    <div>
                                       <label class="luruminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
                                    </div>
@@ -413,7 +413,7 @@
                             </div>
 
                             <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card"
-                                :fileList="imgHeaderList" @preview="handlePreview" @change="handleChange">
+                                :fileList="shopimgHeaderList" @preview="handlePreview" @change="handleChange">
                             </a-upload>
                                 <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
                                 <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
@@ -432,7 +432,7 @@
                             </div>
                             <div class="lurutupianbox">
                                 <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                    listType="picture-card" :fileList="shineiList" @preview="handlePreview"
+                                    listType="picture-card" :fileList="shopshineiList" @preview="handlePreview"
                                     @change="handleChange">
                                     <!-- <a-button class="updatedbutton">
                                             <a-icon type="upload" />上传图片</a-button> -->
@@ -442,7 +442,7 @@
                                 </a-modal>
                             </div>
                         </div>
-                        <div class="lurushinei lurudivallbox">
+                       <!-- <div class="lurushinei lurudivallbox">
                             <div class="lurulaberbox">
                                 <span class="lurulaberboxtitle">&nbsp;房&nbsp;型&nbsp;图:</span>
                                 <div class="shineipadd">
@@ -503,9 +503,9 @@
                                                 <a-icon type="up" />
                                             </a-button>
                                         </a-dropdown>
-                                    </div> -->
+                                    </div> 
                             </div>
-                        </div>
+                        </div>-->
                         <div class="lurufangyuansp">
                             <div class="lurulaberbox">
                                 <span class="lurulaberboxtitle">房源视频:</span>
@@ -541,7 +541,7 @@ import moment from 'moment';
     const plainOptionsc = ['普通上传', '批量上传', '大图压缩批量上传'];
     const plainOptionsy = ['不加水印', '添加水印'];
     const pilianglist = ['批量水印', '批量美颜', '批量水印美颜', '批量恢复原图', '批量调整大小', '批量下载图片'];
-    const plainOptionzhuangtai=['营业中','闲置中','新铺'];
+    const plainOptionzhuangtai=['经营中','空置中','新铺'];
     const houseroot=['住宅底商','商业街商铺','旅游商铺','写字楼配套底商','主题卖场','酒店底商','百货/购物中心','地下商场','其他'];
     const plainOptionxingzhi=['二手商铺','商铺新房'];
     const plainOptionfenge=['是','否',];
@@ -579,12 +579,12 @@ export default {
                 // danyuan,
                 // zhuang,
                 chaoxiangvalue: '东',
-                cfvalue: '电话预约',
                 zxvalue: '豪华装修',
-                zhuangtaivalue: '营业中',
+                zhuangtaivalue: '新铺',
                 xingzhivalue: '商铺新房',
                 fengevalue: '是',
                 linjievalue:'是',
+                cfvalue:'否',
                 zengzhishuivalue:'无增值税',
                 geshuivalue:'无个税',
                 value6: '普通上传',
@@ -613,20 +613,22 @@ export default {
                 pilianglist,
                 provinceData,
                 proquyuseData,
-                houseTypes: '二手房',
+                houseTypes: '商铺',
                 userId: '48639146-0751-11EA-87FE-305A3A80A208',
                 urlss: '',
                 text: '',
                 hutong: '',
                 ref: {},
+                shopref:{},
                 previewVisible: false,
                 previewImage: '',
-                shineiList: [
+                shopshineiList: [
                 ],
-                imgHeaderList: [],
+                shopimgHeaderList: [],
                 xiaoQuList: [],
                 fangxinlist: [],
                 address: '',
+               
                 kanfang: '',
                 chaoxiang: '',
                 zhuangxiu: '',
@@ -637,14 +639,19 @@ export default {
                 selectedWei: '',
                 selectedTai: '',
                 options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
-                ceng: '',
-                lou: '',
+                shopceng: '',
+                shoplou: '',
                 fangyuanBiaoqian: '',
                 weiyiUserId: '',
                 saveRes: {},
                 imgH: {},
-                refQuyu:'',
-                laf:{},
+                shoprefQuyu:'',
+                shoplaf:{},
+                wid:'',
+                cenhig:'',
+                jinshen:'',
+                shifoulj:'',
+                keliurenqun:{},
         }
     },
     mounted() {
@@ -653,152 +660,133 @@ export default {
             this.gongnuan = "自供暖";
         },
         methods: {
-                onSearch(){
-                    console.log("等待接入后台中")
-                },
-            // uuid() {
-            //     var s = [];
-            //     var hexDigits = "0123456789abcdef";
-            //     for (var i = 0; i < 36; i++) {
-            //         s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
-            //     }
-            //     s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
-            //     s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
-            //     s[8] = s[13] = s[18] = s[23] = "-";
+               
+            uuid() {
+                var s = [];
+                var hexDigits = "0123456789abcdef";
+                for (var i = 0; i < 36; i++) {
+                    s[i] = hexDigits.substr(Math.floor(Math.random() * 0x10), 1);
+                }
+                s[14] = "4";  // bits 12-15 of the time_hi_and_version field to 0010
+                s[19] = hexDigits.substr((s[19] & 0x3) | 0x8, 1);  // bits 6-7 of the clock_seq_hi_and_reserved to 01
+                s[8] = s[13] = s[18] = s[23] = "-";
 
-            //     var uuid = s.join("");
-            //     this.text = uuid
-            // },
-            // //插入一条url数据链接
-            // async onSearch(params) {
-            //     //判断URL网址输入是否正确
-            //     var strRegex ='^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
-            //     var re=new RegExp(strRegex); 
-            //     if (params==""||!re.test(params)) { 
-            //         alert("请输入正确的url地址");
-            //         return; 
-            //     }
-            //     this.uuid()
-            //     this.urlss = params;
-            //     const data = {
-            //         userId: this.userId,
-            //         url: this.urlss,
-            //         houseType: this.houseTypes,
-            //         weiYiUrl: this.text
-            //     };
-            //     await this.$http.post(`${this.$config.api}/api/cms/urls/url`, data).then(response => {
-            //         this.spinning = true;
-            //         if (response.status == 200) {
-            //             this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
-            //                 console.log(`抓取数据:`+JSON.stringify(res.data))
-            //                 this.laf = res.data;
-            //                 var ret = res.data.address;
-            //                 var refQu = ret.indexOf('－');
-            //                 this.refQuyu = ret.substring(0,refQu);
-            //                 this.saveRes = res.data;
-            //                 this.chaoxiang = ret.chaoxiang;
-            //                 this.spinning = false;
-            //                 this.ref = res.data;
-            //                 //字符串
-            //                 console.log("房源标签是否含有html标签？=========="+this.ref.fangyuanBiaoqian);
-            //                 this.fangyuanBiaoqian = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"");
-            //                 console.log("去掉房源标签含有的html标签成功？=========="+this.fangyuanBiaoqian);
-            //                 this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
-            //                 this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
-            //                 let shi = this.ref.huxing.indexOf("室");
-            //                 let ting = this.ref.huxing.indexOf("厅");
-            //                 let wei = this.ref.huxing.indexOf("卫");
-            //                 this.selectedShi = this.ref.huxing.substring(0, shi);
-            //                 this.selectedTing = this.ref.huxing.substring(shi + 1, ting);
-            //                 this.selectedWei = this.ref.huxing.substring(ting + 1, wei);
-            //                 this.spinning = false;
-            //                 var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
-            //                 var ss = shineiImg.split(",")
-            //                 this.weiyiUserId = res.data.weiYiUrl;
-            //                 for (var i = 0; i < ss.length; i++) {
-            //                     var imgUrl = {};
-            //                     imgUrl.url = ss[i];
-            //                     imgUrl.uid = i;
-            //                     imgUrl.name = 'xxx.jpg';
-            //                     imgUrl.status = 'done';
-            //                     this.shineiList.push(imgUrl);
-            //                 }
-            //                 this.imgH.url = ss[0],
-            //                     this.imgH.uid = '-1',
-            //                     this.imgH.name = 'xxx.jpg',
-            //                     this.imgH.status = 'done',
-            //                     this.imgHeaderList.push(this.imgH);
+                var uuid = s.join("");
+                this.text = uuid
+            },
+            //插入一条url数据链接
+            async onSearch(params) {
+                //判断URL网址输入是否正确
+            //     var strRegex ='(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
+                var re=new RegExp(strRegex); 
+                if (params==""||!re.test(params)) { 
+                    alert("请输入正确的url地址");
+                    return; 
+                }
+                this.uuid()
+                this.urlss = params;
+                const data = {
+                    userId: this.userId,
+                    url: this.urlss,
+                    houseType: this.houseTypes,
+                    weiYiUrl: this.text
+                };
+                await this.$http.post(`${this.$config.api}/api/cms/shopurl/shopUrl`, data).then(response => {
+                    this.spinning = true;
+                    if (response.status == 200) {
+                       this.$http.get(`${this.$config.api}/api/cms/shopurl/url?userid=`+this.userId+'&Housetype='+this.houseTypes+'&WeiYiUrl='+this.text).then(res => {
+                            console.log(`抓取数据1111:`+JSON.stringify(res.data))
+                            this.shoplaf = res.data;
+                            var add=res.data.shopquyu
+                            this.shoprefQuyu=add.split('区')[0];
+                            var loucengs=res.data.shoplouceng
+                            this.shopceng=loucengs.split('/')[0];
+                            this.shoplou=loucengs.split('/')[1];
+                            
+                            const gg=res.data.shopGuige
+                            this.wid=gg.split('、')[0].split('面宽')[1].split('m')[0]
+                            this.cenhig=gg.split('、')[1].split('层高')[1].split('m')[0]
+                            this.jinshen=gg.split('、')[2].split('进深')[1].split('m')[0]
+                            var lingjir=res.data.Shoplinj
+                            if(lingjir==true)
+                            {
+                                this.shifoulj="是";
+                            }
+                            else
+                            {
+                                this.shifoulj="否";
+                            }
 
+                            this.shopref=res.data
+                            var shineiImgs = res.data.shopimgs.replace(/'/g, '').replace('[', '').replace(']', '');
+                            var shops = shineiImgs.split(",")
+                            for (var i = 0; i < shops.length; i++) {
+                                var imgUrl = {};
+                                imgUrl.url = shops[i];
+                                imgUrl.uid = i;
+                                imgUrl.name = 'xxx.jpg';
+                                imgUrl.status = 'done';
+                                this.shopshineiList.push(imgUrl);
+                            }
+                             this.imgH.url = res.data.shopFengimg,
+                                this.imgH.uid = '-1',
+                                this.imgH.name = 'xxx.jpg',
+                                this.imgH.status = 'done',
+                                this.shopimgHeaderList.push(this.imgH);
+                            setTimeout(() => {
+                                this.visible = false;
+                            }, 500);
+                            this.visible = false;
+                        });
 
-            //                 var imgFangxing = {};
-            //                 imgFangxing.url = res.data.imgHeader.replace(/'/g, '').replace('[', '').replace(']', ''),
-            //                     imgFangxing.uid = '-1',
-            //                     imgFangxing.name = 'xxx.jpg',
-            //                     imgFangxing.status = 'done',
-            //                     this.fangxinlist.push(imgFangxing);
+                    }
+                });
 
 
-            //                 var XiaoquImg = {};
-            //                 XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-            //                     XiaoquImg.uid = '-3',
-            //                     XiaoquImg.name = 'xxx.jpg',
-            //                     XiaoquImg.status = 'done',
-            //                     this.xiaoQuList.push(XiaoquImg);
-            //                 setTimeout(() => {
-            //                     this.visible = false;
-            //                 }, 500);
-            //                 this.visible = false;
-            //             });
+            },
+            async saveHouse() {
+                if (this.shoplaf.shopTitle == null && this.shoplaf.shopRice == null &&
+                    this.shoplaf.shopSquare == null && this.shoplaf.shopAdress == null &&
+                    this.shoplaf.shopimgs == null && this.shoplaf.jingyingtype == null &&
+                    this.shoplaf.shopGuige == null && this.shoplaf.jingyingZt == null && this.shoplaf.keliurenqun == null 
+                ) {
+                    this.openNotificationWithIcon('error')
+                }
+                else {
+                    //this.saveRes.urlsId = this.$store.userId;
+                    let update = JSON.parse(localStorage.getItem('update'));
+                    this.shoplaf.userid = update.userId;
+                    await this.$http.post(`${this.$config.api}/api/cms/shopPub/shoplishHouse`, this.shoplaf).then(response => {
+                        if (response.status == 200) {
+                            this.openNotificationWithIcon('success')
+                        }
+                    })
+                }
 
-            //         }
-            //     });
-
-
-            // },
-            // async saveHouse() {
-            //     if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
-            //         this.saveRes.rice == null && this.saveRes.simpleRice == null &&
-            //         this.saveRes.square == null && this.saveRes.huxing == null &&
-            //         this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null && this.saveRes.imgHeader == null
-            //     ) {
-            //         this.openNotificationWithIcon('error')
-            //     }
-            //     else {
-            //         //this.saveRes.urlsId = this.$store.userId;
-            //         let update = JSON.parse(localStorage.getItem('update'));
-            //         this.saveRes.urlsId = update.userId;
-            //         this.saveRes.imgHeader = this.imgH.url;
-            //         await this.$http.post(`${this.$config.api}/api/cms/pubulish/publishHouse`, this.saveRes).then(response => {
-            //             if (response.status == 200) {
-            //                 this.openNotificationWithIcon('success')
-            //             }
-            //         })
-            //     }
-
-            // },
-            // openNotificationWithIcon(type) {
-            //     if (type == 'success') {
-            //         this.$notification[type]({
-            //             message: '保存成功',
-            //             placement: 'bottomRight',
-            //             bottom: '50px',
-            //             right: '500px',
-            //             description:
-            //                 '保存房源成功数据将存入发布房源列表',
-            //         });
-            //         this.$router.replace('/salerelease')
-            //     }
-            //          if (type == 'error') {
-            //         this.$notification[type]({
-            //             message: '保存失败',
-            //             placement: 'bottomRight',
-            //             bottom: '50px',
-            //             right: '500px',
-            //             description:
-            //                 '保存房源失败数据不能为空',
-            //         });
-            //     }
-            // },
+            },
+            openNotificationWithIcon(type) {
+                if (type == 'success') {
+                    this.$notification[type]({
+                        message: '保存成功',
+                        placement: 'bottomRight',
+                        bottom: '50px',
+                        right: '500px',
+                        description:
+                            '保存房源成功数据将存入发布房源列表',
+                    });
+                    this.$router.replace('/salerelease')
+                }
+                     if (type == 'error') {
+                    this.$notification[type]({
+                        message: '保存失败',
+                        placement: 'bottomRight',
+                        bottom: '50px',
+                        right: '500px',
+                        description:
+                            '保存房源失败数据不能为空',
+                    });
+                }
+            },
             showModal() {
                 this.visible = true;
             },
@@ -1156,5 +1144,8 @@ export default {
          font-size:16px;
          padding-right:8px;
      }
+    .ant-checkbox-wrapper{
+        margin:0px;
+    }
  
 </style>
