@@ -22,9 +22,9 @@
                 </a-spin>
             </p>
             <div class="shangpulogo">
-                <a href="https://cq.58.com/shangpucs" target="_blank"><img class="wuba" src="../../assets/logo/58logo.png"></a>
-                <a href="https://cq.sydc.anjuke.com/sp-shou" target="_blank"><img class="anju" src="../../assets/logo/anjuke.jpg"></a>
-                <a href="https://cq.shop.fang.com" target="_blank"><img class="fang" src="../../assets/logo/fangtianxia.jpg"></a>
+                <a href="https://cq.58.com/shangpu" target="_blank"><img class="wuba" src="../../assets/logo/58logo.png"></a>
+                <a href="https://cq.sydc.anjuke.com/sp-zu" target="_blank"><img class="anju" src="../../assets/logo/anjuke.jpg"></a>
+                <a href="https://cq.shop.fang.com/zu/house/kw/" target="_blank"><img class="fang" src="../../assets/logo/fangtianxia.jpg"></a>
             </div>
             <div class="lurufontU">
                 <ul class="lurusale-content-tip clear" style="margin:0px">
@@ -69,7 +69,14 @@
                                     class="lurumianji" />
                                 <label class="lurusmianij" style="">平方米</label>
                         </a-form-item>
-
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*支付方式：" has-feedback 
+                              validate-status="">
+                                <a-select default-value="" class="paywaybox" v-model="ref.fangwuChanquan">
+                                    <a-select-option v-for="(root,i) in housepayway" :key="i" :value="root" >
+                                        {{root}}
+                                    </a-select-option>
+                                </a-select>
+                           </a-form-item>
                         <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
                             validate-status="">
                             <a-input type="number" v-model="ref.square" id="warning2" placeholder="活动面积"
@@ -128,7 +135,7 @@
                             </a-select>
                             <label>阳台</label>
                         </a-form-item> -->
-
+                         
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
                             <a-input type="number" id="" v-model="ref.rice" placeholder="" class="lurumianji" />
@@ -228,8 +235,11 @@
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="水费:" validate-status="">
                                 <a-input id="" placeholder="" class="luruwuyemoney" />元/吨 
                             </a-form-item>
-                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="预期租金收益:" validate-status="">
-                                <a-input id="" placeholder="" class="luruwuyemoney" />元
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*起租期:" validate-status="">
+                                <a-input id="" placeholder="" class="luruwuyemoney" />月
+                            </a-form-item>
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="免租期:" validate-status="">
+                                <a-input id="" placeholder="" class="luruwuyemoney" />月
                             </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="商铺性质" has-feedback 
                            validate-status="">
@@ -242,14 +252,6 @@
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="是否临街" has-feedback
                            validate-status="">
                               <a-radio-group :options="plainOptionlinjie" :defaultValue="linjievalue" />
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="增值税" has-feedback
-                           validate-status="">
-                              <a-radio-group :options="plainOptionzengzhishui" :defaultValue="zengzhishuivalue" />
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="个税" has-feedback v-model="ref.houseType"
-                           validate-status="">
-                              <a-radio-group :options="plainOptiongeshui" :defaultValue="geshuivalue" />
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="配套设施" has-feedback
                            validate-status="">
@@ -542,11 +544,10 @@ import moment from 'moment';
     const pilianglist = ['批量水印', '批量美颜', '批量水印美颜', '批量恢复原图', '批量调整大小', '批量下载图片'];
     const plainOptionzhuangtai=['营业中','闲置中','新铺'];
     const houseroot=['住宅底商','商业街商铺','旅游商铺','写字楼配套底商','主题卖场','酒店底商','百货/购物中心','地下商场','其他'];
+    const housepayway=['押一付一','押一付二','押一付三','押二付一','押二付二','押二付三','押三付一','押三付三','半年付','年付','面议'];
     const plainOptionxingzhi=['二手商铺','商铺新房'];
     const plainOptionfenge=['是','否',];
     const plainOptionlinjie=['是','否',];
-    const plainOptionzengzhishui=['有增值税','无增值税'];
-    const plainOptiongeshui=['有个税','无个税'];
     // const zhuang=['单元','号','幢','栋','号楼'];
     // const danyuan=['栋','号','弄','座','号楼','胡同'];
 export default {
@@ -571,10 +572,9 @@ export default {
                 plainOptionxingzhi,
                 plainOptionzhuangtai,
                 houseroot,
+                housepayway,
                 plainOptionfenge,
                 plainOptionlinjie,
-                plainOptionzengzhishui,
-                plainOptiongeshui,
                 // danyuan,
                 // zhuang,
                 chaoxiangvalue: '东',
@@ -837,7 +837,11 @@ export default {
     }
 </script>
 
-<style  lang="less" scoped>
+<style scoped lang="less">
+.ant-checkbox-wrapper + .ant-checkbox-wrapper {
+    margin-left: 0px;
+    margin-right: 8px;
+}
     .shangpulogo{
             display: flex;
             align-items: center;
@@ -980,6 +984,9 @@ export default {
     .zhuzhaibox{
         width: 180px !important;
         // padding-left: 25px
+    }
+    .paywaybox{
+        width: 120px !important;
     }
    .firhuxing{
          width: 65px !important;

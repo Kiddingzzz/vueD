@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-      <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk" :destroyOnClose="true">
+      <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk" :destroyOnClose="true" cancelText="取消" okText="确定">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
@@ -21,6 +21,11 @@
                 <a-spin :spinning="spinning">
                 </a-spin>
             </p>
+            <div class="leaselogo">
+                <a href="https://cq.58.com/zufang" target="_blank"><img class="wuba" src="../../assets/logo/58logo.png"></a>
+                <a href="https://cq.zu.anjuke.com" target="_blank"><img class="anju" src="../../assets/logo/anjuke.jpg"></a>
+                <a href="https://cq.zu.fang.com" target="_blank"><img class="fang" src="../../assets/logo/fangtianxia.jpg"></a>
+            </div>
             <div class="leasefilter">
                 <ul class="leasesale-content-tip clear" style="margin:0px">
                     <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
@@ -832,6 +837,30 @@
     }
 </script>
 <style lang="less" scoped>
+    .leaselogo{
+        display: flex;
+        align-items: center;
+        a{
+            margin-right: 15px;
+            .wuba{
+                width: 150px;
+                height: 80px;
+                padding: 15px 10px;
+                border: 1px solid #ececec;
+            }
+            .anju{
+                width: 150px;
+                height: 80px;
+                border: 1px solid #ececec;
+            }
+            .fang{
+                width: 150px;
+                height: 80px;
+                padding: 10px 0px;
+                border: 1px solid #ececec;
+            }
+        }
+    }
     .sealewrap {
         width: 100%;
         display: flex;

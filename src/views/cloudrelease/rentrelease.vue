@@ -64,8 +64,8 @@
                     <a-tab-pane tab="住宅" key="1">
                         <rentvtable @getData="getMag"></rentvtable>
                     </a-tab-pane>
-                    <a-tab-pane tab="别墅" key="2">
-                        <rentvtable></rentvtable>
+                    <a-tab-pane tab="商铺" key="2">
+                        <rentshangpu></rentshangpu>
                     </a-tab-pane>
                     <a-tab-pane tab="写字楼" key="3">
                         <rentvtable></rentvtable>
@@ -93,6 +93,7 @@
     import rentvtable from '../../components/rentvtable'
     import rentinter from '../../components/rentinter'
     import rentsusstable from '../../components/rentsusstable'
+    import rentshangpu from '../cloudrelease/components/rentshangpu'
 
     export default {
         data() {
@@ -107,7 +108,8 @@
         components: {
             rentvtable,
             rentinter,
-            rentsusstable
+            rentsusstable,
+            rentshangpu,
         },
         methods: {
             adduser() {

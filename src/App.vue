@@ -24,7 +24,7 @@
       <a-layout-sider width="200" style="background: #fff">
         <a-menu
           mode="inline"
-          :defaultSelectedKeys="[this.$route.path]"
+          :defaultSelectedKeys="['/index']"
           :defaultOpenKeys="['sub1']"
           :style="{ height: '100%', borderRight: 0 }"
           :selectedKeys="[this.$route.path]"
@@ -32,53 +32,47 @@
           <a-sub-menu key="sub1">
             <span slot="title"><a-icon type="user" />个人房源</span>
             <a-menu-item key="/index">
-              <router-link to="index">二手房</router-link>
+              <router-link to="index"><i class="iconfont icon-ershoufang"></i>二手房</router-link>
+            </a-menu-item>
+            <a-menu-item key="/zufang">
+              <router-link to="zufang"><i class="iconfont icon-zufang"></i>租房</router-link>
             </a-menu-item>
             <a-menu-item key="/shops">
-              <router-link to="shops">商铺</router-link>
-            </a-menu-item>
-          </a-sub-menu>
-          <a-sub-menu key="sub2">
-            <span slot="title"><a-icon type="laptop" />房源管理</span>
-            <a-menu-item key="/pubulish">
-              <router-link to="pubulish">发布房源</router-link>
-            </a-menu-item> 
-            <a-menu-item key="/test">
-                <router-link to="test">url链接列表</router-link>
+              <router-link to="shops"><i class="iconfont icon-shangpu01"></i>商铺</router-link>
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub3">
             <span slot="title"><a-icon type="inbox" />房源录入</span>
             <a-menu-item key="/lease">
-              <router-link to="lease">租房录入</router-link>
+              <router-link to="lease"><i class="iconfont icon-zufang"></i>租房录入</router-link>
             </a-menu-item>  
             <a-menu-item key="/sell">
-                 <router-link to="sell">售房录入</router-link>
+                 <router-link to="sell"><i class="iconfont icon-ershoufang"></i>售房录入</router-link>
+            </a-menu-item>
+            <a-menu-item key="/shangpuzuluru">
+                 <router-link to="shangpuzuluru"><i class="iconfont icon-shangpu01"></i>商铺出租录入</router-link>
             </a-menu-item>
             <a-menu-item key="/shangpuluru">
-                 <router-link to="shangpuluru">商铺录入</router-link>
+                 <router-link to="shangpuluru"><i class="iconfont icon-shangpu01"></i>商铺出售录入</router-link>
             </a-menu-item>
           </a-sub-menu>
 
           <a-sub-menu key="sub4">
             <span slot="title"><a-icon type="cloud" />云发布</span>
             <a-menu-item key="/rentrelease">
-              <router-link to="rentrelease">出租群发</router-link>
+              <router-link to="rentrelease"><i class="iconfont icon-zufang"></i>出租群发</router-link>
             </a-menu-item>  
             <a-menu-item key="/salerelease">
-              <router-link to="salerelease">出售群发</router-link>
+              <router-link to="salerelease"><i class="iconfont icon-ershoufang"></i>出售群发</router-link>
             </a-menu-item>           
           </a-sub-menu>
           <a-sub-menu key="sub5">
             <span slot="title"><a-icon type="setting" />个人管理</span>
             <a-menu-item key="/zhandian">
-              <router-link to="zhandian">站点管理</router-link>
+              <router-link to="zhandian"><i class="iconfont icon-wangzhan"></i>站点管理</router-link>
             </a-menu-item>
             <a-menu-item key="/tuijian">
-              <router-link to="tuijian">站点管理</router-link>
-            </a-menu-item>
-             <a-menu-item key="15">
-              <router-link to="loginform">退出登录</router-link>
+              <router-link to="tuijian"><i class="iconfont icon-wangzhan"></i><span>站点管理</span></router-link>
             </a-menu-item>
           </a-sub-menu>
         </a-menu>
@@ -100,6 +94,7 @@ export default {
         // user:'',
         // logouttxt:'',
         OpenKeys: '',
+        userinfo: [],
       };
     },
     mounted(){
@@ -108,7 +103,7 @@ export default {
       _user(){
         let update = JSON.parse(localStorage.getItem('update'));
         console.log("登录到首页=========="+JSON.stringify(update));
-         console.log("登录成功名字=============="+update.userName);
+        console.log("登录成功名字=============="+update.userName);
         return update.hasLogin != false ? "欢迎您，"+update.userName : "请登录";
       },
       _logouttxt(){
@@ -123,22 +118,12 @@ export default {
       // this.historyWatch();
       window.addEventListener('beforeunload', e => {
       localStorage.setItem("store",JSON.stringify(this.$store.state))
-
     });
     
     },
     methods: {
       // historyWatch () {
       //   this.news = (this.$route.path === '/sell' ? 1 : 0);
-      // },
-      // click(e){
-      //   let str = e.keyPath
-      //   let hh = str.lastIndexOf(",");
-      //   // this.OpenKeys = str.substring(hh+1);
-      //   //  console.log("点击的父亲"+this.OpenKeys)
-      // },
-      // onChange(e){
-      //   console.log("改变"+e.length)
       // },
 
       logout(){
@@ -164,6 +149,13 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.ant-menu-item > a {
+    display: flex !important;
+    align-items: center;
+    i {
+      margin-right: 5px;
+    }
+}
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

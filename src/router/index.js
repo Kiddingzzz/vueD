@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/home/index'
-import Pubulish from '@/views/home-second/pubulishHome/pubulish'
-import Test from '@/views/pulishUrl/test'
 import DashBoard from '@/components/Dashboard'
 import Shops from '@/views/home/shop/shops'
 import Lease from '@/views/houseluru/lease'
@@ -21,6 +19,9 @@ import Rentusstable from '@/components/rentsusstable'
 import Rentvtable from '@/components/rentvtable'
 import Rentinter from '@/components/rentinter'
 import Shangpuluru from '@/views/houseluru/shangpuluru'
+import Zufang from '@/views/home/zufang'
+import Rentshangpu from '@/views/cloudrelease/components/rentshangpu'
+import Shangpuzuluru from '@/views/houseluru/shangpuzuluru'
 Vue.use(Router)
 
 export default new Router({
@@ -56,29 +57,6 @@ export default new Router({
 			   keepAlive: true
 			 }
 	    },
-		{
-			path: "/pubulish",
-			name: "Pubulish",
-			component: Pubulish,
-			// meta: {
-			// 	requireAuth: true
-			// }
-			meta: {
-				keepAlive: true
-			  }
-		},
-		{
-			path: "/test",
-			name: "Test",
-			component: Test,
-			// meta: {
-			// 	requireAuth: true
-			// }
-			meta: {
-				keepAlive: true
-			  }
-			
-		},
 		{
 			path:'/lease',
 			name:'Lease',
@@ -150,6 +128,22 @@ export default new Router({
 				keepAlive: true
 			  }
 		},
+		{
+			path: '/shangpuzuluru',
+			name: 'Shangpuzuluru',
+			component: Shangpuzuluru,
+			meta: {
+				keepAlive: true
+			  }
+		},
+		{
+			path: '/zufang',
+			name: 'Zufang',
+			component: Zufang,
+			meta: {
+				keepAlive: true
+			  }
+		},
 
 		//组件
 		{
@@ -203,6 +197,11 @@ export default new Router({
 			path: '/rentinter',
 			name: 'Rentinter',
 			component: Rentinter
+		},
+		{
+			path: '/rentshangpu',
+			name: 'Rentshangpu',
+			component: Rentshangpu,			
 		},
 
 	]

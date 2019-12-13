@@ -115,6 +115,7 @@
                 <div class="moniselectcon">
                   <a-dropdown>
                   <a-menu slot="overlay">
+                  <a-menu-item key="0" @click="reset('朝向不限')"><a-icon type="user" />朝向不限</a-menu-item>
                     <a-menu-item key="1" @click="reset('东')"><a-icon type="user" />东</a-menu-item>
                     <a-menu-item key="2" @click="reset('南')"><a-icon type="user" />南</a-menu-item>
                     <a-menu-item key="3" @click="reset('西')"><a-icon type="user" />西</a-menu-item>
@@ -131,14 +132,15 @@
                 </div><!-- moniselectcon -->
                 <div class="moniselectcon">
                   <a-dropdown>
-                  <a-menu slot="overlay">
-                    <a-menu-item key="11" @click="reset('毛坯')"><a-icon type="user" />毛坯</a-menu-item>
-                    <a-menu-item key="12" @click="reset('简单装修')"><a-icon type="user" />简单装修</a-menu-item>
-                    <a-menu-item key="13" @click="reset('精装修')"><a-icon type="user" />精装修</a-menu-item>
-                    <a-menu-item key="14" @click="reset('豪华装修')"><a-icon type="user" />豪华装修</a-menu-item>
-                  </a-menu>
-                  <a-button style="margin-left: 8px"> {{zhuangxiuselect}} <a-icon type="down" /> </a-button>
-                </a-dropdown>
+                    <a-menu slot="overlay">
+                      <a-menu-item key="11" @click="reset('装修不限')"><a-icon type="user" />装修不限</a-menu-item>
+                      <a-menu-item key="12" @click="reset('毛坯')"><a-icon type="user" />毛坯</a-menu-item>
+                      <a-menu-item key="13" @click="reset('简单装修')"><a-icon type="user" />简单装修</a-menu-item>
+                      <a-menu-item key="14" @click="reset('精装修')"><a-icon type="user" />精装修</a-menu-item>
+                      <a-menu-item key="15" @click="reset('豪华装修')"><a-icon type="user" />豪华装修</a-menu-item>
+                    </a-menu>
+                    <a-button style="margin-left: 8px"> {{zhuangxiuselect}} <a-icon type="down" /> </a-button>
+                  </a-dropdown>
                 </div><!-- moniselectcon -->
               </dd>
             </dl>
@@ -266,27 +268,46 @@
             this.getDashboard();
           },
           methods: {
-            async getDashboard(pi) {
-              if(pi == undefined){
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList`);
-                console.log(respones)
-                const res = respones.data;
-                this.list = res.items;
-                return;
+            async getDashboard(pi) {        
+              //@param condition 过滤条件
+              //@param data 需要过滤的数据
+              let filter=(condition,filterdata)=>{
+                  return filterdata.filter( item => {
+                      return Object.keys( condition ).every( key => {
+                        return String( item[ key ] ).toLowerCase() == String( condition[ key ] ).trim().toLowerCase() ? true : false
+                          } )
+                  } )
               }
-              console.log(pi)
-              const data = {
-                SearchName:pi
-              }
-              const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList?Searchname=`+ data.SearchName);
+              const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList`);
               console.log(respones)
               const res = respones.data;
-              this.list = res.items;
+              if(pi == undefined || (this.zhuangxiuselect == '装修不限' & this.chaoxiangselect == '朝向不限')){
+                  this.list = res.items;
+                  return;
+              }else if(this.zhuangxiuselect == '装修不限' & this.chaoxiangselect != '朝向不限'){
+                  //假设选择的条件为具体的朝向
+                  let condition={chaoxiang:this.chaoxiangselect}
+                  this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
+              }else if(this.zhuangxiuselect != '装修不限' & this.chaoxiangselect == '朝向不限'){
+                  //假设选择的条件为具体的装修
+                  let condition={zhuangxiu:this.zhuangxiuselect}
+                  this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
+              }else{
+                  //假设选择的条件为具体的装修 和 具体的朝向
+                  let condition={zhuangxiu:this.zhuangxiuselect,chaoxiang:this.chaoxiangselect}
+                  this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
+              }
+              // const data = {
+              //   SearchName:pi
+              // }
+              // const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList?Searchname=`+ data.SearchName);
+              // const res = respones.data;
+              // this.list = res.items;
             },
             reset(data){
               //确定选项里的值是属于装修还是朝向
               const  hh = data
-              const str = "毛坯简单装修精装修豪华装修";
+              const str = "装修不限毛坯简单装修精装修豪华装修";
               const reg = new RegExp(hh);
               if(reg.test(str)){
                 this.zhuangxiuselect = data;
@@ -294,7 +315,7 @@
                 this.chaoxiangselect = data;
               }
               this.getDashboard(data)
-            }
+            },
           }
         }
       </script>
