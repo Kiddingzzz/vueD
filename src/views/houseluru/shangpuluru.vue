@@ -43,12 +43,12 @@
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*标题:" validate-status=""
+                        <!--<<a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*标题:" validate-status=""
                             help="">
                             <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" @blur="blur('xiaoquName')" />
-                            <!--<label class="selladdshowxq">找不到小区？</label>
+                            label class="selladdshowxq">找不到小区？</label>
                             <a class="selladdshowxq" @click="addshowxaqu">查看相似小区</a>
-                            <a class="selladdshowxq" @click="addxiaoqu">我要添加小区</a>-->
+                            <a class="selladdshowxq" @click="addxiaoqu">我要添加小区</a>
                             <span class="errormsg" v-if="xiaoquNameerror">小区不能为空</span>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
@@ -57,7 +57,7 @@
                                     :value="province">{{province}}
                                 </a-select-option>
                             </a-select>
-                        </a-form-item>
+                        </a-form-item>-->
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="地址" has-feedback
                             validate-status="" help="">
@@ -467,7 +467,7 @@
                                     <span>最多10张。您可以</span>
                                     <label class="lurupiclaber">从我的图库选择</label>
                                     <span>或者</span>
-                                    <label class="lurupiclaber">从小区图库选择</label>
+                                    <label class="lurupiclaber">从小区图库选择</label>  
                                     <a-button type="" class="lurubuttontuku">我的图库</a-button>
                                     <a-button type="" class="lurubuttontuku">小区图库</a-button>
                                 </div>
@@ -499,7 +499,7 @@
                                                 <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
                                                     <a-icon type="user" />{{pilaingsy}}</a-menu-item>
                                             </a-menu>
-                                             <a-button class="tupianchuli">图片处理
+                                                <a-button class="tupianchuli">图片处理
                                                 <a-icon type="up" />
                                             </a-button>
                                         </a-dropdown>
@@ -677,7 +677,7 @@ export default {
             //插入一条url数据链接
             async onSearch(params) {
                 //判断URL网址输入是否正确
-            //     var strRegex ='(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
+               var strRegex ='(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
                 var re=new RegExp(strRegex); 
                 if (params==""||!re.test(params)) { 
                     alert("请输入正确的url地址");

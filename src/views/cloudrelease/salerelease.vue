@@ -65,7 +65,7 @@
                         <vtable @getData="getMag"></vtable>
                     </a-tab-pane>
                     <a-tab-pane tab="商铺" key="2">
-                        <saleshangpu></saleshangpu>
+                        <saleshangpu @getData="getMag"></saleshangpu>
                     </a-tab-pane>
                     <a-tab-pane tab="写字楼" key="3">
                         <vtable></vtable>
@@ -134,6 +134,7 @@
                     this.bieshu = this.houselist;
                 }
             },
+            
             //第二步操作跳转第三步
             getSeconds(message) {
                 if (message == 'a') {

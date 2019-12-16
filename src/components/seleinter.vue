@@ -47,7 +47,7 @@
                 </a-select>
             </span>
             <span slot="caozuo" slot-scope="text, record">
-                <a-button type="primary" @click="fabuok(record)">确认发布</a-button>
+                <a-button type="primary" @click="shopfabuok(record)">确认发布</a-button>
                 <a-spin :spinning="spinning">
                 </a-spin>
             </span>
@@ -126,7 +126,8 @@
                 shineiImgList: [],
                 xiaoquImgList: [],
                 huxingImgList: [],
-                bid: 'a'
+                bid: 'a',
+                shopshineiList:[],
             };
         },
         props: {
@@ -137,13 +138,25 @@
         },
         mounted() {
             this.def = this.value;
-
+            console.log("商铺风格士大夫哈哈哈哈哈哈哈哈哈哈："+this.def.houseType)
+            console.log("商铺风格士大夫哈哈哈哈哈哈哈哈哈哈："+this.def.shopquyu)
+            console.log("商铺风格士大夫哈哈哈哈哈哈哈哈哈哈："+this.def.shopsimpleRice)
         },
         methods: {
 
             callback(key) {
                 console.log(key);
             },
+            
+            async shopfabuok(e){
+                console.log(this.def.houseType)
+                if(this.def.houseType === '商铺'){
+                    this.fabuShangpu()
+                }
+                if(this.def.houseType === 'rr'){}
+            },
+            
+            ///二手房发布
             async fabuok(e) {
                 this.spinning = true;
                 this.pdef = this.value;
@@ -282,6 +295,137 @@
                         // this.flag = res1.returnmsgs.flag;
                         // this.houseid = res1.returnmsgs.houseid;
                         var renders = this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id)
+                        this.openNotificationWithIcon('success')
+                    }
+                })
+            },
+            
+            ///商铺发布
+            async fabuShangpu(){
+                 this.spinning = true;
+                this.pdef = this.value;
+                var ades=this.pdef.shopquyu;
+                if(RegExp(/-/).exec(ades))
+                    ades=this.pdef.shopquyu.split('-')[1];
+                var price=this.pdef.shopRice
+                 price=parseFloat(price)
+                var spure=this.pdef.shopSquare;
+                var peitao=this.pdef.shopPeitao;
+                peitao=peitao.replace("'",'').replace('[','').replace(']','');
+                var louceng1=this.pdef.shoplouceng.split('/')[1];
+                louceng1=parseInt(louceng1);
+                 var louceng2=this.pdef.shoplouceng.split('/')[0];
+                louceng2=parseInt(louceng2);
+                const gg=this.pdef.shopGuige
+                var wid=0;
+                var cenhig=0;
+                var jinshen=0;
+                 wid=gg.split('、')[0].split('面宽')[1].split('m')[0]
+                 cenhig=gg.split('、')[1].split('层高')[1].split('m')[0]
+                 jinshen=gg.split('、')[2].split('进深')[1].split('m')[0]
+                var proff=this.pdef.xiangguanFy;
+                
+                if(proff=="暂无数据")
+                       proff=null;
+                else
+                       proff=null;
+                var shoptype=this.pdef.shoptype;
+                if(RegExp(/住宅/).exec(shoptype))
+                     shoptype="住宅底商";
+               else if(RegExp(/商业/).exec(shoptype))
+                     shoptype="商业街商铺";     
+               else if(RegExp(/临街/).exec(shoptype))
+                     shoptype="临街门面";
+                else if(RegExp(/写字楼/).exec(shoptype))
+                     shoptype="写字楼配套底商";
+                if(RegExp(/购物/).exec(shoptype))
+                     shoptype=" 购物中心/百货";
+                else
+                   shoptype="其他";
+                var shopFy=this.pdef.xiangguanFy;
+                if(shopFy=="暂无数据")
+                    shopFy=null;
+
+                var shineiImgs = this.pdef.shopimgs.replace(/'/g, '').replace('[', '').replace(']', '');
+                            var shops = shineiImgs.split(",")
+                            for (var i = 0; i < shops.length; i++) {
+                                var imgUrl = {};
+                                imgUrl.url = shops[i];
+                                imgUrl.uid = i;
+                                imgUrl.name = 'xxx.jpg';
+                                imgUrl.status = 'done';
+                                this.shopshineiList.push(imgUrl);
+                            }
+                //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + this.$store.userId);
+                let update = JSON.parse(localStorage.getItem('update'));
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + update.userId);
+                let datas = query.data;
+                const urls = 'unity/authenticate';
+                const data = {
+                    userName: datas.userName,
+                    pwd: datas.passWord,
+                    keyId: "10568"
+                }
+                console.log(this.pdef.shopquyu.replace(' ',''))
+                console.log("s"+ades)
+                console.log(this.pdef.shopAdress)
+                const res = await this.$axios.post(urls, data);
+                const userName = res.data.returnmsgs.userName;
+                this.tokens = res.data.returnmsgs.token;
+                const list = {
+                    houseType: "Sale",
+                    purposeType: "Shop",
+                    newcode: 1,
+                    projname:"暂无数据",
+                    district: this.pdef.shopquyu.replace(' ',''),
+                    comarea:ades,
+                    address: this.pdef.shopAdress,
+                    price: price,
+                    buildingArea: spure,
+                    innerid: "gz1213",
+                    baseService: peitao,
+                    trafficinfo: "交通便利，距离地铁比较近，多路公交车",
+                    subwayinfo: "暂无数据",
+                    title: this.pdef.shopTitle,
+                    content: this.pdef.shopmiaoshu,
+                    subtype:shoptype,
+                    propfee:shopFy,
+                    isdivisi:null,
+                    floor:louceng2,
+                    allfloor:louceng1,
+                    aimoperastion:null,
+                    fitment:null,
+                    ptype:0,
+                    photourl:this.pdef.shopFengimg,
+                    image6:this.shopshineiList,
+                    image7:this.shopshineiList,
+                    videourl:null,
+                    videotitle:null,
+                    floorHeight:cenhig,
+                    roomWide:wid,
+                    roomDeep:jinshen,
+                    livearea:this.pdef.shopSquare-1,
+                    serviceIntroduction:"暂无介绍",
+                }
+                const SaleUrl = '/agent/house/input';
+                // ?token='+this.tokens+'&Content-Type='+'application/json'+'&keyId='+'10568'+'&FangRequestID='+'fangusername_input_410661884'
+                const res1 = await this.$axios.post(SaleUrl, list,
+                    {
+                        headers: {
+                            'token': res.data.returnmsgs.token,
+                            'Content-Type': 'application/json',
+                            'keyId': '10568',
+                            'FangRequestID': 'fangusername_input_410661884'
+                        }
+                    }
+                ).then(res1 => {
+                    // console.log(`出售住宅房源:` + JSON.stringify(res1));
+                    if (res1.data.code == "1") {
+                        // this.innerid = res1.returnmsgs.innerid;
+                        // this.houseurl = res1.returnmsgs.houseurl;
+                        // this.flag = res1.returnmsgs.flag;
+                        // this.houseid = res1.returnmsgs.houseid;
+                        var renders = this.$http.post(`${this.$config.api}/api/cms/shopPub/modifyShopStatus/` + this.value.id)
                         this.openNotificationWithIcon('success')
                     }
                 })
