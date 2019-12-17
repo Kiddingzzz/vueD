@@ -314,10 +314,10 @@
                          </div>
                          <div class="lurutilerbox">
                              <div class="lurutiler-firstbox">
-                                <label class="lurulabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
+                                <label class="lurulabeltle">*信息描述：</label><label>30-300字效果为最佳</label><label style="color:red;font-size:12px">(由于有些网页不太稳定，导致信息描述可能会有错误，可自行修改！)</label>
                              </div>
                              <div>
-                                   <a-textarea v-model="shopref.shopmiaoshu"  style="width:50%;" :rows="6" />
+                                   <a-textarea v-model="maioshu"  style="width:50%;" :rows="7" />
                                    <div>
                                       <label class="luruminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
                                    </div>
@@ -650,6 +650,7 @@ export default {
                 cenhig:'',
                 jinshen:'',
                 shifoulj:'',
+                maioshu:'',
                 keliurenqun:{},
         }
     },
@@ -697,6 +698,7 @@ export default {
                             console.log(`抓取数据1111:`+JSON.stringify(res.data))
                             this.shoplaf = res.data;
                             var add=res.data.shopquyu
+                            this.maioshu=res.data.shopmiaoshu
                             this.shoprefQuyu=add.split('区')[0];
                             var loucengs=res.data.shoplouceng
                             this.shopceng=loucengs.split('/')[0];
@@ -755,6 +757,7 @@ export default {
                     //this.saveRes.urlsId = this.$store.userId;
                     let update = JSON.parse(localStorage.getItem('update'));
                     this.shoplaf.userid = update.userId;
+                    this.shoplaf.shopmiaoshu=this.maioshu
                     await this.$http.post(`${this.$config.api}/api/cms/shopPub/shoplishHouse`, this.shoplaf).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')

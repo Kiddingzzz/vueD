@@ -692,6 +692,7 @@
                 imgH: {},
                 refQuyu:'',
                 laf:{},
+                ZhuaquUrl:'',
             }
         },
         mounted() {
@@ -731,7 +732,13 @@
                     houseType: this.houseTypes,
                     weiYiUrl: this.text
                 };
-                await this.$http.post(`${this.$config.api}/api/cms/urls/url`, data).then(response => {
+                if(RegExp(/anjuke/).exec(params))
+                        this.ZhuaquUrl='${this.$config.api}/api/cms/anJuKe/shopUrl'
+                if(RegExp(/cq.58.com/).exec(params))
+                        this.ZhuaquUrl='${this.$config.api}/api/cms/urls/url'
+                if(RegExp(/sofang/).exec(params))
+                        console.log("我是搜房网");
+                await this.$http.post(this.ZhuaquUrl, data).then(response => {
                     this.spinning = true;
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
