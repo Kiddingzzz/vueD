@@ -251,6 +251,9 @@
 
 </script>
 <style scoped lang="less">
+/deep/.ant-table-thead > tr > th,/deep/ .ant-table-tbody > tr > td {
+    padding: 16px 10px;
+}
     .wrap {
         width: 100%;
         display: flex;

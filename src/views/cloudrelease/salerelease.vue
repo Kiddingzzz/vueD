@@ -60,14 +60,14 @@
             </div>
             <!-- tab标签页 -->
             <div class="tabcontent" v-if="current==0">
-                <a-tabs type="card">
-                    <a-tab-pane tab="住宅" key="1">
+                <a-tabs type="card" v-model="activeKey">
+                    <a-tab-pane tab="住宅" :key="1">
                         <vtable @getData="getMag"></vtable>
                     </a-tab-pane>
-                    <a-tab-pane tab="商铺" key="2">
+                    <a-tab-pane tab="商铺" :key="2">
                         <saleshangpu @getData="getMag"></saleshangpu>
                     </a-tab-pane>
-                    <a-tab-pane tab="写字楼" key="3">
+                    <a-tab-pane tab="写字楼" :key="3">
                         <vtable></vtable>
                     </a-tab-pane>
                 </a-tabs>
@@ -98,6 +98,7 @@
     export default {
         data() {
             return {
+                activeKey: 1,
                 current: 0,
                 selectedRowKeys: [], // Check here to configure the default column
                 list: [],
@@ -110,6 +111,12 @@
             seleinter,
             susstable,
             saleshangpu
+        },
+        mounted(){
+            //接收商铺出售录入保存成功
+            if(this.$route.query.activeKey != undefined){
+                this.activeKey = this.$route.query.activeKey
+            }
         },
         methods: {
             adduser() {

@@ -807,7 +807,13 @@ export default {
                         description:
                             '保存房源成功数据将存入发布房源列表',
                     });
-                    this.$router.replace('/salerelease')
+                 //   this.$router.replace('/salerelease')
+                    this.$router.push({
+                        path: '/salerelease',
+                        query: {
+                            activeKey: 2,
+                        },
+                    })
                 }
                      if (type == 'error') {
                     this.$notification[type]({

@@ -58,17 +58,17 @@
 
       <!-- 租金 -->
       <dl id="secitem-rent" class="secitem">
-        <dt class="fl" style="margin-top:2px;">租金：</dt>
+        <dt class="fl" style="margin-top:2px;">房价：</dt>
         <dd>
-          <a-radio-group defaultValue="租金不限" size="small" buttonStyle="solid">
-          <a-radio-button value="租金不限"  class='select' @click="reset()">不限</a-radio-button>
+          <a-radio-group defaultValue="租金不限" size="small" buttonStyle="solid"  @change="zujinChange">
+          <a-radio-button value="租金不限" @click="reset('租金不限')" class='select'>不限</a-radio-button>
           <a-radio-button value="0-80"  @click="reset('0-80')">80万以下</a-radio-button>
           <a-radio-button value="80-130"  @click="reset('80-130')">80-130万</a-radio-button>
           <a-radio-button value="130-180"  @click="reset('130-180')">130-180万</a-radio-button>
-          <a-radio-button value="180以上"  @click="reset('180以上')">180万以上</a-radio-button>
-            <span class="shaixuanbtn none">
+          <a-radio-button value="180-more"  @click="reset('180-more')">180万以上</a-radio-button>
+            <!-- <span class="shaixuanbtn none">
               <a-radio-button value="万元/户"  href="javascript:;" onClick="clickLog('from=fcpc_list_cq_Zujin_shaixuan')">万元/户</a-radio-button>
-            </span>
+            </span> -->
           </a-radio-group>
         </dd>
       </dl>
@@ -83,7 +83,7 @@
           <a-radio-button value="2室" @click="reset('2室')">两室</a-radio-button>
           <a-radio-button value="3室" @click="reset('3室')">三室</a-radio-button>
           <a-radio-button value="4室" @click="reset('4室')">四室</a-radio-button>
-          <a-radio-button value="四室以上" @click="reset('四室以上')">四室以上</a-radio-button>
+          <a-radio-button value="moreroom" @click="reset('四室以上')">四室以上</a-radio-button>
           </a-radio-group>
         </dd>
       </dl>
@@ -211,7 +211,7 @@
       title: '价格/万',
       dataIndex: 'rice',
       key: 'rice',
-      width:'7%'
+      width:'6%'
     },
     {
       title: '单价/元',
@@ -223,7 +223,7 @@
       title: '面积㎡',
       dataIndex: 'square',
       key: 'square',
-      width:'7%'
+      width:'6%'
     },
     {
       title: '朝向',
@@ -287,6 +287,9 @@
         zhuangxiuselect: '',
         quyu: '',
         huxingselect: '',
+        zujin: '',
+        ricehigh: '',
+        ricelow: '',
       };
     },
     mounted() {
@@ -303,6 +306,13 @@
           this.huxingselect = e.target.value
         }
       },
+      zujinChange(e) {
+        if(e.target.value != '租金不限'){
+          this.zujin = e.target.value
+          this.ricelow = e.target.value.split("-")[0]
+          this.ricehigh = e.target.value.split("-")[1]
+        }
+      },
       zhuangxiuChange(value) {
         if(value.key != '朝向不限'){
           this.zhuangxiuselect = value.key
@@ -316,11 +326,18 @@
       async getDashboard(pi) {
           // @param condition 过滤条件
           //@param data 需要过滤的数据
-          let filter=(condition,filterdata)=>{
+          let mohufilter=(condition,filterdata)=>{
               return filterdata.filter( item => {
                   return Object.keys( condition ).every( key => {
                     return String( item[ key ] ).toLowerCase().includes( 
                     String( condition[ key ] ).trim().toLowerCase() )
+                  } )
+              } )
+          }
+          let chaoxiangfilter=(condition,filterdata)=>{
+              return filterdata.filter( item => {
+                  return Object.keys( condition ).every( key => {
+                    return String( item[ key ] ).toLowerCase() == String( condition[ key ] ).trim().toLowerCase() ? true : false
                   } )
               } )
           }
@@ -342,72 +359,41 @@
             if(pi == '装修不限'){
               this.zhuangxiuselect = ''
             }
-            let condition={chaoxiang:this.chaoxiangselect,zhuangxiu:this.zhuangxiuselect,address:this.quyu,huxing:this.huxingselect}
-            this.list = filter(condition,res.items) 
-            console.log(res.items)
-            console.log(this.list)
+            if(pi == '租金不限'){
+              this.zujin = ''
+            }
+            //筛选装修和地区
+                let condition={chaoxiang:this.chaoxiangselect,zhuangxiu:this.zhuangxiuselect,address:this.quyu}
+                this.listt = mohufilter(condition,res.items) 
+            //筛选具体朝向
+            if(this.chaoxiangselect != ''){
+                let chaoxiangcondition={chaoxiang:this.chaoxiangselect}
+                this.listt = chaoxiangfilter(chaoxiangcondition,this.listt);
+            }
+            //筛选户型huxing:this.huxingselect
+            if(this.huxingselect != 'moreroom'){
+                let huxingcondition={huxing:this.huxingselect}
+                this.listt = mohufilter(huxingcondition,this.listt);
+            }
+            if(this.huxingselect == 'moreroom'){
+                this.listt = this.listt.filter(function (item) {
+                    return 5 <= item.huxing.split("室")[0]
+                });
+            }
+            //筛选租金
+            const that = this
+            this.listt = this.listt.filter(function (item) {
+                if(that.ricehigh == 'more'){
+                    return that.ricelow <= item.rice 
+                }else if(that.zujin == ''){
+                    return 0 <= item.rice 
+                }else{
+                    return that.ricelow <= item.rice & item.rice <= that.ricehigh
+                }
+            });
+            this.list = this.listt           
           }
       },
-      // async getDashboard(pi) {      
-      //   //@param condition 过滤条件
-      //   //@param data 需要过滤的数据
-      //   let filter=(condition,filterdata)=>{
-      //       return filterdata.filter( item => {
-      //           return Object.keys( condition ).every( key => {
-      //             return String( item[ key ] ).toLowerCase().includes( 
-      //              String( condition[ key ] ).trim().toLowerCase() )
-      //           } )
-      //       } )
-      //   }
-      //   const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList`);
-      //       console.log(respones)
-      //       const res = respones.data;
-      //       console.log(res.items)
-      //   if(pi == undefined){
-      //       // const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList`);
-      //       // console.log(respones)
-      //       // const res = respones.data;
-      //       this.list = res.items;
-      //       return;
-      //   }
-        
-      //   let condition={chaoxiang:this.chaoxiangselect,zhuangxiu:this.zhuangxiuselect,address:this,quyu}
-      //   this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
-        //     const data = {
-        //       SearchName:pi
-        //     }
-        //     const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList?Searchname=`+ data.SearchName);
-        //     const res = respones.data;
-        // if(this.zhuangxiuselect == '装修不限' & this.chaoxiangselect != '朝向不限'){
-        //     //假设选择的条件为具体的朝向
-        //     let condition={chaoxiang:this.chaoxiangselect,quyu:this.quyu}
-        //     this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
-        // }else if(this.zhuangxiuselect != '装修不限' & this.chaoxiangselect == '朝向不限'){
-        //     //假设选择的条件为具体的装修
-        //     let condition={zhuangxiu:this.zhuangxiuselect,quyu:this.quyu}
-        //     this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
-        // }else if(this.zhuangxiuselect != '装修不限' & this.chaoxiangselect != '朝向不限'){
-        //     //假设选择的条件为具体的装修 和 具体的朝向
-        //     let condition={zhuangxiu:this.zhuangxiuselect,chaoxiang:this.chaoxiangselect,address:this.quyu}
-        //     this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
-        // }else{
-        //      this.list = res.items;
-        // }
-      // },
-      // reset(data){
-      //   //确定选项里的值是属于装修还是朝向
-      //     const  hh = data
-      //     const str = "装修不限毛坯简单装修精装修豪华装修";
-      //     const str2 = "朝向不限东西南北东南西南东北西北";
-      //     const reg = new RegExp(hh);
-      //     if(reg.test(str)){
-      //         this.zhuangxiuselect = data;
-      //     }
-      //     if(reg.test(str2)){
-      //         this.chaoxiangselect = data;
-      //     }
-      //       this.getDashboard(data)
-      // },
       reset(data){
         this.getDashboard(data)
       },
