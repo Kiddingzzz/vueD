@@ -1,6 +1,6 @@
 <template>
   <div class="zufangts">
-    <div class="filter-wrap" style="padding: 20px 20px 0px 20px;">
+    <div class="filter-wrap" style="padding: 24px 24px 0px 24px;">
     <div class="search_bd">
       <dl class="secitem secitem_fist">
         <dt class="fl">区域：</dt>
@@ -175,7 +175,7 @@
       title: '价格/万',
       dataIndex: 'rice',
       key: 'rice',
-      width:'7.5%'
+      width:'7%'
     },
     {
       title: '单价/元',
@@ -193,7 +193,7 @@
       title: '朝向',
       dataIndex: 'chaoxiang',
       key: 'chaoxiang',
-      width:'5.7%'
+      width:'5.5%'
     },
     {
       title: '户型',
@@ -217,14 +217,14 @@
       title: '联系人',
       dataIndex: 'lianxiPeople',
       key: 'lianxiPeople',
-      width:'7.2%'
+      width:'6.5%'
     },
     {
       title: '电话',
       dataIndex: 'phone',
       key: 'phone',
       scopedSlots: { customRender: 'phones' },
-      width:'6%'
+      width:'7.2%'
      
     },
     {
@@ -237,7 +237,7 @@
       title: '来源',
       dataIndex: 'source',
       key: 'source',
-      width:'11.5%'
+      width:'6.5%'
     },
   ];
   export default {
@@ -306,8 +306,8 @@
   }
 </script>
 <style lang="less" scoped>
-  .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
-      padding: 10px 10px;
+ /deep/ .ant-table-thead > tr > th, .ant-table-tbody > tr > td {
+      padding: 16px 10px;
   }
   .wrap {
     width: 100%;

@@ -1,7 +1,7 @@
 <template>
-        <div class="ts">
-          <div class="filter-wrap" style="padding: 24px 24px 0px 24px;">
-          <div class="search_bd">
+        <div class="shopts">
+          <div class="shopfilter-wrap" style="padding: 24px 24px 0px 24px;">
+          <div class="shopsearch_bd">
             <dl class="secitem secitem_fist">
               <dt class="fl">区域：</dt>
               <dd>
@@ -325,23 +325,23 @@
           display: flex;
           flex: 0 0 auto;
         }
-        .ts{
+        .shopts{
           display: flex;
           width: 100%;
           flex-flow: column;
           margin: 0 auto;
         }
-        .filter-wrap{
+        .shopfilter-wrap{
           position: relative;
           z-index: 1;
           display: flex;
           flex: 0 0 auto;
           justify-content: center;
         }
-        .filter-wrap .search_bd .secitem dd a.select {
+        .shopfilter-wrap .shopsearch_bd .secitem dd a.select {
           color: #ff552e;
         }
-        .search_bd{
+        .shopsearch_bd{
           background: #fff;
           display: flex;
           flex-flow: column;
@@ -350,7 +350,7 @@
           border-radius: 10px;
           border: 1px solid #ebedf0;
         }
-        .filter-wrap .search_bd .secitem dt {
+        .shopfilter-wrap .shopsearch_bd .secitem dt {
           color: #888;
           width: 36px;
           font-size: 12px;

@@ -4,9 +4,9 @@
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record">
-                        <a-popconfirm title="确定删除么？" @confirm="confirm(record.id)" okText="确认" cancelText="取消">
+                        <p title="确定删除么？" @confirm="confirm(record.id)" okText="确认" cancelText="取消">
                             <a href="#">删除</a>
-                        </a-popconfirm>
+                        </p>
                         <a href="javascript:;" @click="onfabu(record)">未发布</a>
                     </span>
                     <span slot="customTitles">

@@ -4,9 +4,9 @@
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record">
-                        <a-popconfirm title="确定删除么？" @confirm="sconfirm(record.id)" okText="确认" cancelText="取消">
+                        <p title="确定删除么？" @confirm="sconfirm(record.id)" okText="确认" cancelText="取消">
                             <a href="#">删除</a>
-                        </a-popconfirm>
+                        </p>
                         <a href="javascript:;" @click="shoponfabu(record)">未发布</a>
                     </span>
                     <span slot="customTitles">
@@ -25,14 +25,14 @@
             title: '标题',
             dataIndex: 'shopTitle',
             key: 'shopTitle',
-            width: '7.5%'
+            width: '13%'
         },
         {
             dataIndex: 'cretime',
             key: 'creationTime',
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'creationTime' },
-            width: '13%'
+            width: '10%'
         },
         // {
         //     title: '首页图',
@@ -44,7 +44,7 @@
             title: '价格',
             dataIndex: 'shopRice',
             key: 'shopRice',
-            width: '7%'
+            width: '6%'
         },
         {
             title: '面积',
@@ -62,13 +62,13 @@
             title: '楼层',
             dataIndex: 'shoplouceng',
             key: 'shoplouceng',
-            width: '7.5%'
+            width: '5.5%'
         },
         {
             title: '地址',
             dataIndex: 'shopAdress',
             key: 'shopAdress',
-            width: '6.7%'
+            width: '8.7%'
         },
         {
             title: '经营状态',
@@ -92,7 +92,7 @@
             title: '状态',
             dataIndex: 'shopReleaseType',
             key: 'shopReleaseType',
-            width: '7%'
+            width: '6%'
         },
         // {
         //     title: '发布历史',
@@ -104,7 +104,7 @@
             title: '来源',
             dataIndex: 'shopSource',
             key: 'shopSource',
-            width: '6%'
+            width: '7%'
         },
         {
             title: '操作',

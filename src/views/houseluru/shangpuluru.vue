@@ -43,13 +43,13 @@
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*标题:" validate-status=""
+                        <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*标题:" validate-status=""
                             help="">
-                            <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" @blur="blur('xiaoquName')" />
+                            <a-input id="error" v-model="ref.xiaoquName" placeholder="房源所属小区" style="width:50%;" @blur="blur('xiaoquName')" /> -->
                             <!--<label class="selladdshowxq">找不到小区？</label>
                             <a class="selladdshowxq" @click="addshowxaqu">查看相似小区</a>
                             <a class="selladdshowxq" @click="addxiaoqu">我要添加小区</a>-->
-                        </a-form-item>
+                        <!-- </a-form-item> -->
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*区域:" validate-status="">
                             <a-select :defaultValue="provinceData[0]" style="width: 120px" v-model="shoprefQuyu">
                                 <a-select-option v-for="(province,index) of provinceData" :key="index"
@@ -132,7 +132,7 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
                             <a-input type="number" id="" v-model="shopref.shopRice" placeholder="" class="lurumianji" />
-                            <label class="lurusmianij">万</label>
+                            <label class="lurusmianij">万元</label>
                         </a-form-item>
                        <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
                             validate-status="" >
@@ -159,7 +159,7 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status="">
                             <a-radio-group :options="plainOptionzx" :defaultValue="zxvalue" v-model="laf.zhuangxiu"/>
-                        </a-form-item>
+                        </a-form-item>-->
                         <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
                             <a-radio-group :options="plainOptiongn" :defaultValue="value5" v-model="gongnuan" />
@@ -200,8 +200,9 @@
                                 <a-radio-group :options="plainOptionzhuangtai" :defaultValue="zhuangtaivalue"  v-model="shopref.jingyingZt"/>
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="目标业态" has-feedback
-                           validate-status="">
-                                <a-checkbox >百货超市</a-checkbox>
+                           validate-status="" style="line-height:20px !important;">
+                           <a-checkbox-group :options="plainOptionsyetai" v-model="yetaicheckedList" />
+                                <!-- <a-checkbox >百货超市</a-checkbox>
                                 <a-checkbox >酒店宾馆</a-checkbox>
                                 <a-checkbox >家居建材</a-checkbox>
                                 <a-checkbox >服饰鞋包</a-checkbox>
@@ -209,18 +210,20 @@
                                 <a-checkbox >美容美发</a-checkbox>
                                 <a-checkbox >餐饮美食</a-checkbox>
                                 <a-checkbox >休闲娱乐</a-checkbox>
-                                <a-checkbox >其它</a-checkbox>
+                                <a-checkbox >其它</a-checkbox> -->
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="客流人群" has-feedback
                            validate-status="">
-                                <a-checkbox >办公</a-checkbox>
+                                <!-- <a-checkbox >办公</a-checkbox>
                                 <a-checkbox >学生</a-checkbox>
                                 <a-checkbox >居民</a-checkbox>
                                 <a-checkbox >旅游</a-checkbox>
-                                <a-checkbox >其它</a-checkbox>
+                                <a-checkbox >其它</a-checkbox> -->
+                                <a-checkbox-group :options="plainOptionskeliu" v-model="keliucheckedList" />
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="相关费用:" validate-status="">
-                                <a-input id="" v-model="shopref.xiangguanFy" class="luruwuyemoney" />元/m²/天
+                                <!-- <a-input id="" v-model="shopref.xiangguanFy" class="luruwuyemoney" />元/平米·月 -->
+                                <a-input id="" v-model="xiangguanFy" class="luruwuyemoney" />元/平米·月
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="电费:" validate-status="">
                                 <a-input id="" placeholder="" class="luruwuyemoney" />元/度 
@@ -229,7 +232,7 @@
                                 <a-input id="" placeholder="" class="luruwuyemoney" />元/吨 
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="预期租金收益:" validate-status="">
-                                <a-input id="" v-model="shopref.yuqiShouyi" class="luruwuyemoney" />元
+                                <a-input id="" v-model="shopref.yuqiShouyi" class="luruwuyemoney" />元/月
                             </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="商铺性质" has-feedback 
                            validate-status="">
@@ -253,14 +256,15 @@
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="配套设施" has-feedback
                            validate-status="">
-                                <a-checkbox checked:true>客梯</a-checkbox>
-                                <a-checkbox >货梯</a-checkbox>
+                            <a-checkbox-group :options="plainOptionspeitao" v-model="peitaocheckedList" />
+                                <!-- <a-checkbox >货梯</a-checkbox>
                                 <a-checkbox >扶梯</a-checkbox>
+                                <a-checkbox >客梯</a-checkbox>
                                 <a-checkbox >暖气</a-checkbox>
-                                <a-checkbox >空调</a-checkbox>
+                                <a-checkbox >中央空调</a-checkbox>
                                 <a-checkbox >停车位</a-checkbox>
-                                <a-checkbox  >上水</a-checkbox>
-                                <a-checkbox >燃气</a-checkbox>
+                                <a-checkbox >上水</a-checkbox>
+                                <a-checkbox >天燃气</a-checkbox>
                                 <a-checkbox >网络</a-checkbox>
                                 <a-checkbox >下水</a-checkbox>
                                 <a-checkbox >排烟</a-checkbox>
@@ -268,7 +272,7 @@
                                 <a-checkbox >管煤</a-checkbox>
                                 <a-checkbox >380V</a-checkbox>
                                 <a-checkbox >可明火</a-checkbox>
-                                <a-checkbox >可外摆</a-checkbox>
+                                <a-checkbox >可外摆</a-checkbox> -->
                            </a-form-item>
                         </a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*面宽:" validate-status="">
@@ -491,7 +495,7 @@
                                     <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
                                         <img alt="example" style="height:100%; width:100%;"  :src="previewImage" />
                                     </a-modal>
-                                </div>
+                                </div>-->
                                 <!-- <div class="xiala">
                                         <a-dropdown>
                                             <a-menu slot="overlay">
@@ -547,12 +551,22 @@ import moment from 'moment';
     const plainOptionlinjie=['是','否',];
     const plainOptionzengzhishui=['有增值税','无增值税'];
     const plainOptiongeshui=['有个税','无个税'];
+    const plainOptionskeliu = ['办公', '学生', '居民', '旅游', '其他'];
+    const plainOptionspeitao = ['网络', '暖气', '天燃气', '上水', '下水', '排烟', '排污', '管煤', '停车位', '380v', '扶梯', '货梯', '客梯', '中央空调', '外摆区', '可明火'];
+    const plainOptionsyetai = ['百货超市', '酒店宾馆', '家居建材', '服饰鞋包', '生活服务', '美容美发', '餐饮美食', '休闲娱乐', '其他'];
     // const zhuang=['单元','号','幢','栋','号楼'];
     // const danyuan=['栋','号','弄','座','号楼','胡同'];
 export default {
     data () {
         return {
-             url: '11',
+                // checkedList: defaultCheckedList,
+                keliucheckedList: [],
+                plainOptionskeliu,
+                peitaocheckedList: [],
+                plainOptionspeitao,
+                yetaicheckedList: [],
+                plainOptionsyetai,
+                url: '11',
                 visible: false,
                 addxq: false,
                 addshowxqu: false,
@@ -652,6 +666,7 @@ export default {
                 shifoulj:'',
                 maioshu:'',
                 keliurenqun:{},
+                xiangguanFy:'',
         }
     },
     mounted() {
@@ -719,6 +734,22 @@ export default {
                             }
 
                             this.shopref=res.data
+                            // //目标业态多选框
+                            // this.peitaocheckedList = this.shopref.shopPeitao;
+                            //客流人群多选框
+                            let tempStr = this.shopref.keliurenqun;
+                            let tempArr = tempStr.split("、");
+                            for(var i=0;i<tempArr.length;i++){
+                                this.keliucheckedList.push("'"+tempArr[i]+"'")
+                            }
+                            console.log(this.keliucheckedList)
+                            //配套多选框
+                            this.peitaocheckedList = this.shopref.shopPeitao;
+                            if(this.shopref.xiangguanFy == '暂无数据'){
+                                this.xiangguanFy = '';
+                            }else{
+                                this.xiangguanFy = this.shopref.xiangguanFy;
+                            }
                             var shineiImgs = res.data.shopimgs.replace(/'/g, '').replace('[', '').replace(']', '');
                             var shops = shineiImgs.split(",")
                             for (var i = 0; i < shops.length; i++) {
@@ -826,6 +857,9 @@ export default {
 </script>
 
 <style  lang="less" scoped>
+.ant-checkbox-group{
+    margin-top: 10px;
+}
     .shangpulogo{
             display: flex;
             align-items: center;
