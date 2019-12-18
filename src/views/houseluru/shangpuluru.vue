@@ -225,12 +225,12 @@
                                 <!-- <a-input id="" v-model="shopref.xiangguanFy" class="luruwuyemoney" />元/平米·月 -->
                                 <a-input id="" v-model="xiangguanFy" class="luruwuyemoney" />元/平米·月
                             </a-form-item>
-                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="电费:" validate-status="">
+                            <!--<a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="电费:" validate-status="">
                                 <a-input id="" placeholder="" class="luruwuyemoney" />元/度 
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="水费:" validate-status="">
                                 <a-input id="" placeholder="" class="luruwuyemoney" />元/吨 
-                            </a-form-item>
+                            </a-form-item>-->
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="预期租金收益:" validate-status="">
                                 <a-input id="" v-model="shopref.yuqiShouyi" class="luruwuyemoney" />元/月
                             </a-form-item>
@@ -274,16 +274,17 @@
                                 <a-checkbox >可明火</a-checkbox>
                                 <a-checkbox >可外摆</a-checkbox> -->
                            </a-form-item>
-                        </a-form>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*面宽:" validate-status="">
-                            <a-input id="" v-model="wid" class="luruwuyemoney" />米 
-                        </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*层高:" validate-status="">
-                            <a-input id="" v-model="cenhig" class="luruwuyemoney" />米 
-                        </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*进深:" validate-status="">
-                            <a-input id="" v-model="jinshen" class="luruwuyemoney" />米
-                        </a-form-item>
+                        
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*面宽:" validate-status="">
+                                <a-input id="" v-model="wid" class="luruwuyemoney" />米 
+                            </a-form-item>
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*层高:" validate-status="">
+                                <a-input id="" v-model="cenhig" class="luruwuyemoney" />米 
+                            </a-form-item>
+                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*进深:" validate-status="">
+                                <a-input id="" v-model="jinshen" class="luruwuyemoney" />米
+                            </a-form-item>
+                         </a-form>
                     </a-layout-content>
                 </a-layout>
         </div>
@@ -667,12 +668,14 @@ export default {
                 maioshu:'',
                 keliurenqun:{},
                 xiangguanFy:'',
+                shopurl:'',
         }
     },
     mounted() {
             // this.kanfang="随时看房";
             this.zhuangxiu = "中等装修";
             this.gongnuan = "自供暖";
+            
         },
         methods: {
                
@@ -688,10 +691,13 @@ export default {
 
                 var uuid = s.join("");
                 this.text = uuid
+               
             },
+              
             //插入一条url数据链接
             async onSearch(params) {
                 //判断URL网址输入是否正确
+
                var strRegex ='^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
                 var re=new RegExp(strRegex); 
                 if (params==""||!re.test(params)) { 
@@ -706,7 +712,15 @@ export default {
                     houseType: this.houseTypes,
                     weiYiUrl: this.text
                 };
-                await this.$http.post(`${this.$config.api}/api/cms/shopurl/shopUrl`, data).then(response => {
+                 if(RegExp(/anjuke/).exec(params))
+                       // this.ZhuaquUrl=`${this.$config.api}/api/cms/anJuKe/shopUrl`
+                if(RegExp(/cq.58.com/).exec(params))
+                        this.shopurl=`${this.$config.api}/api/cms/shopurl/shopUrl`
+                if(RegExp(/sofang/).exec(params))
+                        console.log("我是搜房网");
+                if(RegExp(/esf.fang./).exec(params))
+                        //this.ZhuaquUrl=`${this.$config.api}/api/cms/fang/fangUrl`
+                await this.$http.post(this.shopurl, data).then(response => {
                     this.spinning = true;
                     if (response.status == 200) {
                        this.$http.get(`${this.$config.api}/api/cms/shopurl/url?userid=`+this.userId+'&Housetype='+this.houseTypes+'&WeiYiUrl='+this.text).then(res => {
@@ -732,19 +746,25 @@ export default {
                             {
                                 this.shifoulj="否";
                             }
-
+                           let yearry=[]
+                           var yetai=res.data.jingyingtype
+                           if(yetai!="暂无数据")
+                           {
+                               if(RegExp(/-/).exec(yetai))
+                                  yetai=yetai.split("-")[0];
+                                yearry.push(yetai)
+                               this.yetaicheckedList=yearry
+                           }
                             this.shopref=res.data
                             // //目标业态多选框
                             // this.peitaocheckedList = this.shopref.shopPeitao;
                             //客流人群多选框
+                            
                             let tempStr = this.shopref.keliurenqun;
-                            let tempArr = tempStr.split("、");
-                            for(var i=0;i<tempArr.length;i++){
-                                this.keliucheckedList.push("'"+tempArr[i]+"'")
-                            }
-                            console.log(this.keliucheckedList)
+                            this.keliucheckedList = tempStr.split("、");
                             //配套多选框
-                            this.peitaocheckedList = this.shopref.shopPeitao;
+                            let checkboxs = this.shopref.shopPeitao;
+                            this.peitaocheckedList=checkboxs.split(",")
                             if(this.shopref.xiangguanFy == '暂无数据'){
                                 this.xiangguanFy = '';
                             }else{
@@ -760,8 +780,9 @@ export default {
                                 imgUrl.status = 'done';
                                 this.shopshineiList.push(imgUrl);
                             }
+
                              this.imgH.url = res.data.shopFengimg,
-                                this.imgH.uid = '-1',
+                                this.imgH.uid = '-2',
                                 this.imgH.name = 'xxx.jpg',
                                 this.imgH.status = 'done',
                                 this.shopimgHeaderList.push(this.imgH);
