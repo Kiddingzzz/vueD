@@ -712,7 +712,7 @@ export default {
                        this.$http.get(`${this.$config.api}/api/cms/shopurl/url?userid=`+this.userId+'&Housetype='+this.houseTypes+'&WeiYiUrl='+this.text).then(res => {
                             console.log(`抓取数据1111:`+JSON.stringify(res.data))
                             this.shoplaf = res.data;
-                            var add=res.data.shopquyu
+                            let add=res.data.shopquyu
                             this.maioshu=res.data.shopmiaoshu
                             this.shoprefQuyu=add.split('区')[0];
                             var loucengs=res.data.shoplouceng
@@ -723,8 +723,8 @@ export default {
                             this.wid=gg.split('、')[0].split('面宽')[1].split('m')[0]
                             this.cenhig=gg.split('、')[1].split('层高')[1].split('m')[0]
                             this.jinshen=gg.split('、')[2].split('进深')[1].split('m')[0]
-                            var lingjir=res.data.Shoplinj
-                            if(lingjir==true)
+                            
+                            if(res.data.shoplinj==true)
                             {
                                 this.shifoulj="是";
                             }

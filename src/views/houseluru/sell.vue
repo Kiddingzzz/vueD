@@ -733,12 +733,14 @@
                     weiYiUrl: this.text
                 };
                 if(RegExp(/anjuke/).exec(params))
-                        this.ZhuaquUrl='${this.$config.api}/api/cms/anJuKe/shopUrl'
+                        this.ZhuaquUrl=`${this.$config.api}/api/cms/anJuKe/shopUrl`
                 if(RegExp(/cq.58.com/).exec(params))
-                        this.ZhuaquUrl='${this.$config.api}/api/cms/urls/url'
+                        this.ZhuaquUrl=`${this.$config.api}/api/cms/urls/url`
                 if(RegExp(/sofang/).exec(params))
                         console.log("我是搜房网");
-                await this.$http.post(this.ZhuaquUrl, data).then(response => {
+                if(RegExp(/esf.fang./).exec(params))
+                        this.ZhuaquUrl=`${this.$config.api}/api/cms/fang/fangUrl`
+                await this.$http.post( this.ZhuaquUrl, data).then(response => {
                     this.spinning = true;
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
