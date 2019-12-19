@@ -293,6 +293,8 @@
       };
     },
     mounted() {
+      let update = JSON.parse(localStorage.getItem('update'));
+      console.log(`aaa`+JSON.stringify(update))
       this.getDashboard();
     },
     methods: {

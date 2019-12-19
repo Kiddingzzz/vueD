@@ -9,7 +9,12 @@
             <!-- 登录成功 -->
              <span>
                <a-dropdown>
-                <a class="ant-dropdown-link" href="#"> {{_user}} <a-icon type="down"/> </a>
+                 <div v-if="nat == false">
+                   <a class="ant-dropdown-link" href="#"> <a-icon type="down"/> {{userName}} </a>
+                 </div>
+                 <div v-if="nat != false">
+                   <a class="ant-dropdown-link" href="#"> <a-icon type="down"/> {{_user}} </a>
+                 </div>
                 <a-menu slot="overlay">
                   <a-menu-item>
                     <a href="javascript:;" @click="logout">{{_logouttxt}}</a>
@@ -77,7 +82,9 @@
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>
+      <keep-alive>
       <router-view/>
+      </keep-alive>
     </a-layout>
   </a-layout>
   <!-- 登录页 -->
@@ -95,15 +102,26 @@ export default {
         // logouttxt:'',
         OpenKeys: '',
         userinfo: [],
+        userName:'',
+        nat:true,
       };
     },
     mounted(){
+      console.log(222)
     },
+    updated () {
+        let update = JSON.parse(localStorage.getItem('update'));
+        console.log("登录到首页=========="+JSON.stringify(update));
+        console.log("登录成功名字=============="+update.userName);
+        this.userName = "欢迎您，"+update.userName;
+        this.nat = false;
+　　},
     computed:{
       _user(){
         let update = JSON.parse(localStorage.getItem('update'));
         console.log("登录到首页=========="+JSON.stringify(update));
         console.log("登录成功名字=============="+update.userName);
+        this.nat = true;
         return update.hasLogin != false ? "欢迎您，"+update.userName : "请登录";
       },
       _logouttxt(){

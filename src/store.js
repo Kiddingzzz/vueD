@@ -35,10 +35,9 @@ const store = new Vuex.Store({
 		 */
 		Remeber(state, config) {
 			// console.log(`update-state: ${JSON.stringify(config)}`);
-			Object.keys(config).map((item, key) => {
-				state[item] = config[item];
-			})
-			window.localStorage.setItem(Remeber-state,JSON.stringify(config))
+			var res = [];
+			res.push(config)
+			window.localStorage.setItem(Remeber-state,JSON.stringify(res))
 		},
 		update(state, config) {
 			// console.log(`update-state: ${JSON.stringify(config)}`);
