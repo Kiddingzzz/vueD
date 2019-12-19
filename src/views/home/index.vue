@@ -361,6 +361,7 @@
             }
             if(pi == '租金不限'){
               this.zujin = ''
+              this.ricehigh = ''
             }
             //筛选装修和地区
                 let condition={chaoxiang:this.chaoxiangselect,zhuangxiu:this.zhuangxiuselect,address:this.quyu}
@@ -385,7 +386,7 @@
             this.listt = this.listt.filter(function (item) {
                 if(that.ricehigh == 'more'){
                     return that.ricelow <= item.rice 
-                }else if(that.zujin == ''){
+                }else if(that.ricehigh == ''){
                     return 0 <= item.rice 
                 }else{
                     return that.ricelow <= item.rice & item.rice <= that.ricehigh
