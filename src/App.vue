@@ -140,7 +140,8 @@ export default {
                   isUpdateHome: true
               }
               //存入数据
-              localStorage.setItem('update', JSON.stringify(update));
+              window.localStorage.setItem('update', JSON.stringify(update));
+              // window.localStorage.clear()
               console.log("退出成功======="+localStorage.getItem('update'))
               this.$router.replace('/loginform');
       },

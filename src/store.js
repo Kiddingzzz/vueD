@@ -13,7 +13,8 @@ const store = new Vuex.Store({
 		userId:'',
 		user: {},
 		token:'',
-		isUpdateHome: true
+		isUpdateHome: true,
+		remeber:[]
 	},
 	mutations: {
 		/**
@@ -32,6 +33,13 @@ const store = new Vuex.Store({
 		 * @param {*} state 
 		 * @param {*Object} config 
 		 */
+		Remeber(state, config) {
+			// console.log(`update-state: ${JSON.stringify(config)}`);
+			Object.keys(config).map((item, key) => {
+				state[item] = config[item];
+			})
+			window.localStorage.setItem(Remeber-state,JSON.stringify(config))
+		},
 		update(state, config) {
 			// console.log(`update-state: ${JSON.stringify(config)}`);
 			Object.keys(config).map((item, key) => {
