@@ -195,7 +195,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
                             validate-status="" >
-                            <a-input-number :min="1950" :max="2019" v-model="ref.fangwuDate" class="sellmianji" />
+                            <a-input-number :min="1950" :max="2019" v-model="jianzaoniandai" class="sellmianji" />
                             <label class="sellsmianij">年</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*所在楼层" has-feedback
@@ -665,6 +665,7 @@
                 urlss: '',
                 text: '',
                 hutong: '',
+                jianzaoniandai:'',
                 ref: {},
                 previewVisible: false,
                 previewImage: '',
@@ -762,6 +763,12 @@
                             let shi = this.ref.huxing.indexOf("室");
                             let ting = this.ref.huxing.indexOf("厅");
                             let wei = this.ref.huxing.indexOf("卫");
+                            let niandai=this.ref.fangwuDate;
+                            if(RegExp(/年/).exec(niandai))
+                            {
+                                this.jianzaoniandai=niandai.replace('年','')
+                                
+                            }
                             this.selectedShi = this.ref.huxing.substring(0, shi);
                             this.selectedTing = this.ref.huxing.substring(shi + 1, ting);
                             this.selectedWei = this.ref.huxing.substring(ting + 1, wei);
@@ -778,7 +785,7 @@
                                 this.shineiList.push(imgUrl);
                             }
                             this.imgH.url = ss[0],
-                                this.imgH.uid = '-1',
+                                this.imgH.uid = '-150',
                                 this.imgH.name = 'xxx.jpg',
                                 this.imgH.status = 'done',
                                 this.imgHeaderList.push(this.imgH);
@@ -786,7 +793,7 @@
 
                             var imgFangxing = {};
                             imgFangxing.url = res.data.imgHeader.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                imgFangxing.uid = '-2',
+                                imgFangxing.uid = '-50',
                                 imgFangxing.name = 'xxx.jpg',
                                 imgFangxing.status = 'done',
                                 this.fangxinlist.push(imgFangxing);
@@ -794,7 +801,7 @@
 
                             var XiaoquImg = {};
                             XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                XiaoquImg.uid = '-3',
+                                XiaoquImg.uid = '-100',
                                 XiaoquImg.name = 'xxx.jpg',
                                 XiaoquImg.status = 'done',
                                 this.xiaoQuList.push(XiaoquImg);
