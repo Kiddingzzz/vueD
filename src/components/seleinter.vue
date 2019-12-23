@@ -37,12 +37,12 @@
                 </a-select>
             </span>
             <span slot="tuiaction" slot-scope="text, record">
-                <a-select default-value="2" class="seleshangjia">
-                    <a-select-option value="1">
-                        上架
+                <a-select default-value="58同城" v-model="wangvalue"  class="seleshangjia">
+                    <a-select-option value="58同城">
+                       58同城
                     </a-select-option>
-                    <a-select-option value="2">
-                        待上架
+                    <a-select-option value="房天下">
+                       房天下
                     </a-select-option>
                 </a-select>
             </span>
@@ -90,7 +90,7 @@
             width: '13%'
         },
         {
-            title: '推送设置',
+            title: '所发布网站',
             key: 'tuiaction',
             scopedSlots: { customRender: 'tuiaction' },
             width: '12%'
@@ -127,6 +127,7 @@
                 xiaoquImgList: [],
                 huxingImgList: [],
                 bid: 'a',
+                wangvalue:'',
                 shopshineiList:[],
             };
         },
@@ -149,11 +150,42 @@
             },
             
             async shopfabuok(e){
-                console.log(this.def.houseType)
-                if(this.def.houseType === '商铺'){
-                    this.fabuShangpu()
+                console.log(`fgsdfsdfg:`+this.wangvalue)
+                 let update = JSON.parse(localStorage.getItem('update'));
+                console.log("respones.house222:" + update.userId)
+                try {
+                    // await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
+                    await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId+'&sitename='+this.wangvalue).then(Response => {
+                        console.log("respones.house2222:" + JSON.stringify(Response))
+                        if (Response.status == 200) {
+                            if (Response.data == "yes") {
+                                if(this.def.houseType === '商铺'){
+                                    this.fabuShangpu()
+                                }
+                                if(this.def.houseType === '二手房'){
+                                    this.fabuok()
+                                }
+                            }
+                            else {
+                                let that = this;
+                                const h = that.$createElement;
+                                that.$info({
+                                    title: '提示', okText: '去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'),]),
+                                    // onOk() {
+                                    //     that.$router.replace('/zhandian')
+                                    // },
+                                });
+                            }
+
+                        }
+                    })
                 }
-                if(this.def.houseType === 'rr'){}
+                catch (e) {
+                    this.$message.warning('系统遇到了点问题，请重试');
+                }
+
+                console.log(this.def.houseType)
+               
             },
             
             ///二手房发布

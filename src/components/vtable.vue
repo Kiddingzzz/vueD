@@ -204,36 +204,36 @@
 
             },
             //传房源对象并判断此账号是否已有添加网站
-            async onfabu(record) {
-                // console.log("respones.house222:"+this.$store.userId)
-                let update = JSON.parse(localStorage.getItem('update'));
-                console.log("respones.house222:" + update.userId)
-                try {
-                    // await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
-                    await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId).then(Response => {
-                        console.log("respones.house2222:" + JSON.stringify(Response))
-                        if (Response.status == 200) {
-                            if (Response.data == "yes") {
+           onfabu(record) {
+                // // console.log("respones.house222:"+this.$store.userId)
+                // let update = JSON.parse(localStorage.getItem('update'));
+                // console.log("respones.house222:" + update.userId)
+                // try {
+                //     // await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
+                //     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId).then(Response => {
+                //         console.log("respones.house2222:" + JSON.stringify(Response))
+                //         if (Response.status == 200) {
+                //             if (Response.data == "yes") {
                                 console.log("respones.house:" + JSON.stringify(record))
                                 this.$emit("getData", record);
-                            }
-                            else {
-                                let that = this;
-                                const h = that.$createElement;
-                                that.$info({
-                                    title: '提示', okText: '去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'),]),
-                                    onOk() {
-                                        that.$router.replace('/zhandian')
-                                    },
-                                });
-                            }
+                            // }
+                //             else {
+                //                 let that = this;
+                //                 const h = that.$createElement;
+                //                 that.$info({
+                //                     title: '提示', okText: '去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'),]),
+                //                     onOk() {
+                //                         that.$router.replace('/zhandian')
+                //                     },
+                //                 });
+                //             }
 
-                        }
-                    })
-                }
-                catch (e) {
-                    this.$message.warning('系统遇到了点问题，请重试');
-                }
+                //         }
+                //     })
+                // }
+                // catch (e) {
+                //     this.$message.warning('系统遇到了点问题，请重试');
+                // }
             },
             //获取房源列表
             async seachShow() {
