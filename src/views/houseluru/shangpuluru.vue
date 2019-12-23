@@ -244,7 +244,8 @@
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="是否临街" has-feedback
                            validate-status="">
-                              <a-radio-group :options="plainOptionlinjie" :defaultValue="linjievalue" v-model="shifoulj" />
+                              <!-- <a-radio-group :options="plainOptionlinjie" :defaultValue="linjievalue" v-model="shifoulj" /> -->
+                                <a-radio-group :options="plainOptionlinjie" :defaultValue="shifoulj"/>
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="增值税" has-feedback
                            validate-status="">
@@ -597,8 +598,8 @@ export default {
                 zhuangtaivalue: '新铺',
                 xingzhivalue: '商铺新房',
                 fengevalue: '是',
-                linjievalue:'是',
-                cfvalue:'否',
+                shifoulj: '是',
+                cfvalue:'电话预约',
                 zengzhishuivalue:'无增值税',
                 geshuivalue:'无个税',
                 value6: '普通上传',
@@ -661,10 +662,9 @@ export default {
                 imgH: {},
                 shoprefQuyu:'',
                 shoplaf:{},
-                wid:'',
-                cenhig:'',
-                jinshen:'',
-                shifoulj:'',
+                wid:'5',
+                cenhig:'3',
+                jinshen:'4',
                 maioshu:'',
                 keliurenqun:{},
                 xiangguanFy:'',

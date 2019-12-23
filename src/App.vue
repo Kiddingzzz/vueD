@@ -91,7 +91,6 @@
     <router-view v-if="!$route.meta.keepAlive"></router-view>
   </div>
 </template>
-
 <script>
 export default {
   name: 'App',
@@ -108,6 +107,8 @@ export default {
     },
     mounted(){
       console.log(222)
+      let ip = returnCitySN["cip"];
+      console.log('app.vue的ip=================='+ip)
     },
     updated () {
         let update = JSON.parse(localStorage.getItem('update'));

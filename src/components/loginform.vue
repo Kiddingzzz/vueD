@@ -31,8 +31,19 @@
 
                     <div v-if="account == 'username'">
                         <div class="logins">
-                            <el-input prefix-icon="iconfont icon-User" v-model="user" placeholder="请输入姓名" class="inputs"
-                                @keyup.enter.native="doLogin()"></el-input>
+                            <!-- <el-input prefix-icon="iconfont icon-User" v-model="user" placeholder="请输入姓名" class="inputs"
+                                @keyup.enter.native="doLogin()"></el-input> -->
+                                <el-autocomplete
+                                prefix-icon="iconfont icon-User"
+                                class="inline-input"
+                                v-model="user"
+                                :fetch-suggestions="querySearch"
+                                placeholder="请输入姓名"
+                                :trigger-on-focus="false"
+                                @select="handleSelect"
+                                @keyup.enter.native="doLogin()"
+                                ></el-autocomplete>
+                                
                             <el-input type="password" placeholder="请输入密码" v-model="password" class="inputs"
                                 @keyup.enter.native="doLogin()" prefix-icon="iconfont icon-mima"></el-input>
               		    <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
@@ -85,6 +96,8 @@
                 openId: '',
                 access_token: '',
                 refresh_token: '',
+                //用户名下拉框
+                restaurants: [],
             };
         },
         computed: {
@@ -95,11 +108,15 @@
             }
         },
         mounted() {
-	    // 如果存在赋值给表单，并且将记住密码勾选
-	    if(localStorage.getItem("siteName") != ''){
-	      this.getlocalStorage()
-	      this.checked = true
-	    }
+            let ip = returnCitySN["cip"];
+            console.log('登录页面的ip=================='+ip)
+            //用户名下拉框
+            this.restaurants = this.loadAll();
+            // 如果存在赋值给表单，并且将记住密码勾选
+            // if(localStorage.getItem("siteName") != ''){
+            //     this.getlocalStorage()
+            //     this.checked = true
+	        // }
             //获取58令牌
             // const WuBaApi = 'https://openapi.58.com/v2/auth/show?app_key=e36309f80bd9030c879d69ba4155a74b&redirect_uri=http://972133.vip'
 
@@ -177,6 +194,28 @@
             //  });
         },
         methods: {
+            //用户名下拉框
+            querySearch(queryString, cb) {
+                var restaurants = this.restaurants;
+                var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
+                // 调用 callback 返回建议列表的数据
+                cb(results);
+            },
+            createFilter(queryString) {
+                return (restaurant) => {
+                return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                };
+            },
+            loadAll() {
+                return [
+                    { "value": "1233", "address": "长宁区新渔路144号" },
+                    { "value": "zaqwe", "address": "上海市长宁区淞虹路661号" },
+                    { "value": "ffff123", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
+                ];
+            },
+            handleSelect(item) {
+                console.log(item);
+            },
             ...mapMutations(['login', 'update']),
             onChange(e) {
                 console.log(e.target.checked);
@@ -321,12 +360,12 @@
                             
                             this.$router.replace('/index')
                             // 当记住密码的checbox选中时，像localStorage里存入一下用户输入的用户名和密码
-                            if (this.checked==true) {
-                              console.log("记住密码")
-                              this.setlocalStorage(this.user, this.password)
-                            } else {
-                                this.clear()
-                            }
+                            // if (this.checked==true) {
+                            //   console.log("记住密码")
+                            //   this.setlocalStorage(this.user, this.password)
+                            // } else {
+                            //     this.clear()
+                            // }
                             
 
                             // this.update({
@@ -346,19 +385,19 @@
                     }
                       // uni.setStorageSync('UserInfo', res.user);
                 },
-                setlocalStorage(c_name, c_pwd) {
-                    localStorage.siteName = c_name
-                    localStorage.sitePassword =  c_pwd
-                },
-                getlocalStorage() {
-                    this.user = localStorage.getItem("siteName");//保存到保存数据的地方
-                    this.password = localStorage.getItem("sitePassword");
-                },
-                    // 清空localStorage里的存储
+                // setlocalStorage(c_name, c_pwd) {
+                //     localStorage.siteName = c_name
+                //     localStorage.sitePassword =  c_pwd
+                // },
+                // getlocalStorage() {
+                //     this.user = localStorage.getItem("siteName");//保存到保存数据的地方
+                //     this.password = localStorage.getItem("sitePassword");
+                // },
+                //     // 清空localStorage里的存储
                 
-                clear() {
-                    this.setlocalStorage('', '')
-                }
+                // clear() {
+                //     this.setlocalStorage('', '')
+                // }
 
                 // toMain() {
                 // 	uni.reLaunch({
@@ -371,6 +410,10 @@
 <style lang="less" scoped>
     // @import "../../styles";
     //@import "~@/assets/iconfont.css";
+/deep/.el-input,/deep/.el-input--prefix{
+    width: 350px;
+    margin-bottom: 35px;
+}
 .el-checkbox{
     width: 350px;
     display: flex;

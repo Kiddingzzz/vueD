@@ -157,7 +157,7 @@
       </div>
     </div>
     <div class="wrap">
-      <a-layout style="padding: 20px 20px 20px 20px">
+      <a-layout style="padding: 24px">
         <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
           <a-table :columns="columns" :dataSource="list">
             <span slot="customTitle">
@@ -296,6 +296,9 @@
       let update = JSON.parse(localStorage.getItem('update'));
       console.log(`aaa`+JSON.stringify(update))
       this.getDashboard();
+
+      let ip = returnCitySN["cip"];
+      console.log('index.vue的ip=================='+ip)
     },
     methods: {
       quyuChange(e){

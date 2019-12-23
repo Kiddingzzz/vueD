@@ -43,7 +43,7 @@
 
                                 {{tag.toUpperCase()}}
                             </a-tag>
-                            <a-modal title="登录账号" v-model="visible" @ok="handleOk()">
+                            <a-modal title="登录账号" v-model="visible" @ok="handleOk()" @cancel="close" cancelText="取消" okText="确定" >
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="siteUserName"
@@ -68,17 +68,17 @@
                             <a-button type="primary" @click="DeleteSite(record.id,record.siteName)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary" @click="lookpwdbotton()">查看密码</a-button>
-                            <a-modal title="查看密码" v-model="lookvisible" @ok="lookpwd(record.id,record.siteName)">
+                            <a-modal title="查看密码" v-model="lookvisible" @ok="lookpwd(record.id,record.siteName)" @cancel="close" cancelText="取消" okText="确定">
                                 <label>为了您的账户安全，请输入您在开单王的登陆密码</label>
-                                <el-input
+                                <a-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="lookpwdput"
                                     placeholder="请输入密码"
                                     class="inputs"
                                     autocomplete="new-lookpwdput"
-                                    ></el-input>
+                                    ></a-input>
                             </a-modal>
-                            <a-modal title="查看密码" v-model="lookpwdvisible" @ok="lookpwdoks()">
+                            <!-- <a-modal title="查看密码" v-model="lookpwdvisible" @ok="lookpwdoks()">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="loolnameok"
@@ -91,7 +91,7 @@
                                     class="inputs"
                                     autocomplete="new-lookpwdok"
                                     ></el-input>
-                            </a-modal>
+                            </a-modal> -->
                         </span>
                     </a-table>
                 </a-tab-pane>
@@ -281,7 +281,9 @@
                     this.$message.success('您已添加账号');
                      this.visible = false;
                }
-               
+               ///关闭添加账号model框时，清空input框数据
+                this.siteUserName = '';
+                this.sitepwd = '';               
             },
             ceshi(tag,hname) {
                 this.siteName=hname;
@@ -323,7 +325,12 @@
             lookpwdbotton(){
                     this.lookvisible=true;
             },
-
+            //关闭添加账号、查看密码model框时，清空input框数据
+            close(){
+                this.lookpwdput = '';
+                this.siteUserName = '';
+                this.sitepwd = '';
+            },
 
             //查看密码
             async lookpwd(pid,lsitename)
@@ -353,6 +360,8 @@
                 {
                     this.$message.success('密码输入错误');
                 }
+                //关闭查看密码model框时，清空input框数据
+                this.lookpwdput = '';
             },
            lookpwdoks(){
                this.lookpwdvisible=false;
