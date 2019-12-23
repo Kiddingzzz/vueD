@@ -786,7 +786,7 @@
 
                             var imgFangxing = {};
                             imgFangxing.url = res.data.imgHeader.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                imgFangxing.uid = '-1',
+                                imgFangxing.uid = '-2',
                                 imgFangxing.name = 'xxx.jpg',
                                 imgFangxing.status = 'done',
                                 this.fangxinlist.push(imgFangxing);

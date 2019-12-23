@@ -34,8 +34,9 @@
                             </a-tag>
                         </span>
                         <span slot="inter" slot-scope="text, record" >
-                           <!-- <img class="interimg" :src="record.inter"/> -->
-                           <a>{{record.inter}}</a>
+                            
+                            <img class="interimg" :src="record.inter">
+                          <!-- <a>{{record.inter}}</a>-->
                         </span>
                         <span slot="tiaojian" slot-scope="text, record">
                             <a-tag v-for="tag in record.tiaojian" @click="ceshi(tag,record.siteName)"

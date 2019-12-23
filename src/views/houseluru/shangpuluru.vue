@@ -712,15 +712,16 @@ export default {
                     houseType: this.houseTypes,
                     weiYiUrl: this.text
                 };
-                 if(RegExp(/anjuke/).exec(params))
-                       // this.ZhuaquUrl=`${this.$config.api}/api/cms/anJuKe/shopUrl`
-                if(RegExp(/cq.58.com/).exec(params))
-                        this.shopurl=`${this.$config.api}/api/cms/shopurl/shopUrl`
-                if(RegExp(/sofang/).exec(params))
-                        console.log("我是搜房网");
-                if(RegExp(/esf.fang./).exec(params))
-                        //this.ZhuaquUrl=`${this.$config.api}/api/cms/fang/fangUrl`
-                await this.$http.post(this.shopurl, data).then(response => {
+                //  if(RegExp(/anjuke/).exec(params))
+                //        // this.ZhuaquUrl=`${this.$config.api}/api/cms/anJuKe/shopUrl`
+                // if(RegExp(/cq.58.com/).exec(params))
+                //         this.shopurl=
+                //         console.log("58")
+                // if(RegExp(/sofang/).exec(params))
+                //         console.log("我是搜房网");
+                // if(RegExp(/esf.fang./).exec(params))
+                //         //this.ZhuaquUrl=`${this.$config.api}/api/cms/fang/fangUrl`
+                await this.$http.post(`${this.$config.api}/api/cms/shopurl/shopUrl`, data).then(response => {
                     this.spinning = true;
                     if (response.status == 200) {
                        this.$http.get(`${this.$config.api}/api/cms/shopurl/url?userid=`+this.userId+'&Housetype='+this.houseTypes+'&WeiYiUrl='+this.text).then(res => {
