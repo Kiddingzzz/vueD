@@ -87,16 +87,17 @@
                 </a-radio-group>
                 <span class="prifilter">
                   <span class="text">
-                    <input type="text" style="width:100px" v-model="ricelowinput" @focus="inputFocus" para="minprice" muti="1" min="0" max="999999" name="b_q" autocomplete="off">
+                    <input type="number" style="width:60px;" v-model="ricelowinput" @focus="inputFocus"/>
                   </span>
                   <span class="dev"> - </span>
                   <span class="text">
-                    <input type="text" style="width:100px" v-model="ricehighinput" @focus="inputFocus" para="minprice" muti="1" min="0" max="999999" name="b_q" autocomplete="off">
+                    <input type="number" style="width:60px;" v-model="ricehighinput" @focus="inputFocus"/>
                   </span>
                   <span class="dev">元</span>
                   <span class="shaixuanbtn none">
                     <a-button type="primary" v-if="inputChange" @click="reset('shaiRice')">价格筛选</a-button>
                   </span>
+                  <span class="errorMsg">{{errorMsg}}</span>
                 </span>
               </dd>
             </dl>
@@ -293,7 +294,8 @@
         ricehighinput: '',
         ricelowinput: '',
         inputChange: false,
-        zujinvalue: '租金不限'
+        zujinvalue: '租金不限',
+        errorMsg:'',
       };
     },
     mounted() {
@@ -371,8 +373,8 @@
               this.ricehigh = ''
             }
             //筛选装修和地区
-                let condition={chaoxiang:this.chaoxiangselect,zhuangxiu:this.zhuangxiuselect,address:this.quyu}
-                this.listt = mohufilter(condition,res.items) 
+            let condition={chaoxiang:this.chaoxiangselect,zhuangxiu:this.zhuangxiuselect,address:this.quyu}
+            this.listt = mohufilter(condition,res.items) 
             //筛选具体朝向
             if(this.chaoxiangselect != ''){
                 let chaoxiangcondition={chaoxiang:this.chaoxiangselect}
@@ -412,14 +414,45 @@
           }
       },
       reset(data){
-          if(data == '0-500' || data == '500-1000' || data == '1000-1500'|| data == '1500-2000'|| data == '2000-3000'|| data == '3000-4500'|| data == '4500-more'){
-            this.ricehighinput = ''
-            this.ricelowinput = ''
+          if(data == '租金不限' || data == '0-500' || data == '500-1000' || data == '1000-1500' ||
+           data == '1500-2000' || data == '2000-3000' || data == '3000-4500'  || data == '4500-more'){
+             this.errorMsg = ''
+             this.ricehighinput = '' 
+             this.ricelowinput = ''
+             this.inputChange = false 
+             this.getDashboard(data)
+          }else if(data == 'shaiRice'){
+              console.log('ff最高'+this.ricehighinput)
+              console.log('ff最低'+this.ricelowinput)
+              this.zujinvalue = '租金不限'
+              if(this.ricehighinput == '' || this.ricelowinput == ''){
+                console.log('最低'+this.ricelowinput)
+                  this.errorMsg = '价格不能为空'
+              }else if(this.ricehighinput != '' && this.ricelowinput != ''){
+                  // if(parseFloat(this.ricelowinput)<0){
+                  //   this.ricelowinput = 0
+                  // }
+                  // if(parseFloat(this.ricelowinput)>9999999){
+                  //   this.ricelowinput = 9999999
+                  // }
+                  // if(parseFloat(this.ricehighinput)<0){
+                  //   this.ricehighinput = 0
+                  // } 
+                  // if(parseFloat(this.ricehighinput)>9999999){
+                  //   this.ricehighinput = 9999999
+                  // }
+                  if(parseFloat(this.ricelowinput) > parseFloat(this.ricehighinput)){
+                    this.errorMsg = '最高价格不能低于最低价格'
+                  }else{
+                    this.errorMsg = ''
+                    this.getDashboard(data)
+                  }              
+              } 
+          }else{
+              this.errorMsg = ''
+              this.inputChange = false 
+              this.getDashboard(data)
           }
-          if(this.ricehighinput != '' & this.ricelowinput != ''){
-            this.zujinvalue = '租金不限'
-          }
-          this.getDashboard(data)
       },
       
     },
@@ -428,6 +461,9 @@
 <style lang="less" scoped>
  /deep/ .ant-table-thead > tr > th, /deep/.ant-table-tbody > tr > td {
       padding: 16px 10px !important;
+  }
+  .errorMsg{
+    color: red;
   }
   .ant-radio-button-wrapper{
       border: 0px !important;

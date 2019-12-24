@@ -60,16 +60,16 @@
             </div>
             <!-- tab标签页 -->
             <div class="tabcontent" v-if="current==0">
-                <a-tabs type="card" v-model="activeKey">
+                <a-tabs type="card" v-model="activeKey" @change="callback">
                     <a-tab-pane tab="住宅" :key="1">
                         <vtable @getData="getMag"></vtable>
                     </a-tab-pane>
                     <a-tab-pane tab="商铺" :key="2">
                         <saleshangpu @getData="getMag"></saleshangpu>
                     </a-tab-pane>
-                    <a-tab-pane tab="写字楼" :key="3">
+                    <!-- <a-tab-pane tab="写字楼" :key="3">
                         <vtable></vtable>
-                    </a-tab-pane>
+                    </a-tab-pane> -->
                 </a-tabs>
             </div>
 
@@ -112,13 +112,21 @@
             susstable,
             saleshangpu
         },
-        mounted(){
-            //接收商铺出售录入保存成功
-            if(this.$route.query.activeKey != undefined){
-                this.activeKey = this.$route.query.activeKey
+        watch:{   //监听路由变化
+            $route( to , from ){   
+           //  console.log( to , from )
+            if(to.path == '/salerelease'&& from.path == '/shangpuluru'){
+                this.activeKey = 2
+            }
+                // to , from 分别表示从哪跳转到哪，都是一个对象
+                // to.path  ( 表示的是要跳转到的路由的地址 eg: /home );
             }
         },
         methods: {
+            callback(key) {
+               // console.log('点击tab改变'+key);
+                this.activeKey = key
+            },
             adduser() {
                 this.$router.replace('/zhandian')
             },

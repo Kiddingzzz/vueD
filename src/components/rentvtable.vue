@@ -177,7 +177,7 @@
         },
         mounted() {
             console.log(123)
-            this.seachShow();
+            // this.seachShow();
         },
         methods: {
             onSelectChange(selectedRowKeys) {
@@ -185,67 +185,67 @@
                 this.selectedRowKeys = selectedRowKeys;
             },
 
-            //删除
-            async  onDelete(id) {
-                try {
-                    //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
-                    let update = JSON.parse(localStorage.getItem('update'));
-                    await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId).then(Response => {
-                        if (Response.status == 200) {
-                            const datas = [...this.data];
-                            this.datas = datas.filter(item => item.key !== key)
-                            this.$message.success('删除成功！！！');
+            // //删除
+            // async  onDelete(id) {
+            //     try {
+            //         //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+            //         let update = JSON.parse(localStorage.getItem('update'));
+            //         await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId).then(Response => {
+            //             if (Response.status == 200) {
+            //                 const datas = [...this.data];
+            //                 this.datas = datas.filter(item => item.key !== key)
+            //                 this.$message.success('删除成功！！！');
 
-                        }
-                    })
-                }
-                catch (e) {
-                    this.$message.warning('系统繁忙，请稍后再试！！！');
-                }
+            //             }
+            //         })
+            //     }
+            //     catch (e) {
+            //         this.$message.warning('系统繁忙，请稍后再试！！！');
+            //     }
 
-            },
-            //传房源对象并判断此账号是否已有添加网站
-            async  onfabu(house) {
-                try {
-                    //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
-                    let update = JSON.parse(localStorage.getItem('update'));
-                    await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId).then(Response => {
-                        if (Response.status == 200) {
-                            if (Response.items.length != 0) {
-                                console.log("respones.house:" + JSON.stringify(house))
-                                this.$emit("getData", house);
-                            }
-                            else {
-                                let that = this;
-                                const h = that.$createElement;
-                                that.$info({
-                                    title: '提示', okText: '去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'),]),
-                                    onOk() {
-                                        that.$router.replace('/zhandian')
-                                    },
-                                });
-                            }
+            // },
+            // //传房源对象并判断此账号是否已有添加网站
+            // async  onfabu(house) {
+            //     try {
+            //         //await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId).then(Response=>{
+            //         let update = JSON.parse(localStorage.getItem('update'));
+            //         await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId).then(Response => {
+            //             if (Response.status == 200) {
+            //                 if (Response.items.length != 0) {
+            //                     console.log("respones.house:" + JSON.stringify(house))
+            //                     this.$emit("getData", house);
+            //                 }
+            //                 else {
+            //                     let that = this;
+            //                     const h = that.$createElement;
+            //                     that.$info({
+            //                         title: '提示', okText: '去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'),]),
+            //                         onOk() {
+            //                             that.$router.replace('/zhandian')
+            //                         },
+            //                     });
+            //                 }
 
-                        }
-                    })
-                }
-                catch (e) {
-                    this.$message.warning('系统遇到了点问题，请重试');
-                }
-            },
-            //
-            async seachShow() {
-                //const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
-                let update = JSON.parse(localStorage.getItem('update'));
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId);
-                if (respones.status == 200) {
-                    console.log("respones.status:" + JSON.stringify(respones))
-                    this.list = respones.data.items;
-                }
-            },
-            confirm(id) {
-                this.onDelete(id)
-            }
+            //             }
+            //         })
+            //     }
+            //     catch (e) {
+            //         this.$message.warning('系统遇到了点问题，请重试');
+            //     }
+            // },
+            // //
+            // async seachShow() {
+            //     //const respones = await this.$http.get(`${this.$config.api}/api/cms/pubulish/publishList/`+this.$store.userId);
+            //     let update = JSON.parse(localStorage.getItem('update'));
+            //     const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId);
+            //     if (respones.status == 200) {
+            //         console.log("respones.status:" + JSON.stringify(respones))
+            //         this.list = respones.data.items;
+            //     }
+            // },
+            // confirm(id) {
+            //     this.onDelete(id)
+            // }
         },
 
     }

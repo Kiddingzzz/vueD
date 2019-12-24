@@ -141,7 +141,7 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
                             <a-input type="number" id="" v-model="ref.rice" placeholder="" class="lurumianji" />
-                            <label class="lurusmianij">万</label>
+                            <label class="lurusmianij">元/月</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
                             validate-status="" >
@@ -162,7 +162,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncf" :defaultValue="cfvalue" v-model="kanfang" />
+                            <a-radio-group :options="plainOptioncf" :defaultValue="cfvalue" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status="">
@@ -228,7 +228,7 @@
                                 <a-checkbox >其它</a-checkbox>
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="物业费:" validate-status="">
-                                <a-input id="" placeholder="" class="luruwuyemoney" />元/平米·月
+                                <a-input id="" placeholder="0" class="luruwuyemoney" />元/平米·月
                                 <label class="luruneibula">注：若没有物业费时，为0。</label>
                             </a-form-item>
                             <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="电费:" validate-status="">

@@ -112,16 +112,16 @@ export default {
     },
     updated () {
         let update = JSON.parse(localStorage.getItem('update'));
-        console.log("登录到首页=========="+JSON.stringify(update));
-        console.log("登录成功名字=============="+update.userName);
+        // console.log("登录到首页=========="+JSON.stringify(update));
+        // console.log("登录成功名字=============="+update.userName);
         this.userName = "欢迎您，"+update.userName;
         this.nat = false;
 　　},
     computed:{
       _user(){
         let update = JSON.parse(localStorage.getItem('update'));
-        console.log("登录到首页=========="+JSON.stringify(update));
-        console.log("登录成功名字=============="+update.userName);
+        // console.log("登录到首页=========="+JSON.stringify(update));
+        // console.log("登录成功名字=============="+update.userName);
         this.nat = true;
         return update.hasLogin != false ? "欢迎您，"+update.userName : "请登录";
       },
