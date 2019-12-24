@@ -2,7 +2,7 @@
     <div style="width:100%" @click="$emit('click',value)">
         <a-table :columns="columnss" :dataSource="datas">
             <span slot="inter" slot-scope="res,record">
-                <img class="wangyeimg" :src="record.inter">
+                <img  class="wangyeimg" :src="record.inter">
             </span>
             <span slot="acctionkey" slot-scope="acctionkey, record">
                 <a-checkbox></a-checkbox>
@@ -37,7 +37,7 @@
                 </a-select>
             </span>
             <span slot="tuiaction" slot-scope="text, record">
-                <a-select default-value="58同城" v-model="wangvalue"  class="seleshangjia">
+                <a-select default-value="58同城"  v-model="wangvalue" @click="aa(1)"  class="seleshangjia">
                     <a-select-option value="58同城">
                        58同城
                     </a-select-option>
@@ -127,7 +127,7 @@
                 xiaoquImgList: [],
                 huxingImgList: [],
                 bid: 'a',
-                wangvalue:'',
+                wangvalue:'房天下',
                 shopshineiList:[],
             };
         },
@@ -139,41 +139,46 @@
         },
         mounted() {
             this.def = this.value;
-            console.log("商铺风格士大夫哈哈哈哈哈哈哈哈哈哈："+this.def.houseType)
-            console.log("商铺风格士大夫哈哈哈哈哈哈哈哈哈哈："+this.def.shopquyu)
-            console.log("商铺风格士大夫哈哈哈哈哈哈哈哈哈哈："+this.def.shopsimpleRice)
         },
         methods: {
-
-            callback(key) {
-                console.log(key);
+            aa(e){
+                  console.log('dgsdfgsdfhgsdfhsfdhsfgh'+e)
             },
-            
             async shopfabuok(e){
-                console.log(`fgsdfsdfg:`+this.wangvalue)
                  let update = JSON.parse(localStorage.getItem('update'));
-                console.log("respones.house222:" + update.userId)
                 try {
                     // await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId+'&sitename='+this.wangvalue).then(Response => {
                         console.log("respones.house2222:" + JSON.stringify(Response))
                         if (Response.status == 200) {
                             if (Response.data == "yes") {
-                                if(this.def.houseType === '商铺'){
+                               if(this.wangvalue=="房天下")
+                               {
+                                    if(this.def.houseType === '商铺'){
                                     this.fabuShangpu()
-                                }
-                                if(this.def.houseType === '二手房'){
-                                    this.fabuok()
-                                }
+                                    }
+                                    if(this.def.houseType === '二手房'){
+                                        this.fabuok()
+                                    }
+                               }
+                               if(this.wangvalue=="58同城")
+                               {
+                                    if(this.def.houseType === '商铺'){
+                                    
+                                    }
+                                    if(this.def.houseType === '二手房'){
+                                        
+                                    }
+                               }
                             }
                             else {
                                 let that = this;
                                 const h = that.$createElement;
                                 that.$info({
                                     title: '提示', okText: '去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'),]),
-                                    // onOk() {
-                                    //     that.$router.replace('/zhandian')
-                                    // },
+                                    onOk() {
+                                        that.$router.replace('/zhandian')
+                                    },
                                 });
                             }
 
