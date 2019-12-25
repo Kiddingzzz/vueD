@@ -3,10 +3,11 @@
         <a-layout>
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
+                    
                     <span slot="operation" slot-scope="text, record">
-                        <p title="确定删除么？" @confirm="sconfirm(record.id)" okText="确认" cancelText="取消">
+                        <a-popconfirm title="确定删除?" @confirm="sconfirm(record.id)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
-                        </p>
+                        </a-popconfirm>
                         <a href="javascript:;" @click="shoponfabu(record)">未发布</a>
                     </span>
                     <span slot="customTitles">
@@ -44,7 +45,7 @@
             title: '价格',
             dataIndex: 'shopRice',
             key: 'shopRice',
-            width: '6%'
+            width: '5%'
         },
         {
             title: '面积',
@@ -68,7 +69,7 @@
             title: '地址',
             dataIndex: 'shopAdress',
             key: 'shopAdress',
-            width: '8.7%'
+            width: '9%'
         },
         {
             title: '经营状态',
@@ -80,13 +81,13 @@
             title: '预期收入',
             dataIndex: 'yuqiShouyi',
             key: 'yuqiShouyi',
-            width: '8%'
+            width: '7%'
         },
         {
             title: '相关费用',
             dataIndex: 'xiangguanFy',
             key: 'xiangguanFy',
-            width: '7.3%'
+            width: '7.8%'
         },
         {
             title: '状态',
@@ -111,7 +112,7 @@
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
             key: 'donation',
-            width: '11%'
+            width: '12%'
 
         },
     ];
@@ -206,31 +207,31 @@
             },
              async shoponfabu(record) {
               // console.log("respones.house222:"+this.$store.userId)
-              let update = JSON.parse(localStorage.getItem('update'));
-                  try{
-                      // await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
-                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+update.userId).then(Response=>{
-                       if(Response.status==200)
-                       {
-                            if(Response.data=="yes"){
+            //   let update = JSON.parse(localStorage.getItem('update'));
+            //       try{
+            //           // await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
+            //          await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+update.userId).then(Response=>{
+            //            if(Response.status==200)
+            //            {
+            //                 if(Response.data=="yes"){
                               this.$emit("getData",record);
-                            }
-                            else{
-                                let that = this;
-                                const h = that.$createElement;
-                                that.$info({ title: '提示', okText:'去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'), ]),
-                                onOk() {
-                                    that.$router.replace('/zhandian')
-                                },
-                                }); 
-                            }
+                //             }
+                //             else{
+                //                 let that = this;
+                //                 const h = that.$createElement;
+                //                 that.$info({ title: '提示', okText:'去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'), ]),
+                //                 onOk() {
+                //                     that.$router.replace('/zhandian')
+                //                 },
+                //                 }); 
+                //             }
                           
-                       }   
-                   })
-                }
-                catch(e){    
-                    this.$message.warning('系统遇到了点问题，请重试');         
-                }
+                //        }   
+                //    })
+                // }
+                // catch(e){    
+                //     this.$message.warning('系统遇到了点问题，请重试');         
+                // }
             },
             
             async ShopseachShow() {

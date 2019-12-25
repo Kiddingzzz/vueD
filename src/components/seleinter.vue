@@ -2,7 +2,7 @@
     <div style="width:100%" @click="$emit('click',value)">
         <a-table :columns="columnss" :dataSource="datas">
             <span slot="inter" slot-scope="res,record">
-                <img  class="wangyeimg" :src="record.inter">
+                <img  class="wangyeimg" :src="record.inter[hsd]">
             </span>
             <span slot="acctionkey" slot-scope="acctionkey, record">
                 <a-checkbox></a-checkbox>
@@ -37,7 +37,7 @@
                 </a-select>
             </span>
             <span slot="tuiaction" slot-scope="text, record">
-                <a-select default-value="58同城"  v-model="wangvalue" @click="aa(1)"  class="seleshangjia">
+                <a-select default-value="58同城"  v-model="wangvalue" @change="changeimg(wangvalue)"  class="seleshangjia">
                     <a-select-option value="58同城">
                        58同城
                     </a-select-option>
@@ -106,11 +106,13 @@
     const datas = [
         {
             key: '1',
-            inter: '/static/img/logoJXW.2d85d52.png',
+            // inter: '/static/img/logoJXW.2d85d52.png',
+            inter: ['https://img.58cdn.com.cn/logo/58/252_84/logo-o.png?v=2','https://static.soufunimg.com/navigation/images/navlogo.gif' ],
             acctionkey: ['15624687', '可用'],
             leibie: ['第一个', '第二个'],
 
         }
+        
 
     ];
 
@@ -127,8 +129,10 @@
                 xiaoquImgList: [],
                 huxingImgList: [],
                 bid: 'a',
+                hsd:1,
                 wangvalue:'房天下',
                 shopshineiList:[],
+                // inter: require("../../assets/logo/58logo.png"),
             };
         },
         props: {
@@ -139,10 +143,20 @@
         },
         mounted() {
             this.def = this.value;
+            console.log(this.value)
         },
         methods: {
-            aa(e){
-                  console.log('dgsdfgsdfhgsdfhsfdhsfgh'+e)
+            changeimg(e)
+            {
+                   console.log("选中："+e)
+                    switch(e){
+                    case "58同城":this.hsd=0
+                    break;
+                    case "房天下":this.hsd=1
+                    break;
+                    
+                    }
+
             },
             async shopfabuok(e){
                  let update = JSON.parse(localStorage.getItem('update'));
@@ -164,7 +178,7 @@
                                if(this.wangvalue=="58同城")
                                {
                                     if(this.def.houseType === '商铺'){
-                                    
+                                       this.TwoHouseWuba()
                                     }
                                     if(this.def.houseType === '二手房'){
                                         
@@ -193,7 +207,7 @@
                
             },
             
-            ///二手房发布
+            ///房天下二手房发布
             async fabuok(e) {
                 this.spinning = true;
                 this.pdef = this.value;
@@ -337,7 +351,7 @@
                 })
             },
             
-            ///商铺发布
+            ///房天下商铺发布
             async fabuShangpu(){
                  this.spinning = true;
                 this.pdef = this.value;
@@ -467,7 +481,69 @@
                     }
                 })
             },
-
+            
+            ///三网合一发布房源
+            async TwoHouseWuba()
+              {
+                 this.spinning = true;
+                 this.pdef = this.value;
+                 let shis=this.pdef.huxing
+                 shis=shis.split('室')[0]
+                 shis=parseInt(shi);
+                 var leixing=this.pdef.fangwuChanquan
+                 if(RegExp(/商品/).exec(leixing))
+                 {
+                    leixing="商品房住宅"
+                 }
+                 if(leixing=="")
+                 {
+                      leixing="商品房住宅"
+                 }
+                 var jianzao=this.pdef.fangwuDate
+                 if(jianzao!="")
+                 {
+                     jianzao=jianzao.split('年')[0]
+                 }
+                 if(jianzao=="")
+                 {
+                     jianzao=null
+                 }
+                 var xingzhi =this.pdef.fangyuanBiaoqian
+                 if(RegExp(/满二/).exec(xingzhi))
+                 {
+                    xingzhi="满二"
+                 }
+                  if(RegExp(/满五/).exec(xingzhi))
+                 {
+                    xingzhi="满五"
+                 }
+                 const list={
+                     xiaoquanme:this.pdef.xiaoquName,
+                     mianji:parseFloat(this.pdef.square),
+                     taomianji:parseFloat(this.pdef.square)-1,
+                     fangwuLeixing:this.pdef.fangwuLeibie,
+                     zhuangxiu:thjis.pdef.zhuangxiu,
+                     chaoxiang:this.pdef.chaoxiang,
+                     dijilou:parseInt(this.pdef.louceng.split('/')[0]),
+                     gonglou:parseInt(this.pdef.louceng.split('/')[1]),
+                     chanquan:parseInt(this.pdef.chanquanNianxian),
+                     chanquanleixing:leixing,
+                     jianzaoniandai:jianzao,
+                     dianti:null,
+                     housetype:'二手房',                                     
+                     housexingzhi:xingzhi,
+                     weiyizhufang:this.pdef.weiyizhufang,
+                     jiage:parseFloat(this.pdef.rice),
+                     shoufu:null,
+                     yongjin:null,
+                     title:this.pdef.title,
+                     housejieshao:this.pdef.note,
+                     yehzuxintai:this.pdef.atittude,
+                     fuwujiwshao:this.pdef.fuwuCondition,
+                     
+                     
+                 }
+              },
             //aaa
             openNotificationWithIcon(type) {
                 if (type == 'success') {

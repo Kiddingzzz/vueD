@@ -4,9 +4,10 @@
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record">
-                        <p title="确定删除么？" @confirm="confirm(record.id)" okText="确认" cancelText="取消">
+                       
+                        <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
-                        </p>
+                        </a-popconfirm>
                         <a href="javascript:;" @click="onfabu(record)">未发布</a>
                     </span>
                     <span slot="customTitles">
@@ -32,7 +33,7 @@
             key: 'biaoti',
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
-            width: '13%'
+            width: '12.5%'
         },
         // {
         //     title: '首页图',
@@ -186,7 +187,7 @@
 
             //删除
             async onDelete(id) {
-                console.log(id)
+                console.log("asdgsdfgsdrfgsdfsdfhsfdhsfthsfdtgsh")
                 try {
                     await this.$http.post(`${this.$config.api}/api/cms/house/` + id + `/publishDelete`).then(Response => {
                         if (Response.status == 200) {
@@ -194,7 +195,7 @@
                             // const datas = [...this.data];
                             // this.datas = datas.filter(item => item.key !== key)
                             this.$message.success('删除成功！！！');
-
+                            this.seachShow();
                         }
                     })
                 }
