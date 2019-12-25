@@ -39,6 +39,7 @@
                                 v-model="user"
                                 :fetch-suggestions="querySearch"
                                 placeholder="请输入姓名"
+                                value-key="address"
                                 :trigger-on-focus="false"
                                 @select="handleSelect"
                                 @keyup.enter.native="doLogin()"
@@ -96,8 +97,14 @@
                 openId: '',
                 access_token: '',
                 refresh_token: '',
+                ip: '',
+                remember: '',
                 //用户名下拉框
-                restaurants: [],
+                restaurants: [
+                    { "value": "1233", "address": "长宁区新渔路144号", "remember": true },
+                    { "value": "zaqwe", "address": "上海市长宁区淞虹路661号", "remember": false },
+                    { "value": "ffff123", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113", "remember": true  },
+                ],
             };
         },
         computed: {
@@ -108,10 +115,10 @@
             }
         },
         mounted() {
-            let ip = returnCitySN["cip"];
-            console.log('登录页面的ip=================='+ip)
+            this.ip = returnCitySN["cip"];
+            console.log('登录页面的ip=================='+this.ip)
             //用户名下拉框
-            this.restaurants = this.loadAll();
+            // this.restaurants = this.loadAll();
             // 如果存在赋值给表单，并且将记住密码勾选
             // if(localStorage.getItem("siteName") != ''){
             //     this.getlocalStorage()
@@ -206,15 +213,20 @@
                 return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
                 };
             },
-            loadAll() {
-                return [
-                    { "value": "1233", "address": "长宁区新渔路144号" },
-                    { "value": "zaqwe", "address": "上海市长宁区淞虹路661号" },
-                    { "value": "ffff123", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
-                ];
-            },
+            // loadAll() {
+            //     return [
+            //         { "value": "1233", "address": "长宁区新渔路144号" },
+            //         { "value": "zaqwe", "address": "上海市长宁区淞虹路661号" },
+            //         { "value": "ffff123", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
+            //     ];
+            // },
             handleSelect(item) {
-                console.log(item);
+                console.log('dayi'+JSON.stringify(item));
+                this.password = item.value
+                if(item.remember == true){
+                    this.checked = true
+                }
+                console.log('成功')
             },
             ...mapMutations(['login', 'update']),
             onChange(e) {
@@ -330,16 +342,23 @@
                 //  });
 
 
-
+                if(this.checked == true){
+                    this.remember = '是'
+                }else{
+                    this.remember = ''
+                }
                 const datas = {
                     userNameOrEmailAddress: this.user,
-                    password: this.password
+                    password: this.password,
+                    computerIp: this.ip,
+                    rememberPwd: this.remember,
                 };
                 const statu = `${this.$config.api}/api/cms/acount/loginAuthentic`;
                 try {
                     await this.$http.post(statu, datas).then(Response => {
                         let that = this;
                         console.log(JSON.stringify(Response))
+                        console.log(Response.config.data)
                         if (Response.status == 200) {
                             // window.location.reload();
                             //this.$store.login(Response.data.userNameOrEmailAddress)
