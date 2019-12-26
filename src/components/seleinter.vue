@@ -492,7 +492,7 @@
             ///三网合一发布房源
             async TwoHouseWuba()
               {
-                  console.log("1111")
+                 
                  this.spinning = true;
                  this.pdef = this.value;
                  let shis=this.pdef.huxing.split('室')[0]
@@ -524,7 +524,7 @@
                  {
                     xingzhi="满五"
                  }
-                 console.log("22222")
+                
                  const list={
                      xiaoquanme:this.pdef.xiaoquName,
                      mianji:parseFloat(this.pdef.square),

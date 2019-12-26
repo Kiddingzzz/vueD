@@ -209,7 +209,7 @@
              async BackUserPwd()
             {
               console.log("ip地址："+this.ip)
-                await this.$http.get(`${this.$config.api}/api/cms/acount/backUserPwdAdressIp=`+this.ip).then(Response=>{
+                await this.$http.get(`${this.$config.api}/api/cms/acount/backUserPwd?AdressIp=`+this.ip).then(Response=>{
                     if(Response.status == 200)
                     {
                         console.log("返回缓存"+JSON.stringify(Response))

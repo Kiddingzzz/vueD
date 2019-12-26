@@ -76,7 +76,7 @@
             title: '权限',
             dataIndex: 'name',
             key: 'name',
-             width: '17%',
+             width: '19%',
             scopedSlots: { customRender: 'name' },
         },
         {
@@ -90,7 +90,7 @@
             title: '条件',
             key: 'tiaojian',
             dataIndex: 'tiaojian',
-            width: '17%',
+            width: '19%',
             scopedSlots: { customRender: 'tiaojian' },
         },
         {
@@ -105,7 +105,7 @@
             key: 'action',
              dataIndex: 'action',
             scopedSlots: { customRender: 'action' },
-            width:'32%'
+            width:'28%'
         }
   ];
   export default {
@@ -156,7 +156,6 @@
      // const KeyHex =cryptoJs.enc.utf8.parse(ddd);
       const userName1 = this.encryptDes('gracemae', '058523bb')
        const pwd1 = this.encryptDes('jiayu6248', '058523bb')
-
       this.GetOpenSiteList();
    },
     methods: {
@@ -166,12 +165,17 @@
                let update = JSON.parse(localStorage.getItem('update'));
                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+update.userId)
                 this.siteitem = query.data.items;
-                this.siteitem[0].name = ['允许发布', '允许推送'];
-                this.siteitem[0].tiaojian = ['添加账号', '去注册'];
-                this.siteitem[0].key = '1';
-                this.siteitem[1].name = ['允许发布', '允许推送'];
-                this.siteitem[1].tiaojian = ['添加账号', '去注册'];
-                this.siteitem[1].key = '2';
+                for(var i=0;i<this.siteitem.length;i++){
+                     this.siteitem[i].name = ['允许发布', '允许推送']
+                     this.siteitem[i].key = ''+(i+1)+'';
+                     this.siteitem[i].tiaojian = ['添加账号', '去注册']
+                }
+                // ;
+                // this.siteitem[0].tiaojian = ['添加账号', '去注册'];
+                // 
+                // this.siteitem[1].name = ['允许发布', '允许推送'];
+                //;
+                // this.siteitem[1].key = '2';
 
             },
             ///房天下

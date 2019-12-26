@@ -118,7 +118,7 @@
             title: '权限',
             dataIndex: 'name',
             key: 'name',
-             width: '17%',
+             width: '18%',
             scopedSlots: { customRender: 'name' },
         },
         {
@@ -132,7 +132,7 @@
             title: '条件',
             key: 'tiaojian',
             dataIndex: 'tiaojian',
-            width: '17%',
+            width: '18%',
             scopedSlots: { customRender: 'tiaojian' },
         },
         {
@@ -147,7 +147,7 @@
             key: 'action',
             dataIndex: 'action',
             scopedSlots: { customRender: 'action' },
-            width:'32%'
+            width:'30%'
         }
     ];
 
@@ -242,14 +242,19 @@
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+this.$store.userId)
                 let update = JSON.parse(localStorage.getItem('update'));
                 var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+update.userId)
-                 console.log(query.data.items);
-                this.item = query.data.items;
-                this.item[0].name = ['允许发布', '允许推送'];
-                this.item[0].tiaojian = ['添加账号', '去注册'];
-                this.item[0].key = '1';
-                this.item[1].name = ['允许发布', '允许推送'];
-                this.item[1].tiaojian = ['添加账号', '去注册'];
-                this.item[1].key = '2';
+                 this.item = query.data.items
+                 for(var i=0;i<this.item.length;i++){
+                     this.item[i].name = ['允许发布', '允许推送']
+                     this.item[i].key = ''+(i+1)+'';
+                     this.item[i].tiaojian = ['添加账号', '去注册']
+                }
+                // this.item = query.data.items;
+                // this.item[0].name = ['允许发布', '允许推送'];
+                // this.item[0].tiaojian = ['添加账号', '去注册'];
+                // this.item[0].key = '1';
+                // this.item[1].name = ['允许发布', '允许推送'];
+                // this.item[1].tiaojian = ['添加账号', '去注册'];
+                // this.item[1].key = '2';
 
             },
             ///房天下

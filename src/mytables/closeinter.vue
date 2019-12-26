@@ -9,10 +9,10 @@
                             </a-tag>
                         </span>
                         <span slot="inter" slot-scope="text, record" >
-                           <img class="closeinterimg"" :src="record.inter"/>
+                           <img class="closeinterimg" :src="record.inter"/>
                         </span>
-                        <span slot="tiaojian" slot-scope="tiaojian">
-                            <a-tag v-for="tag in tiaojian" @click="openceshi(tag)"
+                        <span slot="tiaojian" slot-scope="text, record">
+                            <a-tag v-for="tag in record.tiaojian" @click="openceshi(tag,record.siteName)"
                                 :color="tag==='loser' ? 'volcano' : (tag.length > 3? 'geekblue' : 'green')" :key="tag">
 
                                 {{tag.toUpperCase()}}
@@ -56,9 +56,8 @@
                                 <a>{{record.userName}}</a>
                         </span>
                         <span slot="action" slot-scope="text, record" >
-                            <a-button type="primary" @click="DeleteSite(record.id)">删除</a-button>
-                            <a-button type="primary">修改密码</a-button>
-                            <a-button type="primary">查看密码</a-button>
+                            <a>暂无操作</a>
+                           
                         </span>
                     </a-table>   
      </div>
@@ -69,27 +68,27 @@
             title: '权限',
             dataIndex: 'name',
             key: 'name',
-             width: '17%',
+             width: '22%',
             scopedSlots: { customRender: 'name' },
         },
         {
             title: '网页',
             dataIndex: 'inter',
             key: 'inter',
-             width: '17%',
+             width: '23%',
             scopedSlots: { customRender: 'inter' },
         },
         {
             title: '条件',
             key: 'tiaojian',
             dataIndex: 'tiaojian',
-            width: '17%',
+            width: '23%',
             scopedSlots: { customRender: 'tiaojian' },
         },
         {
             title: '账号情况',
             dataIndex: 'userName',
-            width: '17%',
+            width: '22%',
             key: 'userName',
             scopedSlots: { customRender: 'userName' },
         },
@@ -97,7 +96,7 @@
             title: '操作',
             key: 'action',
             scopedSlots: { customRender: 'action' },
-            width:'32%'
+            width:'10%'
         }
   ];
   export default {
@@ -129,6 +128,7 @@
           closevisible: false,
           closeaddress: '',
           closesiteitem:[],
+          intername:'',
        
       };
     },
@@ -149,14 +149,19 @@
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
                 let update = JSON.parse(localStorage.getItem('update'));
                 var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+update.userId)
-                console.log("fasdfasdfa:"+JSON.stringify(query.data.items))
+                
                 this.closesiteitem = query.data.items; 
-                this.closesiteitem[0].name = ['允许发布', '允许推送'];
-                this.closesiteitem[0].tiaojian = ['添加账号', '去注册'];
-                this.closesiteitem[0].key = '1';
-                this.closesiteitem[1].name = ['允许发布', '允许推送'];
-                this.closesiteitem[1].tiaojian = ['添加账号', '去注册'];
-                this.closesiteitem[1].key = '2';
+                for(var i=0;i<this.closesiteitem.length;i++){
+                     this.closesiteitem[i].name = ['允许发布', '允许推送']
+                     this.closesiteitem[i].key = ''+(i+1)+'';
+                     this.closesiteitem[i].tiaojian = ['添加账号', '去注册']
+                }
+                // this.closesiteitem[0].name = ['允许发布', '允许推送'];
+                // this.closesiteitem[0].tiaojian = ['添加账号', '去注册'];
+                // this.closesiteitem[0].key = '1';
+                // this.closesiteitem[1].name = ['允许发布', '允许推送'];
+                // this.closesiteitem[1].tiaojian = ['添加账号', '去注册'];
+                // this.closesiteitem[1].key = '2';
             },
             ///58tongcheng
             async closehandle58(e) {
@@ -185,14 +190,15 @@
                     sitePassword: this.closesitepwd,
                     userName: this.closesiteUserName,
                     opentoken:'aaa',
-                    biaoshi:'房天下'
+                    biaoshi: this.intername,
                 }
                 
                 var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);
                 this.GetCloseSiteList();
                 this.closevisible = false;
             },
-            openceshi(tag) {
+            openceshi(tag,name) {
+                this.intername=name;
                 if(tag == '添加账号'){
                     this.closevisible = true;            
                 }
