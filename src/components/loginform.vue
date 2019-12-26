@@ -64,10 +64,9 @@
                     <div class="tip2">开单网</div>
                     <div class="pwd" v-if="account == 'username'">
                         <div @click="openMask" class="reg">注册</div>
-                        <div class="forget" @click="openForget">忘记密码</div>
+                        <div class="forget">忘记密码</div>
                     </div>
                 </div>
-                <forget v-model="forgetMod" type="danger" title="找回密码"></forget>
             </div>
         </div>
     </div>
@@ -75,13 +74,11 @@
 <script>
     import { mapState, mapMutations } from 'vuex';
     import dialogRegister from "./dialog-register.vue";
-    import forget from "./forget.vue";
     import md5 from 'js-md5';
 
     export default {
         components: {
             dialogRegister,
-            forget,
         },
         data() {
             return {
@@ -93,7 +90,6 @@
                 imgType: "",
                 account: "qcode",
                 sendVal: false,
-                forgetMod: false,
                 user: "",
                 password: "",
                 TokenRES: {},
@@ -121,8 +117,13 @@
         mounted() {
             this.ip = returnCitySN["cip"];
             console.log('登录页面的ip=================='+this.ip)
-            //后台返回用户名、密码、remember
-            this.BackUserPwd(this.ip)
+            //用户名下拉框
+            // this.restaurants = this.loadAll();
+            // 如果存在赋值给表单，并且将记住密码勾选
+            // if(localStorage.getItem("siteName") != ''){
+            //     this.getlocalStorage()
+            //     this.checked = true
+	        // }
             //获取58令牌
             // const WuBaApi = 'https://openapi.58.com/v2/auth/show?app_key=e36309f80bd9030c879d69ba4155a74b&redirect_uri=http://972133.vip'
 
@@ -204,13 +205,19 @@
             }
         },
         methods: {
-                console.log(e.target.checked);
-                this.password = password;
-                this.qqvisible = false;
-            openMask(index) {
-                this.sendVal = true;
-            openForget(){
-                this.forgetMod = true;
+            ///获取已登录用户及密码
+             async BackUserPwd()
+            {
+              console.log("ip地址："+this.ip)
+                await this.$http.get(`${this.$config.api}/api/cms/acount/backUserPwdAdressIp=`+this.ip).then(Response=>{
+                    if(Response.status == 200)
+                    {
+                        console.log("返回缓存"+JSON.stringify(Response))
+                        console.log(Response.data.items)
+                        this.restaurants = JSON.stringify(Response.data.items)
+                        // localStorage.setItem("BackUserPwd",this.restaurants)
+                    }
+                })
             },
             //用户名下拉框
             querySearch(queryString, cb) {
@@ -233,21 +240,29 @@
             // },
             handleSelect(item) {
                 console.log('dayi'+JSON.stringify(item));
-                this.password = item.password
-                if(item.remember == '是'){
+                this.password = item.value
+                if(item.remember == true){
                     this.checked = true
                 }
                 console.log('成功')
             },
-            // 获取已登录用户及密码
-            async BackUserPwd(ipAdress) {
-                await this.$http.get(`${this.$config.api}/api/cms/acount/backUserPwd?ipAdress=` +ipAdress).then(Response=>{
-                    if(Response.status == 200)
-                    {
-                        console.log(JSON.stringify(Response))
-                        this.restaurants = Response.data.item
-                    }
-                })
+            ...mapMutations(['login', 'update']),
+            onChange(e) {
+                console.log(e.target.checked);
+            },
+            getDate(userName, password) {
+                // childValue就是子组件传过来的值
+                this.user = userName;
+                this.password = password;
+            },
+            hide() {
+                console.log(111);
+                this.payvisible = false;
+                this.weixinvisible = false;
+                this.qqvisible = false;
+            },
+            openMask(index) {
+                this.sendVal = true;
             },
             async doLogin() {
                 // const statu =`${this.config}/api/`;
@@ -344,22 +359,15 @@
                 //    }
                 //  });
 
-                if(this.user == ''|| this.password == ''){
-                     this.$error({
-                        title: '提示',
-                        content: '账号或密码不能为空！！！',
-                        });
-                    return ;
+
+                if(this.checked == true){
+                    this.remember = '是'
                 }else{
-                    if(this.checked == true){
-                        this.remember = '是'
-                    }else{
                     this.remember = '否'
-                    }
                 }
                 const datas = {
-                        userNameOrEmailAddress: this.user,
-                        password: this.password,
+                    userNameOrEmailAddress: this.user,
+                    password: this.password,
                     adressIp: this.ip,
                     remPasspwd: this.remember,
                 };
@@ -368,6 +376,7 @@
                     await this.$http.post(statu, datas).then(Response => {
                         let that = this;
                         console.log(JSON.stringify(Response))
+                        console.log(Response.config.data)
                         if (Response.status == 200) {
                             // window.location.reload();
                             //this.$store.login(Response.data.userNameOrEmailAddress)
@@ -387,6 +396,20 @@
                             localStorage.setItem('Remeber', JSON.stringify(update));
                             
                             this.$router.replace('/index')
+                            // 当记住密码的checbox选中时，像localStorage里存入一下用户输入的用户名和密码
+                            // if (this.checked==true) {
+                            //   console.log("记住密码")
+                            //   this.setlocalStorage(this.user, this.password)
+                            // } else {
+                            //     this.clear()
+                            // }
+                            
+
+                            // this.update({
+                            //     hasLogin: true,
+                            //     userName:Response.data.username,
+                            //     userId:Response.data.userId,
+                            //   });
                         }
                     })
                 }
@@ -399,8 +422,8 @@
                     }
                       // uni.setStorageSync('UserInfo', res.user);
                 },
-                // },
-                
+        },
+       
     };
 </script>
 <style lang="less" scoped>
