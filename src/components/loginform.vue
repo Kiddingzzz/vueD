@@ -105,9 +105,9 @@
                 remember: '',
                 //用户名下拉框
                 restaurants: [
-                    { "value": "1233", "address": "长宁区新渔路144号", "remember": true },
-                    { "value": "zaqwe", "address": "上海市长宁区淞虹路661号", "remember": false },
-                    { "value": "ffff123", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113", "remember": true  },
+                    // { "value": "1233", "address": "长宁区新渔路144号", "remember": true },
+                    // { "value": "zaqwe", "address": "上海市长宁区淞虹路661号", "remember": false },
+                    // { "value": "ffff123", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113", "remember": true  },
                 ],
             };
         },
@@ -198,26 +198,17 @@
             //       })
             //    }
             //  });
+            
+            if(this.ip!=null) {
+                 this.BackUserPwd()
+            }
         },
         methods: {
-            ...mapMutations(['login', 'update']),
-            onChange(e) {
                 console.log(e.target.checked);
-            },
-            getDate(userName, password) {
-                // childValue就是子组件传过来的值
-                this.user = userName;
                 this.password = password;
-            },
-            hide() {
-                console.log(111);
-                this.payvisible = false;
-                this.weixinvisible = false;
                 this.qqvisible = false;
-            },
             openMask(index) {
                 this.sendVal = true;
-            },
             openForget(){
                 this.forgetMod = true;
             },
@@ -363,14 +354,14 @@
                     if(this.checked == true){
                         this.remember = '是'
                     }else{
-                        this.remember = ''
+                    this.remember = '否'
                     }
                 }
                 const datas = {
                         userNameOrEmailAddress: this.user,
                         password: this.password,
-                        computerIp: this.ip,
-                        rememberPwd: this.remember,
+                    adressIp: this.ip,
+                    remPasspwd: this.remember,
                 };
                 const statu = `${this.$config.api}/api/cms/acount/loginAuthentic`;
                 try {
@@ -408,7 +399,8 @@
                     }
                       // uni.setStorageSync('UserInfo', res.user);
                 },
-        }
+                // },
+                
     };
 </script>
 <style lang="less" scoped>

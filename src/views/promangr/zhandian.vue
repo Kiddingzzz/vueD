@@ -79,7 +79,7 @@
                                     autocomplete="new-lookpwdput"
                                     ></a-input>
                             </a-modal>
-                            <!-- <a-modal title="查看密码" v-model="lookpwdvisible" @ok="lookpwdoks()">
+                            <a-modal title="查看密码" v-model="lookpwdvisible" @ok="lookpwdoks()">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="loolnameok"
@@ -92,7 +92,7 @@
                                     class="inputs"
                                     autocomplete="new-lookpwdok"
                                     ></el-input>
-                            </a-modal> -->
+                            </a-modal>
                         </span>
                     </a-table>
                 </a-tab-pane>

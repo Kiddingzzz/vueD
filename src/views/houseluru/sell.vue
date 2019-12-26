@@ -769,6 +769,10 @@
                                 this.jianzaoniandai=niandai.replace('年','')
                                 
                             }
+                            else
+                            {
+                                 this.jianzaoniandai=niandai
+                            }
                             this.selectedShi = this.ref.huxing.substring(0, shi);
                             this.selectedTing = this.ref.huxing.substring(shi + 1, ting);
                             this.selectedWei = this.ref.huxing.substring(ting + 1, wei);
@@ -792,7 +796,7 @@
 
 
                             var imgFangxing = {};
-                            imgFangxing.url = res.data.imgHeader.replace(/'/g, '').replace('[', '').replace(']', ''),
+                            imgFangxing.url = res.data.fangxinImg.replace(/'/g, '').replace('[', '').replace(']', ''),
                                 imgFangxing.uid = '-50',
                                 imgFangxing.name = 'xxx.jpg',
                                 imgFangxing.status = 'done',

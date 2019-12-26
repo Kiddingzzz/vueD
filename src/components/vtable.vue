@@ -63,7 +63,7 @@
             title: '朝向',
             dataIndex: 'chaoxiang',
             key: 'sq',
-            width: '5.5%'
+            width: '6%'
         },
         {
             title: '楼层',

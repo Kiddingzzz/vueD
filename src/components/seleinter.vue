@@ -144,6 +144,7 @@
         mounted() {
             this.def = this.value;
             console.log(this.value)
+            
         },
         methods: {
             changeimg(e)
@@ -161,28 +162,17 @@
             async shopfabuok(e){
                  let update = JSON.parse(localStorage.getItem('update'));
                 try {
-                    // await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=`+this.$store.userId).then(Response=>{
+                  
                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId+'&sitename='+this.wangvalue).then(Response => {
-                        console.log("respones.house2222:" + JSON.stringify(Response))
+                       
                         if (Response.status == 200) {
                             if (Response.data == "yes") {
-                               if(this.wangvalue=="房天下")
-                               {
-                                    if(this.def.houseType === '商铺'){
-                                    this.fabuShangpu()
-                                    }
-                                    if(this.def.houseType === '二手房'){
-                                        this.fabuok()
-                                    }
+                               if(this.wangvalue=="房天下"){
+                                    this.Fangtianxia();
                                }
-                               if(this.wangvalue=="58同城")
-                               {
-                                    if(this.def.houseType === '商铺'){
-                                       this.TwoHouseWuba()
-                                    }
-                                    if(this.def.houseType === '二手房'){
-                                        
-                                    }
+                               if(this.wangvalue=="58同城") {
+                                   console.log("1111")
+                                    this.Wuba();
                                }
                             }
                             else {
@@ -190,23 +180,40 @@
                                 const h = that.$createElement;
                                 that.$info({
                                     title: '提示', okText: '去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'),]),
-                                    onOk() {
-                                        that.$router.replace('/zhandian')
-                                    },
+                                        onOk() {
+                                            that.$router.replace('/zhandian')
+                                        },
                                 });
                             }
-
                         }
                     })
                 }
                 catch (e) {
                     this.$message.warning('系统遇到了点问题，请重试');
                 }
-
-                console.log(this.def.houseType)
-               
             },
             
+            ///发布房天下
+           Fangtianxia()
+           {
+               if(this.def.houseType === '商铺'){
+                     this.fabuShangpu()
+                }
+                 if(this.def.houseType === '二手房'){
+                     this.fabuok()
+                  }
+           },
+           ///发布五八同城
+            Wuba(){
+                if(this.def.houseType === '商铺'){
+                    
+                  }
+                if(this.def.houseType === '二手房'){
+                    console.log("22211")
+                    this.TwoHouseWuba()           
+                    }
+            },
+
             ///房天下二手房发布
             async fabuok(e) {
                 this.spinning = true;
@@ -485,11 +492,11 @@
             ///三网合一发布房源
             async TwoHouseWuba()
               {
+                  console.log("1111")
                  this.spinning = true;
                  this.pdef = this.value;
-                 let shis=this.pdef.huxing
-                 shis=shis.split('室')[0]
-                 shis=parseInt(shi);
+                 let shis=this.pdef.huxing.split('室')[0]
+                 shis=parseInt(shis);
                  var leixing=this.pdef.fangwuChanquan
                  if(RegExp(/商品/).exec(leixing))
                  {
@@ -517,12 +524,13 @@
                  {
                     xingzhi="满五"
                  }
+                 console.log("22222")
                  const list={
                      xiaoquanme:this.pdef.xiaoquName,
                      mianji:parseFloat(this.pdef.square),
                      taomianji:parseFloat(this.pdef.square)-1,
                      fangwuLeixing:this.pdef.fangwuLeibie,
-                     zhuangxiu:thjis.pdef.zhuangxiu,
+                     zhuangxiu:this.pdef.zhuangxiu,
                      chaoxiang:this.pdef.chaoxiang,
                      dijilou:parseInt(this.pdef.louceng.split('/')[0]),
                      gonglou:parseInt(this.pdef.louceng.split('/')[1]),
@@ -543,7 +551,10 @@
                      
                      
                  }
+                 console.log("3333")
               },
+          
+           
             //aaa
             openNotificationWithIcon(type) {
                 if (type == 'success') {
