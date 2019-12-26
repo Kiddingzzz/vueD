@@ -492,10 +492,21 @@
             ///三网合一发布房源
             async TwoHouseWuba()
               {
-                 
+                let update = JSON.parse(localStorage.getItem('update'));
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
+                let datas = query.data;
+                // const urls = 'unity/authenticate';
+                // const data = {
+                //     userName: datas.userName,
+                //     pwd: datas.passWord,
+                   
+                // }
                  this.spinning = true;
                  this.pdef = this.value;
-                 let shis=this.pdef.huxing.split('室')[0]
+                 let huxing=this.pdef.huxing
+                 let shis=huxing.split('室')[0]
+                 let ting=huxing.split('室')[1].split('厅')[0]
+                 let wei=huxing.split('室')[1].split('厅')[1].split('卫')[0]
                  shis=parseInt(shis);
                  var leixing=this.pdef.fangwuChanquan
                  if(RegExp(/商品/).exec(leixing))
@@ -507,10 +518,12 @@
                       leixing="商品房住宅"
                  }
                  var jianzao=this.pdef.fangwuDate
-                 if(jianzao!="")
-                 {
-                     jianzao=jianzao.split('年')[0]
+                
+                if(RegExp(/年/).exec(jianzao)){
+                            jianzao=jianzao.split('年')[0]
                  }
+                      
+                 
                  if(jianzao=="")
                  {
                      jianzao=null
@@ -548,7 +561,12 @@
                      housejieshao:this.pdef.note,
                      yehzuxintai:this.pdef.atittude,
                      fuwujiwshao:this.pdef.fuwuCondition,
-                     
+                     weiyiurl:this.pdef.weiYiUrl,
+                     ting:parseInt(ting),
+                     wei:parseInt(wei),
+                     username:datas.userName,
+                     userpwd:datas.passWord,
+
                      
                  }
                 var data = {
