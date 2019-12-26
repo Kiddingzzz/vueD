@@ -18,6 +18,14 @@ module.exports = {
           '^/api': '/'
         }
       },
+      '/ips': {
+        target: 'http://localhost:8085/',
+        changeOrigin: true,
+        pathRewrite: {
+          '^/ips': '/',
+        },
+        logLevel: 'debug',
+      },
       '/prod': {  //将target的值印射为 /mntncar，
         target: 'https://openapi.fang.com/',
         secure: true,  // 如果是https接口，需要配置这个参数

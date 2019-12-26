@@ -551,9 +551,25 @@
                      
                      
                  }
-                 console.log("3333")
+                var data = {
+                     aa:'1',
+                     bb:'2',
+                 }
+                 $.ajax({
+                    type: 'GET',
+                    url: 'http://localhost:8085/get_user',
+                    params:data,
+                    dataType: 'jsonp', //希望服务器返回json格式的数据
+                    jsonp: "callback",
+                    jsonpCallback: "successCallback",//回调方法
+                    success: function (data) {
+                        if(data == "{'200'}"){
+                            console.log('发布成功')
+                        }
+                    }
+
+                });
               },
-          
            
             //aaa
             openNotificationWithIcon(type) {
