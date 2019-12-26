@@ -575,8 +575,7 @@
                  }
                  $.ajax({
                     type: 'GET',
-                    url: 'http://localhost:8085/get_user',
-                    params:data,
+                    url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
                     dataType: 'jsonp', //希望服务器返回json格式的数据
                     jsonp: "callback",
                     jsonpCallback: "successCallback",//回调方法
