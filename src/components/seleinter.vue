@@ -520,10 +520,8 @@
                  var jianzao=this.pdef.fangwuDate
                 
                 if(RegExp(/年/).exec(jianzao)){
-                            jianzao=jianzao.split('年')[0]
+                    jianzao=jianzao.split('年')[0]
                  }
-                      
-                 
                  if(jianzao=="")
                  {
                      jianzao=null
@@ -582,6 +580,18 @@
                     success: function (data) {
                         if(data == "{'200'}"){
                             console.log('发布成功')
+                        }
+                        else {
+                            const that=this.$router;
+                            this.$error({
+                               okText:'编辑房源信息',
+                               title: '提示',
+                               content: 'error',
+                               onOk() {
+                                  that.replace('/sell?id='+this.pdef.id)
+                                    },
+                                });
+
                         }
                     }
 

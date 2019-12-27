@@ -158,6 +158,9 @@
        const pwd1 = this.encryptDes('jiayu6248', '058523bb')
       this.GetOpenSiteList();
    },
+   updated(){
+       this.GetOpenSiteList();
+   },
     methods: {
         ///获取站点列表
             async GetOpenSiteList(){

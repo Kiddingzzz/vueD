@@ -23,7 +23,7 @@
             </div>
         </div>
         <div style="padding: 24px 24px 0px;">
-             <a-tabs type="card">
+             <a-tabs @change="callback" type="card">
                 <a-tab-pane tab="全部网站" key="1">
                     <a-table width="1120px" :columns="columnss" :dataSource="item">
                         <span slot="name" slot-scope="name">
@@ -237,6 +237,9 @@
             // this.GetSiteList58()
         },
         methods: {
+            callback (key) {
+            console.log(key)
+            },
             ///获取站点列表
             async GetSiteList(){
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+this.$store.userId)
@@ -313,8 +316,8 @@
                  await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow?name=`+gname).then(Response=>{
                     if(Response.status==200) {
                          if(Response.data=="yes"){
-                              this.$message.success('删除成功！！');
                               this.GetSiteList();
+                              this.$message.success('删除成功！！');
                          }
                           else{
                               this.$message.success('您还没有添加网站的账号，请先添加！');

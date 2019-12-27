@@ -212,7 +212,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncf" :defaultValue="value3" v-model="kanfang" />
+                            <a-radio-group :options="plainOptioncf" :defaultValue="value3"  />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status="">
@@ -272,7 +272,7 @@
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋年限" has-feedback v-model="ref.weiyizhufang"
                            validate-status="">
-                              <a-radio-group :options="plainOptionroot" :defaultValue="valueroot" />
+                              <a-radio-group :options="plainOptionroot" :defaultValue="valueroot" v-model="fangyuanBiaoqian" />
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*唯一住房" has-feedback
                            validate-status="">
@@ -694,12 +694,18 @@
                 refQuyu:'',
                 laf:{},
                 ZhuaquUrl:'',
+                reciveId:'',
             }
         },
-        mounted() {
+        mounted(options) {
+            console.log(JSON.stringify(options))
+            // this.reciveId =options.id;
             // this.kanfang="随时看房";
             this.zhuangxiu = "中等装修";
             this.gongnuan = "自供暖";
+            this.reciveId="a3bed39f-3897-3eb5-c991-39f2522428ec"
+            if(this.reciveId!=''||this.reciveId!=null)
+                   this.backfbdata(this.reciveId);
         },
         methods: {
 
@@ -756,7 +762,16 @@
                             this.ref = res.data;
                             //字符串
                             console.log("房源标签是否含有html标签？=========="+this.ref.fangyuanBiaoqian);
-                            this.fangyuanBiaoqian = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"");
+                            const nianqi=this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"")
+                            console.log(nianqi)
+                            if( nianqi=='新上')
+                            {
+                               console.log("sdgsfsfd")
+                               this.fangyuanBiaoqian ="不满二年";
+                            }
+                                 
+                            else
+                                 this.fangyuanBiaoqian =nianqi ;
                             console.log("去掉房源标签含有的html标签成功？=========="+this.fangyuanBiaoqian);
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                             this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
@@ -820,8 +835,25 @@
 
 
             },
+            //保存房源
             async saveHouse() {
-                if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
+               if(this.reciveId==''||this.reciveId==undefined){
+                      this.zhuaqubao();
+               }
+                else{
+                     this.xiugaibao();
+                }
+
+            },
+            async xiugaibao()
+             {
+               const list={
+                   
+               };
+             },
+            //抓取房源保存
+            async zhuaqubao(){
+                 if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
                     this.saveRes.rice == null && this.saveRes.simpleRice == null &&
                     this.saveRes.square == null && this.saveRes.huxing == null &&
                     this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null && this.saveRes.imgHeader == null
@@ -839,7 +871,6 @@
                         }
                     })
                 }
-
             },
             openNotificationWithIcon(type) {
                 if (type == 'success') {
@@ -896,6 +927,81 @@
                 this.fileList = fileList;
             },
             moment,
+           async backfbdata(backid){
+                console.log("返回id："+backid)
+                   await this.$http.post(`${this.$config.api}/api/cms/house/` + backid + `/backPubData`).then(res => {
+                        console.log(`抓取数据:`+JSON.stringify(res.data))
+                            this.laf = res.data;
+                            var ret = res.data.address;
+                            var refQu = ret.indexOf('－');
+                            this.refQuyu = ret.substring(0,refQu);
+                            this.saveRes = res.data;
+                            this.chaoxiang = ret.chaoxiang;
+                            this.spinning = false;
+                            this.ref = res.data;
+                            //字符串
+                            console.log("房源标签是否含有html标签？=========="+this.ref.fangyuanBiaoqian);
+                             const nianqi=this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"")
+                             console.log(nianqi)
+                            if( nianqi=="新上")
+                               this.fangyuanBiaoqian ="不满二年";
+                            else
+                                 this.fangyuanBiaoqian =nianqi ;
+                            //this.fangyuanBiaoqian = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"");
+                            console.log("去掉房源标签含有的html标签成功？gg=========="+this.fangyuanBiaoqian);
+                            this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
+                            this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
+                            let shi = this.ref.huxing.indexOf("室");
+                            let ting = this.ref.huxing.indexOf("厅");
+                            let wei = this.ref.huxing.indexOf("卫");
+                            let niandai=this.ref.fangwuDate;
+                            if(RegExp(/年/).exec(niandai))
+                            {
+                                this.jianzaoniandai=niandai.replace('年','')
+                                
+                            }
+                            else
+                            {
+                                 this.jianzaoniandai=niandai
+                            }
+                            this.selectedShi = this.ref.huxing.substring(0, shi);
+                            this.selectedTing = this.ref.huxing.substring(shi + 1, ting);
+                            this.selectedWei = this.ref.huxing.substring(ting + 1, wei);
+                            this.spinning = false;
+                            var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
+                            var ss = shineiImg.split(",")
+                            this.weiyiUserId = res.data.weiYiUrl;
+                            for (var i = 0; i < ss.length; i++) {
+                                var imgUrl = {};
+                                imgUrl.url = ss[i];
+                                imgUrl.uid = i;
+                                imgUrl.name = 'xxx.jpg';
+                                imgUrl.status = 'done';
+                                this.shineiList.push(imgUrl);
+                            }
+                            this.imgH.url = ss[0],
+                                this.imgH.uid = '-150',
+                                this.imgH.name = 'xxx.jpg',
+                                this.imgH.status = 'done',
+                                this.imgHeaderList.push(this.imgH);
+
+
+                            var imgFangxing = {};
+                            imgFangxing.url = res.data.fangxinImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                                imgFangxing.uid = '-50',
+                                imgFangxing.name = 'xxx.jpg',
+                                imgFangxing.status = 'done',
+                                this.fangxinlist.push(imgFangxing);
+
+
+                            var XiaoquImg = {};
+                            XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                                XiaoquImg.uid = '-100',
+                                XiaoquImg.name = 'xxx.jpg',
+                                XiaoquImg.status = 'done',
+                                this.xiaoQuList.push(XiaoquImg);
+                  })
+            }
         }
     }
 </script>

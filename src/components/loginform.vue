@@ -388,12 +388,7 @@
                                 userName: Response.data.username,
                                 userId: Response.data.userId,
                             }
-                            var remeber = [{
-                                userName: Response.data.username,
-                                password: this.password
-                            }]
                             localStorage.setItem('update', JSON.stringify(update));
-                            localStorage.setItem('Remeber', JSON.stringify(update));
                             
                             this.$router.replace('/index')
                             // 当记住密码的checbox选中时，像localStorage里存入一下用户输入的用户名和密码
