@@ -492,15 +492,9 @@
             ///三网合一发布房源
             async TwoHouseWuba()
               {
-                let update = JSON.parse(localStorage.getItem('update'));
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
-                let datas = query.data;
-                // const urls = 'unity/authenticate';
-                // const data = {
-                //     userName: datas.userName,
-                //     pwd: datas.passWord,
-                   
-                // }
+                //   let update = JSON.parse(localStorage.getItem('update'));
+                // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
+                // let datas = query.data;
                  this.spinning = true;
                  this.pdef = this.value;
                  let huxing=this.pdef.huxing
@@ -508,7 +502,7 @@
                  let ting=huxing.split('室')[1].split('厅')[0]
                  let wei=huxing.split('室')[1].split('厅')[1].split('卫')[0]
                  shis=parseInt(shis);
-                 var leixing=this.pdef.fangwuChanquan
+                 var leixing=this.pdef.fangwuChanquan;
                  if(RegExp(/商品/).exec(leixing))
                  {
                     leixing="商品房住宅"
@@ -518,24 +512,21 @@
                       leixing="商品房住宅"
                  }
                  var jianzao=this.pdef.fangwuDate
-                
-                if(RegExp(/年/).exec(jianzao)){
-                    jianzao=jianzao.split('年')[0]
+                 console.log("this.pdef.fangwuDate:"+this.pdef.fangwuDate)
+                 if(jianzao!="")
+                 {
+                     jianzao=jianzao.split('年')[0]
                  }
                  if(jianzao=="")
                  {
                      jianzao=null
                  }
                  var xingzhi =this.pdef.fangyuanBiaoqian
-                 if(RegExp(/满二/).exec(xingzhi))
-                 {
-                    xingzhi="满二"
-                 }
+                 if(RegExp(/满二/).exec(xingzhi)) 
                   if(RegExp(/满五/).exec(xingzhi))
                  {
                     xingzhi="满五"
                  }
-                
                  const list={
                      xiaoquanme:this.pdef.xiaoquName,
                      mianji:parseFloat(this.pdef.square),
@@ -557,23 +548,20 @@
                      yongjin:null,
                      title:this.pdef.title,
                      housejieshao:this.pdef.note,
-                     yehzuxintai:this.pdef.atittude,
-                     fuwujiwshao:this.pdef.fuwuCondition,
-                     weiyiurl:this.pdef.weiYiUrl,
+                     yehzuxintai:encodeURI(this.pdef.atittude),
+                     fuwujiwshao:encodeURI(this.pdef.fuwuCondition),
+                     weiyiurl:encodeURI(this.pdef.weiYiUrl),
                      ting:parseInt(ting),
                      wei:parseInt(wei),
-                     username:datas.userName,
-                     userpwd:datas.passWord,
-
+                     shi:shis,
+                    //  username:datas.userName,
+                    //  userpwd:datas.passWord,
                      
                  }
-                var data = {
-                     aa:'1',
-                     bb:'2',
-                 }
+                 console.log('list:'+JSON.stringify(list))
                  $.ajax({
                     type: 'GET',
-                    url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
+                    url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
                     dataType: 'jsonp', //希望服务器返回json格式的数据
                     jsonp: "callback",
                     jsonpCallback: "successCallback",//回调方法
