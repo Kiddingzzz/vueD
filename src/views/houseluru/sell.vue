@@ -260,7 +260,7 @@
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*产权年限" has-feedback 
                            validate-status="">
-                              <a-radio-group :options="plainOptionnianxian" v-model="laf.chanquanNianxian" />
+                              <a-radio-group :options="plainOptionnianxian" v-model="ref.chanquanNianxian" />
                            </a-form-item>
                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑形式" has-feedback
                            validate-status="">
@@ -600,7 +600,6 @@
                 visible: false,
                 addxq: false,
                 addshowxqu: false,
-
                 spinning: false,
                 confirmLoading: false,
                 labelCol: {
@@ -694,17 +693,16 @@
                 refQuyu:'',
                 laf:{},
                 ZhuaquUrl:'',
-                reciveId:'',
+                reciveId:this.$route.params.id,
             }
         },
-        mounted(options) {
-            console.log(JSON.stringify(options))
+        mounted() {
+            
             // this.reciveId =options.id;
             // this.kanfang="随时看房";
             this.zhuangxiu = "中等装修";
             this.gongnuan = "自供暖";
-            this.reciveId="a3bed39f-3897-3eb5-c991-39f2522428ec"
-            if(this.reciveId!=''||this.reciveId!=null)
+            if(this.reciveId!=undefined||this.reciveId!=null)
                    this.backfbdata(this.reciveId);
         },
         methods: {
@@ -847,13 +845,7 @@
             },
             async xiugaibao()
              {
-               const list={
-                   
-               };
-             },
-            //抓取房源保存
-            async zhuaqubao(){
-                 if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
+                if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
                     this.saveRes.rice == null && this.saveRes.simpleRice == null &&
                     this.saveRes.square == null && this.saveRes.huxing == null &&
                     this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null && this.saveRes.imgHeader == null
@@ -866,6 +858,27 @@
                     this.saveRes.urlsId = update.userId;
                     this.saveRes.imgHeader = this.imgH.url;
                     await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.saveRes).then(response => {
+                        if (response.status == 200) {
+                            this.openNotificationWithIcon('success')
+                        }
+                    })
+                }
+             },
+            //抓取房源保存
+            async zhuaqubao(){
+                 if (this.ref.xiaoquName == null && this.ref.title == null &&
+                    this.ref.rice == null && this.ref.simpleRice == null &&
+                    this.ref.square == null && this.ref.huxing == null &&
+                    this.ref.louceng == null && this.ref.zhuangxiu == null && this.ref.address == null && this.ref.imgHeader == null
+                ) {
+                    this.openNotificationWithIcon('error')
+                }
+                else {
+                    //this.saveRes.urlsId = this.$store.userId;
+                    let update = JSON.parse(localStorage.getItem('update'));
+                    this.ref.urlsId = update.userId;
+                    this.ref.imgHeader = this.imgH.url;
+                    await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.ref).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
                         }

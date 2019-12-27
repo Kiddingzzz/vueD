@@ -586,9 +586,12 @@
                             this.$error({
                                okText:'编辑房源信息',
                                title: '提示',
-                               content: 'error',
+                               content: 'error:'+data,
                                onOk() {
-                                  that.replace('/sell?id='+this.pdef.id)
+                                  that.replace({
+                                      name:'Sell',
+                                      params:{id:this.pdef.id}
+                                  })
                                     },
                                 });
 
