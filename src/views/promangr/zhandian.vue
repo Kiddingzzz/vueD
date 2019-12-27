@@ -66,10 +66,11 @@
                                 <a>{{record.userName}}</a>
                         </span>
                         <span slot="action" slot-scope="text, record" >
-                            <a-button type="primary" @click="DeleteSite(record.id,record.siteName)">删除</a-button>
+                            <a-spin :spinning="zspinning"></a-spin>
+                            <a-button type="primary" @click="DeleteSite(record.id)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary" @click="lookpwdbotton()">查看密码</a-button>
-                            <a-modal title="查看密码" v-model="lookvisible" @ok="lookpwd(record.id,record.siteName)" @cancel="close" cancelText="取消" okText="确定">
+                            <a-modal title="查看密码" v-model="lookvisible" @ok="lookpwd(record.id)" @cancel="close" cancelText="取消" okText="确定">
                                 <label>为了您的账户安全，请输入您在开单王的登陆密码</label>
                                 <a-input
                                     prefix-icon="iconfont icon-User"
@@ -187,6 +188,7 @@
                 siteUserName: '',
                 sitepwd: '',
                 lookpwdput:'',
+                zspinning:false,
                 loolnameok:'',
                 lookpwdok:'',
                 keyId: "12345645",
@@ -244,7 +246,7 @@
             async GetSiteList(){
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+this.$store.userId)
                 let update = JSON.parse(localStorage.getItem('update'));
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?UserId=`+update.userId)
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/siteList?userId=`+update.userId)
                  this.item = query.data.items
                  for(var i=0;i<this.item.length;i++){
                      this.item[i].name = ['允许发布', '允许推送']
@@ -269,13 +271,12 @@
                     userId:update.userId,
                     siteUserName: this.siteUserName,
                     sitePassword: this.sitepwd,
-                    userName: this.siteUserName,
                     token:'aaa',
                     biaoshi:this.siteName,
                 }
                 
                try{
-                     var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
+                    await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
                         if(Response.status==200)
                         {
                             this.$message.success('添加账号成功');
@@ -311,12 +312,13 @@
                 }
             },
             //删除房源
-            async DeleteSite(sid,gname){
-                console.log("Id:"+gname)
-                 await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow?name=`+gname).then(Response=>{
+            async DeleteSite(sid){
+               this.zspinning=true
+                 await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow`).then(Response=>{
                     if(Response.status==200) {
                          if(Response.data=="yes"){
                               this.GetSiteList();
+                              this.zspinning=false
                               this.$message.success('删除成功！！');
                          }
                           else{
@@ -326,9 +328,10 @@
                            
                     }
                     else{
+                        this.zspinning=false
                         this.$message.success('删除错误，请重新删除！');
-                    }   
-
+                        
+                    }
                  })
             },
             lookpwdbotton(){
@@ -342,16 +345,16 @@
             },
 
             //查看密码
-            async lookpwd(pid,lsitename)
+            async lookpwd(pid)
             {
                  let update = JSON.parse(localStorage.getItem('update'));
                 const data={
                      userid:update.userId,
                      password:this.lookpwdput,
                      lookpid:pid,
-                     looksitename:lsitename,
+                    
                 };
-              console.log("id:"+update.userid+"密码："+this.lookpwdput)
+              console.log("id:"+update.userId+"密码："+this.lookpwdput)
                 try{
                         await this.$http.post(`${this.$config.api}/api/cms/acount/lookPwd`,data).then(Response=>{
                         console.log(Response)
@@ -374,6 +377,8 @@
             },
            lookpwdoks(){
                this.lookpwdvisible=false;
+               this.loolnameok="";
+                this.lookpwdok="";
            }
         },
     };

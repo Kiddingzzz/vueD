@@ -148,7 +148,7 @@
             async GetCloseSiteList(){
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
                 let update = JSON.parse(localStorage.getItem('update'));
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+update.userId)
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?userId=`+update.userId)
                 
                 this.closesiteitem = query.data.items; 
                 for(var i=0;i<this.closesiteitem.length;i++){
@@ -169,10 +169,9 @@
                 const data = {
                     // userId: this.$store.userId,
                     userId:update.userId,
-                    closesiteUserName: this.closesiteUserName,
+                    siteUserName: this.closesiteUserName,
                     sitePassword: this.closesitepwd,
-                    userName: this.closesiteUserName,
-                    opentoken:'aaa',
+                    token:'aaa',
                     biaoshi:'58同城'
                 }
                 
@@ -186,16 +185,29 @@
                 const data = {
                     // userId: this.$store.userId,
                     userId:update.userId,
-                    closesiteUserName: this.closesiteUserName,
+                    siteUserName: this.closesiteUserName,
                     sitePassword: this.closesitepwd,
-                    userName: this.closesiteUserName,
                     opentoken:'aaa',
                     biaoshi: this.intername,
                 }
+                 try{
+                      await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
+                        if(Response.status==200)
+                        {
+                            this.$message.success('添加账号成功');
+                           this.closevisible = false;
+                             this.GetCloseSiteList();
+          ``      
+                        }
+                      });
+               }
+               catch(e){
+                   console.log(e)
+                    this.$message.success('您已添加账号');
+                    this.closevisible = false;
+               }
+               
                 
-                var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);
-                this.GetCloseSiteList();
-                this.closevisible = false;
             },
             openceshi(tag,name) {
                 this.intername=name;
@@ -219,6 +231,6 @@
     }
     .closeinterimg{
       width:160px;
-       height:65px;
+     height:65px;
     }
 </style>

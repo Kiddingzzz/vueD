@@ -39,7 +39,7 @@
                                 <a>{{record.userName}}</a>
                         </span>
                         <span slot="action" slot-scope="text, record">
-                            <a-button type="primary" @click="openDeleteSite(record.id,record.siteName)">删除</a-button>
+                            <a-button type="primary" @click="openDeleteSite(record.id)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary" @click="openlookpwdbotton()">查看密码</a-button>
                             <a-modal title="查看密码" v-model="openlookvisible" @ok="openlookpwd(record.id,record.siteName)">
@@ -166,7 +166,7 @@
             async GetOpenSiteList(){
                // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+this.$store.userId)
                let update = JSON.parse(localStorage.getItem('update'));
-               var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+update.userId)
+               var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?userId=`+update.userId)
                 this.siteitem = query.data.items;
                 for(var i=0;i<this.siteitem.length;i++){
                      this.siteitem[i].name = ['允许发布', '允许推送']
@@ -188,13 +188,12 @@
                     userId:update.userId,
                     siteUserName: this.opensiteUserName,
                     sitePassword: this.opensitepwd,
-                    userName: this.opensiteUserName,
                     token:'aaa',
                     biaoshi:this.opensiteName,
                 }
                 
                try{
-                     var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
+                   await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
                         if(Response.status==200)
                         {
                             this.$message.success('添加账号成功');
@@ -212,7 +211,7 @@
             },
             //删除房源
             async openDeleteSite(sid,gname){
-                 await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow?name=`+gname).then(Response=>{
+                 await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow`).then(Response=>{
                     if(Response.status==200) {
                          if(Response.data=="yes"){
                              //this.Deletesiteuser(id);
@@ -256,14 +255,14 @@
                     this.openlookvisible=true;
             },
              async openlookpwd(pid,lsitename)
-            {
+              {
+                let update = JSON.parse(localStorage.getItem('update'));
                 const data={
-                     userid:update.userid,
+                     userid:update.userId,
                      password:this.openlookpwdput,
                      lookpid:pid,
-                     looksitename:lsitename,
                 };
-              console.log("id:"+update.userid+"密码："+this.lookpwdput)
+                 console.log("id:"+update.userId+"密码："+this.openlookpwdput)
                 try{
                         await this.$http.post(`${this.$config.api}/api/cms/acount/lookPwd`,data).then(Response=>{
                         console.log(Response)
@@ -299,9 +298,6 @@
     .wangyeimg{
       width: 200px;
       height: 70px;
-    }
-      .openinputs{
-        margin-bottom: 20px;
     }
     .openinterimg{
       width:160px;
