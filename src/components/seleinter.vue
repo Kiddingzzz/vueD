@@ -492,99 +492,100 @@
             ///三网合一发布房源
             async TwoHouseWuba()
               {
-                //   let update = JSON.parse(localStorage.getItem('update'));
+                // let update = JSON.parse(localStorage.getItem('update'));
                 // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
                 // let datas = query.data;
-                 this.spinning = true;
-                 this.pdef = this.value;
-                 let huxing=this.pdef.huxing
-                 let shis=huxing.split('室')[0]
-                 let ting=huxing.split('室')[1].split('厅')[0]
-                 let wei=huxing.split('室')[1].split('厅')[1].split('卫')[0]
-                 shis=parseInt(shis);
-                 var leixing=this.pdef.fangwuChanquan;
-                 if(RegExp(/商品/).exec(leixing))
-                 {
+                this.spinning = true;
+                this.pdef = this.value;
+                let huxing=this.pdef.huxing
+                let shis=huxing.split('室')[0]
+                let ting=huxing.split('室')[1].split('厅')[0]
+                let wei=huxing.split('室')[1].split('厅')[1].split('卫')[0]
+                shis=parseInt(shis);
+                var leixing=this.pdef.fangwuChanquan;
+                if(RegExp(/商品/).exec(leixing))
+                {
+                leixing="商品房住宅"
+                }
+                if(leixing=="")
+                {
                     leixing="商品房住宅"
-                 }
-                 if(leixing=="")
-                 {
-                      leixing="商品房住宅"
-                 }
-                 var jianzao=this.pdef.fangwuDate
-                 console.log("this.pdef.fangwuDate:"+this.pdef.fangwuDate)
-                 if(jianzao!="")
-                 {
-                     jianzao=jianzao.split('年')[0]
-                 }
-                 if(jianzao=="")
-                 {
-                     jianzao=null
-                 }
-                 var xingzhi =this.pdef.fangyuanBiaoqian
-                 if(RegExp(/满二/).exec(xingzhi)) 
-                  if(RegExp(/满五/).exec(xingzhi))
-                 {
-                    xingzhi="满五"
-                 }
-                 const list={
-                     xiaoquanme:this.pdef.xiaoquName,
-                     mianji:parseFloat(this.pdef.square),
-                     taomianji:parseFloat(this.pdef.square)-1,
-                     fangwuLeixing:this.pdef.fangwuLeibie,
-                     zhuangxiu:this.pdef.zhuangxiu,
-                     chaoxiang:this.pdef.chaoxiang,
-                     dijilou:parseInt(this.pdef.louceng.split('/')[0]),
-                     gonglou:parseInt(this.pdef.louceng.split('/')[1]),
-                     chanquan:parseInt(this.pdef.chanquanNianxian),
-                     chanquanleixing:leixing,
-                     jianzaoniandai:jianzao,
-                     dianti:null,
-                     housetype:'二手房',                                     
-                     housexingzhi:xingzhi,
-                     weiyizhufang:this.pdef.weiyizhufang,
-                     jiage:parseFloat(this.pdef.rice),
-                     shoufu:null,
-                     yongjin:null,
-                     title:this.pdef.title,
-                     housejieshao:this.pdef.note,
-                     yehzuxintai:encodeURI(this.pdef.atittude),
-                     fuwujiwshao:encodeURI(this.pdef.fuwuCondition),
-                     weiyiurl:encodeURI(this.pdef.weiYiUrl),
-                     ting:parseInt(ting),
-                     wei:parseInt(wei),
-                     shi:shis,
-                    //  username:datas.userName,
-                    //  userpwd:datas.passWord,
-                     
-                 }
-                 console.log('list:'+JSON.stringify(list))
-                 $.ajax({
-                    type: 'GET',
-                    url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
-                    dataType: 'jsonp', //希望服务器返回json格式的数据
-                    jsonp: "callback",
-                    jsonpCallback: "successCallback",//回调方法
-                    success: function (data) {
-                        if(data == "{'200'}"){
-                            console.log('发布成功')
-                        }
-                        else {
-                            const that=this.$router;
-                            this.$error({
-                               okText:'编辑房源信息',
-                               title: '提示',
-                               content: 'error:'+data,
-                               onOk() {
-                                  that.replace({
-                                      name:'Sell',
-                                      params:{id:this.pdef.id}
-                                  })
-                                    },
-                                });
-
-                        }
+                }
+                var jianzao=this.pdef.fangwuDate
+                console.log("this.pdef.fangwuDate:"+this.pdef.fangwuDate)
+                if(jianzao!="")
+                {
+                    jianzao=jianzao.split('年')[0]
+                }
+                if(jianzao=="")
+                {
+                    jianzao=null
+                }
+                var xingzhi =this.pdef.fangyuanBiaoqian
+                if(RegExp(/满二/).exec(xingzhi)) 
+                if(RegExp(/满五/).exec(xingzhi))
+                {
+                xingzhi="满五"
+                }
+                const list={
+                    xiaoquanme:this.pdef.xiaoquName,
+                    mianji:parseFloat(this.pdef.square),
+                    taomianji:parseFloat(this.pdef.square)-1,
+                    fangwuLeixing:this.pdef.fangwuLeibie,
+                    zhuangxiu:this.pdef.zhuangxiu,
+                    chaoxiang:this.pdef.chaoxiang,
+                    dijilou:parseInt(this.pdef.louceng.split('/')[0]),
+                    gonglou:parseInt(this.pdef.louceng.split('/')[1]),
+                    chanquan:parseInt(this.pdef.chanquanNianxian),
+                    chanquanleixing:leixing,
+                    jianzaoniandai:jianzao,
+                    dianti:null,
+                    housetype:'二手房',                                     
+                    housexingzhi:xingzhi,
+                    weiyizhufang:this.pdef.weiyizhufang,
+                    jiage:parseFloat(this.pdef.rice),
+                    shoufu:null,
+                    yongjin:null,
+                    title:this.pdef.title,
+                    housejieshao:this.pdef.note,
+                    yehzuxintai:encodeURI(this.pdef.atittude),
+                    fuwujiwshao:encodeURI(this.pdef.fuwuCondition),
+                    weiyiurl:encodeURI(this.pdef.weiYiUrl),
+                    ting:parseInt(ting),
+                    wei:parseInt(wei),
+                    shi:shis,
+                    // username:datas.userName,
+                    // userpwd:datas.passWord,
+                    
+                }
+                console.log('list:'+JSON.stringify(list))
+                $.ajax({
+                type: 'GET',
+                // url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
+                url:'http://localhost:8085/get_user?data=' + JSON.stringify(list),
+                dataType: 'jsonp', //希望服务器返回json格式的数据
+                jsonp: "callback",
+                jsonpCallback: "successCallback",//回调方法
+                success: function (data) {
+                    if(data == "{'200'}"){
+                        console.log('发布成功')
                     }
+                    else {
+                        const that=this.$router;
+                        this.$error({
+                            okText:'编辑房源信息',
+                            title: '提示',
+                            content: 'error:'+data,
+                            onOk() {
+                                that.replace({
+                                    name:'Sell',
+                                    params:{id:this.pdef.id}
+                                })
+                                },
+                            });
+
+                    }
+                }
 
                 });
               },
