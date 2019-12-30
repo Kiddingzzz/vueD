@@ -132,6 +132,7 @@
                 hsd: 1,
                 wangvalue: '房天下',
                 shopshineiList: [],
+                Fhdata:'',
                 // inter: require("../../assets/logo/58logo.png"),
             };
         },
@@ -350,8 +351,11 @@
                         // this.houseurl = res1.returnmsgs.houseurl;
                         // this.flag = res1.returnmsgs.flag;
                         // this.houseid = res1.returnmsgs.houseid;
-                        var renders = this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id)
-                        this.openNotificationWithIcon('success')
+                        this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id).then(pones=>{
+                             this.openNotificationWithIcon('success')
+
+                        })
+                      
                     }
                 })
             },
@@ -551,36 +555,48 @@
 
                 }
                 console.log('list:' + JSON.stringify(list))
+                var thiats= this.$error
+                // this.Fhdata="发布房源错误 "
                 $.ajax({
                     type: 'GET',
-                    // url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
-                    url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
+                    url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
+                    //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
                     dataType: 'jsonp', //希望服务器返回json格式的数据
                     jsonp: "callback",
                     jsonpCallback: "successCallback",//回调方法
                     success: function (data) {
-                        if (data == "{'200'}") {
-                            console.log('发布成功')
+                        console.log("返回值：")
+                        console.log(data)
+                        if (data =="200") {
+                             this.spinning = false;
+                             this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id).then(pones=>{
+                             this.openNotificationWithIcon('success')})
                         }
                         else {
-                            const that = this.$router;
-                            this.$notification['error']({
-                                okText: '编辑房源信息',
-                                title: '提示',
-                                content: 'error:' + data,
-                                onOk() {
-                                    that.replace({
-                                        name: 'Sell',
-                                        params: { id: this.pdef.id }
-                                    })
-                                },
-                            });
+                           this.Fhdata=data;
                         }
                     }
 
                 });
+              if(this.Fhdata!='')
+                this.spinning = false;
+                this.FanhuiData(this.Fhdata,this.pdef.id)
             },
-
+         ///跳转
+          FanhuiData(data,sid)
+          {
+              const that= this.$router
+              this.$error({
+                    title: '提示',
+                    content: 'error:' + data,
+                     onOk() {
+                   that.replace({
+                         name: 'Sell',
+                         params: { id: sid }
+                       })
+                   },
+                });
+          },
             //aaa
             openNotificationWithIcon(type) {
                 if (type == 'success') {
