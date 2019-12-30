@@ -865,7 +865,7 @@
                     let update = JSON.parse(localStorage.getItem('update'));
                     this.saveRes.urlsId = update.userId;
                     this.saveRes.imgHeader = this.imgH.url;
-                    await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.saveRes).then(response => {
+                    await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
                         }
@@ -887,7 +887,7 @@
                     let update = JSON.parse(localStorage.getItem('update'));
                     this.ref.urlsId = update.userId;
                     this.ref.imgHeader = this.imgH.url;
-                    await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.ref).then(response => {
+                    await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.ref).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
                         }
