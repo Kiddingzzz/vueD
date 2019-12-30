@@ -2,7 +2,7 @@
     <div class="wrap">
         <a-layout>
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
-                <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;">
+                <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;margin-top">
                     <a-button type="primary" @click="start" :disabled="!hasSelected" :loading="loading">
                         批量删除
                     </a-button>
