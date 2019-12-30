@@ -39,7 +39,7 @@
                                 v-model="user"
                                 :fetch-suggestions="querySearch"
                                 placeholder="请输入姓名"
-                                value-key="username"
+                                value-key="userNameOrEmailAddress"
                                 @input = "reset"
                                 @select="handleSelect"
                                 @keyup.enter.native="doLogin()"
@@ -100,11 +100,8 @@
                 ip: '',
                 remember: '',
                 //用户名下拉框
-                restaurants: [
-                    // { "value": "1233", "address": "长宁区新渔路144号", "remember": true },
-                    // { "value": "zaqwe", "address": "上海市长宁区淞虹路661号", "remember": false },
-                    // { "value": "ffff123", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113", "remember": true  },
-                ],
+                restaurants: [],
+                test: [],
             };
         },
         computed: {
@@ -115,15 +112,20 @@
             }
         },
         mounted() {
-            this.ip = returnCitySN["cip"];
-            console.log('登录页面的ip=================='+this.ip)
-            //用户名下拉框
-            // this.restaurants = this.loadAll();
-            // 如果存在赋值给表单，并且将记住密码勾选
-            // if(localStorage.getItem("siteName") != ''){
-            //     this.getlocalStorage()
-            //     this.checked = true
-	        // }
+            //获取登录前的localStorage存的账号
+            let BackUserPwd =[]
+            BackUserPwd = JSON.parse(localStorage.getItem("BackUserPwd"))
+            if(BackUserPwd != null){
+                this.restaurants = BackUserPwd
+            }
+            console.log(JSON.parse(localStorage.getItem("BackUserPwd")))
+            // this.getUserIP((ip) => {
+            //     this.ip = ip;
+            //     console.log('登录页面的内网ip=================='+this.ip)
+            //     if(this.ip!=null) {
+            //         this.BackUserPwd()
+            //     }                
+            // });
             //获取58令牌
             // const WuBaApi = 'https://openapi.58.com/v2/auth/show?app_key=e36309f80bd9030c879d69ba4155a74b&redirect_uri=http://972133.vip'
 
@@ -199,10 +201,6 @@
             //       })
             //    }
             //  });
-            
-            if(this.ip!=null) {
-                 this.BackUserPwd()
-            }
         },
         methods: {
             //重置
@@ -217,18 +215,15 @@
                 await this.$http.get(`${this.$config.api}/api/cms/acount/backUserPwd?AdressIp=`+this.ip).then(Response=>{
                     if(Response.status == 200)
                     {
-                        // console.log("返回缓存"+JSON.stringify(Response))
-                        // console.log(Response.data.items)
                         if(Response.data.items.length != 0){
                             this.restaurants = Response.data.items
                         }
-                        // localStorage.setItem("BackUserPwd",this.restaurants)
                     }
                 })
             },
             //用户名下拉框
             querySearch(queryString, cb) {
-                console.log(this.restaurants)
+                // console.log(this.restaurants)
                 var restaurants = this.restaurants;
                 var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
                 // 调用 callback 返回建议列表的数据
@@ -236,23 +231,16 @@
             },
             createFilter(queryString) {
                 return (restaurant) => {
-                return (restaurant.username.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                return (restaurant.userNameOrEmailAddress.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
                 };
             },
-            // loadAll() {
-            //     return [
-            //         { "value": "1233", "address": "长宁区新渔路144号" },
-            //         { "value": "zaqwe", "address": "上海市长宁区淞虹路661号" },
-            //         { "value": "ffff123", "address": "上海市普陀区真北路988号创邑金沙谷6号楼113" },
-            //     ];
-            // },
             handleSelect(item) {
                 console.log('dayi'+JSON.stringify(item));
-                this.password = item.userpwd
-                if(item.rempwd == '是'){
+                this.password = item.password 
+                if(item.remPasspwd == '是'){
                     this.checked = true
                 }
-                if(item.rempwd == '否'){
+                if(item.remPasspwd == '否'){
                     this.checked = false
                 }
                 console.log('成功')
@@ -386,9 +374,24 @@
                 try {
                     await this.$http.post(statu, datas).then(Response => {
                         let that = this;
-                        console.log(JSON.stringify(Response))
-                        console.log(Response.config.data)
+                        // console.log(JSON.stringify(Response))
+                        // console.log(Response.config.data)
                         if (Response.status == 200) {
+                            //判断保存的
+                            let hh = JSON.parse(localStorage.getItem("BackUserPwd"))
+                            if(hh != null){
+                                for(let i=0;i<hh.length;i++){
+                                 console.log(hh[i].userNameOrEmailAddress)
+                                    if(hh[i].userNameOrEmailAddress == datas.userNameOrEmailAddress){
+                                        this.restaurants.splice(i,1)
+                                    }
+                                    this.restaurants.push(datas)
+                                    localStorage.setItem("BackUserPwd",JSON.stringify(this.restaurants))
+                                }
+                            }else{
+                                this.restaurants.push(datas)
+                                localStorage.setItem("BackUserPwd",JSON.stringify(this.restaurants))
+                            }
                             // window.location.reload();
                             //this.$store.login(Response.data.userNameOrEmailAddress)
                             // this.$store.userId = Response.data.userId; 
@@ -402,20 +405,6 @@
                             localStorage.setItem('update', JSON.stringify(update));
                             
                             this.$router.replace('/index')
-                            // 当记住密码的checbox选中时，像localStorage里存入一下用户输入的用户名和密码
-                            // if (this.checked==true) {
-                            //   console.log("记住密码")
-                            //   this.setlocalStorage(this.user, this.password)
-                            // } else {
-                            //     this.clear()
-                            // }
-                            
-
-                            // this.update({
-                            //     hasLogin: true,
-                            //     userName:Response.data.username,
-                            //     userId:Response.data.userId,
-                            //   });
                         }
                     })
                 }

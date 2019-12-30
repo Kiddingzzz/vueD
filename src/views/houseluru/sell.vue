@@ -921,19 +921,19 @@
             },
             //保存房源
             async saveHouse() {
-                if(this.title == ''){
+                if(this.title == '' || this.titlezishu == true){
                     this.titleerror = true
                     return ;
                 }
-                if(this.note == ''){
+                if(this.note == '' || this.fuwuConditionzishu == true){
                     this.noteerror = true
                     return ;
                 }
-                if(this.atittude == ''){
+                if(this.atittude == '' || this.fuwuConditionzishu == true){
                     this.atittudeerror = true
                     return ;
                 }
-                if(this.fuwuCondition == ''){
+                if(this.fuwuCondition == '' || this.fuwuConditionzishu == true){
                     this.fuwuConditionerror = true
                     return ;
                 }

@@ -106,9 +106,9 @@ export default {
       };
     },
     mounted(){
-      console.log(222)
-      let ip = returnCitySN["cip"];
-      console.log('app.vue的ip=================='+ip)
+      // console.log(222)
+      // let ip = returnCitySN["cip"];
+      // console.log('app.vue的ip=================='+ip)
     },
     updated () {
         let update = JSON.parse(localStorage.getItem('update'));

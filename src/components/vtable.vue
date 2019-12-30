@@ -2,7 +2,7 @@
     <div class="wrap">
         <a-layout>
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
-                <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;margin-top">
+                <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;margin-top:-55px;">
                     <a-button type="primary" @click="start" :disabled="!hasSelected" :loading="loading">
                         批量删除
                     </a-button>
@@ -16,8 +16,8 @@
                     </span>
                 </div>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
-                    <span slot="operation" slot-scope="text, record">
-                       
+                    <span slot="operation" slot-scope="text, record" class="caozuo">
+                        <a href="javascript:;" @click="update">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
@@ -26,7 +26,7 @@
                     <span slot="customTitles">
                         <a-icon type="smile-o" /> 标题</span>
                     <template slot="titles" slot-scope="text, record">
-                        <a target="_blank">{{record.title}}</a>
+                        <span target="_blank">{{record.title}}</span>
                     </template>
                 </a-table>
             </a-layout-content>
@@ -279,6 +279,11 @@
 
 </script>
 <style scoped lang="less">
+    .caozuo{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .wrap {
         width: 100%;
         display: flex;
