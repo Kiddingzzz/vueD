@@ -39,7 +39,8 @@
                                 <a>{{record.userName}}</a>
                         </span>
                         <span slot="action" slot-scope="text, record">
-                            <a-button type="primary" @click="openDeleteSite(record.id)">删除</a-button>
+                            <!-- <a-button type="primary" @click="openDeleteSite(record.id)">删除</a-button> -->
+                            <a-button type="primary" @click="openDeleteSite(record.key,record.id,record.siteName)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary" @click="openlookpwdbotton()">查看密码</a-button>
                             <a-modal title="查看密码" v-model="openlookvisible" @ok="openlookpwd(record.id,record.siteName)">
@@ -109,6 +110,15 @@
         }
   ];
   export default {
+    // 接收站点父组件传过来的值
+    props:{
+        item: {
+            type: Array,
+            default() {
+                return []
+            }
+        }
+    },
     data() {
       return {
           columns,
@@ -156,31 +166,55 @@
      // const KeyHex =cryptoJs.enc.utf8.parse(ddd);
       const userName1 = this.encryptDes('gracemae', '058523bb')
        const pwd1 = this.encryptDes('jiayu6248', '058523bb')
+       this.siteitem = this.item;
       this.GetOpenSiteList();
    },
-   updated(){
-       this.GetOpenSiteList();
-   },
+//    updated(){
+//        this.GetOpenSiteList();
+//    },
+    watch:{
+        item:{
+            handler(newValue,oldValue){
+                //console.log('发生变化'+JSON.stringify(newValue))
+                this.siteitem = newValue;
+                this.siteitem = this.siteitem.filter(function (item) {
+                    return item.userName != undefined
+                });
+            },
+            deep:true
+        }
+    },
     methods: {
         ///获取站点列表
-            async GetOpenSiteList(){
-               // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+this.$store.userId)
-               let update = JSON.parse(localStorage.getItem('update'));
-               var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?userId=`+update.userId)
-                this.siteitem = query.data.items;
-                for(var i=0;i<this.siteitem.length;i++){
-                     this.siteitem[i].name = ['允许发布', '允许推送']
-                     this.siteitem[i].key = ''+(i+1)+'';
-                     this.siteitem[i].tiaojian = ['添加账号', '去注册']
-                }
-                // ;
-                // this.siteitem[0].tiaojian = ['添加账号', '去注册'];
-                // 
-                // this.siteitem[1].name = ['允许发布', '允许推送'];
-                //;
-                // this.siteitem[1].key = '2';
+        GetOpenSiteList(){
+            //筛选已开通网站
+            this.siteitem = this.siteitem.filter(function (item) {
+                return item.userName != undefined
+            });
+            for(let i=0;i<this.siteitem.length;i++){
+                this.siteitem[i].name = ['允许发布', '允许推送'];
+                this.siteitem[i].tiaojian = ['添加账号', '去注册'];
+                this.siteitem[i].key = ''+(i+1)+'';
+            }
+        },
+            // async GetOpenSiteList(){
+            //    // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?UserId=`+this.$store.userId)
+            //    let update = JSON.parse(localStorage.getItem('update'));
+            //    var query = await this.$http.get(`${this.$config.api}/api/cms/sites/openSite?userId=`+update.userId)
+            //     this.siteitem = query.data.items;
+            //     for(var i=0;i<this.siteitem.length;i++){
+            //          this.siteitem[i].name = ['允许发布', '允许推送']
+            //          this.siteitem[i].key = ''+(i+1)+'';
+            //          this.siteitem[i].tiaojian = ['添加账号', '去注册']
+            //     }
+            //     // ;
+            //     // this.siteitem[0].tiaojian = ['添加账号', '去注册'];
+            //     // 
+            //     // this.siteitem[1].name = ['允许发布', '允许推送'];
+            //     //;
+            //     // this.siteitem[1].key = '2';
 
-            },
+            // },
             ///房天下
             async openhandleOk(e) {
                 const data = {
@@ -210,13 +244,13 @@
                }
             },
             //删除房源
-            async openDeleteSite(sid,gname){
+            async openDeleteSite(index,sid,gname){
                  await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow`).then(Response=>{
                     if(Response.status==200) {
                          if(Response.data=="yes"){
                              //this.Deletesiteuser(id);
-                        
-                              this.GetOpenSiteList();
+                            this.siteitem.splice(index-1,1)
+                            //   this.GetOpenSiteList();
                               this.$message.success('删除成功！！');
                          }
                           else{
@@ -238,7 +272,8 @@
                 console.log("23135213")
                 this.opensiteName=hname;
                 if(tag == '添加账号'){
-                    this.openvisible = true;            
+                    // this.openvisible = true;   
+                    this.$message.error('暂时最多只能在每个网站上绑定1个账号，如果要修改账号名请先删除旧账号然后再添加！');             
                 }
                 else{
                     if(hname=="房天下")

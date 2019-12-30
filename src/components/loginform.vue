@@ -217,8 +217,8 @@
                 await this.$http.get(`${this.$config.api}/api/cms/acount/backUserPwd?AdressIp=`+this.ip).then(Response=>{
                     if(Response.status == 200)
                     {
-                        console.log("返回缓存"+JSON.stringify(Response))
-                        console.log(Response.data.items)
+                        // console.log("返回缓存"+JSON.stringify(Response))
+                        // console.log(Response.data.items)
                         if(Response.data.items.length != 0){
                             this.restaurants = Response.data.items
                         }
@@ -228,6 +228,7 @@
             },
             //用户名下拉框
             querySearch(queryString, cb) {
+                console.log(this.restaurants)
                 var restaurants = this.restaurants;
                 var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
                 // 调用 callback 返回建议列表的数据

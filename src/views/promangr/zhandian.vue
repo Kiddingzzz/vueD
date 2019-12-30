@@ -98,10 +98,10 @@
                     </a-table>
                 </a-tab-pane>
                 <a-tab-pane tab="已开通网站" key="2">
-                   <allinter></allinter>
+                    <allinter :item = 'item'></allinter>
                 </a-tab-pane>
                 <a-tab-pane tab="未开通网站" key="3">
-                    <closeinter></closeinter>
+                    <closeinter :item = 'item'></closeinter>
                 </a-tab-pane>
                 <a-tab-pane tab="操作日志" key="4">
                     <rizhi></rizhi>
@@ -240,7 +240,10 @@
         },
         methods: {
             callback (key) {
-            console.log(key)
+            // console.log(key)
+                if(key == 1){
+                    this.GetSiteList();
+                }
             },
             ///获取站点列表
             async GetSiteList(){

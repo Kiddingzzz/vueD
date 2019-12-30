@@ -100,6 +100,15 @@
         }
   ];
   export default {
+    // 接收站点父组件传过来的值
+    props:{
+        item: {
+            type: Array,
+            default() {
+                return []
+            }
+        }
+    },
     data() {
       return {
           column,
@@ -132,37 +141,60 @@
        
       };
     },
-   mounted() {
-      let pwd = this.pwd;
-      let closekeyId = this.closekeyId;
-      const ddd = closekeyId.toString();
-      // console.log(ddd);
-     // const KeyHex =cryptoJs.enc.utf8.parse(ddd);
-      const userName1 = this.encryptDes('gracemae', '058523bb')
-       const pwd1 = this.encryptDes('jiayu6248', '058523bb')
-
-      this.GetCloseSiteList();
-   },
+    mounted() {
+        let pwd = this.pwd;
+        let closekeyId = this.closekeyId;
+        const ddd = closekeyId.toString();
+        // console.log(ddd);
+        // const KeyHex =cryptoJs.enc.utf8.parse(ddd);
+        const userName1 = this.encryptDes('gracemae', '058523bb')
+        const pwd1 = this.encryptDes('jiayu6248', '058523bb')
+        this.closesiteitem = this.item;
+        this.GetCloseSiteList();
+    },
+     watch:{
+        item:{
+            handler(newValue,oldValue){
+                //console.log('发生变化'+JSON.stringify(newValue))
+                this.closesiteitem = newValue;
+                this.closesiteitem = this.closesiteitem.filter(function (item) {
+                    return item.userName == undefined
+                });
+            },
+            deep:true
+        }
+    },
     methods: {
         ///获取站点列表
-            async GetCloseSiteList(){
-                //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
-                let update = JSON.parse(localStorage.getItem('update'));
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?userId=`+update.userId)
+         GetCloseSiteList(){
+            //筛选已开通网站
+            this.closesiteitem = this.closesiteitem.filter(function (item) {
+                return item.userName == undefined
+            });
+            for(let i=0;i<this.closesiteitem.length;i++){
+                this.closesiteitem[i].name = ['允许发布', '允许推送'];
+                this.closesiteitem[i].tiaojian = ['添加账号', '去注册'];
+                this.closesiteitem[i].key = ''+(i+1)+'';
+            }
+        },
+            // async GetCloseSiteList(){
+            //     //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
+            //     let update = JSON.parse(localStorage.getItem('update'));
+            //     var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?userId=`+update.userId)
                 
-                this.closesiteitem = query.data.items; 
-                for(var i=0;i<this.closesiteitem.length;i++){
-                     this.closesiteitem[i].name = ['允许发布', '允许推送']
-                     this.closesiteitem[i].key = ''+(i+1)+'';
-                     this.closesiteitem[i].tiaojian = ['添加账号', '去注册']
-                }
-                // this.closesiteitem[0].name = ['允许发布', '允许推送'];
-                // this.closesiteitem[0].tiaojian = ['添加账号', '去注册'];
-                // this.closesiteitem[0].key = '1';
-                // this.closesiteitem[1].name = ['允许发布', '允许推送'];
-                // this.closesiteitem[1].tiaojian = ['添加账号', '去注册'];
-                // this.closesiteitem[1].key = '2';
-            },
+            //     this.closesiteitem = query.data.items; 
+            //     for(var i=0;i<this.closesiteitem.length;i++){
+            //          this.closesiteitem[i].name = ['允许发布', '允许推送']
+            //          this.closesiteitem[i].key = ''+(i+1)+'';
+            //          this.closesiteitem[i].tiaojian = ['添加账号', '去注册']
+            //     }
+            //     // this.closesiteitem[0].name = ['允许发布', '允许推送'];
+            //     // this.closesiteitem[0].tiaojian = ['添加账号', '去注册'];
+            //     // this.closesiteitem[0].key = '1';
+            //     // this.closesiteitem[1].name = ['允许发布', '允许推送'];
+            //     // this.closesiteitem[1].tiaojian = ['添加账号', '去注册'];
+            //     // this.closesiteitem[1].key = '2';
+            // },
             ///58tongcheng
             async closehandle58(e) {
                 let update = JSON.parse(localStorage.getItem('update'));
