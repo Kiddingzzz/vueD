@@ -40,7 +40,6 @@
                                 :fetch-suggestions="querySearch"
                                 placeholder="请输入姓名"
                                 value-key="username"
-                                :trigger-on-focus="false"
                                 @input = "reset"
                                 @select="handleSelect"
                                 @keyup.enter.native="doLogin()"
