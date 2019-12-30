@@ -840,6 +840,11 @@
                             this.ref = res.data;
                             //产权年限
                             this.chanquanNianxian = this.ref.chanquanNianxian
+                            //信息标题、价格、面积、房源地址、配套标签
+                            this.title = this.ref.title
+                            this.note = this.ref.note
+                            this.atittude = this.ref.atittude
+                            this.fuwuCondition = this.ref.fuwuCondition
                             //字符串
                             console.log("房源标签是否含有html标签？==========" + this.ref.fangyuanBiaoqian);
                             const nianqi = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
@@ -973,7 +978,7 @@
                     let update = JSON.parse(localStorage.getItem('update'));
                     this.saveRes.urlsId = update.userId;
                     this.saveRes.imgHeader = this.imgH.url;
-                    await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.saveRes).then(response => {
+                    await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
                         }
@@ -995,7 +1000,7 @@
                     let update = JSON.parse(localStorage.getItem('update'));
                     this.ref.urlsId = update.userId;
                     this.ref.imgHeader = this.imgH.url;
-                    await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.ref).then(response => {
+                    await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.ref).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
                         }
@@ -1069,6 +1074,8 @@
                     this.chaoxiang = ret.chaoxiang;
                     this.spinning = false;
                     this.ref = res.data;
+                    //产权年限
+                    this.chanquanNianxian = this.ref.chanquanNianxian
                     //信息标题、价格、面积、房源地址、配套标签
                     this.title = this.ref.title
                     this.note = this.ref.note

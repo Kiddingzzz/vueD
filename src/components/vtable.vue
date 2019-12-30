@@ -2,6 +2,19 @@
     <div class="wrap">
         <a-layout>
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
+                <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;">
+                    <a-button type="primary" @click="start" :disabled="!hasSelected" :loading="loading">
+                        批量删除
+                    </a-button>
+                    <a-button style="margin-right: 8px" type="primary" @click="start" :disabled="!hasSelected" :loading="loading">
+                        批量发布
+                    </a-button>
+                    <span style="margin-left: 8px">
+                        <template v-if="hasSelected">
+                        {{`Selected ${selectedRowKeys.length} items`}}
+                        </template>
+                    </span>
+                </div>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record">
                        
@@ -122,57 +135,58 @@
             return {
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
+                loading: false,
                 list: [],
             };
         },
         computed: {
+            hasSelected() {
+                return this.selectedRowKeys.length > 0;
+            },
             rowSelection() {
                 const { selectedRowKeys } = this;
                 return {
-                    selectedRowKeys,
-                    onChange: this.onSelectChange,
-                    hideDefaultSelections: true,
-                    selections: [
-                        {
-                            key: 'all-data',
-                            text: '全选',
-
-                            onSelect: () => {
-                                this.selectedRowKeys = [...Array(46).keys()]; // 0...45
-                            },
-                        },
-                        {
-                            key: 'odd',
-                            text: '单选',
-
-                            onSelect: changableRowKeys => {
-                                let newSelectedRowKeys = [];
-                                newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-                                    if (index % 2 !== 0) {
-                                        return false;
-                                    }
-                                    return true;
-                                });
-                                this.selectedRowKeys = newSelectedRowKeys;
-                            },
-                        },
-                        {
-                            key: 'even',
-                            text: '双选',
-
-                            onSelect: changableRowKeys => {
-                                let newSelectedRowKeys = [];
-                                newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-                                    if (index % 2 !== 0) {
-                                        return true;
-                                    }
-                                    return false;
-                                });
-                                this.selectedRowKeys = newSelectedRowKeys;
-                            },
-                        },
-                    ],
-                    onSelection: this.onSelection,
+                selectedRowKeys,
+                onChange: this.onSelectChange,
+                hideDefaultSelections: true,
+                selections: [
+                    {
+                    key: 'all-data',
+                    text: 'Select All Data',
+                    onSelect: () => {
+                        this.selectedRowKeys = [...Array(46).keys()]; // 0...45
+                    },
+                    },
+                    {
+                    key: 'odd',
+                    text: 'Select Odd Row',
+                    onSelect: changableRowKeys => {
+                        let newSelectedRowKeys = [];
+                        newSelectedRowKeys = changableRowKeys.filter((key, index) => {
+                        if (index % 2 !== 0) {
+                            return false;
+                        }
+                        return true;
+                        });
+                        this.selectedRowKeys = newSelectedRowKeys;
+                    },
+                    },
+                    {
+                    key: 'even',
+                    text: 'Select Even Row',
+                    onSelect: changableRowKeys => {
+                        let newSelectedRowKeys = [];
+                        newSelectedRowKeys = changableRowKeys.filter((key, index) => {
+                        if (index % 2 !== 0) {
+                            return true;
+                        }
+                        return false;
+                        });
+                        this.selectedRowKeys = newSelectedRowKeys;
+                    },
+                    },
+                ],
+                onSelection: this.onSelection,
                 };
             },
         },
@@ -180,6 +194,14 @@
             this.seachShow();
         },
         methods: {
+            start() {
+                this.loading = true;
+                // ajax request after empty completing
+                setTimeout(() => {
+                this.loading = false;
+                this.selectedRowKeys = [];
+                }, 1000);
+            },
             onSelectChange(selectedRowKeys) {
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
