@@ -13,7 +13,8 @@
                 </div>
             </div>
         </div>
-        <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @ok="handleOk" :destroyOnClose="true" cancelText="取消" okText="确定">
+        <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @ok="handleOk" :destroyOnClose="true"
+            cancelText="取消" okText="确定">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
@@ -22,9 +23,12 @@
                 </a-spin>
             </p>
             <div class="selllogo">
-                <a href="https://cq.58.com/ershoufang" target="_blank"><img class="wuba" src="../../assets/logo/58logo.png"></a>
-                <a href="https://chongqing.anjuke.com/sale" target="_blank"><img class="anju" src="../../assets/logo/anjuke.jpg"></a>
-                <a href="https://cq.esf.fang.com" target="_blank"><img class="fang" src="../../assets/logo/fangtianxia.jpg"></a>
+                <a href="https://cq.58.com/ershoufang" target="_blank"><img class="wuba"
+                        src="../../assets/logo/58logo.png"></a>
+                <a href="https://chongqing.anjuke.com/sale" target="_blank"><img class="anju"
+                        src="../../assets/logo/anjuke.jpg"></a>
+                <a href="https://cq.esf.fang.com" target="_blank"><img class="fang"
+                        src="../../assets/logo/fangtianxia.jpg"></a>
             </div>
             <div class="sellfontU">
                 <ul class="sellsale-content-tip clear" style="margin:0px">
@@ -38,7 +42,7 @@
                 </ul>
             </div>
         </a-modal>
-     <!--   <a-modal title="添加小区" v-model="addxq" @ok="addok">
+        <!--   <a-modal title="添加小区" v-model="addxq" @ok="addok">
             <div style="width:100%">
                 <div>
                     <a-form>
@@ -124,9 +128,9 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
                             validate-status="">
-                                <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积"
-                                    class="sellmianji" />
-                                <label class="sellsmianij" style="">平方米</label>
+                            <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积"
+                                class="sellmianji" />
+                            <label class="sellsmianij" style="">平方米</label>
                         </a-form-item>
 
                         <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
@@ -138,17 +142,17 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">
-                            <a-input id="error2" placeholder="" class="sellshihaow"  />
-                            <a-select default-value="栋" class="sellshihaoselw sellmianji" >
-                                <a-select-option  v-for="(index,i) in danyuan" :key="i" :value="index">
+                            <a-input id="error2" placeholder="" class="sellshihaow" />
+                            <a-select default-value="栋" class="sellshihaoselw sellmianji">
+                                <a-select-option v-for="(index,i) in danyuan" :key="i" :value="index">
                                     {{index}}
                                 </a-select-option>
                             </a-select>
                             <a-input id="" placeholder="" class="sellshihaow" />
-                            <a-select default-value="单元"  class="sellshihaoselw sellmianji">
-                                    <a-select-option v-for="(index,i) in zhuang" :key="i" :value="index">
-                                            {{index}}
-                                    </a-select-option>
+                            <a-select default-value="单元" class="sellshihaoselw sellmianji">
+                                <a-select-option v-for="(index,i) in zhuang" :key="i" :value="index">
+                                    {{index}}
+                                </a-select-option>
                             </a-select>
                             <a-input id="" placeholder="" class="sellshihaow" />
                             <label class="sellsmianij">室</label>
@@ -194,7 +198,7 @@
                             <label class="sellsmianij">万</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
-                            validate-status="" >
+                            validate-status="">
                             <a-input-number :min="1950" :max="2019" v-model="jianzaoniandai" class="sellmianji" />
                             <label class="sellsmianij">年</label>
                         </a-form-item>
@@ -212,11 +216,11 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncf" :defaultValue="value3"  />
+                            <a-radio-group :options="plainOptioncf" :defaultValue="value3" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptionzx" :defaultValue="value4" v-model="laf.zhuangxiu"/>
+                            <a-radio-group :options="plainOptionzx" :defaultValue="value4" v-model="laf.zhuangxiu" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
@@ -243,87 +247,88 @@
 
         <!-- 住宅信息 -->
         <div class="sellwrap">
-                <a-layout style="padding: 24px 24px 24px 24px">
-                    <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-                        <a-form>
-                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedback v-model="ref.fangwuLeixing"
-                                validate-status="">
-                                <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" />
-                            </a-form-item>
-                            <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋产权：" has-feedback 
-                              validate-status="">
-                                <a-select default-value="" class="zhuzhaibox " v-model="ref.fangwuChanquan">
-                                    <a-select-option v-for="(root,i) in houseroot" :key="i" :value="root" >
-                                        {{root}}
-                                    </a-select-option>
-                                </a-select>
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*产权年限" has-feedback 
-                           validate-status="">
-                              <a-radio-group :options="plainOptionnianxian" v-model="ref.chanquanNianxian" />
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑形式" has-feedback
-                           validate-status="">
-                              <a-radio-group :options="plainOptionjianzhutype" :defaultValue="valuetype" />
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑结构" has-feedback
-                           validate-status="">
-                              <a-radio-group :options="plainOptionjianzhujiegou" :defaultValue="valuejieg" />
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋年限" has-feedback v-model="ref.weiyizhufang"
-                           validate-status="">
-                              <a-radio-group :options="plainOptionroot" :defaultValue="valueroot" v-model="fangyuanBiaoqian" />
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*唯一住房" has-feedback
-                           validate-status="">
-                              <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi" />
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*新房/二手房" has-feedback v-model="ref.houseType"
-                           validate-status="">
-                              <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse" />
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*佣金比例：" has-feedback
-                           validate-status="">
-                             <label class="yongjinlabel">≤</label>
-                             <a-input-number :min="0" :max="10" :step="0.5" />
-                             <label class="sellyongjingbox">%</label>
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
-                           validate-status="">
-                                <a-checkbox ></a-checkbox>
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
-                           validate-status="">
-                                <a-checkbox >水</a-checkbox>
-                                <a-checkbox >电</a-checkbox>
-                                <a-checkbox >煤气/天然气</a-checkbox>
-                                <a-checkbox >有线电视</a-checkbox>
-                                <a-checkbox >暖气</a-checkbox>
-                                <a-checkbox >车位</a-checkbox>
-                                <a-checkbox >露台</a-checkbox>
-                                <a-checkbox >阁楼</a-checkbox>
-                                <a-checkbox >储藏室/地下室</a-checkbox>
-                           </a-form-item>
-                           <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套设施" has-feedback
-                           validate-status="">
-                                <a-checkbox >电话</a-checkbox>
-                                <a-checkbox >热水器</a-checkbox>
-                                <a-checkbox >彩电</a-checkbox>
-                                <a-checkbox >空调</a-checkbox>
-                                <a-checkbox >冰箱</a-checkbox>
-                                <a-checkbox >洗衣机</a-checkbox>
-                                <a-checkbox >家具</a-checkbox>
-                                <a-checkbox >床</a-checkbox>
-                                <a-checkbox >宽带网</a-checkbox>
-                                <a-checkbox >微波炉</a-checkbox>
-                                <a-checkbox >衣柜</a-checkbox>
-                                <a-checkbox >沙发</a-checkbox>
-                                <a-checkbox >厨具（可做饭）</a-checkbox>
-                                <a-checkbox >独立卫生间</a-checkbox>
-                           </a-form-item>
-                        </a-form>
-                    </a-layout-content>
-                </a-layout>
+            <a-layout style="padding: 24px 24px 24px 24px">
+                <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
+                    <a-form>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedback
+                            v-model="ref.fangwuLeixing" validate-status="">
+                            <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" />
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋产权：" has-feedback
+                            validate-status="">
+                            <a-select default-value="" class="zhuzhaibox " v-model="ref.fangwuChanquan">
+                                <a-select-option v-for="(root,i) in houseroot" :key="i" :value="root">
+                                    {{root}}
+                                </a-select-option>
+                            </a-select>
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*产权年限" has-feedback
+                            validate-status="">
+                            <a-radio-group :options="plainOptionnianxian" v-model="ref.chanquanNianxian" />
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑形式" has-feedback
+                            validate-status="">
+                            <a-radio-group :options="plainOptionjianzhutype" :defaultValue="valuetype" />
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑结构" has-feedback
+                            validate-status="">
+                            <a-radio-group :options="plainOptionjianzhujiegou" :defaultValue="valuejieg" />
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋年限" has-feedback
+                            v-model="ref.weiyizhufang" validate-status="">
+                            <a-radio-group :options="plainOptionroot" :defaultValue="valueroot"
+                                v-model="fangyuanBiaoqian" />
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*唯一住房" has-feedback
+                            validate-status="">
+                            <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi" />
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*新房/二手房" has-feedback
+                            v-model="ref.houseType" validate-status="">
+                            <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse" />
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*佣金比例：" has-feedback
+                            validate-status="">
+                            <label class="yongjinlabel">≤</label>
+                            <a-input-number :min="0" :max="10" :step="0.5" />
+                            <label class="sellyongjingbox">%</label>
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
+                            validate-status="">
+                            <a-checkbox></a-checkbox>
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
+                            validate-status="">
+                            <a-checkbox>水</a-checkbox>
+                            <a-checkbox>电</a-checkbox>
+                            <a-checkbox>煤气/天然气</a-checkbox>
+                            <a-checkbox>有线电视</a-checkbox>
+                            <a-checkbox>暖气</a-checkbox>
+                            <a-checkbox>车位</a-checkbox>
+                            <a-checkbox>露台</a-checkbox>
+                            <a-checkbox>阁楼</a-checkbox>
+                            <a-checkbox>储藏室/地下室</a-checkbox>
+                        </a-form-item>
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套设施" has-feedback
+                            validate-status="">
+                            <a-checkbox>电话</a-checkbox>
+                            <a-checkbox>热水器</a-checkbox>
+                            <a-checkbox>彩电</a-checkbox>
+                            <a-checkbox>空调</a-checkbox>
+                            <a-checkbox>冰箱</a-checkbox>
+                            <a-checkbox>洗衣机</a-checkbox>
+                            <a-checkbox>家具</a-checkbox>
+                            <a-checkbox>床</a-checkbox>
+                            <a-checkbox>宽带网</a-checkbox>
+                            <a-checkbox>微波炉</a-checkbox>
+                            <a-checkbox>衣柜</a-checkbox>
+                            <a-checkbox>沙发</a-checkbox>
+                            <a-checkbox>厨具（可做饭）</a-checkbox>
+                            <a-checkbox>独立卫生间</a-checkbox>
+                        </a-form-item>
+                    </a-form>
+                </a-layout-content>
+            </a-layout>
         </div>
         <div class="sellfilter-wraps sellwrapscolor">
             <div class="sellsearch_bds">
@@ -343,66 +348,70 @@
         </div>
         <!-- 房源介绍 -->
         <div class="sellwrap">
-           <a-layout class="res" style="padding:24px;">
+            <a-layout class="res" style="padding:24px;">
                 <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
                     <a-form>
-                         <div class="selltilerbox">
-                             <div class="selltiler-firstbox">
+                        <div class="selltilerbox">
+                            <div class="selltiler-firstbox">
                                 <label class="selllabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
-                             </div>
-                             <div>
-                                  <a-input v-model="ref.title"  placeholder="字数限制10-30" style="width:50%;" />
-                             </div>
-                         </div>
-                         <div class="selltilerbox">
-                             <div class="selltiler-firstbox">
+                            </div>
+                            <div>
+                                <a-input v-model="ref.title" placeholder="字数限制10-30" style="width:50%;" />
+                            </div>
+                        </div>
+                        <div class="selltilerbox">
+                            <div class="selltiler-firstbox">
                                 <label class="selllabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
-                             </div>
-                             <div>
-                                   <a-textarea v-model="ref.note"  style="width:50%;" :rows="6" />
-                                   <div>
-                                      <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
-                                   </div>
-                             </div>
-                         </div>
-                         <div class="selltilerbox">
-                                <div class="selltiler-firstbox">
-                                    <label class="selllabeltle">*业主心态：</label><label>从房东卖房原因、是否急售等方面进行描述</label><label class="putnumber">(字数限制20-300)</label>
-                                </div>
+                            </div>
+                            <div>
+                                <a-textarea v-model="ref.note" style="width:50%;" :rows="6" />
                                 <div>
-                                    <a-textarea v-model="ref.atittude" style="width:50%;" :rows="5" />
-                                    <div>
-                                    <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲ 《》♀♂⊕⊙＊※【】‖︻ ︼</label>
-                                    </div>
+                                    <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲
+                                        《》♀♂⊕⊙＊※【】‖︻ ︼</label>
                                 </div>
-                         </div>
-                         <div class="selltilerbox">
-                                <div class="selltiler-firstbox">
-                                    <label class="selllabeltle">服务介绍:</label>
-                                    <label>多角度描述您的服务优势，例如：行业年限、专业经验、服务态度、可提供的服务种类等</label>
-                                    <label class="sellputnumber">(字数限制20-300)</label>
-                                </div>
+                            </div>
+                        </div>
+                        <div class="selltilerbox">
+                            <div class="selltiler-firstbox">
+                                <label class="selllabeltle">*业主心态：</label><label>从房东卖房原因、是否急售等方面进行描述</label><label
+                                    class="putnumber">(字数限制20-300)</label>
+                            </div>
+                            <div>
+                                <a-textarea v-model="ref.atittude" style="width:50%;" :rows="5" />
                                 <div>
-                                    <a-textarea :rows="5" style="width:50%;"  v-model="ref.fuwuCondition"/>
+                                    <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲
+                                        《》♀♂⊕⊙＊※【】‖︻ ︼</label>
                                 </div>
-                         </div>
-                         <div class="selltilerbox">
-                                <div class="selltiler-firstbox">
-                                    <label class="selllabeltle">*小区配套:</label><label>从交通、教育、医疗、内部环境、车位情况、安保措施方面来描述</label>
-                                </div>
-                                <div>
-                                    <a-textarea :rows="5" style="width:50%;"/>
-                                </div>
-                         </div>
-                         <div class="selltilerbox">
-                                <div class="selltiler-firstbox">
-                                    <label class="selllabeltle">税费信息:</label><label>相关费用，描述越详尽您的房源质量就会越高，展示给网友的机会就会增加(仅搜房帮)</label>
-                                </div>
-                                <div>
-                                    <a-textarea :rows="5" style="width:50%;" />
-                                </div>
-                         </div>
-                   
+                            </div>
+                        </div>
+                        <div class="selltilerbox">
+                            <div class="selltiler-firstbox">
+                                <label class="selllabeltle">服务介绍:</label>
+                                <label>多角度描述您的服务优势，例如：行业年限、专业经验、服务态度、可提供的服务种类等</label>
+                                <label class="sellputnumber">(字数限制20-300)</label>
+                            </div>
+                            <div>
+                                <a-textarea :rows="5" style="width:50%;" v-model="ref.fuwuCondition" />
+                            </div>
+                        </div>
+                        <div class="selltilerbox">
+                            <div class="selltiler-firstbox">
+                                <label class="selllabeltle">*小区配套:</label><label>从交通、教育、医疗、内部环境、车位情况、安保措施方面来描述</label>
+                            </div>
+                            <div>
+                                <a-textarea :rows="5" style="width:50%;" />
+                            </div>
+                        </div>
+                        <div class="selltilerbox">
+                            <div class="selltiler-firstbox">
+                                <label
+                                    class="selllabeltle">税费信息:</label><label>相关费用，描述越详尽您的房源质量就会越高，展示给网友的机会就会增加(仅搜房帮)</label>
+                            </div>
+                            <div>
+                                <a-textarea :rows="5" style="width:50%;" />
+                            </div>
+                        </div>
+
                     </a-form>
                 </a-layout-content>
             </a-layout>
@@ -456,9 +465,9 @@
                             <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76" listType="picture-card"
                                 :fileList="imgHeaderList" @preview="handlePreview" @change="handleChange">
                             </a-upload>
-                                <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                            <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
                                 <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
-                                </a-modal>
+                            </a-modal>
                         </div>
                         <div class="sellshinei selldivallbox">
                             <div class="selllaberbox">
@@ -478,7 +487,8 @@
                                     <!-- <a-button class="updatedbutton">
                                             <a-icon type="upload" />上传图片</a-button> -->
                                 </a-upload>
-                                <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
+                                <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null"
+                                    @cancel="handleCancel">
                                     <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
                                 </a-modal>
                             </div>
@@ -530,8 +540,9 @@
                                         listType="picture-card" :fileList="xiaoQuList" @preview="handlePreview"
                                         @change="handleChange">
                                     </a-upload>
-                                    <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                                        <img alt="example" style="height:100%; width:100%;"  :src="previewImage" />
+                                    <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null"
+                                        @cancel="handleCancel">
+                                        <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
                                     </a-modal>
                                 </div>
                                 <!-- <div class="xiala">
@@ -561,7 +572,7 @@
                             </div>
                         </div>
                         <div class="sellbottomobx">
-                            <a-button type="" class="sellbuttonfang sellokbutton" @click="saveHouse()" >保存房源</a-button>
+                            <a-button type="" class="sellbuttonfang sellokbutton" @click="saveHouse()">保存房源</a-button>
                             <a-button type="" class="sellokbutton">保存草稿</a-button>
                         </div>
                     </a-form>
@@ -583,16 +594,16 @@
     const plainOptionsc = ['普通上传', '批量上传', '大图压缩批量上传'];
     const plainOptionsy = ['不加水印', '添加水印'];
     const pilianglist = ['批量水印', '批量美颜', '批量水印美颜', '批量恢复原图', '批量调整大小', '批量下载图片'];
-    const plainOptionfwlb=['公寓','普通住宅','平房','其他'];
-    const houseroot=['商品房','商住两用','经济适用房','使用权','公房','其他'];
-    const plainOptionnianxian=['70年','50年','40年'];
-    const plainOptionjianzhutype=['板楼','塔楼','板塔结合','砖混','其他',];
-    const plainOptionjianzhujiegou=['平层','错层','跃层','复式','开间',];
-    const plainOptionroot=['满五年','满二年','不满二年'];
-    const plainOptionweiyi=['是','否'];
-    const plainOptionhouse=['新房','二手房'];
-    const zhuang=['单元','号','幢','栋','号楼'];
-    const danyuan=['栋','号','弄','座','号楼','胡同'];
+    const plainOptionfwlb = ['公寓', '普通住宅', '平房', '其他'];
+    const houseroot = ['商品房', '商住两用', '经济适用房', '使用权', '公房', '其他'];
+    const plainOptionnianxian = ['70年', '50年', '40年'];
+    const plainOptionjianzhutype = ['板楼', '塔楼', '板塔结合', '砖混', '其他',];
+    const plainOptionjianzhujiegou = ['平层', '错层', '跃层', '复式', '开间',];
+    const plainOptionroot = ['满五年', '满二年', '不满二年'];
+    const plainOptionweiyi = ['是', '否'];
+    const plainOptionhouse = ['新房', '二手房'];
+    const zhuang = ['单元', '号', '幢', '栋', '号楼'];
+    const danyuan = ['栋', '号', '弄', '座', '号楼', '胡同'];
     export default {
         data() {
             return {
@@ -628,22 +639,22 @@
                 value5: '集体供暖',
                 value6: '普通上传',
                 value7: '不加水印',
-                value8:'普通住宅',
-                value9:'70年产权',
-                valuetype:'板楼',
-                valuejieg:'平层',
-                valueroot:'满五年',
-                valueweiyi:'是',
-                valuehouse:'二手房',
+                value8: '普通住宅',
+                value9: '70年产权',
+                valuetype: '板楼',
+                valuejieg: '平层',
+                valueroot: '满五年',
+                valueweiyi: '是',
+                valuehouse: '二手房',
                 radioStyle: {
                     display: 'block',
                     height: '30px',
                     lineHeight: '30px',
                 },
-                tstyle:{
-                    height:'470px'
+                tstyle: {
+                    height: '470px'
                 },
-                style:{
+                style: {
                 },
                 ret: {},
                 visible: false,
@@ -664,7 +675,7 @@
                 urlss: '',
                 text: '',
                 hutong: '',
-                jianzaoniandai:'',
+                jianzaoniandai: '',
                 ref: {},
                 previewVisible: false,
                 previewImage: '',
@@ -690,20 +701,20 @@
                 weiyiUserId: '',
                 saveRes: {},
                 imgH: {},
-                refQuyu:'',
-                laf:{},
-                ZhuaquUrl:'',
-                reciveId:this.$route.params.id,
+                refQuyu: '',
+                laf: {},
+                ZhuaquUrl: '',
+                reciveId: this.$route.params.id,
             }
         },
         mounted() {
-            
+
             // this.reciveId =options.id;
             // this.kanfang="随时看房";
             this.zhuangxiu = "中等装修";
             this.gongnuan = "自供暖";
-            if(this.reciveId!=undefined||this.reciveId!=null)
-                   this.backfbdata(this.reciveId);
+            if (this.reciveId != undefined || this.reciveId != null)
+                this.backfbdata(this.reciveId);
         },
         methods: {
 
@@ -723,11 +734,11 @@
             //插入一条url数据链接
             async onSearch(params) {
                 //判断URL网址输入是否正确
-                var strRegex ='^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
-                var re=new RegExp(strRegex); 
-                if (params==""||!re.test(params)) { 
+                var strRegex = '^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
+                var re = new RegExp(strRegex);
+                if (params == "" || !re.test(params)) {
                     alert("请输入正确的url地址");
-                    return; 
+                    return;
                 }
                 this.uuid()
                 this.urlss = params;
@@ -737,54 +748,51 @@
                     houseType: this.houseTypes,
                     weiYiUrl: this.text
                 };
-                if(RegExp(/anjuke/).exec(params))
-                        this.ZhuaquUrl=`${this.$config.api}/api/cms/anJuKe/shopUrl`
-                if(RegExp(/cq.58.com/).exec(params))
-                        this.ZhuaquUrl=`${this.$config.api}/api/cms/urls/url`
-                if(RegExp(/sofang/).exec(params))
-                        console.log("我是搜房网");
-                if(RegExp(/esf.fang./).exec(params))
-                        this.ZhuaquUrl=`${this.$config.api}/api/cms/fang/fangUrl`
-                await this.$http.post( this.ZhuaquUrl, data).then(response => {
+                if (RegExp(/anjuke/).exec(params))
+                    this.ZhuaquUrl = `${this.$config.api}/api/cms/anJuKe/shopUrl`
+                if (RegExp(/cq.58.com/).exec(params))
+                    this.ZhuaquUrl = `${this.$config.api}/api/cms/urls/url`
+                if (RegExp(/sofang/).exec(params))
+                    console.log("我是搜房网");
+                if (RegExp(/esf.fang./).exec(params))
+                    this.ZhuaquUrl = `${this.$config.api}/api/cms/fang/fangUrl`
+                await this.$http.post(this.ZhuaquUrl, data).then(response => {
                     this.spinning = true;
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
-                            console.log(`抓取数据:`+JSON.stringify(res.data))
+                            console.log(`抓取数据:` + JSON.stringify(res.data))
                             this.laf = res.data;
                             var ret = res.data.address;
                             var refQu = ret.indexOf('－');
-                            this.refQuyu = ret.substring(0,refQu);
+                            this.refQuyu = ret.substring(0, refQu);
                             this.saveRes = res.data;
                             this.chaoxiang = ret.chaoxiang;
                             this.spinning = false;
                             this.ref = res.data;
                             //字符串
-                            console.log("房源标签是否含有html标签？=========="+this.ref.fangyuanBiaoqian);
-                            const nianqi=this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"")
+                            console.log("房源标签是否含有html标签？==========" + this.ref.fangyuanBiaoqian);
+                            const nianqi = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
                             console.log(nianqi)
-                            if( nianqi=='新上')
-                            {
-                               console.log("sdgsfsfd")
-                               this.fangyuanBiaoqian ="不满二年";
+                            if (nianqi == '新上') {
+                                console.log("sdgsfsfd")
+                                this.fangyuanBiaoqian = "不满二年";
                             }
-                                 
+
                             else
-                                 this.fangyuanBiaoqian =nianqi ;
-                            console.log("去掉房源标签含有的html标签成功？=========="+this.fangyuanBiaoqian);
+                                this.fangyuanBiaoqian = nianqi;
+                            console.log("去掉房源标签含有的html标签成功？==========" + this.fangyuanBiaoqian);
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                             this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
                             let shi = this.ref.huxing.indexOf("室");
                             let ting = this.ref.huxing.indexOf("厅");
                             let wei = this.ref.huxing.indexOf("卫");
-                            let niandai=this.ref.fangwuDate;
-                            if(RegExp(/年/).exec(niandai))
-                            {
-                                this.jianzaoniandai=niandai.replace('年','')
-                                
+                            let niandai = this.ref.fangwuDate;
+                            if (RegExp(/年/).exec(niandai)) {
+                                this.jianzaoniandai = niandai.replace('年', '')
+
                             }
-                            else
-                            {
-                                 this.jianzaoniandai=niandai
+                            else {
+                                this.jianzaoniandai = niandai
                             }
                             this.selectedShi = this.ref.huxing.substring(0, shi);
                             this.selectedTing = this.ref.huxing.substring(shi + 1, ting);
@@ -835,16 +843,16 @@
             },
             //保存房源
             async saveHouse() {
-               if(this.reciveId==''||this.reciveId==undefined){
-                      this.zhuaqubao();
-               }
-                else{
-                     this.xiugaibao();
+                console.log(`reciveId:` + this.reciveId)
+                if (this.reciveId == '' || this.reciveId == undefined) {
+                    this.zhuaqubao();
+                }
+                else {
+                    this.xiugaibao();
                 }
 
             },
-            async xiugaibao()
-             {
+            async zhuaqubao() {
                 if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
                     this.saveRes.rice == null && this.saveRes.simpleRice == null &&
                     this.saveRes.square == null && this.saveRes.huxing == null &&
@@ -863,10 +871,11 @@
                         }
                     })
                 }
-             },
+            },
             //抓取房源保存
-            async zhuaqubao(){
-                 if (this.ref.xiaoquName == null && this.ref.title == null &&
+            async xiugaibao() {
+                console.log('抓取房源保存')
+                if (this.ref.xiaoquName == null && this.ref.title == null &&
                     this.ref.rice == null && this.ref.simpleRice == null &&
                     this.ref.square == null && this.ref.huxing == null &&
                     this.ref.louceng == null && this.ref.zhuangxiu == null && this.ref.address == null && this.ref.imgHeader == null
@@ -897,7 +906,7 @@
                     });
                     this.$router.replace('/salerelease')
                 }
-                     if (type == 'error') {
+                if (type == 'error') {
                     this.$notification[type]({
                         message: '保存失败',
                         placement: 'bottomRight',
@@ -940,102 +949,104 @@
                 this.fileList = fileList;
             },
             moment,
-           async backfbdata(backid){
-                console.log("返回id："+backid)
-                   await this.$http.post(`${this.$config.api}/api/cms/house/` + backid + `/backPubData`).then(res => {
-                        console.log(`抓取数据:`+JSON.stringify(res.data))
-                            this.laf = res.data;
-                            var ret = res.data.address;
-                            var refQu = ret.indexOf('－');
-                            this.refQuyu = ret.substring(0,refQu);
-                            this.saveRes = res.data;
-                            this.chaoxiang = ret.chaoxiang;
-                            this.spinning = false;
-                            this.ref = res.data;
-                            //字符串
-                            console.log("房源标签是否含有html标签？=========="+this.ref.fangyuanBiaoqian);
-                             const nianqi=this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"")
-                             console.log(nianqi)
-                            if( nianqi=="新上")
-                               this.fangyuanBiaoqian ="不满二年";
-                            else
-                                 this.fangyuanBiaoqian =nianqi ;
-                            //this.fangyuanBiaoqian = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"");
-                            console.log("去掉房源标签含有的html标签成功？gg=========="+this.fangyuanBiaoqian);
-                            this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
-                            this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
-                            let shi = this.ref.huxing.indexOf("室");
-                            let ting = this.ref.huxing.indexOf("厅");
-                            let wei = this.ref.huxing.indexOf("卫");
-                            let niandai=this.ref.fangwuDate;
-                            if(RegExp(/年/).exec(niandai))
-                            {
-                                this.jianzaoniandai=niandai.replace('年','')
-                                
-                            }
-                            else
-                            {
-                                 this.jianzaoniandai=niandai
-                            }
-                            this.selectedShi = this.ref.huxing.substring(0, shi);
-                            this.selectedTing = this.ref.huxing.substring(shi + 1, ting);
-                            this.selectedWei = this.ref.huxing.substring(ting + 1, wei);
-                            this.spinning = false;
-                            var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
-                            var ss = shineiImg.split(",")
-                            this.weiyiUserId = res.data.weiYiUrl;
-                            for (var i = 0; i < ss.length; i++) {
-                                var imgUrl = {};
-                                imgUrl.url = ss[i];
-                                imgUrl.uid = i;
-                                imgUrl.name = 'xxx.jpg';
-                                imgUrl.status = 'done';
-                                this.shineiList.push(imgUrl);
-                            }
-                            this.imgH.url = ss[0],
-                                this.imgH.uid = '-150',
-                                this.imgH.name = 'xxx.jpg',
-                                this.imgH.status = 'done',
-                                this.imgHeaderList.push(this.imgH);
+            async backfbdata(backid) {
+                console.log("返回id：" + backid)
+                await this.$http.post(`${this.$config.api}/api/cms/house/` + backid + `/backPubData`).then(res => {
+                    console.log(`抓取数据:` + JSON.stringify(res.data))
+                    this.laf = res.data;
+                    var ret = res.data.address;
+                    var refQu = ret.indexOf('－');
+                    this.refQuyu = ret.substring(0, refQu);
+                    this.saveRes = res.data;
+                    this.chaoxiang = ret.chaoxiang;
+                    this.spinning = false;
+                    this.ref = res.data;
+                    //字符串
+                    console.log("房源标签是否含有html标签？==========" + this.ref.fangyuanBiaoqian);
+                    const nianqi = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
+                    console.log(nianqi)
+                    if (nianqi == "新上")
+                        this.fangyuanBiaoqian = "不满二年";
+                    else
+                        this.fangyuanBiaoqian = nianqi;
+                    //this.fangyuanBiaoqian = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"");
+                    console.log("去掉房源标签含有的html标签成功？gg==========" + this.fangyuanBiaoqian);
+                    this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
+                    this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
+                    let shi = this.ref.huxing.indexOf("室");
+                    let ting = this.ref.huxing.indexOf("厅");
+                    let wei = this.ref.huxing.indexOf("卫");
+                    let niandai = this.ref.fangwuDate;
+                    if (RegExp(/年/).exec(niandai)) {
+                        this.jianzaoniandai = niandai.replace('年', '')
+
+                    }
+                    else {
+                        this.jianzaoniandai = niandai
+                    }
+                    this.selectedShi = this.ref.huxing.substring(0, shi);
+                    this.selectedTing = this.ref.huxing.substring(shi + 1, ting);
+                    this.selectedWei = this.ref.huxing.substring(ting + 1, wei);
+                    this.spinning = false;
+                    var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
+                    var ss = shineiImg.split(",")
+                    this.weiyiUserId = res.data.weiYiUrl;
+                    for (var i = 0; i < ss.length; i++) {
+                        var imgUrl = {};
+                        imgUrl.url = ss[i];
+                        imgUrl.uid = i;
+                        imgUrl.name = 'xxx.jpg';
+                        imgUrl.status = 'done';
+                        this.shineiList.push(imgUrl);
+                    }
+                    this.imgH.url = ss[0],
+                        this.imgH.uid = '-150',
+                        this.imgH.name = 'xxx.jpg',
+                        this.imgH.status = 'done',
+                        this.imgHeaderList.push(this.imgH);
 
 
-                            var imgFangxing = {};
-                            imgFangxing.url = res.data.fangxinImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                imgFangxing.uid = '-50',
-                                imgFangxing.name = 'xxx.jpg',
-                                imgFangxing.status = 'done',
-                                this.fangxinlist.push(imgFangxing);
+                    var imgFangxing = {};
+                    imgFangxing.url = res.data.fangxinImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                        imgFangxing.uid = '-50',
+                        imgFangxing.name = 'xxx.jpg',
+                        imgFangxing.status = 'done',
+                        this.fangxinlist.push(imgFangxing);
 
 
-                            var XiaoquImg = {};
-                            XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                XiaoquImg.uid = '-100',
-                                XiaoquImg.name = 'xxx.jpg',
-                                XiaoquImg.status = 'done',
-                                this.xiaoQuList.push(XiaoquImg);
-                  })
+                    var XiaoquImg = {};
+                    XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                        XiaoquImg.uid = '-100',
+                        XiaoquImg.name = 'xxx.jpg',
+                        XiaoquImg.status = 'done',
+                        this.xiaoQuList.push(XiaoquImg);
+                })
             }
         }
     }
 </script>
 <style lang="less" scoped>
-    .selllogo{
+    .selllogo {
         display: flex;
         align-items: center;
-        a{
+
+        a {
             margin-right: 15px;
-            .wuba{
+
+            .wuba {
                 width: 150px;
                 height: 80px;
                 padding: 15px 10px;
                 border: 1px solid #ececec;
             }
-            .anju{
+
+            .anju {
                 width: 150px;
                 height: 80px;
                 border: 1px solid #ececec;
             }
-            .fang{
+
+            .fang {
                 width: 150px;
                 height: 80px;
                 padding: 10px 0px;
@@ -1043,6 +1054,7 @@
             }
         }
     }
+
     .sellwrap {
         width: 100%;
         display: flex;
@@ -1157,18 +1169,22 @@
         padding-right: 5px;
         padding-left: 25px
     }
-    .zhuzhaibox{
+
+    .zhuzhaibox {
         width: 180px !important;
         padding-left: 25px
     }
-   .firhuxing{
-         width: 65px !important;
+
+    .firhuxing {
+        width: 65px !important;
         padding-right: 5px;
-   }
+    }
+
     .sellshihaoselw {
         padding-right: 22px;
         padding-left: 8px;
     }
+
     .sellglaber {
         padding-left: 17px;
         padding-right: 5px;
@@ -1202,17 +1218,19 @@
         align-items: center;
         height: 40px !important;
     }
+
     .selllaberbox {
         display: flex;
         align-items: center;
     }
+
     .selllaberboxtitle {
-            color: red;
-            padding-right: 10px;
-        }
+        color: red;
+        padding-right: 10px;
+    }
 
     .selltupianbox {
-       
+
         padding-left: 60px;
     }
 
@@ -1306,35 +1324,42 @@
         padding-left: 5px;
         font-size: 14px
     }
-    .sellant-modal{
-        width:800px !important;
+
+    .sellant-modal {
+        width: 800px !important;
         height: 700px !important;
     }
-    .selllabeltle{
-        font-weight:bold;
-        color:black;
+
+    .selllabeltle {
+        font-weight: bold;
+        color: black;
     }
-    .selltilerbox{
+
+    .selltilerbox {
         padding-left: 20px;
-        padding-top:20px;
+        padding-top: 20px;
     }
-    .selltiler-firstbox
-    {
-        padding-bottom:10px;
-        
+
+    .selltiler-firstbox {
+        padding-bottom: 10px;
+
     }
-    .sellminganlabel{
-        color:darkgrey;
+
+    .sellminganlabel {
+        color: darkgrey;
     }
-    .sellputnumber{
+
+    .sellputnumber {
         color: orange;
-     }
-     .sellyongjingbox{
-         padding-left: 5px;
-         font-size:16px;
-     }
-     .yongjinlabel{
-         font-size:16px;
-         padding-right:8px;
-     }
+    }
+
+    .sellyongjingbox {
+        padding-left: 5px;
+        font-size: 16px;
+    }
+
+    .yongjinlabel {
+        font-size: 16px;
+        padding-right: 8px;
+    }
 </style>

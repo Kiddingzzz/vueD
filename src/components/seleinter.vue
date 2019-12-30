@@ -2,7 +2,7 @@
     <div style="width:100%" @click="$emit('click',value)">
         <a-table :columns="columnss" :dataSource="datas">
             <span slot="inter" slot-scope="res,record">
-                <img  class="wangyeimg" :src="record.inter[hsd]">
+                <img class="wangyeimg" :src="record.inter[hsd]">
             </span>
             <span slot="acctionkey" slot-scope="acctionkey, record">
                 <a-checkbox></a-checkbox>
@@ -37,12 +37,12 @@
                 </a-select>
             </span>
             <span slot="tuiaction" slot-scope="text, record">
-                <a-select default-value="58同城"  v-model="wangvalue" @change="changeimg(wangvalue)"  class="seleshangjia">
+                <a-select default-value="58同城" v-model="wangvalue" @change="changeimg(wangvalue)" class="seleshangjia">
                     <a-select-option value="58同城">
-                       58同城
+                        58同城
                     </a-select-option>
                     <a-select-option value="房天下">
-                       房天下
+                        房天下
                     </a-select-option>
                 </a-select>
             </span>
@@ -107,12 +107,12 @@
         {
             key: '1',
             // inter: '/static/img/logoJXW.2d85d52.png',
-            inter: ['https://img.58cdn.com.cn/logo/58/252_84/logo-o.png?v=2','https://static.soufunimg.com/navigation/images/navlogo.gif' ],
+            inter: ['https://img.58cdn.com.cn/logo/58/252_84/logo-o.png?v=2', 'https://static.soufunimg.com/navigation/images/navlogo.gif'],
             acctionkey: ['15624687', '可用'],
             leibie: ['第一个', '第二个'],
 
         }
-        
+
 
     ];
 
@@ -129,9 +129,9 @@
                 xiaoquImgList: [],
                 huxingImgList: [],
                 bid: 'a',
-                hsd:1,
-                wangvalue:'房天下',
-                shopshineiList:[],
+                hsd: 1,
+                wangvalue: '房天下',
+                shopshineiList: [],
                 // inter: require("../../assets/logo/58logo.png"),
             };
         },
@@ -144,45 +144,44 @@
         mounted() {
             this.def = this.value;
             console.log(this.value)
-            
+
         },
         methods: {
-            changeimg(e)
-            {
-                   console.log("选中："+e)
-                    switch(e){
-                    case "58同城":this.hsd=0
-                    break;
-                    case "房天下":this.hsd=1
-                    break;
-                    
-                    }
+            changeimg(e) {
+                console.log("选中：" + e)
+                switch (e) {
+                    case "58同城": this.hsd = 0
+                        break;
+                    case "房天下": this.hsd = 1
+                        break;
+
+                }
 
             },
-            async shopfabuok(e){
-                 let update = JSON.parse(localStorage.getItem('update'));
+            async shopfabuok(e) {
+                let update = JSON.parse(localStorage.getItem('update'));
                 try {
-                  
-                    await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId+'&sitename='+this.wangvalue).then(Response => {
-                       
+
+                    await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId + '&sitename=' + this.wangvalue).then(Response => {
+
                         if (Response.status == 200) {
                             if (Response.data == "yes") {
-                               if(this.wangvalue=="房天下"){
+                                if (this.wangvalue == "房天下") {
                                     this.Fangtianxia();
-                               }
-                               if(this.wangvalue=="58同城") {
-                                   console.log("1111")
+                                }
+                                if (this.wangvalue == "58同城") {
+                                    console.log("1111")
                                     this.Wuba();
-                               }
+                                }
                             }
                             else {
                                 let that = this;
                                 const h = that.$createElement;
                                 that.$info({
                                     title: '提示', okText: '去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'),]),
-                                        onOk() {
-                                            that.$router.replace('/zhandian')
-                                        },
+                                    onOk() {
+                                        that.$router.replace('/zhandian')
+                                    },
                                 });
                             }
                         }
@@ -192,26 +191,25 @@
                     this.$message.warning('系统遇到了点问题，请重试');
                 }
             },
-            
+
             ///发布房天下
-           Fangtianxia()
-           {
-               if(this.def.houseType === '商铺'){
-                     this.fabuShangpu()
+            Fangtianxia() {
+                if (this.def.houseType === '商铺') {
+                    this.fabuShangpu()
                 }
-                 if(this.def.houseType === '二手房'){
-                     this.fabuok()
-                  }
-           },
-           ///发布五八同城
-            Wuba(){
-                if(this.def.houseType === '商铺'){
-                    
-                  }
-                if(this.def.houseType === '二手房'){
+                if (this.def.houseType === '二手房') {
+                    this.fabuok()
+                }
+            },
+            ///发布五八同城
+            Wuba() {
+                if (this.def.houseType === '商铺') {
+
+                }
+                if (this.def.houseType === '二手房') {
                     console.log("22211")
-                    this.TwoHouseWuba()           
-                    }
+                    this.TwoHouseWuba()
+                }
             },
 
             ///房天下二手房发布
@@ -357,63 +355,63 @@
                     }
                 })
             },
-            
+
             ///房天下商铺发布
-            async fabuShangpu(){
-                 this.spinning = true;
+            async fabuShangpu() {
+                this.spinning = true;
                 this.pdef = this.value;
-                var ades=this.pdef.shopquyu;
-                if(RegExp(/-/).exec(ades))
-                    ades=this.pdef.shopquyu.split('-')[1];
-                var price=this.pdef.shopRice
-                 price=parseFloat(price)
-                var spure=this.pdef.shopSquare;
-                var peitao=this.pdef.shopPeitao;
-                peitao=peitao.replace("'",'').replace('[','').replace(']','');
-                var louceng1=this.pdef.shoplouceng.split('/')[1];
-                louceng1=parseInt(louceng1);
-                 var louceng2=this.pdef.shoplouceng.split('/')[0];
-                louceng2=parseInt(louceng2);
-                const gg=this.pdef.shopGuige
-                var wid=0;
-                var cenhig=0;
-                var jinshen=0;
-                 wid=gg.split('、')[0].split('面宽')[1].split('m')[0]
-                 cenhig=gg.split('、')[1].split('层高')[1].split('m')[0]
-                 jinshen=gg.split('、')[2].split('进深')[1].split('m')[0]
-                var proff=this.pdef.xiangguanFy;
-                
-                if(proff=="暂无数据")
-                       proff=null;
+                var ades = this.pdef.shopquyu;
+                if (RegExp(/-/).exec(ades))
+                    ades = this.pdef.shopquyu.split('-')[1];
+                var price = this.pdef.shopRice
+                price = parseFloat(price)
+                var spure = this.pdef.shopSquare;
+                var peitao = this.pdef.shopPeitao;
+                peitao = peitao.replace("'", '').replace('[', '').replace(']', '');
+                var louceng1 = this.pdef.shoplouceng.split('/')[1];
+                louceng1 = parseInt(louceng1);
+                var louceng2 = this.pdef.shoplouceng.split('/')[0];
+                louceng2 = parseInt(louceng2);
+                const gg = this.pdef.shopGuige
+                var wid = 0;
+                var cenhig = 0;
+                var jinshen = 0;
+                wid = gg.split('、')[0].split('面宽')[1].split('m')[0]
+                cenhig = gg.split('、')[1].split('层高')[1].split('m')[0]
+                jinshen = gg.split('、')[2].split('进深')[1].split('m')[0]
+                var proff = this.pdef.xiangguanFy;
+
+                if (proff == "暂无数据")
+                    proff = null;
                 else
-                       proff=null;
-                var shoptype=this.pdef.shoptype;
-                if(RegExp(/住宅/).exec(shoptype))
-                     shoptype="住宅底商";
-               else if(RegExp(/商业/).exec(shoptype))
-                     shoptype="商业街商铺";     
-               else if(RegExp(/临街/).exec(shoptype))
-                     shoptype="临街门面";
-                else if(RegExp(/写字楼/).exec(shoptype))
-                     shoptype="写字楼配套底商";
-                if(RegExp(/购物/).exec(shoptype))
-                     shoptype=" 购物中心/百货";
+                    proff = null;
+                var shoptype = this.pdef.shoptype;
+                if (RegExp(/住宅/).exec(shoptype))
+                    shoptype = "住宅底商";
+                else if (RegExp(/商业/).exec(shoptype))
+                    shoptype = "商业街商铺";
+                else if (RegExp(/临街/).exec(shoptype))
+                    shoptype = "临街门面";
+                else if (RegExp(/写字楼/).exec(shoptype))
+                    shoptype = "写字楼配套底商";
+                if (RegExp(/购物/).exec(shoptype))
+                    shoptype = " 购物中心/百货";
                 else
-                   shoptype="其他";
-                var shopFy=this.pdef.xiangguanFy;
-                if(shopFy=="暂无数据")
-                    shopFy=null;
+                    shoptype = "其他";
+                var shopFy = this.pdef.xiangguanFy;
+                if (shopFy == "暂无数据")
+                    shopFy = null;
 
                 var shineiImgs = this.pdef.shopimgs.replace(/'/g, '').replace('[', '').replace(']', '');
-                            var shops = shineiImgs.split(",")
-                            for (var i = 0; i < shops.length; i++) {
-                                var imgUrl = {};
-                                imgUrl.url = shops[i];
-                                imgUrl.uid = i;
-                                imgUrl.name = 'xxx.jpg';
-                                imgUrl.status = 'done';
-                                this.shopshineiList.push(imgUrl);
-                            }
+                var shops = shineiImgs.split(",")
+                for (var i = 0; i < shops.length; i++) {
+                    var imgUrl = {};
+                    imgUrl.url = shops[i];
+                    imgUrl.uid = i;
+                    imgUrl.name = 'xxx.jpg';
+                    imgUrl.status = 'done';
+                    this.shopshineiList.push(imgUrl);
+                }
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + this.$store.userId);
                 let update = JSON.parse(localStorage.getItem('update'));
                 var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + update.userId);
@@ -424,8 +422,8 @@
                     pwd: datas.passWord,
                     keyId: "10568"
                 }
-                console.log(this.pdef.shopquyu.replace(' ',''))
-                console.log("s"+ades)
+                console.log(this.pdef.shopquyu.replace(' ', ''))
+                console.log("s" + ades)
                 console.log(this.pdef.shopAdress)
                 const res = await this.$axios.post(urls, data);
                 const userName = res.data.returnmsgs.userName;
@@ -434,9 +432,9 @@
                     houseType: "Sale",
                     purposeType: "Shop",
                     newcode: 1,
-                    projname:"暂无数据",
-                    district: this.pdef.shopquyu.replace(' ',''),
-                    comarea:ades,
+                    projname: "暂无数据",
+                    district: this.pdef.shopquyu.replace(' ', ''),
+                    comarea: ades,
                     address: this.pdef.shopAdress,
                     price: price,
                     buildingArea: spure,
@@ -446,24 +444,24 @@
                     subwayinfo: "暂无数据",
                     title: this.pdef.shopTitle,
                     content: this.pdef.shopmiaoshu,
-                    subtype:shoptype,
-                    propfee:shopFy,
-                    isdivisi:null,
-                    floor:louceng2,
-                    allfloor:louceng1,
-                    aimoperastion:null,
-                    fitment:null,
-                    ptype:0,
-                    photourl:this.pdef.shopFengimg,
-                    image6:this.shopshineiList,
-                    image7:this.shopshineiList,
-                    videourl:null,
-                    videotitle:null,
-                    floorHeight:cenhig,
-                    roomWide:wid,
-                    roomDeep:jinshen,
-                    livearea:this.pdef.shopSquare-1,
-                    serviceIntroduction:"暂无介绍",
+                    subtype: shoptype,
+                    propfee: shopFy,
+                    isdivisi: null,
+                    floor: louceng2,
+                    allfloor: louceng1,
+                    aimoperastion: null,
+                    fitment: null,
+                    ptype: 0,
+                    photourl: this.pdef.shopFengimg,
+                    image6: this.shopshineiList,
+                    image7: this.shopshineiList,
+                    videourl: null,
+                    videotitle: null,
+                    floorHeight: cenhig,
+                    roomWide: wid,
+                    roomDeep: jinshen,
+                    livearea: this.pdef.shopSquare - 1,
+                    serviceIntroduction: "暂无介绍",
                 }
                 const SaleUrl = '/agent/house/input';
                 // ?token='+this.tokens+'&Content-Type='+'application/json'+'&keyId='+'10568'+'&FangRequestID='+'fangusername_input_410661884'
@@ -488,108 +486,101 @@
                     }
                 })
             },
-            
+
             ///三网合一发布房源
-            async TwoHouseWuba()
-              {
+            async TwoHouseWuba() {
                 // let update = JSON.parse(localStorage.getItem('update'));
                 // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
                 // let datas = query.data;
                 this.spinning = true;
                 this.pdef = this.value;
-                let huxing=this.pdef.huxing
-                let shis=huxing.split('室')[0]
-                let ting=huxing.split('室')[1].split('厅')[0]
-                let wei=huxing.split('室')[1].split('厅')[1].split('卫')[0]
-                shis=parseInt(shis);
-                var leixing=this.pdef.fangwuChanquan;
-                if(RegExp(/商品/).exec(leixing))
-                {
-                leixing="商品房住宅"
+                let huxing = this.pdef.huxing
+                let shis = huxing.split('室')[0]
+                let ting = huxing.split('室')[1].split('厅')[0]
+                let wei = huxing.split('室')[1].split('厅')[1].split('卫')[0]
+                shis = parseInt(shis);
+                var leixing = this.pdef.fangwuChanquan;
+                if (RegExp(/商品/).exec(leixing)) {
+                    leixing = "商品房住宅"
                 }
-                if(leixing=="")
-                {
-                    leixing="商品房住宅"
+                if (leixing == "") {
+                    leixing = "商品房住宅"
                 }
-                var jianzao=this.pdef.fangwuDate
-                console.log("this.pdef.fangwuDate:"+this.pdef.fangwuDate)
-                if(jianzao!="")
-                {
-                    jianzao=jianzao.split('年')[0]
+                var jianzao = this.pdef.fangwuDate
+                console.log("this.pdef.fangwuDate:" + this.pdef.fangwuDate)
+                if (jianzao != "") {
+                    jianzao = jianzao.split('年')[0]
                 }
-                if(jianzao=="")
-                {
-                    jianzao=null
+                if (jianzao == "") {
+                    jianzao = null
                 }
-                var xingzhi =this.pdef.fangyuanBiaoqian
-                if(RegExp(/满二/).exec(xingzhi)) 
-                if(RegExp(/满五/).exec(xingzhi))
-                {
-                xingzhi="满五"
-                }
-                const list={
-                    xiaoquanme:this.pdef.xiaoquName,
-                    mianji:parseFloat(this.pdef.square),
-                    taomianji:parseFloat(this.pdef.square)-1,
-                    fangwuLeixing:this.pdef.fangwuLeibie,
-                    zhuangxiu:this.pdef.zhuangxiu,
-                    chaoxiang:this.pdef.chaoxiang,
-                    dijilou:parseInt(this.pdef.louceng.split('/')[0]),
-                    gonglou:parseInt(this.pdef.louceng.split('/')[1]),
-                    chanquan:parseInt(this.pdef.chanquanNianxian),
-                    chanquanleixing:leixing,
-                    jianzaoniandai:jianzao,
-                    dianti:null,
-                    housetype:'二手房',                                     
-                    housexingzhi:xingzhi,
-                    weiyizhufang:this.pdef.weiyizhufang,
-                    jiage:parseFloat(this.pdef.rice),
-                    shoufu:null,
-                    yongjin:null,
-                    title:this.pdef.title,
-                    housejieshao:this.pdef.note,
-                    yehzuxintai:encodeURI(this.pdef.atittude),
-                    fuwujiwshao:encodeURI(this.pdef.fuwuCondition),
-                    weiyiurl:encodeURI(this.pdef.weiYiUrl),
-                    ting:parseInt(ting),
-                    wei:parseInt(wei),
-                    shi:shis,
+                var xingzhi = this.pdef.fangyuanBiaoqian
+                if (RegExp(/满二/).exec(xingzhi))
+                    if (RegExp(/满五/).exec(xingzhi)) {
+                        xingzhi = "满五"
+                    }
+                const list = {
+                    xiaoquanme: this.pdef.xiaoquName,
+                    mianji: parseFloat(this.pdef.square),
+                    taomianji: parseFloat(this.pdef.square) - 1,
+                    fangwuLeixing: this.pdef.fangwuLeibie,
+                    zhuangxiu: this.pdef.zhuangxiu,
+                    chaoxiang: this.pdef.chaoxiang,
+                    dijilou: parseInt(this.pdef.louceng.split('/')[0]),
+                    gonglou: parseInt(this.pdef.louceng.split('/')[1]),
+                    chanquan: parseInt(this.pdef.chanquanNianxian),
+                    chanquanleixing: leixing,
+                    jianzaoniandai: jianzao,
+                    dianti: null,
+                    housetype: '二手房',
+                    housexingzhi: xingzhi,
+                    weiyizhufang: this.pdef.weiyizhufang,
+                    jiage: parseFloat(this.pdef.rice),
+                    shoufu: null,
+                    yongjin: null,
+                    title: this.pdef.title,
+                    housejieshao: this.pdef.note,
+                    yehzuxintai: encodeURI(this.pdef.atittude),
+                    fuwujiwshao: encodeURI(this.pdef.fuwuCondition),
+                    weiyiurl: encodeURI(this.pdef.weiYiUrl),
+                    ting: parseInt(ting),
+                    wei: parseInt(wei),
+                    shi: shis,
                     // username:datas.userName,
                     // userpwd:datas.passWord,
-                    
+
                 }
-                console.log('list:'+JSON.stringify(list))
+                console.log('list:' + JSON.stringify(list))
                 $.ajax({
-                type: 'GET',
-                // url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
-                url:'http://localhost:8085/get_user?data=' + JSON.stringify(list),
-                dataType: 'jsonp', //希望服务器返回json格式的数据
-                jsonp: "callback",
-                jsonpCallback: "successCallback",//回调方法
-                success: function (data) {
-                    if(data == "{'200'}"){
-                        console.log('发布成功')
-                    }
-                    else {
-                        const that=this.$router;
-                        this.$error({
-                            okText:'编辑房源信息',
-                            title: '提示',
-                            content: 'error:'+data,
-                            onOk() {
-                                that.replace({
-                                    name:'Sell',
-                                    params:{id:this.pdef.id}
-                                })
+                    type: 'GET',
+                    // url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
+                    url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
+                    dataType: 'jsonp', //希望服务器返回json格式的数据
+                    jsonp: "callback",
+                    jsonpCallback: "successCallback",//回调方法
+                    success: function (data) {
+                        if (data == "{'200'}") {
+                            console.log('发布成功')
+                        }
+                        else {
+                            const that = this.$router;
+                            this.$notification['error']({
+                                okText: '编辑房源信息',
+                                title: '提示',
+                                content: 'error:' + data,
+                                onOk() {
+                                    that.replace({
+                                        name: 'Sell',
+                                        params: { id: this.pdef.id }
+                                    })
                                 },
                             });
-
+                        }
                     }
-                }
 
                 });
-              },
-           
+            },
+
             //aaa
             openNotificationWithIcon(type) {
                 if (type == 'success') {
