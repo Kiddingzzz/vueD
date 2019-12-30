@@ -320,7 +320,9 @@
                                 <label class="lurulabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
                             </div>
                             <div>
-                                <a-input v-model="shopref.shopTitle" placeholder="字数限制10-30" style="width:50%;" />
+                                <a-input v-model="shopTitle" placeholder="字数限制10-30" style="width:50%;" @blur="blur('shopTitle')"/>
+                                <span class="errormsg" v-if="shopTitleerror">信息标题不能为空</span>
+                                <span class="errormsg" v-if="shopTitlezishu">字数限制在10-30，且不能包含“最”</span>
                             </div>
                         </div>
                         <div class="lurutilerbox">
@@ -330,6 +332,8 @@
                             </div>
                             <div>
                                 <a-textarea v-model="maioshu" style="width:50%;" :rows="7" />
+                                <span class="errormsg" v-if="maioshuerror">信息描述不能为空</span>
+                                <span class="errormsg" v-if="maioshuzishu">字数限制在30-300，且不能包含“最”</span>
                                 <div>
                                     <label class="luruminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲
                                         《》♀♂⊕⊙＊※【】‖︻ ︼</label>
@@ -677,6 +681,13 @@
                 keliurenqun: {},
                 xiangguanFy: '',
                 shopurl: '',
+                //必填框
+                shopTitle: '',
+                // 错误信息提示
+                shopTitlezishu: false,
+                shopTitleerror: false,
+                maioshuzishu: false,
+                maioshuerror: false,
             }
         },
         mounted() {
@@ -686,7 +697,29 @@
 
         },
         methods: {
-
+             blur(data){
+                if(data == "shopTitle"&this.shopTitle == ''){
+                    this.shopTitleerror = true
+                    this.shopTitlezishu = false
+                }else if(data == "shopTitle"&this.shopTitle != ''){
+                    this.shopTitleerror = false
+                    if(this.shopTitle.length <= 10 || this.shopTitle.length >= 30 || this.shopTitle.includes('最') == true){
+                        this.shopTitlezishu = true
+                    }else{
+                        this.shopTitlezishu = false
+                    }
+                }else if(data == "maioshu"&this.maioshu == ''){
+                    this.maioshuerror = true
+                    this.maioshuzishu = false
+                }else if(data == "maioshu"&this.maioshu != ''){
+                    this.maioshuerror = false
+                    if(this.maioshu.length <= 10 || this.maioshu.length >= 30 || this.maioshu.includes('最') == true){
+                        this.maioshuzishu = true
+                    }else{
+                        this.maioshuzishu = false
+                    }
+                }
+             },
             uuid() {
                 var s = [];
                 var hexDigits = "0123456789abcdef";
@@ -762,6 +795,9 @@
                                 this.yetaicheckedList = yearry
                             }
                             this.shopref = res.data
+                            //标题
+                            this.shopTitle =this.shopref.shopTitle
+
                             // //目标业态多选框
                             // this.peitaocheckedList = this.shopref.shopPeitao;
                             //客流人群多选框
@@ -804,6 +840,14 @@
 
             },
             async saveHouse() {
+                if(this.shopTitle == ''){
+                    this.shopTitleerror = true
+                    return ;
+                }
+                if(this.maioshu == ''){
+                    this.maioshuerror = true
+                    return ;
+                }
                 if (this.shoplaf.shopTitle == null && this.shoplaf.shopRice == null &&
                     this.shoplaf.shopSquare == null && this.shoplaf.shopAdress == null &&
                     this.shoplaf.shopimgs == null && this.shoplaf.jingyingtype == null &&
@@ -890,6 +934,10 @@
 </script>
 
 <style lang="less" scoped>
+ .errormsg{
+        margin-left: 10px;
+        color: red;
+    }
     .ant-checkbox-group {
         margin-top: 10px;
     }

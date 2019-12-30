@@ -39,8 +39,9 @@
                                 v-model="user"
                                 :fetch-suggestions="querySearch"
                                 placeholder="请输入姓名"
-                                value-key="address"
+                                value-key="username"
                                 :trigger-on-focus="false"
+                                @input = "reset"
                                 @select="handleSelect"
                                 @keyup.enter.native="doLogin()"
                                 ></el-autocomplete>
@@ -205,6 +206,11 @@
             }
         },
         methods: {
+            //重置
+            reset (){
+                this.password = ''
+               this.checked = false
+            },
             ///获取已登录用户及密码
              async BackUserPwd()
             {
@@ -214,7 +220,9 @@
                     {
                         console.log("返回缓存"+JSON.stringify(Response))
                         console.log(Response.data.items)
-                        this.restaurants = JSON.stringify(Response.data.items)
+                        if(Response.data.items.length != 0){
+                            this.restaurants = Response.data.items
+                        }
                         // localStorage.setItem("BackUserPwd",this.restaurants)
                     }
                 })
@@ -228,7 +236,7 @@
             },
             createFilter(queryString) {
                 return (restaurant) => {
-                return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
+                return (restaurant.username.toLowerCase().indexOf(queryString.toLowerCase()) === 0);
                 };
             },
             // loadAll() {
@@ -240,9 +248,12 @@
             // },
             handleSelect(item) {
                 console.log('dayi'+JSON.stringify(item));
-                this.password = item.value
-                if(item.remember == true){
+                this.password = item.userpwd
+                if(item.rempwd == '是'){
                     this.checked = true
+                }
+                if(item.rempwd == '否'){
+                    this.checked = false
                 }
                 console.log('成功')
             },

@@ -356,7 +356,10 @@
                                 <label class="selllabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
                             </div>
                             <div>
-                                <a-input v-model="ref.title" placeholder="字数限制10-30" style="width:50%;" />
+                                <!-- <a-input v-model="ref.title" placeholder="字数限制10-30" style="width:50%;" /> -->
+                                <a-input v-model="title"  placeholder="字数限制10-30" style="width:50%;" @blur="blur('title')" />
+                                  <span class="errormsg" v-if="titleerror">信息标题不能为空</span>
+                                  <span class="errormsg" v-if="titlezishu">字数限制在10-30，且不能包含“最”</span>
                             </div>
                         </div>
                         <div class="selltilerbox">
@@ -364,7 +367,9 @@
                                 <label class="selllabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
                             </div>
                             <div>
-                                <a-textarea v-model="ref.note" style="width:50%;" :rows="6" />
+                                <a-textarea v-model="note" style="width:50%;" :rows="6" @blur="blur('note')" />
+                                <span class="errormsg" v-if="noteerror">信息描述不能为空</span>
+                                <span class="errormsg" v-if="notezishu">字数限制在30-300，且不能包含“最”</span>
                                 <div>
                                     <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲
                                         《》♀♂⊕⊙＊※【】‖︻ ︼</label>
@@ -377,7 +382,9 @@
                                     class="putnumber">(字数限制20-300)</label>
                             </div>
                             <div>
-                                <a-textarea v-model="ref.atittude" style="width:50%;" :rows="5" />
+                                <a-textarea v-model="atittude" style="width:50%;" :rows="5"  @blur="blur('atittude')" />
+                                <span class="errormsg" v-if="atittudeerror">业主心态不能为空</span>
+                                <span class="errormsg" v-if="atittudezishu">字数限制在20-300，且不能包含“最”</span>
                                 <div>
                                     <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲
                                         《》♀♂⊕⊙＊※【】‖︻ ︼</label>
@@ -391,7 +398,9 @@
                                 <label class="sellputnumber">(字数限制20-300)</label>
                             </div>
                             <div>
-                                <a-textarea :rows="5" style="width:50%;" v-model="ref.fuwuCondition" />
+                                <a-textarea :rows="5" style="width:50%;" v-model="fuwuCondition"  @blur="blur('fuwuCondition')"/>
+                                <span class="errormsg" v-if="fuwuConditionerror">服务介绍不能为空</span>
+                                <span class="errormsg" v-if="fuwuConditionzishu">字数限制在20-300，且不能包含“最”</span>
                             </div>
                         </div>
                         <div class="selltilerbox">
@@ -705,6 +714,21 @@
                 laf: {},
                 ZhuaquUrl: '',
                 reciveId: this.$route.params.id,
+                //必填框
+                title: '',
+                note: '',
+                atittude: '',
+                fuwuCondition: '',
+                // 错误信息提示
+                titlezishu: false,
+                notezishu: false,
+                fuwuConditionzishu: false,
+                atittudezishu: false,
+
+                titleerror: false,
+                noteerror: false,
+                atittudeerror: false,
+                fuwuConditionerror: false,
             }
         },
         mounted() {
@@ -717,7 +741,50 @@
                 this.backfbdata(this.reciveId);
         },
         methods: {
-
+            blur(data){
+                if(data == "title"&this.title == ''){
+                    this.titleerror = true
+                    this.titlezishu = false
+                }else if(data == "title"&this.title != ''){
+                    this.titleerror = false
+                    if(this.title.length <= 10 || this.title.length >= 30 || this.title.includes('最') == true){
+                        this.titlezishu = true
+                    }else{
+                        this.titlezishu = false
+                    }
+                }else if(data == "note"&this.note == ''){
+                    this.noteerror = true
+                    this.notezishu = false
+                }else if(data == "note"&this.note != ''){
+                    this.noteerror = false
+                    if(this.note.length <= 30 || this.note.length >= 300 || this.note.includes('最') == true){
+                        this.notezishu = true
+                    }else{
+                        this.notezishu = false
+                    }
+                }else if(data == "atittude"&this.atittude == ''){
+                    this.atittudeerror = true
+                    this.atittudezishu = false
+                }else if(data == "atittude"&this.atittude != ''){
+                    this.atittudeerror = false
+                    if(this.atittude.length <= 20 || this.atittude.length >= 300 || this.atittude.includes('最') == true){
+                        this.atittudezishu = true
+                    }else{
+                        this.atittudezishu = false
+                    }
+                }else if(data == "fuwuCondition"&this.fuwuCondition == ''){
+                    this.fuwuConditionerror = true
+                    this.fuwuConditionzishu = false
+                }else if(data == "fuwuCondition"&this.fuwuCondition != ''){
+                    this.fuwuConditionerror = false
+                    if(this.atittude.length <= 20 || this.fuwuCondition.length >= 300 || this.fuwuCondition.includes('最') == true){
+                        this.fuwuConditionzishu = true
+                    }else{
+                        this.fuwuConditionzishu = false
+                    }
+                }
+                  
+            },
             uuid() {
                 var s = [];
                 var hexDigits = "0123456789abcdef";
@@ -843,13 +910,48 @@
             },
             //保存房源
             async saveHouse() {
-                console.log(`reciveId:` + this.reciveId)
+                if(this.title == ''){
+                    this.titleerror = true
+                    return ;
+                }
+                if(this.note == ''){
+                    this.noteerror = true
+                    return ;
+                }
+                if(this.atittude == ''){
+                    this.atittudeerror = true
+                    return ;
+                }
+                if(this.fuwuCondition == ''){
+                    this.fuwuConditionerror = true
+                    return ;
+                }
                 if (this.reciveId == '' || this.reciveId == undefined) {
-                    this.zhuaqubao();
+                    // this.zhuaqubao();
                 }
                 else {
-                    this.xiugaibao();
+                    // this.xiugaibao();
                 }
+                // if(this.ref.title.length >= 10 && this.ref.title.length <= 30 && this.ref.title.includes('最')){
+                //     if(this.ref.note.length >= 30 && this.ref.note.length <= 300 && this.ref.note.includes('最')){
+                //         if(this.ref.atittude.length >= 20 && this.ref.atittude.length <= 300 && this.ref.atittude.includes('最')){
+                //             if(this.ref.fuwuCondition.length >= 30 && this.ref.fuwuCondition.length <= 300 && this.ref.fuwuCondition.includes('最')){
+                //                 if (this.reciveId == '' || this.reciveId == undefined) {
+                //                     this.zhuaqubao();
+                //                 }
+                //             }
+                //         }
+                //     }
+                // }else {
+                //     this.xiugaibao();
+                // }
+                // console.log(`reciveId:` + this.reciveId)
+                // if (this.reciveId == '' || this.reciveId == undefined) {
+                //     this.zhuaqubao();
+                // }
+                // else {
+                //     this.xiugaibao();
+                // }
 
             },
             async zhuaqubao() {
@@ -961,6 +1063,11 @@
                     this.chaoxiang = ret.chaoxiang;
                     this.spinning = false;
                     this.ref = res.data;
+                    //信息标题、价格、面积、房源地址、配套标签
+                    this.title = this.ref.title
+                    this.note = this.ref.note
+                    this.atittude = this.ref.atittude
+                    this.fuwuCondition = this.ref.fuwuCondition
                     //字符串
                     console.log("房源标签是否含有html标签？==========" + this.ref.fangyuanBiaoqian);
                     const nianqi = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
@@ -1026,6 +1133,10 @@
     }
 </script>
 <style lang="less" scoped>
+ .errormsg{
+        margin-left: 10px;
+        color: red;
+    }
     .selllogo {
         display: flex;
         align-items: center;
