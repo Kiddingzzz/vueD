@@ -234,7 +234,7 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房源标签:" validate-status=""
                             help="">
                             <!-- <a-input id="" v-model="ref.fangyuanBiaoqian" placeholder="" /> -->
-                            <a-input id="" v-model="fangyuanBiaoqian" placeholder="" />
+                            <a-input id="" v-model="this.nianxian" placeholder="" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套标签:" validate-status=""
                             help="">
@@ -264,7 +264,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*产权年限" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptionnianxian" v-model="ref.chanquanNianxian" />
+                            <a-radio-group :options="plainOptionnianxian" v-model="chanquanNianxian" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑形式" has-feedback
                             validate-status="">
@@ -275,17 +275,18 @@
                             <a-radio-group :options="plainOptionjianzhujiegou" :defaultValue="valuejieg" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋年限" has-feedback
-                            v-model="ref.weiyizhufang" validate-status="">
-                            <a-radio-group :options="plainOptionroot" :defaultValue="valueroot"
-                                v-model="fangyuanBiaoqian" />
+                         validate-status="">
+                            <!-- <a-radio-group :options="plainOptionroot" :defaultValue="valueroot"
+                                v-model="fangyuanBiaoqian" /> -->
+                            <a-radio-group :options="plainOptionroot"  v-model="fangyuanBiaoqian" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*唯一住房" has-feedback
-                            validate-status="">
-                            <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi" />
+                            validate-status="" >
+                            <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi" v-model="ref.weiyizhufang"/>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*新房/二手房" has-feedback
-                            v-model="ref.houseType" validate-status="">
-                            <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse" />
+                         validate-status="">
+                            <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse"  v-model="ref.houseType"/>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*佣金比例：" has-feedback
                             validate-status="">
@@ -649,10 +650,12 @@
                 value6: '普通上传',
                 value7: '不加水印',
                 value8: '普通住宅',
-                value9: '70年产权',
+                chanquanNianxian: '70年',
                 valuetype: '板楼',
                 valuejieg: '平层',
-                valueroot: '满五年',
+                // valueroot: '满五年',
+                fangyuanBiaoqian: '满五年',
+                nianxian: '',
                 valueweiyi: '是',
                 valuehouse: '二手房',
                 radioStyle: {
@@ -706,7 +709,6 @@
                 options: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10],
                 ceng: '',
                 lou: '',
-                fangyuanBiaoqian: '',
                 weiyiUserId: '',
                 saveRes: {},
                 imgH: {},
@@ -836,6 +838,8 @@
                             this.chaoxiang = ret.chaoxiang;
                             this.spinning = false;
                             this.ref = res.data;
+                            //产权年限
+                            this.chanquanNianxian = this.ref.chanquanNianxian
                             //字符串
                             console.log("房源标签是否含有html标签？==========" + this.ref.fangyuanBiaoqian);
                             const nianqi = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
@@ -843,10 +847,12 @@
                             if (nianqi == '新上') {
                                 console.log("sdgsfsfd")
                                 this.fangyuanBiaoqian = "不满二年";
+                                this.nianxian = this.fangyuanBiaoqian
                             }
 
                             else
                                 this.fangyuanBiaoqian = nianqi;
+                                this.nianxian = this.fangyuanBiaoqian
                             console.log("去掉房源标签含有的html标签成功？==========" + this.fangyuanBiaoqian);
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                             this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
@@ -927,10 +933,10 @@
                     return ;
                 }
                 if (this.reciveId == '' || this.reciveId == undefined) {
-                    // this.zhuaqubao();
+                    this.zhuaqubao();
                 }
                 else {
-                    // this.xiugaibao();
+                    this.xiugaibao();
                 }
                 // if(this.ref.title.length >= 10 && this.ref.title.length <= 30 && this.ref.title.includes('最')){
                 //     if(this.ref.note.length >= 30 && this.ref.note.length <= 300 && this.ref.note.includes('最')){
