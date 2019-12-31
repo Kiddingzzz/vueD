@@ -310,7 +310,7 @@
                     }
                     else if(hname=="58同城")
                     {
-                        window.open('https://passport.58.com/reg/?path=https%3A//cq.58.com/%3Futm_source%3Dmarket%26spm%3Du-2d2yxv86y3v43nkddh1.BDPCPZ_BT&utm_source=market&spm=u-2d2yxv86y3v43nkddh1.BDPCPZ_BT&PGTID=0d100000-0002-567b-16c7-57dafcb3c605&ClickID=2');
+                        window.open('https://vip.anjuke.com');
                     }
                 }
             },
