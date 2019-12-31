@@ -6,29 +6,23 @@
                     <a-button type="primary" @click="start" :disabled="!hasSelected" :loading="loading">
                         批量删除
                     </a-button>
-                    <a-button style="margin-right: 8px" type="primary" @click="start" :disabled="!hasSelected" :loading="loading">
+                    <a-button style="margin-right: 8px" type="primary" @click="start" :disabled="!hasSelected"
+                        :loading="loading">
                         批量发布
                     </a-button>
                     <span style="margin-left: 8px">
                         <template v-if="hasSelected">
-                        {{`Selected ${selectedRowKeys.length} items`}}
+                            {{`Selected ${selectedRowKeys.length} items`}}
                         </template>
                     </span>
                 </div>
-                 <a-modal
-                        width='80vw'
-                        title="修改房源"
-                        v-model="visible"
-                        @ok="hideModal"
-                        okText="确认"
-                        cancelText="取消"
-                        >
-                        <updatesalefang></updatesalefang>
+                <a-modal width='80vw' title="修改房源" v-model="visible" @ok="hideModal" okText="确认" cancelText="取消">
+                    <updatesalefang></updatesalefang>
                 </a-modal>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record" class="caozuo">
                         <a href="javascript:;" @click="update(record.id)">修改</a>
-                        <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
+                        <a-popconfirm title="确定删除?" @confirm="confirm(record.id)" okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
                         <a href="javascript:;" @click="onfabu(record)">未发布</a>
@@ -44,7 +38,7 @@
     </div>
 </template>
 <script>
-import updatesalefang from '../views/cloudrelease/components/updatesalefang'
+    import updatesalefang from '../views/cloudrelease/components/updatesalefang'
     const columns = [
         {
             title: '小区',
@@ -155,54 +149,18 @@ import updatesalefang from '../views/cloudrelease/components/updatesalefang'
             };
         },
         computed: {
-            hasSelected() {
-                return this.selectedRowKeys.length > 0;
-            },
             rowSelection() {
                 const { selectedRowKeys } = this;
                 return {
-                selectedRowKeys,
-                onChange: this.onSelectChange,
-                hideDefaultSelections: true,
-                selections: [
-                    {
-                    key: 'all-data',
-                    text: 'Select All Data',
-                    onSelect: () => {
-                        this.selectedRowKeys = this.list; // 0...45
+                    onChange: (selectedRowKeys, selectedRows) => {
+                    this.selectedRowKeys = selectedRows;
+                    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                     },
-                    },
-                    {
-                    key: 'odd',
-                    text: 'Select Odd Row',
-                    onSelect: changableRowKeys => {
-                        let newSelectedRowKeys = [];
-                        newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-                        if (index % 2 !== 0) {
-                            return false;
-                        }
-                        return true;
-                        });
-                        this.selectedRowKeys = newSelectedRowKeys;
-                    },
-                    },
-                    {
-                    key: 'even',
-                    text: 'Select Even Row',
-                    onSelect: changableRowKeys => {
-                        let newSelectedRowKeys = [];
-                        newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-                        if (index % 2 !== 0) {
-                            return true;
-                        }
-                        return false;
-                        });
-                        this.selectedRowKeys = newSelectedRowKeys;
-                    },
-                    },
-                ],
-                onSelection: this.onSelection,
                 };
+            },
+            hasSelected() {
+                console.log(this.selectedRowKeys)
+                return this.selectedRowKeys.length > 0;
             },
         },
         mounted() {
@@ -223,15 +181,10 @@ import updatesalefang from '../views/cloudrelease/components/updatesalefang'
                 this.loading = true;
                 // ajax request after empty completing
                 setTimeout(() => {
-                this.loading = false;
-                this.selectedRowKeys = [];
+                    this.loading = false;
+                    this.selectedRowKeys = [];
                 }, 1000);
             },
-            onSelectChange(selectedRowKeys) {
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
-            },
-
             //删除
             async onDelete(id) {
                 console.log("asdgsdfgsdrfgsdfsdfhsfdhsfthsfdtgsh")
@@ -252,7 +205,7 @@ import updatesalefang from '../views/cloudrelease/components/updatesalefang'
 
             },
             //传房源对象并判断此账号是否已有添加网站
-           onfabu(record) {
+            onfabu(record) {
                 // // console.log("respones.house222:"+this.$store.userId)
                 // let update = JSON.parse(localStorage.getItem('update'));
                 // console.log("respones.house222:" + update.userId)
@@ -262,9 +215,9 @@ import updatesalefang from '../views/cloudrelease/components/updatesalefang'
                 //         console.log("respones.house2222:" + JSON.stringify(Response))
                 //         if (Response.status == 200) {
                 //             if (Response.data == "yes") {
-                                console.log("respones.house:" + JSON.stringify(record))
-                                this.$emit("getData", record);
-                            // }
+                console.log("respones.house:" + JSON.stringify(record))
+                this.$emit("getData", record);
+                // }
                 //             else {
                 //                 let that = this;
                 //                 const h = that.$createElement;
@@ -304,11 +257,12 @@ import updatesalefang from '../views/cloudrelease/components/updatesalefang'
 
 </script>
 <style scoped lang="less">
-    .caozuo{
-        display:flex;
+    .caozuo {
+        display: flex;
         flex-direction: column;
         align-items: center;
     }
+
     .wrap {
         width: 100%;
         display: flex;
