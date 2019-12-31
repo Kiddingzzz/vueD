@@ -2,7 +2,7 @@
     <div class="wrap">
         <a-layout>
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
-                <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;margin-top">
+                <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;margin-top:-55px;">
                     <a-button type="primary" @click="start" :disabled="!hasSelected" :loading="loading">
                         批量删除
                     </a-button>
@@ -15,9 +15,19 @@
                         </template>
                     </span>
                 </div>
+                 <a-modal
+                        width='80vw'
+                        title="修改房源"
+                        v-model="visible"
+                        @ok="hideModal"
+                        okText="确认"
+                        cancelText="取消"
+                        >
+                        <updatesalefang></updatesalefang>
+                </a-modal>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
-                    <span slot="operation" slot-scope="text, record">
-                       
+                    <span slot="operation" slot-scope="text, record" class="caozuo">
+                        <a href="javascript:;" @click="update(record.id)">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
@@ -26,7 +36,7 @@
                     <span slot="customTitles">
                         <a-icon type="smile-o" /> 标题</span>
                     <template slot="titles" slot-scope="text, record">
-                        <a target="_blank">{{record.title}}</a>
+                        <span target="_blank">{{record.title}}</span>
                     </template>
                 </a-table>
             </a-layout-content>
@@ -34,6 +44,7 @@
     </div>
 </template>
 <script>
+import updatesalefang from '../views/cloudrelease/components/updatesalefang'
     const columns = [
         {
             title: '小区',
@@ -131,8 +142,12 @@
     ];
 
     export default {
+        components: {
+            updatesalefang,
+        },
         data() {
             return {
+                visible: false,
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
                 loading: false,
@@ -154,7 +169,7 @@
                     key: 'all-data',
                     text: 'Select All Data',
                     onSelect: () => {
-                        this.selectedRowKeys = [...Array(46).keys()]; // 0...45
+                        this.selectedRowKeys = this.list; // 0...45
                     },
                     },
                     {
@@ -194,6 +209,16 @@
             this.seachShow();
         },
         methods: {
+            //修改
+            // update(){
+            //     alert('正待开发。。。。。。')
+            // },
+            update(id) {
+                this.visible = true
+            },
+            hideModal() {
+                this.visible = false
+            },
             start() {
                 this.loading = true;
                 // ajax request after empty completing
@@ -279,6 +304,11 @@
 
 </script>
 <style scoped lang="less">
+    .caozuo{
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+    }
     .wrap {
         width: 100%;
         display: flex;

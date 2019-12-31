@@ -840,11 +840,11 @@
 
             },
             async saveHouse() {
-                if(this.shopTitle == ''){
+                if(this.shopTitle == '' || this.shopTitlezishu == true){
                     this.shopTitleerror = true
                     return ;
                 }
-                if(this.maioshu == ''){
+                if(this.maioshu == '' || this.maioshuzishu == true){
                     this.maioshuerror = true
                     return ;
                 }

@@ -289,8 +289,8 @@
             console.log(`aaa` + JSON.stringify(update))
             this.getDashboard();
 
-            let ip = returnCitySN["cip"];
-            console.log('index.vue的ip==================' + ip)
+            // let ip = returnCitySN["cip"];
+            // console.log('index.vue的ip==================' + ip)
         },
         methods: {
             quyuChange(e) {
