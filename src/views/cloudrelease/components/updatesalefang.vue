@@ -146,13 +146,12 @@
             <a-layout style="padding: 24px 24px 24px 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
                     <a-form>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedback
-                            v-model="ref.fangwuLeixing" validate-status="">
-                            <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" />
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedbackvalidate-status="">
+                            <a-radio-group :options="plainOptionfwlb" :defaultValue="value8"  v-model="fangwuLeixing" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋产权：" has-feedback
                             validate-status="">
-                            <a-select default-value="" class="zhuzhaibox " v-model="ref.fangwuChanquan">
+                            <a-select default-value="" class="zhuzhaibox " v-model="fangwuChanquan">
                                 <a-select-option v-for="(root,i) in houseroot" :key="i" :value="root">
                                     {{root}}
                                 </a-select-option>
@@ -178,11 +177,11 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*唯一住房" has-feedback
                             validate-status="" >
-                            <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi" v-model="ref.weiyizhufang"/>
+                            <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi" v-model="weiyizhufang"/>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*新房/二手房" has-feedback
                          validate-status="">
-                            <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse"  v-model="ref.houseType"/>
+                            <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse"  v-model="houseType"/>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*佣金比例：" has-feedback
                             validate-status="">
@@ -477,10 +476,10 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="sellbottomobx">
+                        <!-- <div class="sellbottomobx">
                             <a-button type="" class="sellbuttonfang sellokbutton" @click="saveHouse()">保存房源</a-button>
                             <a-button type="" class="sellokbutton">保存草稿</a-button>
-                        </div>
+                        </div> -->
                     </a-form>
                 </a-layout-content>
             </a-layout>
@@ -583,7 +582,7 @@
                 pilianglist,
                 provinceData,
                 proquyuseData,
-                houseTypes: '二手房',
+                houseType: '二手房',
                 userId: '48639146-0751-11EA-87FE-305A3A80A208',
                 urlss: '',
                 text: '',
@@ -602,7 +601,7 @@
                 kanfang: '',
                 chaoxiang: '',
                 zhuangxiu: '',
-                gongnuan: '',
+                gongnuan: '不供暖',
                 selectedShi: '',
                 selectedTing: '',
                 selectedChu: '',
@@ -636,6 +635,9 @@
                 xiaoquName: '',
                 peitaoBiaoqain: '',
                 rice: '',
+                fangwuLeixing: '',
+                fangwuChanquan: '',
+                weiyizhufang: '',
             }
         },
         mounted() {
@@ -706,6 +708,7 @@
                 this.refQuyu = ret.substring(0, refQu);
                 this.address = this.list.address;
                 this.square = this.list.square;
+                this.rice = this.list.rice;
                 this.ceng = this.list.louceng.substring(0, this.list.louceng.indexOf("/"));
                 this.lou = this.list.louceng.substring(this.list.louceng.indexOf("/") + 1, this.list.louceng.length);
                 let shi = this.list.huxing.indexOf("室");
@@ -722,7 +725,10 @@
                 this.selectedWei = this.list.huxing.substring(ting + 1, wei);  
                 this.chaoxiang = this.list.chaoxiang;       
                 this.zhuangxiu = this.list.zhuangxiu;
-                this.gongnuan = this.list.gongnuan;
+                // console.log(this.list.gongnuan)
+                if(this.list.gongnuan != undefined){
+                    this.gongnuan = this.list.gongnuan;
+                }
                 // 房源标签是否含有html标签？
                 const nianqi = this.list.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
                 // console.log(nianqi)
@@ -730,12 +736,56 @@
                    // console.log("sdgsfsfd")
                     this.fangyuanBiaoqian = "不满二年";
                     this.nianxian = this.fangyuanBiaoqian;
+                }else if(nianqi != '满五年' || nianqi != '满二年' || nianqi != '不满二年'){
+                    this.fangyuanBiaoqian = "满二年";
+                    this.nianxian = this.fangyuanBiaoqian;
                 }else{
                     this.fangyuanBiaoqian = nianqi;
                     this.nianxian = this.fangyuanBiaoqian;
                 }
                 this.peitaoBiaoqain = this.list.peitaoBiaoqain;               
+                this.fangwuLeixing = this.list.fangwuLeixing;
+                this.fangwuChanquan = this.list.fangwuChanquan;
+                this.chanquanNianxian = this.list.chanquanNianxian;
+                // console.log(this.list.weiyizhufang)
+                this.weiyizhufang = this.list.weiyizhufang;
+                this.houseType = this.list.houseType;
+                this.title = this.list.title;
+                this.note = this.list.note;
+                this.atittude = this.list.atittude;
+                this.fuwuCondition = this.list.fuwuCondition;
 
+                this.spinning = false;
+                var shineiImg = this.list.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
+                var ss = shineiImg.split(",")
+                this.weiyiUserId =this.list.weiYiUrl;
+                for (var i = 0; i < ss.length; i++) {
+                    var imgUrl = {};
+                    imgUrl.url = ss[i];
+                    imgUrl.uid = i;
+                    imgUrl.name = 'xxx.jpg';
+                    imgUrl.status = 'done';
+                    this.shineiList.push(imgUrl);
+                }
+                this.imgH.url = ss[0],
+                this.imgH.uid = '-150',
+                this.imgH.name = 'xxx.jpg',
+                this.imgH.status = 'done',
+                this.imgHeaderList.push(this.imgH);
+
+                var imgFangxing = {};
+                imgFangxing.url = this.list.fangxinImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                imgFangxing.uid = '-50',
+                imgFangxing.name = 'xxx.jpg',
+                imgFangxing.status = 'done',
+                this.fangxinlist.push(imgFangxing);
+
+                var XiaoquImg = {};
+                XiaoquImg.url = this.list.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                XiaoquImg.uid = '-100',
+                XiaoquImg.name = 'xxx.jpg',
+                XiaoquImg.status = 'done',
+                this.xiaoQuList.push(XiaoquImg);                
             },
             // uuid() {
             //     var s = [];
@@ -935,7 +985,7 @@
             //         })
             //     }
             // },
-            //抓取房源保存
+            //修改房源 
             // async xiugaibao() {
             //     console.log('抓取房源保存')
             //     if (this.ref.xiaoquName == null && this.ref.title == null &&

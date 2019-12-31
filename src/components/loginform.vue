@@ -48,7 +48,7 @@
                             <el-input type="password" placeholder="请输入密码" v-model="password" class="inputs"
                                 @keyup.enter.native="doLogin()" prefix-icon="iconfont icon-mima"></el-input>
               		    <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
-                            <button class="btns" @click="doLogin()" v-preventReClick>登录</button>
+                            <button class="btns" @click="doLogin()" :disabled="dis">登录</button>
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,9 @@
         },
         data() {
             return {
-      		checked: false,
+                //取消禁止点击
+                dis: false,
+      		    checked: false,
                 payvisible: false,
                 weixinvisible: false,
                 qqvisible: false,
@@ -261,6 +263,8 @@
                 this.sendVal = true;
             },
             async doLogin() {
+                 console.log('正在登陆，请耐心等待......')
+                this.dis = 'disabled'
                 // const statu =`${this.config}/api/`;
                 // const response = await this.$http.get(statu);
                 // const data = response.data;
@@ -374,6 +378,7 @@
                         // console.log(JSON.stringify(Response))
                         // console.log(Response.config.data)
                         if (Response.status == 200) {
+                             this.dis = false;
                             //判断保存的
                           //  let hh = JSON.parse(localStorage.getItem("BackUserPwd"))
                             if(this.restaurants != ''){
@@ -411,6 +416,7 @@
                         content: '账号或密码错误！！！',
                         });
                     }
+                    this.dis = false; 
                       // uni.setStorageSync('UserInfo', res.user);
                 },
         },

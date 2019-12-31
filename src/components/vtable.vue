@@ -24,6 +24,7 @@
                         @ok="hideModal"
                         okText="确认"
                         cancelText="取消"
+                        :destroyOnClose="true"
                         >
                         <updatesalefang :list = updatelist ></updatesalefang>
                 </a-modal>

@@ -18,7 +18,7 @@
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
-                <a-input-search placeholder="复制链接" @search="onSearch" enterButton="立即秒录" size="large" />
+                <a-input-search placeholder="复制链接" @search="onSearch" :disabled="disabled" enterButton="立即秒录" size="large" />
                 <a-spin :spinning="spinning">
                 </a-spin>
             </p>
@@ -617,6 +617,7 @@
     export default {
         data() {
             return {
+                disabled: false,
                 url: '11',
                 visible: false,
                 addxq: false,
@@ -809,6 +810,8 @@
             //插入一条url数据链接
             async onSearch(params) {
                 //判断URL网址输入是否正确
+                console.log("正在秒录，请耐心等待......")
+                this.disabled = true;
                 var strRegex = '^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
                 var re = new RegExp(strRegex);
                 if (params == "" || !re.test(params)) {
@@ -834,6 +837,8 @@
                 await this.$http.post(this.ZhuaquUrl, data).then(response => {
                     this.spinning = true;
                     if (response.status == 200) {
+                        //取消禁止按钮
+                        this.disabled = false;
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`抓取数据:` + JSON.stringify(res.data))
                             this.laf = res.data;
@@ -973,12 +978,15 @@
             },
             //抓取房源保存
             async zhuaqubao() {
+                console.log("正在保存抓取房源，请耐心等待......")
+                this.disabled = true;
                 if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
                     this.saveRes.rice == null && this.saveRes.simpleRice == null &&
                     this.saveRes.square == null && this.saveRes.huxing == null &&
                     this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null && this.saveRes.imgHeader == null
                 ) {
                     this.openNotificationWithIcon('error')
+                    this.disabled = false;
                 }
                 else {
                     //this.saveRes.urlsId = this.$store.userId;
@@ -992,19 +1000,22 @@
                     await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
+                            this.disabled = false;
                         }
                     })
                 }
             },
             
             async xiugaibao() {
-                console.log('抓取房源保存')
+                console.log("正在保存房源，请耐心等待......")
+                this.disabled = true;
                 if (this.ref.xiaoquName == null && this.ref.title == null &&
                     this.ref.rice == null && this.ref.simpleRice == null &&
                     this.ref.square == null && this.ref.huxing == null &&
                     this.ref.louceng == null && this.ref.zhuangxiu == null && this.ref.address == null && this.ref.imgHeader == null
                 ) {
                     this.openNotificationWithIcon('error')
+                    this.disabled = false;
                 }
                 else {
                     //this.saveRes.urlsId = this.$store.userId;
@@ -1018,6 +1029,7 @@
                     await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.ref).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
+                            this.disabled = false;
                         }
                     })
                 }

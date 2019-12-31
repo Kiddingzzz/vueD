@@ -153,7 +153,7 @@
                     </a-checkbox>
                 </a-form-item>
                 <!-- <button class="btn-register" @click="doregister()">完成注册</button> -->
-                <button class="btn-register" html-type="submit">完成注册</button>
+                <button class="btn-register" html-type="submit" :disabled="dis">完成注册</button>
             </a-form>
             <div class="close-btn" @click="closeMask">
                 <i class="iconfont icon-guanbi"></i>
@@ -193,6 +193,8 @@
         },
         data() {
             return {
+                //取消禁止点击
+                dis:false,
                 visible: false,
                 showMask: false,
                 hobby2: '',
@@ -361,6 +363,8 @@
             //   }, 1000);
             // },
             async doregister(e) {
+                console.log('正在注册，请耐心等待......')
+                this.dis = 'disabled';
                 const data = {
                     //userNameOrEmailAddress: this.phoneNumber,
                     userNameOrEmailAddress: e.userName,
@@ -380,11 +384,13 @@
                         this.form.resetFields();
                         console.log("注册成功后后重置输入")
                     }, 500);
+                    this.dis = false;
                 } catch (error) {
                     this.$error({
                         icon: "none",
                         title: "注册失败"
                     });
+                    this.dis = false;
                 }
             }
         },
