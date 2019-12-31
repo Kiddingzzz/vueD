@@ -118,7 +118,6 @@
             if(BackUserPwd != null){
                 this.restaurants = BackUserPwd
             }
-            console.log(JSON.parse(localStorage.getItem("BackUserPwd")))
             // this.getUserIP((ip) => {
             //     this.ip = ip;
             //     console.log('登录页面的内网ip=================='+this.ip)
@@ -209,18 +208,18 @@
                this.checked = false
             },
             ///获取已登录用户及密码
-             async BackUserPwd()
-            {
-              console.log("ip地址："+this.ip)
-                await this.$http.get(`${this.$config.api}/api/cms/acount/backUserPwd?AdressIp=`+this.ip).then(Response=>{
-                    if(Response.status == 200)
-                    {
-                        if(Response.data.items.length != 0){
-                            this.restaurants = Response.data.items
-                        }
-                    }
-                })
-            },
+            //  async BackUserPwd()
+            // {
+            //   console.log("ip地址："+this.ip)
+            //     await this.$http.get(`${this.$config.api}/api/cms/acount/backUserPwd?AdressIp=`+this.ip).then(Response=>{
+            //         if(Response.status == 200)
+            //         {
+            //             if(Response.data.items.length != 0){
+            //                 this.restaurants = Response.data.items
+            //             }
+            //         }
+            //     })
+            // },
             //用户名下拉框
             querySearch(queryString, cb) {
                 // console.log(this.restaurants)
@@ -235,15 +234,13 @@
                 };
             },
             handleSelect(item) {
-                console.log('dayi'+JSON.stringify(item));
-                this.password = item.password 
                 if(item.remPasspwd == '是'){
+                    this.password = item.password 
                     this.checked = true
                 }
                 if(item.remPasspwd == '否'){
                     this.checked = false
                 }
-                console.log('成功')
             },
             ...mapMutations(['login', 'update']),
             onChange(e) {
@@ -378,16 +375,15 @@
                         // console.log(Response.config.data)
                         if (Response.status == 200) {
                             //判断保存的
-                            let hh = JSON.parse(localStorage.getItem("BackUserPwd"))
-                            if(hh != null){
-                                for(let i=0;i<hh.length;i++){
-                                 console.log(hh[i].userNameOrEmailAddress)
-                                    if(hh[i].userNameOrEmailAddress == datas.userNameOrEmailAddress){
+                          //  let hh = JSON.parse(localStorage.getItem("BackUserPwd"))
+                            if(this.restaurants != ''){
+                                for(let i=0;i<this.restaurants.length;i++){
+                                    if(this.restaurants[i].userNameOrEmailAddress == datas.userNameOrEmailAddress){
                                         this.restaurants.splice(i,1)
                                     }
-                                    this.restaurants.push(datas)
-                                    localStorage.setItem("BackUserPwd",JSON.stringify(this.restaurants))
                                 }
+                                this.restaurants.push(datas)
+                                localStorage.setItem("BackUserPwd",JSON.stringify(this.restaurants))
                             }else{
                                 this.restaurants.push(datas)
                                 localStorage.setItem("BackUserPwd",JSON.stringify(this.restaurants))
