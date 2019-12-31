@@ -62,7 +62,7 @@
             <div class="tabcontent" v-if="current==0">
                 <a-tabs type="card" v-model="activeKey" @change="callback">
                     <a-tab-pane tab="住宅" :key="1">
-                        <vtable @getData="getMag"></vtable>
+                        <vtable @getData="getMag" @getDataList="getMagList"></vtable>
                     </a-tab-pane>
                     <a-tab-pane tab="商铺" :key="2">
                         <saleshangpu @getData="getMag"></saleshangpu>
@@ -74,7 +74,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==1">
-                <seleinter @getSeconde="getSeconds" :value="bieshu"></seleinter>
+                <seleinter @getSeconde="getSeconds" :array='QunFalist' :value="bieshu"></seleinter>
             </div>
 
             <div class="tabcontent" v-if="current==2">
@@ -96,6 +96,12 @@
     import saleshangpu from '../cloudrelease/components/saleshangpu'
 
     export default {
+        components: {
+            vtable,
+            seleinter,
+            susstable,
+            saleshangpu
+        },
         data() {
             return {
                 activeKey: 1,
@@ -104,13 +110,9 @@
                 list: [],
                 houselist: {},
                 bieshu: {},
+                array:[],
+                QunFalist:[],
             };
-        },
-        components: {
-            vtable,
-            seleinter,
-            susstable,
-            saleshangpu
         },
         watch:{   //监听路由变化
             $route( to , from ){   
@@ -132,7 +134,13 @@
             },
 
             pre() {
-                if (this.current-- < 1) this.current = 0;
+                if (this.current-- < 1){
+                     this.current = 0;
+                     this.bieshu = [];
+                     this.QunFalist = [];
+                }
+                    this.bieshu = [];
+                     this.QunFalist = [];
             },
             //继续发布
             //   goon(){           
@@ -143,13 +151,20 @@
             },
             //接受house对象 
             getMag(house) {
-                this.houselist = house;
-                if (this.houselist != "" && this.houselist != undefined) {
+                console.log("house:"+JSON.stringify(house))
+                if (house != "" && house != undefined) {
+                this.current = 1;
+                this.bieshu = house;
+                }
+                
+            },
+            getMagList(houseLists){
+                console.log("house:"+JSON.stringify(houseLists))
+                if (houseLists.length>0) {
                     this.current = 1;
-                    this.bieshu = this.houselist;
+                    this.QunFalist = houseLists;
                 }
             },
-            
             //第二步操作跳转第三步
             getSeconds(message) {
                 if (message == 'a') {

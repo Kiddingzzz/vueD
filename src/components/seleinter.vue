@@ -123,6 +123,7 @@
                 datas,
                 columnss,
                 def: {},
+                rav:[],
                 spinning: false,
                 pdef: {},
                 shineiImgList: [],
@@ -132,19 +133,31 @@
                 hsd: 1,
                 wangvalue: '房天下',
                 shopshineiList: [],
-                Fhdata:'空',
+                Fhdata: '空',
+                finalResult:[],
                 // inter: require("../../assets/logo/58logo.png"),
             };
         },
         props: {
             value: {
                 type: Object,
-                default: {}
-            }
+                default() {
+                    return {}
+                }
+            },
+            array: {
+                type: Array,
+                default() {
+                    return []
+                }
+            },
+            
         },
         mounted() {
             this.def = this.value;
-            console.log(this.value)
+            console.log('value:'+JSON.stringify(this.value))
+            this.rav = this.array;
+            console.log('rav:'+JSON.stringify(this.rav))
 
         },
         methods: {
@@ -168,11 +181,20 @@
                         if (Response.status == 200) {
                             if (Response.data == "yes") {
                                 if (this.wangvalue == "房天下") {
-                                    this.Fangtianxia();
+                                    if(this.rav == '[]'){
+                                        this.Fangtianxia();
+                                    }
+                                    else{
+
+                                    }
                                 }
                                 if (this.wangvalue == "58同城") {
-                                    console.log("1111")
-                                    this.Wuba();
+                                    if(this.rav.length == 0){
+                                        this.Wuba();
+                                    }
+                                    else{
+                                        this.qunFaSanwang()
+                                    }
                                 }
                             }
                             else {
@@ -351,15 +373,118 @@
                         // this.houseurl = res1.returnmsgs.houseurl;
                         // this.flag = res1.returnmsgs.flag;
                         // this.houseid = res1.returnmsgs.houseid;
-                        this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id).then(pones=>{
-                             this.openNotificationWithIcon('success')
+                        this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id).then(pones => {
+                            this.openNotificationWithIcon('success')
 
                         })
-                      
+
                     }
                 })
             },
+            ///循环发布接口（每次最多10条）
+            async qunFaSanwang(){
+                let arrays = this.rav;
+                for (let i = 0; i < arrays.length; i++) {
+                let recive = {};
+                //循环调用发布接口
+                // let update = JSON.parse(localStorage.getItem('update'));
+                // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
+                // let datas = query.data;
+                this.spinning = true;
+                this.pdef = arrays[i];
+                let huxing = this.pdef.huxing
+                let shis = huxing.split('室')[0]
+                let ting = huxing.split('室')[1].split('厅')[0]
+                let wei = huxing.split('室')[1].split('厅')[1].split('卫')[0]
+                shis = parseInt(shis);
+                var leixing = this.pdef.fangwuChanquan;
+                if (RegExp(/商品/).exec(leixing)) {
+                    leixing = "商品房住宅"
+                }
+                if (leixing == "") {
+                    leixing = "商品房住宅"
+                }
+                var jianzao = this.pdef.fangwuDate
+                if (jianzao != "") {
+                    jianzao = jianzao.split('年')[0]
+                }
+                if (jianzao == "") {
+                    jianzao = null
+                }
+                var xingzhi = this.pdef.fangyuanBiaoqian
+                if (RegExp(/满二/).exec(xingzhi))
+                    if (RegExp(/满五/).exec(xingzhi)) {
+                        xingzhi = "满五"
+                    }
+                const list = {
+                    xiaoquanme: this.pdef.xiaoquName,
+                    mianji: parseFloat(this.pdef.square),
+                    taomianji: parseFloat(this.pdef.square) - 1,
+                    fangwuLeixing: this.pdef.fangwuLeibie,
+                    zhuangxiu: this.pdef.zhuangxiu,
+                    chaoxiang: this.pdef.chaoxiang,
+                    dijilou: parseInt(this.pdef.louceng.split('/')[0]),
+                    gonglou: parseInt(this.pdef.louceng.split('/')[1]),
+                    chanquan: parseInt(this.pdef.chanquanNianxian),
+                    chanquanleixing: leixing,
+                    jianzaoniandai: jianzao,
+                    dianti: null,
+                    housetype: '二手房',
+                    housexingzhi: xingzhi,
+                    weiyizhufang: this.pdef.weiyizhufang,
+                    jiage: parseFloat(this.pdef.rice),
+                    shoufu: null,
+                    yongjin: null,
+                    title: this.pdef.title,
+                    housejieshao: this.pdef.note,
+                    yehzuxintai: encodeURI(this.pdef.atittude),
+                    fuwujiwshao: encodeURI(this.pdef.fuwuCondition),
+                    weiyiurl: encodeURI(this.pdef.weiYiUrl),
+                    ting: parseInt(ting),
+                    wei: parseInt(wei),
+                    shi: shis,
+                    // username:datas.userName,
+                    // userpwd:datas.passWord,
 
+                }
+                console.log('list:' + JSON.stringify(list))
+                var datatext = ""
+                let fff = this.FanhuiData
+                let idss = this.pdef.id
+                $.ajax({
+                    type: 'GET',
+                    url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
+                    //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
+                    dataType: 'jsonp', //希望服务器返回json格式的数据
+                    jsonp: "callback",
+                    jsonpCallback: "successCallback",//回调方法
+                    success: function (data) {
+                        let that = this;
+                        console.log("返回值：")
+                        console.log(data)
+                        if (data == "200") {
+                            that.spinning = false;
+                            console.log("发布称")
+                            recive.id = idss;
+                            recive.message = '成功'
+                            that.finalResult.push(recive)
+                            //      that.$http.post(`${that.$config.api}/api/cms/house/modifyHouseStatus/` + that.value.id).then(pones=>{
+                            //      that.openNotificationWithIcon('success')})
+                        }
+                        else {
+                            datatext = data;
+                            recive.id = idss;
+                            recive.message = datatext;
+                            that.finalResult.push(recive)
+                            // fff(datatext, idss)
+                        }
+                    }
+
+                });
+                }
+                ///消息接收
+                console.log('this.finalResult:'+this.finalResult)
+            },
             ///房天下商铺发布
             async fabuShangpu() {
                 this.spinning = true;
@@ -511,7 +636,6 @@
                     leixing = "商品房住宅"
                 }
                 var jianzao = this.pdef.fangwuDate
-                console.log("this.pdef.fangwuDate:" + this.pdef.fangwuDate)
                 if (jianzao != "") {
                     jianzao = jianzao.split('年')[0]
                 }
@@ -555,9 +679,9 @@
 
                 }
                 console.log('list:' + JSON.stringify(list))
-                var datatext=""
-                let fff= this.FanhuiData
-                let idss=this.pdef.id
+                var datatext = ""
+                let fff = this.FanhuiData
+                let idss = this.pdef.id
                 $.ajax({
                     type: 'GET',
                     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
@@ -569,40 +693,39 @@
                         let that = this;
                         console.log("返回值：")
                         console.log(data)
-                        if (data =="200") {
-                             that.spinning = false;
-                             console.log("发布称")
-                        //      that.$http.post(`${that.$config.api}/api/cms/house/modifyHouseStatus/` + that.value.id).then(pones=>{
-                        //      that.openNotificationWithIcon('success')})
-                         }
+                        if (data == "200") {
+                            that.spinning = false;
+                            console.log("发布称")
+                            //      that.$http.post(`${that.$config.api}/api/cms/house/modifyHouseStatus/` + that.value.id).then(pones=>{
+                            //      that.openNotificationWithIcon('success')})
+                        }
                         else {
                             console.log("走一个 ")
-                           datatext=data;
-                           console.log(datatext)
-                           console.log('ids:'+idss)
-                           fff(datatext,idss)
+                            datatext = data;
+                            console.log(datatext)
+                            console.log('ids:' + idss)
+                            fff(datatext, idss)
                         }
                     }
 
                 });
-              
-              
+
+
             },
-         ///跳转
-          FanhuiData(data,sid)
-          {
-              const that= this.$router
-              this.$error({
+            ///跳转
+            FanhuiData(data, sid) {
+                const that = this.$router
+                this.$error({
                     title: '提示',
                     content: 'error:' + data,
-                     onOk() {
-                   that.replace({
-                         name: 'Sell',
-                         params: { id: sid }
-                       })
-                   },
+                    onOk() {
+                        that.replace({
+                            name: 'Sell',
+                            params: { id: sid }
+                        })
+                    },
                 });
-          },
+            },
             //aaa
             openNotificationWithIcon(type) {
                 if (type == 'success') {

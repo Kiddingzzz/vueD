@@ -180,6 +180,8 @@
             start() {
                 this.loading = true;
                 // ajax request after empty completing
+                console.log("respones.house:" + JSON.stringify(this.selectedRowKeys))
+                this.$emit("getDataList", this.selectedRowKeys);
                 setTimeout(() => {
                     this.loading = false;
                     this.selectedRowKeys = [];
@@ -215,7 +217,7 @@
                 //         console.log("respones.house2222:" + JSON.stringify(Response))
                 //         if (Response.status == 200) {
                 //             if (Response.data == "yes") {
-                console.log("respones.house:" + JSON.stringify(record))
+                // console.log("respones.house:" + JSON.stringify(record))
                 this.$emit("getData", record);
                 // }
                 //             else {
