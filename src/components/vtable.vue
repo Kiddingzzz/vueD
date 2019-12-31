@@ -16,13 +16,21 @@
                         </template>
                     </span>
                 </div>
-                <a-modal width='80vw' title="修改房源" v-model="visible" @ok="hideModal" okText="确认" cancelText="取消">
-                    <updatesalefang></updatesalefang>
+                 <a-modal
+                        style="margin-top:-36px;"
+                        width='80vw'
+                        title="修改房源"
+                        v-model="visible"
+                        @ok="hideModal"
+                        okText="确认"
+                        cancelText="取消"
+                        >
+                        <updatesalefang :list = updatelist ></updatesalefang>
                 </a-modal>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record" class="caozuo">
-                        <a href="javascript:;" @click="update(record.id)">修改</a>
-                        <a-popconfirm title="确定删除?" @confirm="confirm(record.id)" okText="确定" cancelText="取消">
+                        <a href="javascript:;" @click="update(record)">修改</a>
+                        <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
                         <a href="javascript:;" @click="onfabu(record)">未发布</a>
@@ -146,6 +154,7 @@
                 selectedRowKeys: [], // Check here to configure the default column
                 loading: false,
                 list: [],
+                updatelist: [],
             };
         },
         computed: {
@@ -171,8 +180,10 @@
             // update(){
             //     alert('正待开发。。。。。。')
             // },
-            update(id) {
+            update(iditem) {
                 this.visible = true
+                this.updatelist = iditem
+                console.log(iditem)
             },
             hideModal() {
                 this.visible = false
@@ -259,8 +270,8 @@
 
 </script>
 <style scoped lang="less">
-    .caozuo {
-        display: flex;
+    .caozuo{
+        display:flex;
         flex-direction: column;
         align-items: center;
     }

@@ -107,7 +107,7 @@
         {
             key: '1',
             // inter: '/static/img/logoJXW.2d85d52.png',
-            inter: ['https://img.58cdn.com.cn/logo/58/252_84/logo-o.png?v=2', 'https://static.soufunimg.com/navigation/images/navlogo.gif'],
+            inter: [require('../assets/logo/jingjiren.png'), require('../assets/logo/fang.png')],
             acctionkey: ['15624687', '可用'],
             leibie: ['第一个', '第二个'],
 

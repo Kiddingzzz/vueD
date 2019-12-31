@@ -23,6 +23,7 @@ import Zufang from '@/views/home/zufang'
 import Rentshangpu from '@/views/cloudrelease/components/rentshangpu'
 import Saleshangpu from '@/views/cloudrelease/components/saleshangpu'
 import Shangpuzuluru from '@/views/houseluru/shangpuzuluru'
+import Fuburesult from '@/views/cloudrelease/fuburesult'
 Vue.use(Router)
 
 export default new Router({
@@ -145,6 +146,15 @@ export default new Router({
 				keepAlive: true
 			  }
 		},
+		{
+			path: '/fuburesult',
+			name: 'Fuburesult',
+			component: Fuburesult,
+			meta: {
+				keepAlive: true
+			  }
+		},
+
 
 		//组件
 		{

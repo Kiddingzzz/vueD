@@ -48,7 +48,7 @@
                             <el-input type="password" placeholder="请输入密码" v-model="password" class="inputs"
                                 @keyup.enter.native="doLogin()" prefix-icon="iconfont icon-mima"></el-input>
               		    <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
-                            <button class="btns" @click="doLogin()">登录</button>
+                            <button class="btns" @click="doLogin()" v-preventReClick>登录</button>
                         </div>
                     </div>
                 </div>

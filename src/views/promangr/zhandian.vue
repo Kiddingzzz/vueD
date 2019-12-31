@@ -33,6 +33,7 @@
                                 {{tag.toUpperCase()}}
                             </a-tag>
                         </span>
+                         <!-- <img src="../../assets/logo/fang.png"/> -->
                         <span slot="inter" slot-scope="text, record" >
                             
                             <img class="interimg" :src="record.inter">
@@ -217,6 +218,7 @@
                 address: '',
                 item:[],
                 siteName:'',
+                zhandiantu: [require('../../assets/logo/fang.png'),require('../../assets/logo/jingjiren.png')],
             };
         },
         components:{
@@ -255,6 +257,7 @@
                      this.item[i].name = ['允许发布', '允许推送']
                      this.item[i].key = ''+(i+1)+'';
                      this.item[i].tiaojian = ['添加账号', '去注册']
+                     this.item[i].inter = this.zhandiantu[i]
                 }
                 // this.item = query.data.items;
                 // this.item[0].name = ['允许发布', '允许推送'];

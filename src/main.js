@@ -13,6 +13,7 @@ import './assets/iconfont/iconfont.css';
 import { encryptDes, decryptDes } from './des';
 import Axios from 'axios';
 import 'jquery'
+import plugins from './plugins' //防多次点击，重复提交
 Vue.use(ElementUI);
 Vue.use(Antd);
 Vue.use(VueJsonp);

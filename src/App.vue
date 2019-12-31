@@ -69,7 +69,10 @@
             </a-menu-item>  
             <a-menu-item key="/salerelease">
               <router-link to="salerelease"><i class="iconfont icon-ershoufang"></i>出售群发</router-link>
-            </a-menu-item>           
+            </a-menu-item>  
+            <a-menu-item key="/fuburesult">
+              <router-link to="fuburesult"><i class="iconfont icon-ershoufang"></i>发布结果</router-link>
+            </a-menu-item>          
           </a-sub-menu>
           <a-sub-menu key="sub5">
             <span slot="title"><a-icon type="setting" />个人管理</span>
