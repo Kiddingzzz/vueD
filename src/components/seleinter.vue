@@ -132,7 +132,7 @@
                 hsd: 1,
                 wangvalue: '房天下',
                 shopshineiList: [],
-                Fhdata:'',
+                Fhdata:'空',
                 // inter: require("../../assets/logo/58logo.png"),
             };
         },
@@ -555,8 +555,9 @@
 
                 }
                 console.log('list:' + JSON.stringify(list))
-                var thiats= this.$error
-                // this.Fhdata="发布房源错误 "
+                var datatext=""
+                let fff= this.FanhuiData
+                let idss=this.pdef.id
                 $.ajax({
                     type: 'GET',
                     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
@@ -565,22 +566,27 @@
                     jsonp: "callback",
                     jsonpCallback: "successCallback",//回调方法
                     success: function (data) {
+                        let that = this;
                         console.log("返回值：")
                         console.log(data)
                         if (data =="200") {
-                             this.spinning = false;
-                             this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id).then(pones=>{
-                             this.openNotificationWithIcon('success')})
-                        }
+                             that.spinning = false;
+                             console.log("发布称")
+                        //      that.$http.post(`${that.$config.api}/api/cms/house/modifyHouseStatus/` + that.value.id).then(pones=>{
+                        //      that.openNotificationWithIcon('success')})
+                         }
                         else {
-                           this.Fhdata=data;
+                            console.log("走一个 ")
+                           datatext=data;
+                           console.log(datatext)
+                           console.log('ids:'+idss)
+                           fff(datatext,idss)
                         }
                     }
 
                 });
-              if(this.Fhdata!='')
-                this.spinning = false;
-                this.FanhuiData(this.Fhdata,this.pdef.id)
+              
+              
             },
          ///跳转
           FanhuiData(data,sid)

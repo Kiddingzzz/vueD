@@ -733,14 +733,20 @@
                 fuwuConditionerror: false,
             }
         },
-        mounted() {
-
+        activated(options) {
+           this.$route.params.id='4266e37c-a9c2-6403-bf9b-39f26bbbbb51'
+           this.reciveId=this.$route.params.id
+             if (this.$route.params.id!= undefined || this.$route.params.id!= null)
+                this.backfbdata(this.$route.params.id);
+        },
+       
+        mounted(options) {
+            console.log('options'+options)
+            console.log('options'+this.$route.params.id)
             // this.reciveId =options.id;
             // this.kanfang="随时看房";
             this.zhuangxiu = "中等装修";
             this.gongnuan = "自供暖";
-            if (this.reciveId != undefined || this.reciveId != null)
-                this.backfbdata(this.reciveId);
         },
         methods: {
             blur(data){
@@ -921,22 +927,22 @@
             },
             //保存房源
             async saveHouse() {
-                if(this.title == ''){
-                    this.titleerror = true
-                    return ;
-                }
-                if(this.note == ''){
-                    this.noteerror = true
-                    return ;
-                }
-                if(this.atittude == ''){
-                    this.atittudeerror = true
-                    return ;
-                }
-                if(this.fuwuCondition == ''){
-                    this.fuwuConditionerror = true
-                    return ;
-                }
+                // if(this.title == ''){
+                //     this.titleerror = true
+                //     return ;
+                // }
+                // if(this.note == ''){
+                //     this.noteerror = true
+                //     return ;
+                // }
+                // if(this.atittude == ''){
+                //     this.atittudeerror = true
+                //     return ;
+                // }
+                // if(this.fuwuCondition == ''){
+                //     this.fuwuConditionerror = true
+                //     return ;
+                // }
                 if (this.reciveId == '' || this.reciveId == undefined) {
                     this.zhuaqubao();
                 }
@@ -965,6 +971,7 @@
                 // }
 
             },
+            //抓取房源保存
             async zhuaqubao() {
                 if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
                     this.saveRes.rice == null && this.saveRes.simpleRice == null &&
@@ -978,6 +985,10 @@
                     let update = JSON.parse(localStorage.getItem('update'));
                     this.saveRes.urlsId = update.userId;
                     this.saveRes.imgHeader = this.imgH.url;
+                     this.saveRes.title=this.title;
+                    this.saveRes.note=this.note;
+                    this.saveRes.fuwuCondition=this.fuwuCondition
+                    this.saveRes.atittude=this.atittude
                     await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
@@ -985,7 +996,7 @@
                     })
                 }
             },
-            //抓取房源保存
+            
             async xiugaibao() {
                 console.log('抓取房源保存')
                 if (this.ref.xiaoquName == null && this.ref.title == null &&
@@ -1000,6 +1011,10 @@
                     let update = JSON.parse(localStorage.getItem('update'));
                     this.ref.urlsId = update.userId;
                     this.ref.imgHeader = this.imgH.url;
+                    this.ref.title=this.title;
+                    this.ref.note=this.note;
+                    this.ref.fuwuCondition=this.fuwuCondition
+                    this.ref.atittude=this.atittude
                     await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.ref).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
