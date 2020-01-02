@@ -986,12 +986,10 @@
                     return ;
                 }
                 if (this.reciveId == '' || this.reciveId == undefined) {
-                    console.log("保存了")
-                    // this.zhuaqubao();
+                    this.zhuaqubao();
                 }
                 else {
-                     console.log("又保存了")
-                    // this.xiugaibao();
+                    this.xiugaibao();
                 }
                 // if(this.ref.title.length >= 10 && this.ref.title.length <= 30 && this.ref.title.includes('最')){
                 //     if(this.ref.note.length >= 30 && this.ref.note.length <= 300 && this.ref.note.includes('最')){
