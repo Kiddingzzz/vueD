@@ -395,6 +395,8 @@
                 let arrays = this.rav;
 
                 for (let i = 0; i < arrays.length; i++) {
+                    (function(i) {
+                    setTimeout(function() {
                 let recive = {};
                 //循环调用发布接口
                 // let update = JSON.parse(localStorage.getItem('update'));
@@ -496,6 +498,8 @@
                             }
                         }
                     });
+                    }, (i + 1) * 10000);
+                })(i)
                 }
                 catch (e){
                     this.$message.warning('系统错误，请稍后再试');
