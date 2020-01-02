@@ -18,7 +18,8 @@
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
-                <a-input-search placeholder="复制链接" @search="onSearch" :disabled="disabled" enterButton="立即秒录" size="large" />
+                <a-input-search placeholder="复制链接" @search="onSearch" :disabled="disabled" enterButton="立即秒录"
+                    size="large" />
                 <a-spin :spinning="spinning">
                 </a-spin>
             </p>
@@ -275,28 +276,30 @@
                             <a-radio-group :options="plainOptionjianzhujiegou" :defaultValue="valuejieg" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房屋年限" has-feedback
-                         validate-status="">
+                            validate-status="">
                             <!-- <a-radio-group :options="plainOptionroot" :defaultValue="valueroot"
                                 v-model="fangyuanBiaoqian" /> -->
-                            <a-radio-group :options="plainOptionroot"  v-model="fangyuanBiaoqian" />
+                            <a-radio-group :options="plainOptionroot" v-model="fangyuanBiaoqian" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*唯一住房" has-feedback
-                            validate-status="" >
-                            <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi" v-model="ref.weiyizhufang"/>
+                            validate-status="">
+                            <a-radio-group :options="plainOptionweiyi" :defaultValue="valueweiyi"
+                                v-model="ref.weiyizhufang" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*新房/二手房" has-feedback
-                         validate-status="">
-                            <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse"  v-model="ref.houseType"/>
+                            validate-status="">
+                            <a-radio-group :options="plainOptionhouse" :defaultValue="valuehouse"
+                                v-model="ref.houseType" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*佣金比例：" has-feedback
                             validate-status="">
                             <label class="yongjinlabel">≤</label>
-                            <a-input-number :min="0" :max="10" :step="0.5" v-model="yongjin"/>
+                            <a-input-number :min="0" :max="10" :step="0.5" v-model="yongjin" />
                             <label class="sellyongjingbox">%</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
                             validate-status="">
-                            <a-checkbox :checked="diabtiCheck" ></a-checkbox>
+                            <a-checkbox :checked="diabtiCheck"></a-checkbox>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
                             validate-status="">
@@ -361,9 +364,10 @@
                             </div>
                             <div>
                                 <!-- <a-input v-model="ref.title" placeholder="字数限制10-30" style="width:50%;" /> -->
-                                <a-input v-model="title"  placeholder="字数限制10-30" style="width:50%;" @blur="blur('title')" />
-                                  <span class="errormsg" v-if="titleerror">信息标题不能为空</span>
-                                  <span class="errormsg" v-if="titlezishu">字数限制在10-30，且不能包含“最”</span>
+                                <a-input v-model="title" placeholder="字数限制10-30" style="width:50%;"
+                                    @blur="blur('title')" />
+                                <span class="errormsg" v-if="titleerror">信息标题不能为空</span>
+                                <span class="errormsg" v-if="titlezishu">字数限制在10-30，且不能包含“最”</span>
                             </div>
                         </div>
                         <div class="selltilerbox">
@@ -388,7 +392,7 @@
                                     class="putnumber">(字数限制20-300)</label>
                             </div>
                             <div>
-                                <a-textarea v-model="atittude" style="width:50%;" :rows="5"  @blur="blur('atittude')" />
+                                <a-textarea v-model="atittude" style="width:50%;" :rows="5" @blur="blur('atittude')" />
                                 <span class="errormsg" v-if="atittudeerror">业主心态不能为空</span>
                                 <span class="errormsg" v-if="atittudezishu">字数限制在20-300，且不能包含“最”</span>
                                 <div>
@@ -405,7 +409,8 @@
                                 <label class="sellputnumber">(字数限制20-300)</label>
                             </div>
                             <div>
-                                <a-textarea :rows="5" style="width:50%;" v-model="fuwuCondition"  @blur="blur('fuwuCondition')"/>
+                                <a-textarea :rows="5" style="width:50%;" v-model="fuwuCondition"
+                                    @blur="blur('fuwuCondition')" />
                                 <span class="errormsg" v-if="fuwuConditionerror">服务介绍不能为空</span>
                                 <span class="errormsg" v-if="fuwuConditionzishu">字数限制在20-300，且不能包含“最”</span>
                             </div>
@@ -588,7 +593,8 @@
                             </div>
                         </div>
                         <div class="sellbottomobx">
-                            <a-button type="" id='anchor-save' class="sellbuttonfang sellokbutton" v-anchor='anchor' @click="saveHouse()">保存房源</a-button>
+                            <a-button type="" id='anchor-save' class="sellbuttonfang sellokbutton" v-anchor='anchor'
+                                @click="saveHouse()">保存房源</a-button>
                             <a-button type="" class="sellokbutton">保存草稿</a-button>
                         </div>
                     </a-form>
@@ -752,64 +758,64 @@
             }
         },
         activated(options) {
-           console.log("rrrrr"+this.$route.params.id)
-           this.reciveId=this.$route.params.id
-             if (this.$route.params.id!= undefined || this.$route.params.id!= null)
+            console.log("rrrrr" + this.$route.params.id)
+            this.reciveId = this.$route.params.id
+            if (this.$route.params.id != undefined || this.$route.params.id != null)
                 this.backfbdata(this.$route.params.id);
         },
-       
+
         mounted(options) {
-            console.log('options'+options)
-            console.log('options'+this.$route.params.id)
+            console.log('options' + options)
+            console.log('options' + this.$route.params.id)
             // this.reciveId =options.id;
             // this.kanfang="随时看房";
             this.zhuangxiu = "中等装修";
             this.gongnuan = "自供暖";
         },
         methods: {
-           blur(data){
-                if(data == "title"&this.title == ''){
+            blur(data) {
+                if (data == "title" & this.title == '') {
                     this.titleerror = true
                     this.titlezishu = false
-                }else if(data == "title"&this.title != ''){
+                } else if (data == "title" & this.title != '') {
                     this.titleerror = false
-                    if(this.title.length <= 10 || this.title.length >= 30 || this.title.includes('最') == true){
+                    if (this.title.length <= 10 || this.title.length >= 30 || this.title.includes('最') == true) {
                         this.titlezishu = true
-                    }else{
+                    } else {
                         this.titlezishu = false
                     }
-                }else if(data == "note"&this.note == ''){
+                } else if (data == "note" & this.note == '') {
                     this.noteerror = true
                     this.notezishu = false
-                }else if(data == "note"&this.note != ''){
+                } else if (data == "note" & this.note != '') {
                     this.noteerror = false
-                    if(this.note.length <= 30 || this.note.length >= 300 || this.note.includes('最') == true){
+                    if (this.note.length <= 30 || this.note.length >= 300 || this.note.includes('最') == true) {
                         this.notezishu = true
-                    }else{
+                    } else {
                         this.notezishu = false
                     }
-                }else if(data == "atittude"&this.atittude == ''){
+                } else if (data == "atittude" & this.atittude == '') {
                     this.atittudeerror = true
                     this.atittudezishu = false
-                }else if(data == "atittude"&this.atittude != ''){
+                } else if (data == "atittude" & this.atittude != '') {
                     this.atittudeerror = false
-                    if(this.atittude.length <= 20 || this.atittude.length >= 300 || this.atittude.includes('最') == true){
+                    if (this.atittude.length <= 20 || this.atittude.length >= 300 || this.atittude.includes('最') == true) {
                         this.atittudezishu = true
-                    }else{
+                    } else {
                         this.atittudezishu = false
                     }
-                }else if(data == "fuwuCondition"&this.fuwuCondition == ''){
+                } else if (data == "fuwuCondition" & this.fuwuCondition == '') {
                     this.fuwuConditionerror = true
                     this.fuwuConditionzishu = false
-                }else if(data == "fuwuCondition"&this.fuwuCondition != ''){
+                } else if (data == "fuwuCondition" & this.fuwuCondition != '') {
                     this.fuwuConditionerror = false
-                    if(this.fuwuCondition.length <= 20 || this.fuwuCondition.length >= 300 || this.fuwuCondition.includes('最') == true){
+                    if (this.fuwuCondition.length <= 20 || this.fuwuCondition.length >= 300 || this.fuwuCondition.includes('最') == true) {
                         this.fuwuConditionzishu = true
-                    }else{
+                    } else {
                         this.fuwuConditionzishu = false
                     }
                 }
-                  
+
             },
             uuid() {
                 var s = [];
@@ -883,7 +889,7 @@
 
                             else
                                 this.fangyuanBiaoqian = nianqi;
-                                this.nianxian = this.fangyuanBiaoqian
+                            this.nianxian = this.fangyuanBiaoqian
                             // console.log("去掉房源标签含有的html标签成功？==========" + this.fangyuanBiaoqian);
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                             this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
@@ -949,41 +955,41 @@
             },
             //保存房源
             async saveHouse() {
-                if(this.title == '' || this.title.length <= 10 || this.title.length >= 30 || this.title.includes('最') == true){
-                    if(this.title == ''){
+                if (this.title == '' || this.title.length <= 10 || this.title.length >= 30 || this.title.includes('最') == true) {
+                    if (this.title == '') {
                         this.titleerror = true
-                    }else{
+                    } else {
                         this.titlezishu = true
                     }
                     this.anchorerror = 'title'
-                    return ;
+                    return;
                 }
-                if(this.note == '' || this.note.length <= 30 || this.note.length >= 300 || this.note.includes('最') == true){
-                    if(this.note == ''){
+                if (this.note == '' || this.note.length <= 30 || this.note.length >= 300 || this.note.includes('最') == true) {
+                    if (this.note == '') {
                         this.noteerror = true
-                    }else{
+                    } else {
                         this.notezishu = true
                     }
                     this.anchorerror = 'note'
-                    return ;
+                    return;
                 }
-                if(this.atittude == '' || this.atittude.length <= 20 || this.atittude.length >= 300 || this.atittude.includes('最') == true){
-                    if(this.atittude == ''){
+                if (this.atittude == '' || this.atittude.length <= 20 || this.atittude.length >= 300 || this.atittude.includes('最') == true) {
+                    if (this.atittude == '') {
                         this.atittudeerror = true
-                    }else{
+                    } else {
                         this.atittudezishu = true
                     }
                     this.anchorerror = 'atittude'
-                    return ;
+                    return;
                 }
-                if(this.fuwuCondition == '' || this.fuwuCondition.length <= 20 || this.fuwuCondition.length >= 300 || this.fuwuCondition.includes('最') == true){
-                    if(this.fuwuCondition == ''){
+                if (this.fuwuCondition == '' || this.fuwuCondition.length <= 20 || this.fuwuCondition.length >= 300 || this.fuwuCondition.includes('最') == true) {
+                    if (this.fuwuCondition == '') {
                         this.fuwuConditionerror = true
-                    }else{
+                    } else {
                         this.fuwuConditionzishu = true
                     }
                     this.anchorerror = 'fuwuCondition'
-                    return ;
+                    return;
                 }
                 if (this.reciveId == '' || this.reciveId == undefined) {
                     this.zhuaqubao();
@@ -1027,18 +1033,19 @@
                     let update = JSON.parse(localStorage.getItem('update'));
                     this.saveRes.urlsId = update.userId;
                     this.saveRes.imgHeader = this.imgH.url;
-                     this.saveRes.title=this.title;
-                    this.saveRes.note=this.note;
-                    this.saveRes.fuwuCondition=this.fuwuCondition
-                    this.saveRes.atittude=this.atittude
+                    this.saveRes.title = this.title;
+                    this.saveRes.note = this.note;
+                    this.saveRes.fuwuCondition = this.fuwuCondition
+                    this.saveRes.atittude = this.atittude
                     await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
+                            this.saveRes = {}
                         }
                     })
                 }
             },
-            
+
             async xiugaibao() {
                 if (this.ref.xiaoquName == null && this.ref.title == null &&
                     this.ref.rice == null && this.ref.simpleRice == null &&
@@ -1052,13 +1059,14 @@
                     let update = JSON.parse(localStorage.getItem('update'));
                     this.ref.urlsId = update.userId;
                     this.ref.imgHeader = this.imgH.url;
-                    this.ref.title=this.title;
-                    this.ref.note=this.note;
-                    this.ref.fuwuCondition=this.fuwuCondition
-                    this.ref.atittude=this.atittude
+                    this.ref.title = this.title;
+                    this.ref.note = this.note;
+                    this.ref.fuwuCondition = this.fuwuCondition
+                    this.ref.atittude = this.atittude
                     await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.ref).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
+                            this.saveRes = {}
                         }
                     })
                 }
@@ -1204,13 +1212,15 @@
     }
 </script>
 <style lang="less" scoped>
- .errormsg{
+    .errormsg {
         margin-left: 10px;
         color: red;
     }
+
     .ant-checkbox-group {
         margin-top: 10px;
     }
+
     .selllogo {
         display: flex;
         align-items: center;

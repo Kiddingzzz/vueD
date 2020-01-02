@@ -47,7 +47,8 @@
                 </a-select>
             </span>
             <span slot="caozuo" slot-scope="text, record">
-                <a-button type="primary" @click="shopfabuok(record)" :disabled="disabled" :loading="loading">确认发布</a-button>
+                <a-button type="primary" @click="shopfabuok(record)" :disabled="disabled" :loading="loading">确认发布
+                </a-button>
                 <a-spin :spinning="spinning">
                 </a-spin>
             </span>
@@ -125,7 +126,7 @@
                 datas,
                 columnss,
                 def: {},
-                rav:[],
+                rav: [],
                 spinning: false,
                 pdef: {},
                 shineiImgList: [],
@@ -136,7 +137,7 @@
                 wangvalue: '房天下',
                 shopshineiList: [],
                 Fhdata: '空',
-                finalResult:[],
+                finalResult: [],
                 // inter: require("../../assets/logo/58logo.png"),
             };
         },
@@ -153,13 +154,13 @@
                     return []
                 }
             },
-            
+
         },
         mounted() {
             this.def = this.value;
-            console.log('value:'+JSON.stringify(this.value))
+            console.log('value:' + JSON.stringify(this.value))
             this.rav = this.array;
-            console.log('rav:'+JSON.stringify(this.rav))
+            console.log('rav:' + JSON.stringify(this.rav))
 
         },
         methods: {
@@ -186,18 +187,18 @@
                         if (Response.status == 200) {
                             if (Response.data == "yes") {
                                 if (this.wangvalue == "房天下") {
-                                    if(this.rav == '[]'){
+                                    if (this.rav == '[]') {
                                         this.Fangtianxia();
                                     }
-                                    else{
+                                    else {
 
                                     }
                                 }
                                 if (this.wangvalue == "58同城") {
-                                    if(this.rav.length == 0){
+                                    if (this.rav.length == 0) {
                                         this.Wuba();
                                     }
-                                    else{
+                                    else {
                                         this.qunFaSanwang()
                                     }
                                 }
@@ -391,124 +392,119 @@
                 })
             },
             ///循环发布接口（每次最多10条）
-            async qunFaSanwang(){
+            async qunFaSanwang() {
                 let arrays = this.rav;
 
                 for (let i = 0; i < arrays.length; i++) {
-                    (function(i) {
-                    setTimeout(function() {
-                let recive = {};
-                //循环调用发布接口
-                // let update = JSON.parse(localStorage.getItem('update'));
-                // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
-                // let datas = query.data;
-                this.spinning = true;
-                this.pdef = arrays[i];
-                let huxing = this.pdef.huxing
-                let shis = huxing.split('室')[0]
-                let ting = huxing.split('室')[1].split('厅')[0]
-                let wei = huxing.split('室')[1].split('厅')[1].split('卫')[0]
-                shis = parseInt(shis);
-                var leixing = this.pdef.fangwuChanquan;
-                if (RegExp(/商品/).exec(leixing)) {
-                    leixing = "商品房住宅"
-                }
-                if (leixing == "") {
-                    leixing = "商品房住宅"
-                }
-                var jianzao = this.pdef.fangwuDate
-                if (jianzao != "") {
-                    jianzao = jianzao.split('年')[0]
-                }
-                if (jianzao == "") {
-                    jianzao = null
-                }
-                var xingzhi = this.pdef.fangyuanBiaoqian
-                if (RegExp(/满二/).exec(xingzhi))
-                    if (RegExp(/满五/).exec(xingzhi)) {
-                        xingzhi = "满五"
-                    }
-                const list = {
-                    xiaoquanme: this.pdef.xiaoquName,
-                    mianji: parseFloat(this.pdef.square),
-                    taomianji: parseFloat(this.pdef.square) - 1,
-                    fangwuLeixing: this.pdef.fangwuLeibie,
-                    zhuangxiu: this.pdef.zhuangxiu,
-                    chaoxiang: this.pdef.chaoxiang,
-                    dijilou: parseInt(this.pdef.louceng.split('/')[0]),
-                    gonglou: parseInt(this.pdef.louceng.split('/')[1]),
-                    chanquan: parseInt(this.pdef.chanquanNianxian),
-                    chanquanleixing: leixing,
-                    jianzaoniandai: jianzao,
-                    dianti: null,
-                    housetype: '二手房',
-                    housexingzhi: xingzhi,
-                    weiyizhufang: this.pdef.weiyizhufang,
-                    jiage: parseFloat(this.pdef.rice),
-                    shoufu: null,
-                    yongjin: null,
-                    title: this.pdef.title,
-                    housejieshao: this.pdef.note,
-                    yehzuxintai: encodeURI(this.pdef.atittude),
-                    fuwujiwshao: encodeURI(this.pdef.fuwuCondition),
-                    weiyiurl: encodeURI(this.pdef.weiYiUrl),
-                    ting: parseInt(ting),
-                    wei: parseInt(wei),
-                    shi: shis,
-                    // username:datas.userName,
-                    // userpwd:datas.passWord,
+                    (function (i) {
+                        setTimeout(function () {
+                            let recive = {};
+                            //循环调用发布接口
+                            // let update = JSON.parse(localStorage.getItem('update'));
+                            // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
+                            // let datas = query.data;
+                            this.spinning = true;
+                            this.pdef = arrays[i];
+                            let huxing = this.pdef.huxing
+                            let shis = huxing.split('室')[0]
+                            let ting = huxing.split('室')[1].split('厅')[0]
+                            let wei = huxing.split('室')[1].split('厅')[1].split('卫')[0]
+                            shis = parseInt(shis);
+                            var leixing = this.pdef.fangwuChanquan;
+                            if (RegExp(/商品/).exec(leixing)) {
+                                leixing = "商品房住宅"
+                            }
+                            if (leixing == "") {
+                                leixing = "商品房住宅"
+                            }
+                            var jianzao = this.pdef.fangwuDate
+                            if (jianzao != "") {
+                                jianzao = jianzao.split('年')[0]
+                            }
+                            if (jianzao == "") {
+                                jianzao = null
+                            }
+                            var xingzhi = this.pdef.fangyuanBiaoqian
+                            if (RegExp(/满二/).exec(xingzhi))
+                                if (RegExp(/满五/).exec(xingzhi)) {
+                                    xingzhi = "满五"
+                                }
+                            const list = {
+                                xiaoquanme: this.pdef.xiaoquName,
+                                mianji: parseFloat(this.pdef.square),
+                                taomianji: parseFloat(this.pdef.square) - 1,
+                                fangwuLeixing: this.pdef.fangwuLeibie,
+                                zhuangxiu: this.pdef.zhuangxiu,
+                                chaoxiang: this.pdef.chaoxiang,
+                                dijilou: parseInt(this.pdef.louceng.split('/')[0]),
+                                gonglou: parseInt(this.pdef.louceng.split('/')[1]),
+                                chanquan: parseInt(this.pdef.chanquanNianxian),
+                                chanquanleixing: leixing,
+                                jianzaoniandai: jianzao,
+                                dianti: null,
+                                housetype: '二手房',
+                                housexingzhi: xingzhi,
+                                weiyizhufang: this.pdef.weiyizhufang,
+                                jiage: parseFloat(this.pdef.rice),
+                                shoufu: null,
+                                yongjin: null,
+                                title: this.pdef.title,
+                                housejieshao: this.pdef.note,
+                                yehzuxintai: encodeURI(this.pdef.atittude),
+                                fuwujiwshao: encodeURI(this.pdef.fuwuCondition),
+                                weiyiurl: encodeURI(this.pdef.weiYiUrl),
+                                ting: parseInt(ting),
+                                wei: parseInt(wei),
+                                shi: shis,
+                                // username:datas.userName,
+                                // userpwd:datas.passWord,
 
-                }
-                console.log('list:' + JSON.stringify(list))
-                // var datatext = ""
-                // let fff = this.FanhuiData
-                let idss = this.pdef.id
-                let fas=this.fabulist
-                let that =this
-                try{
-                    $.ajax({
-                        type: 'GET',
-                        url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
-                        //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
-                        dataType: 'jsonp', //希望服务器返回json格式的数据
-                        jsonp: "callback",
-                        jsonpCallback: "successCallback",//回调方法
-                        success: function (data) {
-                            let that = this;
-                            console.log("返回值：")
-                            console.log(data)
-                            if (data == "200") {
-                                // const datas={
-                                //     houserid:idss,
-                                //     type:"已发布"
-                                // }
-                                // fas(datas)
-                                console.log("成功")
-                                
                             }
-                            else {
-                                //  const datas={
-                                //  houserid:idss,
-                                //  type:data
-                                // }
-                                //  fas(datas)
-                                console.log("错误信息：")
-                                console.log(data)
-                                this.spinning = false;
-                            }
-                        }
-                    });
-                    }, (i + 1) * 10000);
-                })(i)
-                }
-                catch (e){
-                    this.$message.warning('系统错误，请稍后再试');
-                }
+                            console.log('list:' + JSON.stringify(list))
+                            // var datatext = ""
+                            // let fff = this.FanhuiData
+                            let idss = this.pdef.id
+                            let fas = this.fabulist
+                            let that = this
+                            $.ajax({
+                                type: 'GET',
+                                url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
+                                //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
+                                dataType: 'jsonp', //希望服务器返回json格式的数据
+                                jsonp: "callback",
+                                jsonpCallback: "successCallback",//回调方法
+                                success: function (data) {
+                                    let that = this;
+                                    console.log("返回值：")
+                                    console.log(data)
+                                    if (data == "200") {
+                                        const datas={
+                                            houserid:idss,
+                                            type:"已发布"
+                                        }
+                                        fas(datas)
+                                        console.log("成功")
+
+                                    }
+                                    else {
+                                         const datas={
+                                         houserid:idss,
+                                         type:data
+                                        }
+                                         fas(datas)
+                                        console.log("错误信息：")
+                                        console.log(data)
+                                        this.spinning = false;
+                                    }
+                                }
+                            });
+                        }, (i + 1) * 10000);
+                    })(i)
                 }
                 ///消息接收
                 // console.log('this.finalResult:'+this.finalResult)
             },
-            async fabulist(list){
+            async fabulist(list) {
                 await that.$http.post(`${that.$config.api}/api/cms/house/modifyHouseStatus/` + list)
             },
             ///房天下商铺发布
@@ -708,7 +704,7 @@
                 var datatext = ""
                 let fff = this.FanhuiData
                 let idss = this.pdef.id
-                let fas=this.fabulist
+                let fas = this.fabulist
                 $.ajax({
                     type: 'GET',
                     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
@@ -722,17 +718,17 @@
                         console.log(data)
                         if (data == "200") {
                             that.spinning = false;
-                             const datas={
-                                houserid:idss,
-                                type:"已发布"
+                            const datas = {
+                                houserid: idss,
+                                type: "已发布"
                             }
                             fas(datas)
                         }
                         else {
-                             that.spinning = false;
-                             const datas={
-                                houserid:idss,
-                                type:data
+                            that.spinning = false;
+                            const datas = {
+                                houserid: idss,
+                                type: data
                             }
                             fas(datas)
                         }

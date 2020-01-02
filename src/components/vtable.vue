@@ -176,6 +176,9 @@
         mounted() {
             this.seachShow();
         },
+        activated(){
+            this.seachShow();
+        },
         methods: {
             //修改
             updateItem(iditem) {
