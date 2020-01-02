@@ -622,6 +622,7 @@
     const danyuan = ['栋', '号', '弄', '座', '号楼', '胡同'];
     const plainOptionspeitao = ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间'];
     const plainOptionsjichu = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室'];
+
     export default {
         data() {
             return {
@@ -655,6 +656,10 @@
                 danyuan,
                 zhuang,
                 yongjin: '2.0', //佣金比例
+                plainOptionspeitao,
+                plainOptionsjichu,
+                jichucheckedList: ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间'],
+                peitaocheckedList: ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室'],
                 value2: '东',
                 value3: '随时看房',
                 value4: '豪华装修',
