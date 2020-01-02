@@ -296,7 +296,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
                             validate-status="">
-                            <a-checkbox></a-checkbox>
+                            <a-checkbox :checked="diabtiCheck" ></a-checkbox>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
                             validate-status="">
@@ -626,6 +626,7 @@
     export default {
         data() {
             return {
+                diabtiCheck: true,
                 anchorerror: '',
                 anchor: 'error',
                 disabled: false,
@@ -658,8 +659,8 @@
                 yongjin: '2.0', //佣金比例
                 plainOptionspeitao,
                 plainOptionsjichu,
-                jichucheckedList: ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间'],
-                peitaocheckedList: ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室'],
+                peitaocheckedList: ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间'],
+                jichucheckedList: ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室'],
                 value2: '东',
                 value3: '随时看房',
                 value4: '豪华装修',
@@ -1208,6 +1209,9 @@
  .errormsg{
         margin-left: 10px;
         color: red;
+    }
+    .ant-checkbox-group {
+        margin-top: 10px;
     }
     .selllogo {
         display: flex;
