@@ -393,6 +393,7 @@
             ///循环发布接口（每次最多10条）
             async qunFaSanwang(){
                 let arrays = this.rav;
+
                 for (let i = 0; i < arrays.length; i++) {
                 let recive = {};
                 //循环调用发布接口
@@ -457,42 +458,54 @@
 
                 }
                 console.log('list:' + JSON.stringify(list))
-                var datatext = ""
-                let fff = this.FanhuiData
+                // var datatext = ""
+                // let fff = this.FanhuiData
                 let idss = this.pdef.id
-                $.ajax({
-                    type: 'GET',
-                    url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
-                    //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
-                    dataType: 'jsonp', //希望服务器返回json格式的数据
-                    jsonp: "callback",
-                    jsonpCallback: "successCallback",//回调方法
-                    success: function (data) {
-                        let that = this;
-                        console.log("返回值：")
-                        console.log(data)
-                        if (data == "200") {
-                            that.spinning = false;
-                            console.log("发布称")
-                            recive.id = idss;
-                            recive.message = '成功'
-                            that.finalResult.push(recive)
-                            //      that.$http.post(`${that.$config.api}/api/cms/house/modifyHouseStatus/` + that.value.id).then(pones=>{
-                            //      that.openNotificationWithIcon('success')})
+                let fas=this.fabulist
+                let that =this
+                try{
+                    $.ajax({
+                        type: 'GET',
+                        url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
+                        //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
+                        dataType: 'jsonp', //希望服务器返回json格式的数据
+                        jsonp: "callback",
+                        jsonpCallback: "successCallback",//回调方法
+                        success: function (data) {
+                            let that = this;
+                            console.log("返回值：")
+                            console.log(data)
+                            if (data == "200") {
+                                // const datas={
+                                //     houserid:idss,
+                                //     type:"已发布"
+                                // }
+                                // fas(datas)
+                                console.log("成功")
+                                
+                            }
+                            else {
+                                //  const datas={
+                                //  houserid:idss,
+                                //  type:data
+                                // }
+                                //  fas(datas)
+                                console.log("错误信息：")
+                                console.log(data)
+                                this.spinning = false;
+                            }
                         }
-                        else {
-                            datatext = data;
-                            recive.id = idss;
-                            recive.message = datatext;
-                            that.finalResult.push(recive)
-                            // fff(datatext, idss)
-                        }
-                    }
-
-                });
+                    });
+                }
+                catch (e){
+                    this.$message.warning('系统错误，请稍后再试');
+                }
                 }
                 ///消息接收
-                console.log('this.finalResult:'+this.finalResult)
+                // console.log('this.finalResult:'+this.finalResult)
+            },
+            async fabulist(list){
+                await that.$http.post(`${that.$config.api}/api/cms/house/modifyHouseStatus/` + list)
             },
             ///房天下商铺发布
             async fabuShangpu() {
@@ -691,6 +704,7 @@
                 var datatext = ""
                 let fff = this.FanhuiData
                 let idss = this.pdef.id
+                let fas=this.fabulist
                 $.ajax({
                     type: 'GET',
                     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
@@ -704,16 +718,19 @@
                         console.log(data)
                         if (data == "200") {
                             that.spinning = false;
-                            console.log("发布称")
-                            //      that.$http.post(`${that.$config.api}/api/cms/house/modifyHouseStatus/` + that.value.id).then(pones=>{
-                            //      that.openNotificationWithIcon('success')})
+                             const datas={
+                                houserid:idss,
+                                type:"已发布"
+                            }
+                            fas(datas)
                         }
                         else {
-                            console.log("走一个 ")
-                            datatext = data;
-                            console.log(datatext)
-                            console.log('ids:' + idss)
-                            fff(datatext, idss)
+                             that.spinning = false;
+                             const datas={
+                                houserid:idss,
+                                type:data
+                            }
+                            fas(datas)
                         }
                     }
 

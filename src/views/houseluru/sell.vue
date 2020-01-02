@@ -746,7 +746,7 @@
             }
         },
         activated(options) {
-           this.$route.params.id='4266e37c-a9c2-6403-bf9b-39f26bbbbb51'
+           console.log("rrrrr"+this.$route.params.id)
            this.reciveId=this.$route.params.id
              if (this.$route.params.id!= undefined || this.$route.params.id!= null)
                 this.backfbdata(this.$route.params.id);
