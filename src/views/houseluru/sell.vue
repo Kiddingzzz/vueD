@@ -149,13 +149,13 @@
                                     {{index}}
                                 </a-select-option>
                             </a-select>
-                            <a-input id="" placeholder="" class="sellshihaow" />
+                            <a-input  placeholder="" class="sellshihaow" />
                             <a-select default-value="单元" class="sellshihaoselw sellmianji">
                                 <a-select-option v-for="(index,i) in zhuang" :key="i" :value="index">
                                     {{index}}
                                 </a-select-option>
                             </a-select>
-                            <a-input id="" placeholder="" class="sellshihaow" />
+                            <a-input  placeholder="" class="sellshihaow" />
                             <label class="sellsmianij">室</label>
                         </a-form-item>
 
@@ -195,7 +195,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
-                            <a-input type="number" id="" v-model="ref.rice" placeholder="" class="sellmianji" />
+                            <a-input type="number" v-model="ref.rice" placeholder="" class="sellmianji" />
                             <label class="sellsmianij">万</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
@@ -229,17 +229,17 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
-                            <a-input id="" placeholder="" class="sellmianji" />
+                            <a-input placeholder="" class="sellmianji" />
                             <label class="sellneibula">内部编号为0~20位,只能由数字和字母组成</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房源标签:" validate-status=""
                             help="">
                             <!-- <a-input id="" v-model="ref.fangyuanBiaoqian" placeholder="" /> -->
-                            <a-input id="" v-model="this.nianxian" placeholder="" />
+                            <a-input v-model="this.nianxian" placeholder="" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套标签:" validate-status=""
                             help="">
-                            <a-input id="" v-model="ref.peitaoBiaoqain" placeholder="" />
+                            <a-input v-model="ref.peitaoBiaoqain" placeholder="" />
                         </a-form-item>
                     </a-form>
                 </a-layout-content>
