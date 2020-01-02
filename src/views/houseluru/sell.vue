@@ -291,7 +291,7 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*佣金比例：" has-feedback
                             validate-status="">
                             <label class="yongjinlabel">≤</label>
-                            <a-input-number :min="0" :max="10" :step="0.5" />
+                            <a-input-number :min="0" :max="10" :step="0.5" v-model="yongjin"/>
                             <label class="sellyongjingbox">%</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
@@ -300,7 +300,8 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
                             validate-status="">
-                            <a-checkbox>水</a-checkbox>
+                            <a-checkbox-group :options="plainOptionsjichu" v-model="jichucheckedList" />
+                            <!-- <a-checkbox>水</a-checkbox>
                             <a-checkbox>电</a-checkbox>
                             <a-checkbox>煤气/天然气</a-checkbox>
                             <a-checkbox>有线电视</a-checkbox>
@@ -308,11 +309,12 @@
                             <a-checkbox>车位</a-checkbox>
                             <a-checkbox>露台</a-checkbox>
                             <a-checkbox>阁楼</a-checkbox>
-                            <a-checkbox>储藏室/地下室</a-checkbox>
+                            <a-checkbox>储藏室/地下室</a-checkbox> -->
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套设施" has-feedback
                             validate-status="">
-                            <a-checkbox>电话</a-checkbox>
+                            <a-checkbox-group :options="plainOptionspeitao" v-model="peitaocheckedList" />
+                            <!-- <a-checkbox>电话</a-checkbox>
                             <a-checkbox>热水器</a-checkbox>
                             <a-checkbox>彩电</a-checkbox>
                             <a-checkbox>空调</a-checkbox>
@@ -325,7 +327,7 @@
                             <a-checkbox>衣柜</a-checkbox>
                             <a-checkbox>沙发</a-checkbox>
                             <a-checkbox>厨具（可做饭）</a-checkbox>
-                            <a-checkbox>独立卫生间</a-checkbox>
+                            <a-checkbox>独立卫生间</a-checkbox> -->
                         </a-form-item>
                     </a-form>
                 </a-layout-content>
@@ -618,6 +620,8 @@
     const plainOptionhouse = ['新房', '二手房'];
     const zhuang = ['单元', '号', '幢', '栋', '号楼'];
     const danyuan = ['栋', '号', '弄', '座', '号楼', '胡同'];
+    const plainOptionspeitao = ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间'];
+    const plainOptionsjichu = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室'];
     export default {
         data() {
             return {
@@ -650,6 +654,7 @@
                 plainOptionhouse,
                 danyuan,
                 zhuang,
+                yongjin: '2.0', //佣金比例
                 value2: '东',
                 value3: '随时看房',
                 value4: '豪华装修',

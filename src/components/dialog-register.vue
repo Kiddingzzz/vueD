@@ -48,7 +48,7 @@
                       validator: checkphoneNumber,
                     },
                   ] }]"></a-input>
-                    <button class="btns-code" @click="sendcode()" :disabled='disabled'>{{getCodeText}}</button>
+                    <button class="btns-code" @click="sendcodeh()" :disabled='disabled'>{{getCodeText}}</button>
                 </a-form-item>
                 <a-form-item>
                     <label class="codecomfire">验证码:</label>
@@ -204,7 +204,7 @@
                 sendCode: '',
                 surname: '',
                 respassword: '',
-                getCodeText: '发送验证码',
+                getCodeText: '获取验证码',
                 disabled: false,
             };
         },
@@ -318,6 +318,7 @@
             // },
 
             // async sendcode() {
+            sendcodeh() {
             //   if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber)) {
             //     this.$error({
             //       title: "请填写正确手机号码",
@@ -333,37 +334,38 @@
             //   const Statu = `${this.$config.api}/api/Account/SendCode`;
             //   const res = await this.$http.post(Statu, data);
             //   console.log(123);
-            //   this.getCodeText = "发送中...";
-            //   this.disabled = true;
+              this.getCodeText = "发送中...";
+              this.disabled = true;
             //   this.getCodeisWaiting = true;
             //   this.getCodeBtnColor = "rgba(135,135,135,1)";
-            //   //示例用定时器模拟请求效果
-            //   setTimeout(() => {
-            //     this.$success({
-            //       title: "验证码已发送",
-            //       icon: "none"
-            //     });
-            //     this.disabled = false;
-            //     //示例默认1234，生产中请删除这一句。
-            //     //this.code=1234;
-            //     this.setTimer();
-            //   }, 1000);
-            // },
-            // setTimer() {
-            //   let holdTime = 60;
-            //   this.getCodeText = "重新获取(60)";
-            //   this.Timer = setInterval(() => {
-            //     if (holdTime <= 0) {
-            //       this.getCodeisWaiting = false;
-            //       this.getCodeBtnColor = "#878787";
-            //       this.getCodeText = "获取验证码";
-            //       clearInterval(this.Timer);
-            //       return;
-            //     }
-            //     this.getCodeText = "重新获取(" + holdTime + ")";
-            //     holdTime--;
-            //   }, 1000);
-            // },
+              //示例用定时器模拟请求效果
+              setTimeout(() => {
+                this.$success({
+                  title: "验证码已发送",
+                  icon: "none"
+                });
+                // this.disabled = false;
+                //示例默认1234，生产中请删除这一句。
+                //this.code=1234;
+                this.setTimer();
+              }, 1000);
+            },
+            setTimer() {
+              let holdTime = 60;
+              this.getCodeText = "重新获取(60)";
+              this.Timer = setInterval(() => {
+                if (holdTime <= 0) {
+                //   this.getCodeisWaiting = false;
+                //   this.getCodeBtnColor = "#878787";
+                  this.getCodeText = "获取验证码";
+                  clearInterval(this.Timer);
+                  this.disabled = false;
+                  return;
+                }
+                this.getCodeText = "重新获取(" + holdTime + ")";
+                holdTime--;
+              }, 1000);
+            },
             async doregister(e) {
                 console.log('正在注册，请耐心等待......')
                 this.dis = 'disabled';
@@ -379,12 +381,15 @@
                 try {
                     const Statu = `${this.$config.api}/api/cms/acount/register`;
                     const res = await this.$http.post(Statu, data);
-                    console.log(this.phoneNumber);
+                    // console.log(this.phoneNumber);
                     this.$emit('childByValue', e.userName, e.password)
                     setTimeout(() => {
                         this.showMask = false;
+                        clearInterval(this.Timer);
+                        this.getCodeText = "获取验证码";
+                        this.disabled = false;
                         this.form.resetFields();
-                        console.log("注册成功后后重置输入")
+                        // console.log("注册成功后后重置输入")
                     }, 500);
                     this.dis = false;
                 } catch (error) {
@@ -401,6 +406,9 @@
                 this.showMask = newVal;
             },
             showMask(val) {
+                clearInterval(this.Timer);
+                this.getCodeText = "获取验证码";
+                this.disabled = false;
                 this.$emit("input", val);
             }
         }
