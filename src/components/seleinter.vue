@@ -47,7 +47,7 @@
                 </a-select>
             </span>
             <span slot="caozuo" slot-scope="text, record">
-                <a-button type="primary" @click="shopfabuok(record)">确认发布</a-button>
+                <a-button type="primary" @click="shopfabuok(record)" :disabled="disabled" :loading="loading">确认发布</a-button>
                 <a-spin :spinning="spinning">
                 </a-spin>
             </span>
@@ -120,6 +120,8 @@
     export default {
         data() {
             return {
+                disabled: false,
+                loading: false,
                 datas,
                 columnss,
                 def: {},
@@ -173,11 +175,14 @@
 
             },
             async shopfabuok(e) {
+                //禁止再次点击
+                console.log('正在发布中，请耐心等待......')
+                this.disabled = true;
                 let update = JSON.parse(localStorage.getItem('update'));
                 try {
 
                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId + '&sitename=' + this.wangvalue).then(Response => {
-
+                        this.loading = true
                         if (Response.status == 200) {
                             if (Response.data == "yes") {
                                 if (this.wangvalue == "房天下") {
@@ -209,9 +214,13 @@
                             }
                         }
                     })
+                    this.loading = false
+                    this.disabled = false;
                 }
                 catch (e) {
                     this.$message.warning('系统遇到了点问题，请重试');
+                    this.loading = false
+                    this.disabled = false;
                 }
             },
 

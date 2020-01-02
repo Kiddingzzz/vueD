@@ -30,7 +30,7 @@
                 </a-modal>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record" class="caozuo">
-                        <a href="javascript:;" @click="update(record)">修改</a>
+                        <a href="javascript:;" @click="updateItem(record)">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
@@ -178,13 +178,10 @@
         },
         methods: {
             //修改
-            // update(){
-            //     alert('正待开发。。。。。。')
-            // },
-            update(iditem) {
+            updateItem(iditem) {
                 this.visible = true
                 this.updatelist = iditem
-                console.log(iditem)
+                // console.log(iditem)
             },
             hideModal() {
                 this.visible = false

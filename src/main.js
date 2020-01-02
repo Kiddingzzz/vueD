@@ -13,10 +13,52 @@ import './assets/iconfont/iconfont.css';
 import { encryptDes, decryptDes } from './des';
 import Axios from 'axios';
 import 'jquery'
-import plugins from './plugins' //防多次点击，重复提交
 Vue.use(ElementUI);
 Vue.use(Antd);
 Vue.use(VueJsonp);
+//定义锚点跳转 
+Vue.directive('anchor', {		
+	inserted: function(el, binding) {
+        el.onclick = function() {
+			let total;
+            if (binding.value == 0) {
+                total = 0;
+            } else {
+                if(document.getElementById(`anchor-${binding.value}`) != null){
+                    total = document.getElementById(`anchor-${binding.value}`).offsetTop;  
+                }else{
+                    total = document.getElementById(`anchor-save`).offsetTop; 
+                } 
+            }
+            let distance = document.documentElement.scrollTop || document.body.scrollTop;
+            let step = total / 50;
+            if (total > distance) {
+                (function smoothDown() {
+                    if (distance < total) {
+                        distance += step;
+                        document.documentElement.scrollTop = distance;
+                        setTimeout(smoothDown, 5);
+                    } else {
+                        document.documentElement.scrollTop = total;
+                    }
+                })();
+            } else {
+                let newTotal = distance - total;
+                step = newTotal / 50;
+                (function smoothUp() {
+                    if (distance > total) {
+                        distance -= step;
+                        document.documentElement.scrollTop = distance;
+                        setTimeout(smoothUp, 5);
+                    } else {
+                        document.documentElement.scrollTop = total;
+                    }
+                })();
+            }
+
+        }
+    }
+});
 // 对Date的扩展，将 Date 转化为指定格式的String
 // 月(M)、日(d)、小时(h)、分(m)、秒(s)、季度(q) 可以用 1-2 个占位符，
 // 年(y)可以用 1-4 个占位符，毫秒(S)只能用 1 个占位符(是 1-3 位的数字)

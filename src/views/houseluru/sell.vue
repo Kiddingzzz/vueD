@@ -354,6 +354,7 @@
                     <a-form>
                         <div class="selltilerbox">
                             <div class="selltiler-firstbox">
+                                <span v-if="anchorerror == 'title'" id="anchor-error"></span>
                                 <label class="selllabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
                             </div>
                             <div>
@@ -365,6 +366,7 @@
                         </div>
                         <div class="selltilerbox">
                             <div class="selltiler-firstbox">
+                                <span v-if="anchorerror == 'note'" id="anchor-error"></span>
                                 <label class="selllabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
                             </div>
                             <div>
@@ -379,6 +381,7 @@
                         </div>
                         <div class="selltilerbox">
                             <div class="selltiler-firstbox">
+                                <span v-if="anchorerror == 'atittude'" id="anchor-error"></span>
                                 <label class="selllabeltle">*业主心态：</label><label>从房东卖房原因、是否急售等方面进行描述</label><label
                                     class="putnumber">(字数限制20-300)</label>
                             </div>
@@ -394,6 +397,7 @@
                         </div>
                         <div class="selltilerbox">
                             <div class="selltiler-firstbox">
+                                <span v-if="anchorerror == 'fuwuCondition'" id="anchor-error"></span>
                                 <label class="selllabeltle">服务介绍:</label>
                                 <label>多角度描述您的服务优势，例如：行业年限、专业经验、服务态度、可提供的服务种类等</label>
                                 <label class="sellputnumber">(字数限制20-300)</label>
@@ -582,7 +586,7 @@
                             </div>
                         </div>
                         <div class="sellbottomobx">
-                            <a-button type="" class="sellbuttonfang sellokbutton" @click="saveHouse()">保存房源</a-button>
+                            <a-button type="" id='anchor-save' class="sellbuttonfang sellokbutton" v-anchor='anchor' @click="saveHouse()">保存房源</a-button>
                             <a-button type="" class="sellokbutton">保存草稿</a-button>
                         </div>
                     </a-form>
@@ -617,6 +621,8 @@
     export default {
         data() {
             return {
+                anchorerror: '',
+                anchor: 'error',
                 disabled: false,
                 url: '11',
                 visible: false,
@@ -750,7 +756,7 @@
             this.gongnuan = "自供暖";
         },
         methods: {
-            blur(data){
+           blur(data){
                 if(data == "title"&this.title == ''){
                     this.titleerror = true
                     this.titlezishu = false
@@ -786,7 +792,7 @@
                     this.fuwuConditionzishu = false
                 }else if(data == "fuwuCondition"&this.fuwuCondition != ''){
                     this.fuwuConditionerror = false
-                    if(this.atittude.length <= 20 || this.fuwuCondition.length >= 300 || this.fuwuCondition.includes('最') == true){
+                    if(this.fuwuCondition.length <= 20 || this.fuwuCondition.length >= 300 || this.fuwuCondition.includes('最') == true){
                         this.fuwuConditionzishu = true
                     }else{
                         this.fuwuConditionzishu = false
@@ -810,8 +816,6 @@
             //插入一条url数据链接
             async onSearch(params) {
                 //判断URL网址输入是否正确
-                console.log("正在秒录，请耐心等待......")
-                this.disabled = true;
                 var strRegex = '^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
                 var re = new RegExp(strRegex);
                 if (params == "" || !re.test(params)) {
@@ -826,6 +830,8 @@
                     houseType: this.houseTypes,
                     weiYiUrl: this.text
                 };
+                console.log("正在秒录，请耐心等待......")
+                this.disabled = true;
                 if (RegExp(/anjuke/).exec(params))
                     this.ZhuaquUrl = `${this.$config.api}/api/cms/anJuKe/shopUrl`
                 if (RegExp(/cq.58.com/).exec(params))
@@ -837,8 +843,6 @@
                 await this.$http.post(this.ZhuaquUrl, data).then(response => {
                     this.spinning = true;
                     if (response.status == 200) {
-                        //取消禁止按钮
-                        this.disabled = false;
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`抓取数据:` + JSON.stringify(res.data))
                             this.laf = res.data;
@@ -857,9 +861,9 @@
                             this.atittude = this.ref.atittude
                             this.fuwuCondition = this.ref.fuwuCondition
                             //字符串
-                            console.log("房源标签是否含有html标签？==========" + this.ref.fangyuanBiaoqian);
+                            // console.log("房源标签是否含有html标签？==========" + this.ref.fangyuanBiaoqian);
                             const nianqi = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
-                            console.log(nianqi)
+                            // console.log(nianqi)
                             if (nianqi == '新上') {
                                 console.log("sdgsfsfd")
                                 this.fangyuanBiaoqian = "不满二年";
@@ -869,7 +873,7 @@
                             else
                                 this.fangyuanBiaoqian = nianqi;
                                 this.nianxian = this.fangyuanBiaoqian
-                            console.log("去掉房源标签含有的html标签成功？==========" + this.fangyuanBiaoqian);
+                            // console.log("去掉房源标签含有的html标签成功？==========" + this.fangyuanBiaoqian);
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                             this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
                             let shi = this.ref.huxing.indexOf("室");
@@ -921,8 +925,10 @@
                                 this.xiaoQuList.push(XiaoquImg);
                             setTimeout(() => {
                                 this.visible = false;
+                                this.disabled = false;
                             }, 500);
                             this.visible = false;
+                            this.disabled = false;
                         });
 
                     }
@@ -932,27 +938,49 @@
             },
             //保存房源
             async saveHouse() {
-                if(this.title == '' || this.titlezishu == true){
-                    this.titleerror = true
+                if(this.title == '' || this.title.length <= 10 || this.title.length >= 30 || this.title.includes('最') == true){
+                    if(this.title == ''){
+                        this.titleerror = true
+                    }else{
+                        this.titlezishu = true
+                    }
+                    this.anchorerror = 'title'
                     return ;
                 }
-                if(this.note == '' || this.fuwuConditionzishu == true){
-                    this.noteerror = true
+                if(this.note == '' || this.note.length <= 30 || this.note.length >= 300 || this.note.includes('最') == true){
+                    if(this.note == ''){
+                        this.noteerror = true
+                    }else{
+                        this.notezishu = true
+                    }
+                    this.anchorerror = 'note'
                     return ;
                 }
-                if(this.atittude == '' || this.fuwuConditionzishu == true){
-                    this.atittudeerror = true
+                if(this.atittude == '' || this.atittude.length <= 20 || this.atittude.length >= 300 || this.atittude.includes('最') == true){
+                    if(this.atittude == ''){
+                        this.atittudeerror = true
+                    }else{
+                        this.atittudezishu = true
+                    }
+                    this.anchorerror = 'atittude'
                     return ;
                 }
-                if(this.fuwuCondition == '' || this.fuwuConditionzishu == true){
-                    this.fuwuConditionerror = true
+                if(this.fuwuCondition == '' || this.fuwuCondition.length <= 20 || this.fuwuCondition.length >= 300 || this.fuwuCondition.includes('最') == true){
+                    if(this.fuwuCondition == ''){
+                        this.fuwuConditionerror = true
+                    }else{
+                        this.fuwuConditionzishu = true
+                    }
+                    this.anchorerror = 'fuwuCondition'
                     return ;
                 }
                 if (this.reciveId == '' || this.reciveId == undefined) {
-                    this.zhuaqubao();
+                    console.log("保存了")
+                    // this.zhuaqubao();
                 }
                 else {
-                    this.xiugaibao();
+                     console.log("又保存了")
+                    // this.xiugaibao();
                 }
                 // if(this.ref.title.length >= 10 && this.ref.title.length <= 30 && this.ref.title.includes('最')){
                 //     if(this.ref.note.length >= 30 && this.ref.note.length <= 300 && this.ref.note.includes('最')){
@@ -978,15 +1006,12 @@
             },
             //抓取房源保存
             async zhuaqubao() {
-                console.log("正在保存抓取房源，请耐心等待......")
-                this.disabled = true;
                 if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
                     this.saveRes.rice == null && this.saveRes.simpleRice == null &&
                     this.saveRes.square == null && this.saveRes.huxing == null &&
                     this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null && this.saveRes.imgHeader == null
                 ) {
                     this.openNotificationWithIcon('error')
-                    this.disabled = false;
                 }
                 else {
                     //this.saveRes.urlsId = this.$store.userId;
@@ -1000,22 +1025,18 @@
                     await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
-                            this.disabled = false;
                         }
                     })
                 }
             },
             
             async xiugaibao() {
-                console.log("正在保存房源，请耐心等待......")
-                this.disabled = true;
                 if (this.ref.xiaoquName == null && this.ref.title == null &&
                     this.ref.rice == null && this.ref.simpleRice == null &&
                     this.ref.square == null && this.ref.huxing == null &&
                     this.ref.louceng == null && this.ref.zhuangxiu == null && this.ref.address == null && this.ref.imgHeader == null
                 ) {
                     this.openNotificationWithIcon('error')
-                    this.disabled = false;
                 }
                 else {
                     //this.saveRes.urlsId = this.$store.userId;
@@ -1029,7 +1050,6 @@
                     await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.ref).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
-                            this.disabled = false;
                         }
                     })
                 }
@@ -1069,6 +1089,8 @@
             handleOk(e) {
                 console.log(e);
                 this.visible = false;
+                this.spinning = false;
+                this.disabled = false;
             },
             addok(e) {
                 console.log(e);

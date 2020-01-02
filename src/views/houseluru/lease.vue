@@ -18,7 +18,7 @@
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
-                <a-input-search placeholder="复制链接" @search="onSearch" enterButton="立即秒录" size="large" />
+                <a-input-search placeholder="复制链接" @search="onSearch" :disabled="disabled" enterButton="立即秒录" size="large" />
                 <a-spin :spinning="spinning">
                 </a-spin>
             </p>
@@ -579,6 +579,7 @@
     export default {
         data() {
             return {
+                disabled: false,
                 url: '11',
                 visible: false,
                 addxq: false,
@@ -699,6 +700,8 @@
                     houseType: this.houseTypes,
                     weiYiUrl: this.text
                 };
+                console.log("正在秒录，请耐心等待......")
+                this.disabled = true;
                 await this.$http.post(`${this.$config.api}/api/cms/urls/url`, data).then(response => {
                     this.spinning = true;
                     console.log(JSON.stringify(response))
@@ -757,8 +760,10 @@
                                 this.xiaoQuList.push(XiaoquImg);
                             setTimeout(() => {
                                 this.visible = false;
+                                this.disabled = false;
                             }, 500);
                             this.visible = false;
+                            this.disabled = false;
                         });
 
                     }
@@ -817,6 +822,8 @@
             leasehanderOk(e) {
                 console.log(e);
                 this.visible = false;
+                this.spinning = false;
+                this.disabled = false;
             },
             addok(e) {
                 console.log(e);

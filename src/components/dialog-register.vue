@@ -48,7 +48,7 @@
                       validator: checkphoneNumber,
                     },
                   ] }]"></a-input>
-                    <button class="btns-code" @click="sendcode()">发送验证</button>
+                    <button class="btns-code" @click="sendcode()" :disabled='disabled'>{{getCodeText}}</button>
                 </a-form-item>
                 <a-form-item>
                     <label class="codecomfire">验证码:</label>
@@ -204,6 +204,8 @@
                 sendCode: '',
                 surname: '',
                 respassword: '',
+                getCodeText: '发送验证码',
+                disabled: false,
             };
         },
         beforeCreate() {
@@ -503,7 +505,7 @@
 
                     .inputs-code {
                         margin-left: 10px;
-                        width: 268px;
+                        width: 238px;
                         height: 36px;
                         line-height: 5px;
                         border-radius: 5px;
@@ -533,7 +535,7 @@
                     .btns-code {
                         border: none;
                         margin-left: 10px;
-                        width: 72px;
+                        width: 102px;
                         height: 36px;
                         line-height: 17px;
                         border-radius: 5px;

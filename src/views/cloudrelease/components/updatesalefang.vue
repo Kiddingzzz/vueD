@@ -641,7 +641,7 @@
             }
         },
         mounted() {
-            console.log("传过来的值========"+JSON.stringify(this.list))
+            // console.log("传过来的值========"+JSON.stringify(this.list))
             this.fuzhi()
             // this.xiaoquName = this.list .xiaoquName
         },
