@@ -365,10 +365,11 @@
                 }else{
                     this.remember = '否'
                 }
+
                 const datas = {
                     userNameOrEmailAddress: this.user,
                     password: this.password,
-                    adressIp: this.ip,
+                    adressIp: '129.122.023',
                     remPasspwd: this.remember,
                 };
                 const statu = `${this.$config.api}/api/cms/acount/loginAuthentic`;
