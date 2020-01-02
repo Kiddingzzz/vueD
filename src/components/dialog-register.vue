@@ -389,6 +389,10 @@
                     this.$message.error('验证码输入错误！');
                     return;
                 }
+                 if(this.Yztext==""){
+                    this.$message.error('验证码不能为空！');
+                    return;
+                }
                 else if(this.sendCode!=''&&this.Yztext==this.sendCode){
                     console.log('正在注册，请耐心等待......')
                     this.dis = 'disabled';
