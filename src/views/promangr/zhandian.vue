@@ -49,10 +49,12 @@
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="siteUserName"
-                                    placeholder="请输入姓名"
+                                    placeholder="请输入账号"
                                     class="inputs"
                                     autocomplete="new-siteUserName"
+                                    @blur="blur('user')"
                                     ></el-input>
+                                    <div class="erre" v-if='usererre'>账号不能为空</div>
                                     <el-input
                                     type="password"
                                     autocomplete="new-password"
@@ -60,7 +62,9 @@
                                     v-model="sitepwd"
                                     class="inputs"
                                     prefix-icon="iconfont icon-mima"
+                                    @blur="blur('pwd')"
                                     ></el-input>
+                                    <div class="erre" v-if='pwderre'>密码不能为空</div>
                             </a-modal>
                         </span>
                         <span slot="userName" slot-scope="text, record">
@@ -184,6 +188,8 @@
     export default {
         data() {
             return {
+                usererre: false,
+                pwderre: false,
                 datas,
                 columnss,
                 siteUserName: '',
@@ -243,8 +249,17 @@
         methods: {
             callback (key) {
             // console.log(key)
-                if(key == 1){
-                    this.GetSiteList();
+                this.GetSiteList();
+            },
+            blur(data) {
+                if (data == "user" && this.siteUserName == '') {
+                    this.usererre = true
+                } else if (data == "user" && this.siteUserName != '') {
+                    this.usererre = false
+                }else if (data == "pwd" && this.sitepwd == '') {
+                    this.pwderre = true
+                } else if (data == "pwd" && this.sitepwd != '') {
+                    this.pwderre = false
                 }
             },
             ///获取站点列表
@@ -270,6 +285,14 @@
             },
             ///房天下
             async handleOk() {
+                if(this.siteUserName == ''){
+                    this.usererre = true
+                    return;
+                }
+                if(this.sitepwd == ''){
+                    this.pwderre = true
+                    return;
+                }
                 console.log(this.siteName)
                 let update = JSON.parse(localStorage.getItem('update'));
                 const data = {
@@ -298,8 +321,7 @@
                      this.visible = false;
                }
                ///关闭添加账号model框时，清空input框数据
-                this.siteUserName = '';
-                this.sitepwd = '';               
+                this.close()            
             },
             ceshi(tag,hname) {
                 this.siteName=hname;
@@ -328,6 +350,7 @@
                               this.$message.success('删除成功！！');
                          }
                           else{
+                              this.zspinning=false
                               this.$message.success('您还没有添加网站的账号，请先添加！');
                               this.zspinning=false                         }
 
@@ -348,6 +371,8 @@
                 this.lookpwdput = '';
                 this.siteUserName = '';
                 this.sitepwd = '';
+                this.usererre = false
+                this.pwderre = false
             },
 
             //查看密码
@@ -384,7 +409,7 @@
            lookpwdoks(){
                this.lookpwdvisible=false;
                this.loolnameok="";
-                this.lookpwdok="";
+               this.lookpwdok="";
            }
         },
     };
@@ -428,9 +453,12 @@
         margin: 0 auto;
         background-color: white;
     }
-
     .inputs{
         margin-bottom: 20px;
+    }
+    .erre{
+        margin-top: -18px;
+        color: red;
     }
     .interimg{
       width:160px;

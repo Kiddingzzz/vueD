@@ -17,14 +17,16 @@
 
                                 {{tag.toUpperCase()}}
                             </a-tag>
-                            <a-modal title="登录账号" v-model="closevisible" @ok="closehandleOk('房天下')">
+                            <a-modal title="登录账号" v-model="closevisible" @ok="closehandleOk(record.key,'房天下')" @cancel="close" okText='确定' cancelText='取消'>
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="closesiteUserName"
-                                    placeholder="请输入姓名"
+                                    placeholder="请输入账号"
                                     class="closeinputs"
                                     autocomplete="new-closesiteUserName"
+                                    @blur="blur('user')"
                                     ></el-input>
+                                    <div class="erre" v-if='usererre'>账号不能为空</div>
                                     <el-input
                                     type="password"
                                     autocomplete="new-password"
@@ -32,13 +34,15 @@
                                     v-model="closesitepwd"
                                     class="closeinputs"
                                     prefix-icon="iconfont icon-mima"
+                                    @blur="blur('pwd')"
                                     ></el-input>
+                                    <div class="erre" v-if='pwderre'>密码不能为空</div>
                             </a-modal>
                             <a-modal title="登录账号" v-model="closevisible" @ok="closehandle58">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="closesiteUserName"
-                                    placeholder="请输入姓名"
+                                    placeholder="请输入账号"
                                     class="closeinputs"
                                     autocomplete="new-closesiteUserName"
                                     ></el-input>
@@ -110,36 +114,38 @@
         }
     },
     data() {
-      return {
-          column,
-          closesiteUserName: '',
-          closesitepwd: '',
-          closekeyId: "12345645",
-         closebid: "s123",
-          closeret: [],
-         closebyte: [],
-         closetokens: '',
-         closedespwd: '',
-          //房源类型 售 或 租
-          closehouseType: '',
-          //请求API的授权码 令牌  
-          closetoken: '',
-          //请求API的服务域名
-           closeurl: '',
-          //企业内部房源ID
-          closeinnerid: '',
-          //房源详情页URL
-          closehouseurl: '',
-          // 房天下房源ID   
-          closehouseid: '',
-          //发布状态：1.已推广，2.未推广，5.房源违规
-         closeflag: '',
-          closevisible: false,
-          closeaddress: '',
-          closesiteitem:[],
-          intername:'',
-       
-      };
+        return {
+            usererre: false,
+            pwderre: false,
+            column,
+            closesiteUserName: '',
+            closesitepwd: '',
+            closekeyId: "12345645",
+            closebid: "s123",
+            closeret: [],
+            closebyte: [],
+            closetokens: '',
+            closedespwd: '',
+            //房源类型 售 或 租
+            closehouseType: '',
+            //请求API的授权码 令牌  
+            closetoken: '',
+            //请求API的服务域名
+            closeurl: '',
+            //企业内部房源ID
+            closeinnerid: '',
+            //房源详情页URL
+            closehouseurl: '',
+            // 房天下房源ID   
+            closehouseid: '',
+            //发布状态：1.已推广，2.未推广，5.房源违规
+            closeflag: '',
+            closevisible: false,
+            closeaddress: '',
+            closesiteitem:[],
+            intername:'',
+        
+        };
     },
     mounted() {
         let pwd = this.pwd;
@@ -177,6 +183,17 @@
                 this.closesiteitem[i].key = ''+(i+1)+'';
             }
         },
+        blur(data) {
+            if (data == "user" && this.closesiteUserName == '') {
+                this.usererre = true
+            } else if (data == "user" && this.closesiteUserName != '') {
+                this.usererre = false
+            }else if (data == "pwd" && this.closesitepwd == '') {
+                this.pwderre = true
+            } else if (data == "pwd" && this.closesitepwd != '') {
+                this.pwderre = false
+            }
+        },    
             // async GetCloseSiteList(){
             //     //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
             //     let update = JSON.parse(localStorage.getItem('update'));
@@ -212,7 +229,15 @@
                 this.closevisible = false;
             },
             ///房天下
-            async closehandleOk(e) {
+            async closehandleOk(index,e) {
+                if(this.closesiteUserName == ''){
+                    this.usererre = true
+                    return;
+                }
+                if(this.closesitepwd == ''){
+                    this.pwderre = true
+                    return;
+                }
                 let update = JSON.parse(localStorage.getItem('update'));
                 const data = {
                     // userId: this.$store.userId,
@@ -227,9 +252,11 @@
                         if(Response.status==200)
                         {
                             this.$message.success('添加账号成功');
-                           this.closevisible = false;
-                             this.GetCloseSiteList();
-          ``      
+                            //此处只针对index为1和2的情况
+                            const key = index == 1 ? 0 : 1
+                            this.closesiteitem.splice(key,1)
+                            this.closevisible = false;
+                            // this.GetCloseSiteList(); 
                         }
                       });
                }
@@ -238,7 +265,8 @@
                     this.$message.success('您已添加账号');
                     this.closevisible = false;
                }
-               
+               ///关闭添加账号model框时，清空input框数据
+               this.close()
                 
             },
             openceshi(tag,name) {
@@ -247,9 +275,23 @@
                     this.closevisible = true;            
                 }
                 else{
+                    if(name=="房天下")
+                    {
+                        window.open('https://passport.fang.com/NewRegister.aspx?backurl=https://cq.fang.com/');
+                    }
+                    else if(name=="58同城")
+                    {
+                        window.open('https://vip.anjuke.com');
+                    }
                 }
             },
-            //删除站点账号
+            //关闭添加账号、查看密码model框时，清空input框数据
+            close(){
+                this.closesiteUserName = '';
+                this.closesitepwd = '';
+                this.usererre = false
+                this.pwderre = false
+            },
           
           
      
@@ -257,7 +299,10 @@
   };
 </script>
 <style  lang="less">
-   
+   .erre{
+        margin-top: -18px;
+        color: red;
+    }
     .closeinputs{
         margin-bottom: 20px;
     }

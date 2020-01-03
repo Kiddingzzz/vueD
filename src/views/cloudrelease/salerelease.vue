@@ -154,7 +154,7 @@
             },
             //接受house对象 
             getMag(house) {
-                console.log("house:"+JSON.stringify(house))
+                // console.log("house:"+JSON.stringify(house))
                 if (house != "" && house != undefined) {
                 this.current = 1;
                 this.bieshu = house;
@@ -162,7 +162,7 @@
                 
             },
             getMagList(houseLists){
-                console.log("house:"+JSON.stringify(houseLists))
+                // console.log("house:"+JSON.stringify(houseLists))
                 if (houseLists.length>0) {
                     this.current = 1;
                     this.QunFalist = houseLists;

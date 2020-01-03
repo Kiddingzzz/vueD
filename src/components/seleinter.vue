@@ -751,7 +751,7 @@
                     // userpwd:datas.passWord,
 
                 }
-                console.log('list:' + JSON.stringify(list))
+                // console.log('list:' + JSON.stringify(list))
                 var datatext = ""
                 let fff = this.FanhuiData
                 let idss = this.pdef.id

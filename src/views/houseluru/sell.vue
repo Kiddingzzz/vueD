@@ -715,8 +715,7 @@
                 ref: {},
                 previewVisible: false,
                 previewImage: '',
-                shineiList: [
-                ],
+                shineiList: [],
                 imgHeaderList: [],
                 xiaoQuList: [],
                 fangxinlist: [],
@@ -881,7 +880,7 @@
                             this.chaoxiang = ret.chaoxiang;
                             this.spinning = false;
                             this.ref = res.data;
-                            console.log(this.ref.weiyizhufang.replace(/(^\s*)|(\s*$)/g, ""))
+                            // console.log(this.ref.weiyizhufang.replace(/(^\s*)|(\s*$)/g, ""))
                             //产权年限
                             this.chanquanNianxian = this.ref.chanquanNianxian
                             //信息标题、价格、面积、房源地址、配套标签
@@ -1149,7 +1148,11 @@
             async backfbdata(backid) {
                 console.log("返回id：" + backid)
                 await this.$http.post(`${this.$config.api}/api/cms/house/` + backid + `/backPubData`).then(res => {
-                    console.log(`抓取数据:` + JSON.stringify(res.data))
+                    this.yongjin= '2.0', //佣金比例
+                    this.peitaocheckedList = ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间']
+                    this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
+                    this.checked = true
+                    // console.log(`抓取数据:` + JSON.stringify(res.data))
                     this.laf = res.data;
                     var ret = res.data.address;
                     var refQu = ret.indexOf('－');
@@ -1259,6 +1262,10 @@
                 this.imgHeaderList = []
                 this.xiaoQuList = []
                 this.fangxinlist = []
+                this.yongjin= '', //佣金比例
+                this.peitaocheckedList = []
+                this.jichucheckedList = []
+                this.checked = false
             }
         }
     }

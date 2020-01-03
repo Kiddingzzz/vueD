@@ -17,7 +17,7 @@
 
                                 {{tag.toUpperCase()}}
                             </a-tag>
-                            <a-modal title="登录账号" v-model="openvisible" @ok="openhandleOk()">
+                            <a-modal title="登录账号" v-model="openvisible" @ok="openhandleOk()" @cancel="close" okText='确定' cancelText='取消'>
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="opensiteUserName"
@@ -43,7 +43,7 @@
                             <a-button type="primary" @click="openDeleteSite(record.key,record.id,record.siteName)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary" @click="openlookpwdbotton()">查看密码</a-button>
-                            <a-modal title="查看密码" v-model="openlookvisible" @ok="openlookpwd(record.id,record.siteName)">
+                            <a-modal title="查看密码" v-model="openlookvisible" @ok="openlookpwd(record.id,record.siteName)" @cancel="close" okText='确定' cancelText='取消'>
                                 <label>为了您的账户安全，请输入您在开单王的登陆密码</label>
                                 <el-input
                                     prefix-icon="iconfont icon-User"
@@ -130,8 +130,6 @@
           openbyte: [],
           opentokens: '',
           opendespwd: '',
-          opensiteUserName:'',
-          opensitepwd:'',
           openlookpwdput:'',
           openloolnameok:'',
           openlookpwdok:'',
@@ -289,15 +287,15 @@
             openlookpwdbotton(){
                     this.openlookvisible=true;
             },
-             async openlookpwd(pid,lsitename)
-              {
+            async openlookpwd(pid,lsitename)
+            {
                 let update = JSON.parse(localStorage.getItem('update'));
                 const data={
                      userid:update.userId,
                      password:this.openlookpwdput,
                      lookpid:pid,
                 };
-                 console.log("id:"+update.userId+"密码："+this.openlookpwdput)
+                console.log("id:"+update.userId+"密码："+this.openlookpwdput)
                 try{
                         await this.$http.post(`${this.$config.api}/api/cms/acount/lookPwd`,data).then(Response=>{
                         console.log(Response)
@@ -316,9 +314,15 @@
                     this.$message.success('密码输入错误');
                 }
             },
-             openlookpwdoks(){
-               this.openlookpwdvisible=false;
-           }
+            openlookpwdoks(){
+                this.openlookpwdvisible=false;
+            },
+            //关闭添加账号、查看密码model框时，清空input框数据
+            close(){
+                this.opensiteUserName = '';
+                this.opensitepwd = '';
+                this.openlookpwdput = '';
+            },
     },
   };
 </script>
