@@ -16,18 +16,6 @@
                         </template>
                     </span>
                 </div>
-                 <a-modal
-                        style="margin-top:-36px;"
-                        width='80vw'
-                        title="修改房源"
-                        v-model="visible"
-                        @ok="hideModal"
-                        okText="确认"
-                        cancelText="取消"
-                        :destroyOnClose="true"
-                        >
-                        <updatesalefang :list = updatelist></updatesalefang>
-                </a-modal>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record" class="caozuo">
                         <a href="javascript:;" @click="updateItem(record.id)">修改</a>
@@ -47,7 +35,6 @@
     </div>
 </template>
 <script>
-    import updatesalefang from '../views/cloudrelease/components/updatesalefang'
     const columns = [
         {
             title: '小区',
@@ -145,12 +132,8 @@
     ];
 
     export default {
-        components: {
-            updatesalefang,
-        },
         data() {
             return {
-                visible: false,
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
                 loading: false,
@@ -181,16 +164,12 @@
         },
         methods: {
             //修改
-            updateItem(sid) {
-               
+            updateItem(sid) {           
                 const that = this.$router
                 that.replace({
                         name: 'Sell',
                             params: { id: sid }
                     })  
-            },
-            hideModal() {
-                this.visible = false
             },
             start() {
                 this.loading = true;

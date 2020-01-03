@@ -230,7 +230,7 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
                             <a-input placeholder="" class="sellmianji" />
-                            <label class="sellneibula">内部编号为0~20位,只能由数字和字母组成</label>
+                            <!-- <label class="sellneibula">内部编号为0~20位,只能由数字和字母组成</label> -->
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*房源标签:" validate-status=""
                             help="">
@@ -299,7 +299,7 @@
                         </a-form-item> 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
                             validate-status="">
-                            <a-checkbox :checked="diabtiCheck"></a-checkbox>
+                            <a-checkbox :checked="checked" @change="onChange"></a-checkbox>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
                             validate-status="">
@@ -632,7 +632,7 @@
     export default {
         data() {
             return {
-                diabtiCheck: true,
+                checked: false,
                 anchorerror: '',
                 anchor: 'error',
                 disabled: false,
@@ -662,11 +662,11 @@
                 plainOptionhouse,
                 danyuan,
                 zhuang,
-                yongjin: '2.0', //佣金比例
+                yongjin: '', //佣金比例
                 plainOptionspeitao,
                 plainOptionsjichu,
-                peitaocheckedList: ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间'],
-                jichucheckedList: ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室'],
+                peitaocheckedList: [],
+                jichucheckedList: [],
                 value2: '东',
                 value3: '随时看房',
                 value4: '豪华装修',
@@ -775,6 +775,9 @@
             this.gongnuan = "自供暖";
         },
         methods: {
+            onChange (e) {
+                this.checked = e.target.checked
+            },
             blur(data) {
                 if (data == "title" & this.title == '') {
                     this.titleerror = true
@@ -866,6 +869,10 @@
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseType + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`抓取数据:` + JSON.stringify(res.data))
+                            this.yongjin= '2.0', //佣金比例
+                            this.peitaocheckedList = ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间']
+                            this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
+                            this.checked = true
                             this.laf = res.data;
                             var ret = res.data.address;
                             var refQu = ret.indexOf('－');
