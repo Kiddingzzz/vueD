@@ -120,6 +120,9 @@
             if(to.path == '/salerelease'&& from.path == '/shangpuluru'){
                 this.activeKey = 2
             }
+            if(to.path == '/salerelease'&& from.path == '/zhandian'){
+                this.current = 0;
+            }
                 // to , from 分别表示从哪跳转到哪，都是一个对象
                 // to.path  ( 表示的是要跳转到的路由的地址 eg: /home );
             }

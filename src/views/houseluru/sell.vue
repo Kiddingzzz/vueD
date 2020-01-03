@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @ok="handleOk" :destroyOnClose="true"
+        <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @cancel="cancelClick" @ok="handleOk" :destroyOnClose="true"
             cancelText="取消" okText="确定">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
@@ -296,7 +296,7 @@
                             <label class="yongjinlabel">≤</label>
                             <a-input-number :min="0" :max="10" :step="0.5" v-model="yongjin" />
                             <label class="sellyongjingbox">%</label>
-                        </a-form-item>
+                        </a-form-item> 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
                             validate-status="">
                             <a-checkbox :checked="diabtiCheck"></a-checkbox>
@@ -367,7 +367,7 @@
                                 <a-input v-model="title" placeholder="字数限制10-30" style="width:50%;"
                                     @blur="blur('title')" />
                                 <span class="errormsg" v-if="titleerror">信息标题不能为空</span>
-                                <span class="errormsg" v-if="titlezishu">字数限制在10-30，且不能包含“最”</span>
+                                <span class="errormsg" v-if="titlezishu">内容不能包含“最”</span>
                             </div>
                         </div>
                         <div class="selltilerbox">
@@ -706,7 +706,7 @@
                 pilianglist,
                 provinceData,
                 proquyuseData,
-                houseTypes: '二手房',
+                houseType: '二手房',
                 userId: '48639146-0751-11EA-87FE-305A3A80A208',
                 urlss: '',
                 text: '',
@@ -758,6 +758,8 @@
             }
         },
         activated(options) {
+            //页面变化时，清空原有数据
+            this.clear()
             console.log("rrrrr" + this.$route.params.id)
             this.reciveId = this.$route.params.id
             if (this.$route.params.id != undefined || this.$route.params.id != null)
@@ -779,7 +781,7 @@
                     this.titlezishu = false
                 } else if (data == "title" & this.title != '') {
                     this.titleerror = false
-                    if (this.title.length <= 10 || this.title.length >= 30 || this.title.includes('最') == true) {
+                    if (this.title.includes('最') == true) {
                         this.titlezishu = true
                     } else {
                         this.titlezishu = false
@@ -844,11 +846,13 @@
                 const data = {
                     userId: this.userId,
                     url: this.urlss,
-                    houseType: this.houseTypes,
+                    houseType: this.houseType,
                     weiYiUrl: this.text
                 };
                 console.log("正在秒录，请耐心等待......")
                 this.disabled = true;
+                //清空原有数据
+                this.clear()
                 if (RegExp(/anjuke/).exec(params))
                     this.ZhuaquUrl = `${this.$config.api}/api/cms/anJuKe/shopUrl`
                 if (RegExp(/cq.58.com/).exec(params))
@@ -860,7 +864,7 @@
                 await this.$http.post(this.ZhuaquUrl, data).then(response => {
                     this.spinning = true;
                     if (response.status == 200) {
-                        this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
+                        this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseType + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`抓取数据:` + JSON.stringify(res.data))
                             this.laf = res.data;
                             var ret = res.data.address;
@@ -870,6 +874,7 @@
                             this.chaoxiang = ret.chaoxiang;
                             this.spinning = false;
                             this.ref = res.data;
+                            console.log(this.ref.weiyizhufang.replace(/(^\s*)|(\s*$)/g, ""))
                             //产权年限
                             this.chanquanNianxian = this.ref.chanquanNianxian
                             //信息标题、价格、面积、房源地址、配套标签
@@ -882,14 +887,16 @@
                             const nianqi = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
                             // console.log(nianqi)
                             if (nianqi == '新上') {
-                                console.log("sdgsfsfd")
+                            // console.log("sdgsfsfd")
                                 this.fangyuanBiaoqian = "不满二年";
-                                this.nianxian = this.fangyuanBiaoqian
-                            }
-
-                            else
+                                this.nianxian = this.fangyuanBiaoqian;
+                            }else if(nianqi != '满五年' || nianqi != '满二年' || nianqi != '不满二年'){
+                                this.fangyuanBiaoqian = "满二年";
+                                this.nianxian = this.fangyuanBiaoqian;
+                            }else{
                                 this.fangyuanBiaoqian = nianqi;
-                            this.nianxian = this.fangyuanBiaoqian
+                                this.nianxian = this.fangyuanBiaoqian;
+                            } 
                             // console.log("去掉房源标签含有的html标签成功？==========" + this.fangyuanBiaoqian);
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                             this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
@@ -955,7 +962,7 @@
             },
             //保存房源
             async saveHouse() {
-                if (this.title == '' || this.title.length <= 10 || this.title.length >= 30 || this.title.includes('最') == true) {
+                if (this.title == '' || this.title.includes('最') == true) {
                     if (this.title == '') {
                         this.titleerror = true
                     } else {
@@ -1103,6 +1110,10 @@
             // addshowxaqu() {
             //     this.addshowxqu = true;
             // },
+            cancelClick(){
+                this.spinning = false;
+                this.disabled = false;
+            },
             handleOk(e) {
                 console.log(e);
                 this.visible = false;
@@ -1207,6 +1218,40 @@
                         XiaoquImg.status = 'done',
                         this.xiaoQuList.push(XiaoquImg);
                 })
+            },
+            //清空数据
+            clear(){
+                this.ref.xiaoquName = ''
+                this.ref.chaoxiang = '东'
+                this.ref.address = ''
+                this.ref.square = ''
+                this.ref.rice = ''
+                this.ref.peitaoBiaoqain = ''
+                this.ref.fangwuLeixing = ''
+                this.ref.fangwuChanquan = ''
+                this.ref.weiyizhufang = '是'
+                this.ref.houseType = '二手房'
+                this.laf.zhuangxiu = '豪华装修'
+                this.refQuyu = ''
+                this.selectedShi = ''
+                this.selectedTing = ''
+                this.selectedChu = ''
+                this.selectedWei = ''
+                this.selectedTai = ''
+                this.jianzaoniandai = ''
+                this.ceng = ''
+                this.lou = ''
+                this.nianxian = ''
+                this.chanquanNianxian = '70年'
+                this.fangyuanBiaoqian = '满五年'
+                this.title = ''
+                this.note = ''
+                this.atittude = ''
+                this.fuwuCondition = ''
+                this.shineiList = []
+                this.imgHeaderList = []
+                this.xiaoQuList = []
+                this.fangxinlist = []
             }
         }
     }
@@ -1367,7 +1412,6 @@
 
     .zhuzhaibox {
         width: 180px !important;
-        padding-left: 25px
     }
 
     .firhuxing {

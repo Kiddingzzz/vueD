@@ -26,7 +26,7 @@
                         cancelText="取消"
                         :destroyOnClose="true"
                         >
-                        <updatesalefang :list = updatelist ></updatesalefang>
+                        <updatesalefang :list = updatelist></updatesalefang>
                 </a-modal>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record" class="caozuo">
@@ -53,14 +53,14 @@
             title: '小区',
             dataIndex: 'xiaoquName',
             key: 'det',
-            width: '7.5%'
+            width: '8%'
         },
         {
             dataIndex: 'title',
             key: 'biaoti',
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
-            width: '12.5%'
+            width: '13%'
         },
         // {
         //     title: '首页图',
@@ -72,7 +72,7 @@
             title: '房型',
             dataIndex: 'huxing',
             key: 'fangwu',
-            width: '7%'
+            width: '8%'
         },
         {
             title: '面积',
@@ -139,7 +139,7 @@
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
             key: 'donation',
-            width: '12%'
+            width: '10%'
 
         },
     ];

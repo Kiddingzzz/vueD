@@ -222,11 +222,13 @@
             handleOk(e) {
                 console.log(e);
                 this.visible = false;
+                this.sendCode = ''
             },
 
             closeMask() {
                 this.showMask = false;
                 this.form.resetFields();
+                this.sendCode = ''
                 console.log("手动关闭后重置输入")
             },
             handleSubmit(e) {
@@ -416,6 +418,7 @@
                             this.getCodeText = "获取验证码";
                             this.disabled = false;
                             this.form.resetFields();
+                            this.sendCode = '';
                             // console.log("注册成功后后重置输入")
                         }, 500);
                         this.dis = false;
