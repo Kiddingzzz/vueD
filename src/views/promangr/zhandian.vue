@@ -329,7 +329,7 @@
                          }
                           else{
                               this.$message.success('您还没有添加网站的账号，请先添加！');
-                         }
+                              this.zspinning=false                         }
 
                            
                     }
