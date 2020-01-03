@@ -920,7 +920,7 @@
                                 this.shineiList.push(imgUrl);
                             }
                             this.imgH.url = ss[0],
-                                this.imgH.uid = '-150',
+                                this.imgH.uid = '20',
                                 this.imgH.name = 'xxx.jpg',
                                 this.imgH.status = 'done',
                                 this.imgHeaderList.push(this.imgH);
@@ -928,7 +928,7 @@
 
                             var imgFangxing = {};
                             imgFangxing.url = res.data.fangxinImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                imgFangxing.uid = '-50',
+                                imgFangxing.uid = '40',
                                 imgFangxing.name = 'xxx.jpg',
                                 imgFangxing.status = 'done',
                                 this.fangxinlist.push(imgFangxing);
@@ -936,7 +936,7 @@
 
                             var XiaoquImg = {};
                             XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                XiaoquImg.uid = '-100',
+                                XiaoquImg.uid = '60',
                                 XiaoquImg.name = 'xxx.jpg',
                                 XiaoquImg.status = 'done',
                                 this.xiaoQuList.push(XiaoquImg);

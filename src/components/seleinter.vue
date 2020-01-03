@@ -125,6 +125,7 @@
                 loading: false,
                 datas,
                 columnss,
+                tzvisible:false,
                 def: {},
                 rav: [],
                 spinning: false,
@@ -138,6 +139,7 @@
                 shopshineiList: [],
                 Fhdata: '空',
                 finalResult: [],
+                controller:{},
                 // inter: require("../../assets/logo/58logo.png"),
             };
         },
@@ -160,8 +162,21 @@
             this.def = this.value;
             console.log('value:' + JSON.stringify(this.value))
             this.rav = this.array;
+            
             console.log('rav:' + JSON.stringify(this.rav))
+            
+            console.log('this.controller:'+this.controller)
+            if(this.controller == "200"){
+                console.log('aaaaaaaa')
+            }
+            else{
+              
+                console.log('bbbbbb')
+            }
 
+        },
+        activated() {
+            console.log('this.controller:'+this.controller)
         },
         methods: {
             changeimg(e) {
@@ -173,7 +188,7 @@
                         break;
 
                 }
-
+            
             },
             async shopfabuok(e) {
                 //禁止再次点击
@@ -206,12 +221,17 @@
                             else {
                                 let that = this;
                                 const h = that.$createElement;
-                                that.$info({
-                                    title: '提示', okText: '去添加', content: h('div', {}, [h('p', '您还未添加发布网站，请先添加'),]),
+                                this.tzvisible=true;
+                                that.$confirm({
+                                    title: '提示',
+                                    content: '您还未添加发布网站，请先添加',
+                                    okText: '去添加',
+                                    cancelText: '取消',
                                     onOk() {
                                         that.$router.replace('/zhandian')
                                     },
                                 });
+                               
                             }
                         }
                     })
@@ -394,7 +414,7 @@
             ///循环发布接口（每次最多10条）
             async qunFaSanwang() {
                 let arrays = this.rav;
-
+                  let that=this
                 for (let i = 0; i < arrays.length; i++) {
                     (function (i) {
                         setTimeout(function () {
@@ -464,48 +484,79 @@
                             // var datatext = ""
                             // let fff = this.FanhuiData
                             let idss = this.pdef.id
-                            let fas = this.fabulist
-                            let that = this
+                            const fabulist=this.fabulist
+                           
+                            let text=null;
+                            let dataConsole = '默认值';
+                            let dis=null;
+                            let texttypr=null;
+                            let gettype=' this.$http.post'
+                            let yuming='${that.$config.api'
                             $.ajax({
                                 type: 'GET',
+                                async:true,
                                 url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
                                 //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
                                 dataType: 'jsonp', //希望服务器返回json格式的数据
                                 jsonp: "callback",
                                 jsonpCallback: "successCallback",//回调方法
                                 success: function (data) {
-                                    let that = this;
                                     console.log("返回值：")
                                     console.log(data)
-                                    if (data == "200") {
-                                        const datas={
-                                            houserid:idss,
-                                            type:"已发布"
-                                        }
-                                        fas(datas)
-                                        console.log("成功")
-
-                                    }
-                                    else {
-                                         const datas={
-                                         houserid:idss,
-                                         type:data
-                                        }
-                                         fas(datas)
-                                        console.log("错误信息：")
-                                        console.log(data)
-                                        this.spinning = false;
-                                    }
-                                }
-                            });
-                        }, (i + 1) * 10000);
+                                    dataConsole = data;
+                                    this.controller = data;
+                                   if(data=="200"){
+                                       console.log("成功")
+                                    //    const datas={
+                                    //        houserid:idss,
+                                    //        type:'已发布',
+                                    //    }
+                                    //    return data;
+                                    //  that.fabulist(datas)
+                                     dis=idss
+                                     texttypr="已发布"
+                                   }
+                                  else{
+                                      console.log("错误")
+                                    //    const datas={
+                                    //        houserid:idss,
+                                    //        type:data,
+                                    //    }
+                                    //  that.fabulist(datas)
+                                     dis=idss
+                                     texttypr=data
+                                   }  
+                                },
+                                
+                            })
+                           
+                           
+                            setTimeout(function(){
+                                 console.log("id:")
+                                 console.log(dis)
+                                 console.log(texttypr)
+                               const datas={
+                                    houserid:dis,
+                                    type:texttypr
+                                   }
+                                 if(dis!=null)
+                                      gettype(``+yuming+`}/api/cms/house/modifyHouseStatus/` + list);
+                                
+                            }, 68000+(i*10000))                           
+                            
+                        }, i*20000);
                     })(i)
                 }
+               
+                setTimeout(function(){
+                         that.$message.success('已上传，等待系统审核', 3);        
+                   },2000) 
                 ///消息接收
                 // console.log('this.finalResult:'+this.finalResult)
+               
             },
             async fabulist(list) {
-                await that.$http.post(`${that.$config.api}/api/cms/house/modifyHouseStatus/` + list)
+                await this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + list)
             },
             ///房天下商铺发布
             async fabuShangpu() {
@@ -740,17 +791,7 @@
             },
             ///跳转
             FanhuiData(data, sid) {
-                const that = this.$router
-                this.$error({
-                    title: '提示',
-                    content: 'error:' + data,
-                    onOk() {
-                        that.replace({
-                            name: 'Sell',
-                            params: { id: sid }
-                        })
-                    },
-                });
+               
             },
             //aaa
             openNotificationWithIcon(type) {
