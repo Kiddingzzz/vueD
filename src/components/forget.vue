@@ -37,7 +37,7 @@
                   },
                 ] }]" @blur="handleConfirmBlur"></a-input>
                 </a-form-item>
-                <!-- <a-form-item>
+                <a-form-item>
                     <label>手机号码:</label>
                     <a-input type="text" class="inputs-code" placeholder="请输入您的手机号码" v-decorator="['phoneNumber', { 
                   validateTrigger: 'blur',
@@ -46,12 +46,12 @@
                       validator: checkphoneNumber,
                     },
                   ] }]"></a-input>
-                    <button class="btns-code" @click="sendcode()">发送验证</button>
+                <button class="btns-code" @click="sendcodeh()" :disabled='disabled'>{{getCodeText}}</button> 
                 </a-form-item>
                 <a-form-item>
                     <label class="codecomfire">验证码:</label>
                     <a-input type="text" class="inputs-number" placeholder="请确认您手机收到的验证码" v-model="sendCode"></a-input>
-                </a-form-item> -->
+                </a-form-item>
                 <button class="btn-forget" html-type="submit">提交</button>
             </a-form>
             <div class="close-btn" @click="closeMask">
@@ -101,6 +101,9 @@
                 sendCode: '',
                 surname: '',
                 respassword: '',
+                getCodeText: '获取验证码',
+                disabled: false,
+                Yztext:'',
             };
         },
         beforeCreate() {
@@ -150,14 +153,55 @@
                 }
                 callback();
             },
-            // checkphoneNumber(rule, value, callback) {
-            //     if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(value)) {
-            //         callback('请填写正确的手机号');
-            //     } else {
-            //         callback();
-            //     }
-            // },
-           
+            checkphoneNumber(rule, value, callback) {
+                if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(value)) {
+                    callback('请填写正确的手机号');
+                } else {
+                    this.phoneNumber=value
+                    callback();
+                }
+            },
+            async  sendcodeh() {
+                this.getCodeText = "发送中...";
+                this.disabled = true;
+                console.log("电话号码：")
+                console.log(this.phoneNumber)
+                if(this.phoneNumber=='')
+                {
+                    this.$message.error('手机号码为空！');
+                    return;
+                }
+                await this.$http.post(`${this.$config.api}/api/cms/acount/sendyanm?phNumber=` + this.phoneNumber).then(pones => {
+                    console.log(pones.data)
+                            if(pones.data.backCode=="OK"){
+                                this.Yztext=pones.data.context;
+                                    //示例用定时器模拟请求效果
+                                    setTimeout(() => {
+                                        this.$message.success('验证码发送成功！');
+                                        this.setTimer();
+                                    }, 1000);
+                            }
+                            else{
+                                this.$message.error('验证码发送失败！');
+                           }
+                })
+            },
+            setTimer() {
+                let holdTime = 60;
+                this.getCodeText = "重新获取(60)";
+                this.Timer = setInterval(() => {
+                    if (holdTime <= 0) {
+                    //   this.getCodeisWaiting = false;
+                    //   this.getCodeBtnColor = "#878787";
+                    this.getCodeText = "获取验证码";
+                    clearInterval(this.Timer);
+                    this.disabled = false;
+                    return;
+                    }
+                    this.getCodeText = "重新获取(" + holdTime + ")";
+                    holdTime--;
+                }, 1000);
+            },
             // async doregister(e) {
             //     const data = {
             //         //userNameOrEmailAddress: this.phoneNumber,
@@ -172,7 +216,7 @@
             //         const Statu = `${this.$config.api}/api/cms/acount/register`;
             //         const res = await this.$http.post(Statu, data);
             //         console.log(this.phoneNumber);
-            //         this.$emit('childByValue', e.userName, e.password)
+            //         this.$emit('childValue', e.userName, e.password)
             //         setTimeout(() => {
             //             this.showMask = false;
             //             this.form.resetFields();
@@ -191,6 +235,9 @@
                 this.showMask = newVal;
             },
             showMask(val) {
+                clearInterval(this.Timer);
+                this.getCodeText = "获取验证码";
+                this.disabled = false;
                 this.$emit("input", val);
             }
         }
@@ -260,7 +307,7 @@
             }
 
             .content {
-                margin-top: 60px;
+                margin-top: 40px;
                 color: #797979;
                 line-height: 26px;
                 padding: 0 20px;
@@ -295,7 +342,7 @@
 
                     .inputs-code {
                         margin-left: 10px;
-                        width: 268px;
+                        width: 180px;
                         height: 36px;
                         line-height: 5px;
                         border-radius: 5px;
@@ -311,7 +358,7 @@
                     .inputs-number {
                         margin-left: 10px;
                         text-indent: 10px;
-                        width: 350px;
+                        width: 280px;
                         height: 36px;
                         border-radius: 5px;
                         background-color: rgba(245, 245, 245, 1);
@@ -325,7 +372,7 @@
                     .btns-code {
                         border: none;
                         margin-left: 10px;
-                        width: 72px;
+                        width: 90px;
                         height: 36px;
                         line-height: 17px;
                         border-radius: 5px;

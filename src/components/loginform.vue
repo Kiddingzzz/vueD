@@ -59,12 +59,14 @@
 
                 <dialog-register v-model="sendVal" @childByValue="getDate" type="danger" title="欢迎注册开单网">
                 </dialog-register>
+                <forget v-model="forgetVal" @childValue="getforgetVal" type="danger" title="找回密码">
+                </forget>
 
                 <div class="btm">
                     <div class="tip2">开单网</div>
                     <div class="pwd" v-if="account == 'username'">
                         <div @click="openMask" class="reg">注册</div>
-                        <div class="forget">忘记密码</div>
+                        <div @click="openforget" class="forget">忘记密码</div>
                     </div>
                 </div>
             </div>
@@ -74,11 +76,13 @@
 <script>
     import { mapState, mapMutations } from 'vuex';
     import dialogRegister from "./dialog-register.vue";
+    import forget from './forget.vue'
     import md5 from 'js-md5';
 
     export default {
         components: {
             dialogRegister,
+            forget,
         },
         data() {
             return {
@@ -92,6 +96,7 @@
                 imgType: "",
                 account: "qcode",
                 sendVal: false,
+                forgetVal: false,
                 user: "",
                 password: "",
                 TokenRES: {},
@@ -253,6 +258,11 @@
                 this.user = userName;
                 this.password = password;
             },
+            getforgetVal(userName, password) {
+                // childValue就是子组件传过来的值
+                this.user = userName;
+                this.password = password;
+            },
             hide() {
                 console.log(111);
                 this.payvisible = false;
@@ -261,6 +271,9 @@
             },
             openMask(index) {
                 this.sendVal = true;
+            },
+            openforget(index) {
+                this.forgetVal = true;
             },
             async doLogin() {
                  console.log('正在登陆，请耐心等待......')
