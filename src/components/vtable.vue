@@ -10,11 +10,11 @@
                         :loading="loading">
                         批量发布
                     </a-button>
-                    <span style="margin-left: 8px">
+                    <!--<span style="margin-left: 8px">
                         <template v-if="hasSelected">
                             {{`Selected ${selectedRowKeys.length} items`}}
                         </template>
-                    </span>
+                    </span>-->
                 </div>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record" class="caozuo">
@@ -103,6 +103,12 @@
             key: 'age',
             width: '7.3%'
         },
+         {
+            title: '均价/㎡',
+            dataIndex: 'simpleRice',
+            key: 'simplePrice',
+            width: '7.2%'
+        },
         {
             title: '状态',
             dataIndex: 'publishStatus',
@@ -115,12 +121,7 @@
         //     key:'history',
         //     width:100
         // },
-        {
-            title: '均价/㎡',
-            dataIndex: 'simpleRice',
-            key: 'simplePrice',
-            width: '7.2%'
-        },
+       
         {
             title: '操作',
             dataIndex: 'operation',

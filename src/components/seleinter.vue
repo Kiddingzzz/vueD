@@ -91,7 +91,7 @@
             width: '13%'
         },
         {
-            title: '所发布网站',
+            title: '发布网站',
             key: 'tuiaction',
             scopedSlots: { customRender: 'tuiaction' },
             width: '12%'
@@ -194,11 +194,12 @@
                 //禁止再次点击
                 console.log('正在发布中，请耐心等待......')
                 this.disabled = true;
+                this.loading = true
                 let update = JSON.parse(localStorage.getItem('update'));
                 try {
 
                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId + '&sitename=' + this.wangvalue).then(Response => {
-                        this.loading = true
+                        
                         if (Response.status == 200) {
                             if (Response.data == "yes") {
                                 if (this.wangvalue == "房天下") {
@@ -422,7 +423,7 @@
                             //循环调用发布接口
                             // let update = JSON.parse(localStorage.getItem('update'));
                             // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
-                            // let datas = query.data;
+                            // let data = query.data;
                             this.spinning = true;
                             this.pdef = arrays[i];
                             let huxing = this.pdef.huxing
@@ -492,43 +493,43 @@
                             let texttypr=null;
                             let gettype=' this.$http.post'
                             let yuming='${that.$config.api'
-                            $.ajax({
-                                type: 'GET',
-                                async:true,
-                                url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
-                                //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
-                                dataType: 'jsonp', //希望服务器返回json格式的数据
-                                jsonp: "callback",
-                                jsonpCallback: "successCallback",//回调方法
-                                success: function (data) {
-                                    console.log("返回值：")
-                                    console.log(data)
-                                    dataConsole = data;
-                                    this.controller = data;
-                                   if(data=="200"){
-                                       console.log("成功")
-                                    //    const datas={
-                                    //        houserid:idss,
-                                    //        type:'已发布',
-                                    //    }
-                                    //    return data;
-                                    //  that.fabulist(datas)
-                                     dis=idss
-                                     texttypr="已发布"
-                                   }
-                                  else{
-                                      console.log("错误")
-                                    //    const datas={
-                                    //        houserid:idss,
-                                    //        type:data,
-                                    //    }
-                                    //  that.fabulist(datas)
-                                     dis=idss
-                                     texttypr=data
-                                   }  
-                                },
+                            // $.ajax({
+                            //     type: 'GET',
+                            //     async:true,
+                            //     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
+                            //     //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
+                            //     dataType: 'jsonp', //希望服务器返回json格式的数据
+                            //     jsonp: "callback",
+                            //     jsonpCallback: "successCallback",//回调方法
+                            //     success: function (data) {
+                            //         console.log("返回值：")
+                            //         console.log(data)
+                            //         dataConsole = data;
+                            //         this.controller = data;
+                            //        if(data=="200"){
+                            //            console.log("成功")
+                            //         //    const datas={
+                            //         //        houserid:idss,
+                            //         //        type:'已发布',
+                            //         //    }
+                            //         //    return data;
+                            //         //  that.fabulist(datas)
+                            //          dis=idss
+                            //          texttypr="已发布"
+                            //        }
+                            //       else{
+                            //           console.log("错误")
+                            //         //    const datas={
+                            //         //        houserid:idss,
+                            //         //        type:data,
+                            //         //    }
+                            //         //  that.fabulist(datas)
+                            //          dis=idss
+                            //          texttypr=data
+                            //        }  
+                            //     },
                                 
-                            })
+                            // })
                            
                            
                             setTimeout(function(){
@@ -549,7 +550,8 @@
                 }
                
                 setTimeout(function(){
-                         that.$message.success('已上传，等待系统审核', 3);        
+                         this.loading = true
+                         that.$message.success('已上传，等待系统审核', 2    );        
                    },2000) 
                 ///消息接收
                 // console.log('this.finalResult:'+this.finalResult)

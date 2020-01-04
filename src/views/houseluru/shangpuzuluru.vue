@@ -234,20 +234,20 @@
                             <a-checkbox>其它</a-checkbox>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="物业费:" validate-status="">
-                            <a-input id="" placeholder="0" class="luruwuyemoney" />元/平米·月
+                            <a-input id="" placeholder="0" class="luruwuyemoney" />  <label class="lurusmianij">元/平米·月</label>
                             <label class="luruneibula">注：若没有物业费时，为0。</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="电费:" validate-status="">
-                            <a-input id="" placeholder="" class="luruwuyemoney" />元/度
+                            <a-input id="" placeholder="" class="luruwuyemoney" /><label class="lurusmianij">元/度</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="水费:" validate-status="">
-                            <a-input id="" placeholder="" class="luruwuyemoney" />元/吨
+                            <a-input id="" placeholder="" class="luruwuyemoney" /><label class="lurusmianij">元/吨</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*起租期:" validate-status="">
-                            <a-input id="" placeholder="" class="luruwuyemoney" />月
+                            <a-input id="" placeholder="" class="luruwuyemoney" /><label class="lurusmianij">月</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="免租期:" validate-status="">
-                            <a-input id="" placeholder="" class="luruwuyemoney" />月
+                            <a-input id="" placeholder="" class="luruwuyemoney" /><label class="lurusmianij">月</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="商铺性质" has-feedback
                             validate-status="">
@@ -282,13 +282,13 @@
                         </a-form-item>
                     </a-form>
                     <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*面宽:" validate-status="">
-                        <a-input id="" placeholder="" class="luruwuyemoney" />米
+                        <a-input id="" placeholder="" class="luruwuyemoney" /><label class="lurusmianij">米</label>
                     </a-form-item>
                     <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*层高:" validate-status="">
-                        <a-input id="" placeholder="" class="luruwuyemoney" />米
+                        <a-input id="" placeholder="" class="luruwuyemoney" /><label class="lurusmianij">米</label>
                     </a-form-item>
                     <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*进深:" validate-status="">
-                        <a-input id="" placeholder="" class="luruwuyemoney" />米
+                        <a-input id="" placeholder="" class="luruwuyemoney" /><label class="lurusmianij">米</label>
                     </a-form-item>
                 </a-layout-content>
             </a-layout>
@@ -305,7 +305,7 @@
                     2.完整的房源标题应该是：商圈+卖点+楼盘名称+户型+卖点。
                 </div>
                 <div>
-                    3.小蜜书会自动检测标题与描述中的敏感词,查看敏感词(继续修改时，房源描述中的敏感词会“标红”)
+                    3.开单王会自动检测标题与描述中的敏感词,查看敏感词(继续修改时，房源描述一侧会将敏感词“标红”)
                 </div>
             </div>
         </div>
