@@ -47,8 +47,8 @@
                     <div class="tishi">
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
-                    <div>
-                        1.如果您希望使用的账号不在其中，您可以马上<a-button type="link">添加账号</a-button> 。
+                    <div class="search_bds_red">
+                        1.如果审核失败，请回到" 第一步 " <a-button type="primary" @click="rest">重新发布</a-button> 。
                     </div>
                     <div>
                         2.如果您希望修改"库存满时"与"房源重复"的发送处理方式，请进入<a-button type="link">个人设置</a-button>。
@@ -123,6 +123,9 @@
             if(to.path == '/salerelease'&& from.path == '/zhandian'){
                 this.current = 0;
             }
+            if(to.path == '/salerelease'&& from.path == '/sell'){
+                this.current = 0;
+            }
                 // to , from 分别表示从哪跳转到哪，都是一个对象
                 // to.path  ( 表示的是要跳转到的路由的地址 eg: /home );
             }
@@ -170,9 +173,11 @@
             },
             //第二步操作跳转第三步
             getSeconds(message) {
-                if (message == 'a') {
-                    this.current = 2;
-                }
+                this.current = 2
+            },
+            rest(){
+                this.current = 0
+                console.log("切换"+this.current)
             }
         },
     };

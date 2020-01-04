@@ -1079,6 +1079,7 @@
                     this.ref.note = this.note;
                     this.ref.fuwuCondition = this.fuwuCondition
                     this.ref.atittude = this.atittude
+                    this.ref.publishStatus = '未发布'
                     await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.ref).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')

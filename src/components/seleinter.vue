@@ -121,6 +121,7 @@
     export default {
         data() {
             return {
+                current: 2,
                 disabled: false,
                 loading: false,
                 datas,
@@ -541,8 +542,8 @@
                 }
                
                 setTimeout(function(){
-                        
-                         that.$message.success('已上传，等待系统审核',2);      
+                        that.$emit('getSeconde', 2)
+                        //  that.$message.success('已上传，等待系统审核',2);      
                           this.loading = true  
                    },2000) 
                 ///消息接收

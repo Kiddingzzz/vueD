@@ -402,7 +402,7 @@
                         //userNameOrEmailAddress: this.phoneNumber,
                         userNameOrEmailAddress: e.userName,
                         password: e.password,
-                        phoneNumber: e.phoneNumber
+                        phNumber: e.phoneNumber
                         // sendCode: this.sendCode,
                         // surname: this.phoneNumber
                     };
