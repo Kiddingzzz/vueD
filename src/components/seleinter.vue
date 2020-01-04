@@ -415,7 +415,8 @@
             ///循环发布接口（每次最多10条）
             async qunFaSanwang() {
                 let arrays = this.rav;
-                  let that=this
+                let that=this
+                let number=arrays.length-1
                 for (let i = 0; i < arrays.length; i++) {
                     (function (i) {
                         setTimeout(function () {
@@ -481,85 +482,76 @@
                                 // userpwd:datas.passWord,
 
                             }
-                            console.log('list:' + JSON.stringify(list))
-                            // var datatext = ""
-                            // let fff = this.FanhuiData
-                            let idss = this.pdef.id
-                            const fabulist=this.fabulist
                            
-                            let text=null;
+                            let idss = this.pdef.id
                             let dataConsole = '默认值';
                             let dis=null;
                             let texttypr=null;
-                            let gettype=' this.$http.post'
-                            let yuming='${that.$config.api'
-                            // $.ajax({
-                            //     type: 'GET',
-                            //     async:true,
-                            //     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
-                            //     //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
-                            //     dataType: 'jsonp', //希望服务器返回json格式的数据
-                            //     jsonp: "callback",
-                            //     jsonpCallback: "successCallback",//回调方法
-                            //     success: function (data) {
-                            //         console.log("返回值：")
-                            //         console.log(data)
-                            //         dataConsole = data;
-                            //         this.controller = data;
-                            //        if(data=="200"){
-                            //            console.log("成功")
-                            //         //    const datas={
-                            //         //        houserid:idss,
-                            //         //        type:'已发布',
-                            //         //    }
-                            //         //    return data;
-                            //         //  that.fabulist(datas)
-                            //          dis=idss
-                            //          texttypr="已发布"
-                            //        }
-                            //       else{
-                            //           console.log("错误")
-                            //         //    const datas={
-                            //         //        houserid:idss,
-                            //         //        type:data,
-                            //         //    }
-                            //         //  that.fabulist(datas)
-                            //          dis=idss
-                            //          texttypr=data
-                            //        }  
-                            //     },
-                                
-                            // })
-                           
-                           
+                            let yuming=`${that.$config.api}/api/cms/house/modifyHouseStatus/`
+                            $.ajax({
+                                type: 'GET',
+                                async:true,
+                                url: 'http://47.108.24.104:8095/get_user?data=' + JSON.stringify(list),
+                                //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
+                                dataType: 'json', //希望服务器返回json格式的数据
+                                jsonp: "callback",
+                                jsonpCallback: "successCallback",//回调方法
+                                success: function (data) {
+                                    console.log("返回值：")
+                                    console.log(data)
+                                    dataConsole = data;
+                                    this.controller = data;
+                                   if(data=="200"){
+                                       console.log("成功")
+                                     dis=idss
+                                     texttypr="已发布"
+                                   }
+                                  else{
+                                      console.log("错误")
+                                     dis=idss
+                                     texttypr=data
+                                   }
+                                },
+                                error:function(){
+                                    dis=idss
+                                    texttypr="错误的选择 暗影"
+                                }
+                            })
                             setTimeout(function(){
                                  console.log("id:")
+                                
                                  console.log(dis)
                                  console.log(texttypr)
                                const datas={
                                     houserid:dis,
                                     type:texttypr
                                    }
-                                 if(dis!=null)
-                                      gettype(``+yuming+`}/api/cms/house/modifyHouseStatus/` + list);
-                                
-                            }, 68000+(i*10000))                           
+                                 if(dis!=null){
+                                     that.$http.post(yuming,datas).then(Responses=>{
+                                         if(i==number)
+                                            that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
+                                     });
+                                      
+                                 }
+                                     
+                            }, 30000+(i*10000))                           
                             
                         }, i*20000);
                     })(i)
                 }
                
                 setTimeout(function(){
-                         this.loading = true
-                         that.$message.success('已上传，等待系统审核', 2    );        
+                        
+                         that.$message.success('已上传，等待系统审核',2);      
+                          this.loading = true  
                    },2000) 
                 ///消息接收
                 // console.log('this.finalResult:'+this.finalResult)
                
             },
-            async fabulist(list) {
-                await this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + list)
-            },
+            // async fabulist(list) {
+            //     await this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + list)
+            // },
             ///房天下商铺发布
             async fabuShangpu() {
                 this.spinning = true;
@@ -757,7 +749,7 @@
                 var datatext = ""
                 let fff = this.FanhuiData
                 let idss = this.pdef.id
-                let fas = this.fabulist
+              
                 $.ajax({
                     type: 'GET',
                     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),

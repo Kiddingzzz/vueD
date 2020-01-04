@@ -32,11 +32,11 @@
 const columns = [{
         title: '小区名称',
         dataIndex: 'xiaoquName',
-        width:'30%',
+        width:'25%',
     }, {
         title: '发布房源标题',
         dataIndex: 'title',
-        width:'38%',
+        width:'40 %',
     }, {
         title: '发布信息',
         dataIndex: 'publishStatus',
@@ -45,6 +45,7 @@ const columns = [{
         title: '操作',
         dataIndex: 'operation',
         scopedSlots: { customRender: 'operation' },
+        width:'10%'
     },
 ];
 
@@ -56,6 +57,9 @@ export default {
             columns,
         }
     },
+     activated() {
+           this.GetShowList()
+        },
     mounted() {
         this.GetShowList()
     },
@@ -87,7 +91,7 @@ export default {
         async GetShowList(){
                 let update = JSON.parse(localStorage.getItem('update'));
                 console.log( update.userId)
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId);
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishNoList/` + update.userId);
                 if (respones.status == 200) {
                    
                     this.listfb = respones.data.items;

@@ -874,6 +874,9 @@
                             this.checked = true
                             this.laf = res.data;
                             var ret = res.data.address;
+                            if(RegExp(/简/).exec(this.laf.zhuangxiu))
+                                 this.laf.zhuangxiu="简装修";
+                            console.log(this.laf.zhuangxiu)  
                             var refQu = ret.indexOf('－');
                             this.refQuyu = ret.substring(0, refQu);
                             this.saveRes = res.data;
@@ -1161,6 +1164,8 @@
                     this.chaoxiang = ret.chaoxiang;
                     this.spinning = false;
                     this.ref = res.data;
+                    if(RegExp(/简/).exec(this.laf.zhuangxiu))
+                        this.laf.zhuangxiu="简装修";
                     //产权年限
                     this.chanquanNianxian = this.ref.chanquanNianxian
                     //信息标题、价格、面积、房源地址、配套标签
@@ -1169,15 +1174,12 @@
                     this.atittude = this.ref.atittude
                     this.fuwuCondition = this.ref.fuwuCondition
                     //字符串
-                    console.log("房源标签是否含有html标签？==========" + this.ref.fangyuanBiaoqian);
                     const nianqi = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
-                    console.log(nianqi)
                     if (nianqi == "新上")
                         this.fangyuanBiaoqian = "不满二年";
                     else
                         this.fangyuanBiaoqian = nianqi;
                     //this.fangyuanBiaoqian = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g,"");
-                    console.log("去掉房源标签含有的html标签成功？gg==========" + this.fangyuanBiaoqian);
                     this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                     this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
                     let shi = this.ref.huxing.indexOf("室");
