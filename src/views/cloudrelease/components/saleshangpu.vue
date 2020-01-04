@@ -2,8 +2,21 @@
     <div class="wrap">
         <a-layout>
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
+                <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;margin-top:-55px;">
+                    <a-button type="primary" @click="start" :disabled="!hasSelected" :loading="loading">
+                        批量删除
+                    </a-button>
+                    <a-button style="margin-right: 8px" type="primary" @click="start" :disabled="!hasSelected"
+                        :loading="loading">
+                        批量发布
+                    </a-button>
+                    <span style="margin-left: 8px">
+                        <template v-if="hasSelected">
+                            {{`Selected ${selectedRowKeys.length} items`}}
+                        </template>
+                    </span>
+                </div>
                 <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
-                    
                     <span slot="operation" slot-scope="text, record">
                         <a-popconfirm title="确定删除?" @confirm="sconfirm(record.id)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
@@ -122,6 +135,7 @@
             return {
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
+                loading: false,
                 list: [],
             };
         },
@@ -129,51 +143,15 @@
             rowSelection() {
                 const { selectedRowKeys } = this;
                 return {
-                    selectedRowKeys,
-                    onChange: this.onSelectChange,
-                    hideDefaultSelections: true,
-                    selections: [
-                        {
-                            key: 'all-data',
-                            text: '全选',
-
-                            onSelect: () => {
-                                this.selectedRowKeys = [...Array(46).keys()]; // 0...45
-                            },
-                        },
-                        {
-                            key: 'odd',
-                            text: '单选',
-
-                            onSelect: changableRowKeys => {
-                                let newSelectedRowKeys = [];
-                                newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-                                    if (index % 2 !== 0) {
-                                        return false;
-                                    }
-                                    return true;
-                                });
-                                this.selectedRowKeys = newSelectedRowKeys;
-                            },
-                        },
-                        {
-                            key: 'even',
-                            text: '双选',
-
-                            onSelect: changableRowKeys => {
-                                let newSelectedRowKeys = [];
-                                newSelectedRowKeys = changableRowKeys.filter((key, index) => {
-                                    if (index % 2 !== 0) {
-                                        return true;
-                                    }
-                                    return false;
-                                });
-                                this.selectedRowKeys = newSelectedRowKeys;
-                            },
-                        },
-                    ],
-                    onSelection: this.onSelection,
+                    onChange: (selectedRowKeys, selectedRows) => {
+                    this.selectedRowKeys = selectedRows;
+                    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                    },
                 };
+            },
+            hasSelected() {
+                console.log(this.selectedRowKeys)
+                return this.selectedRowKeys.length > 0;
             },
         },
         mounted() {
@@ -184,7 +162,16 @@
                 console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
-
+            start() {
+                this.loading = true;
+                // ajax request after empty completing
+                console.log("respones.house:" + JSON.stringify(this.selectedRowKeys))
+                this.$emit("getDataList", this.selectedRowKeys);
+                setTimeout(() => {
+                    this.loading = false;
+                    this.selectedRowKeys = [];
+                }, 1000);
+            },
             //删除
             async shoponDelete(id) {
                  console.log(id)
