@@ -36,11 +36,11 @@ const columns = [{
     }, {
         title: '发布房源标题',
         dataIndex: 'title',
-        width:'40 %',
+        width:'30 %',
     }, {
         title: '发布信息',
         dataIndex: 'publishStatus',
-        width:'25%'
+        width:'35%'
     },{
         title: '操作',
         dataIndex: 'operation',
@@ -93,7 +93,7 @@ export default {
                 console.log( update.userId)
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishNoList/` + update.userId);
                 if (respones.status == 200) {
-                   
+                   console.log(respones)
                     this.listfb = respones.data.items;
 
                 }

@@ -78,7 +78,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==2">
-                <susstable @goonfun="getcurrentFormSon"></susstable>
+                <susstable @goonfun="getcurrentFormSon" :time="time"></susstable>
             </div>
             <!-- 上/下一步 -->
             <div class="pre">
@@ -100,7 +100,8 @@
             vtable,
             seleinter,
             susstable,
-            saleshangpu
+            saleshangpu,
+            time: '',
         },
         data() {
             return {
@@ -173,12 +174,17 @@
                 }
             },
             //第二步操作跳转第三步
-            getSeconds(message) {
-                this.current = 2
+            getSeconds(current,length) {
+                this.current = current
+                this.time = length
+                console.log(current,length)
             },
+            // getSpin(spinning){
+            //     console.log('spinning状态'+spinning)
+            // },
             rest(){
                 this.current = 0
-                console.log("切换"+this.current)
+                // console.log("切换"+this.current)
             }
         },
     };

@@ -520,20 +520,21 @@
                                  if(dis!=null){
                                     
                                      that.$http.post(yuming,datas).then(Responses=>{
-                                         if(i==number)
+                                         if(i==number){
                                             that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
+                                         }
                                      });
                                       
                                  }
                                      
                             }, 18000+(i*2000))                           
                             
-                        }, i*9000);
+                        }, i*11000);
                     })(i)
                 }
-               
+                
                 setTimeout(function(){
-                        that.$emit('getSeconde', 2)
+                        that.$emit('getSeconde', 2, arrays.length)
                         //  that.$message.success('已上传，等待系统审核',2);      
                           this.loading = true  
                    },2000) 

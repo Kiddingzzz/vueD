@@ -16,10 +16,10 @@
                         </template>
                     </span>-->
                 </div>
-                <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
-                    <span slot="operation" slot-scope="text, record" class="caozuo">
+                <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list" click> 
+                    <span slot="operation" slot-scope="text, record, index" class="caozuo">
                         <a href="javascript:;" @click="updateItem(record.id)">修改</a>
-                        <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
+                        <a-popconfirm title="确定删除?" @confirm="onDelete(record.id,index)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
                         <a href="javascript:;" @click="onfabu(record)">未发布</a>
@@ -140,7 +140,7 @@
                 loading: false,
                 list: [],
                 updatelist: [],
-                loadingdele:false,
+                index: [],
             };
         },
         computed: {
@@ -148,8 +148,16 @@
                 const { selectedRowKeys } = this;
                 return {
                     onChange: (selectedRowKeys, selectedRows) => {
-                    this.selectedRowKeys = selectedRows;
+                        this.selectedRowKeys = selectedRows;
+                    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                        this.index = selectedRowKeys
                     },
+                    // getCheckboxProps: record => ({
+                    //     props: {
+                    //         // disabled: record.name === 'Disabled User', // Column configuration not to be checked
+                    //         // name: record.name,console.log(record),
+                    //     }
+                    // }),
                 };
             },
             hasSelected() {
@@ -164,6 +172,15 @@
             this.seachShow();
         },
         methods: {
+            //批量删除
+            // deleteAll(){
+            //     console.log("批量删除" + this.index)
+            //     for(let i=0;i<this.index.length;i++){
+            //         this.list.splice(this.index[i],1)
+            //     }
+            //     this.selectedRowKeys = [];
+            //     console.log(this.list)
+            // },
             //修改
             updateItem(sid) {           
                 const that = this.$router
@@ -220,15 +237,19 @@
 
             },
             //删除
-            async onDelete(id) {
+            async onDelete(id,index) {
+                console.log("asdgsdfgsdrfgsdfsdfhsfdhsfthsfdtgsh")
                 try {
                     await this.$http.post(`${this.$config.api}/api/cms/house/` + id + `/publishDelete`).then(Response => {
                         if (Response.status == 200) {
                             console.log(Response)
                             // const datas = [...this.data];
                             // this.datas = datas.filter(item => item.key !== key)
+                            this.list.splice(index,1)
                             this.$message.success('删除成功！！！');
-                            this.seachShow();
+                            this.selectedRowKeys = [];
+                            console.log(this.selectedRowKeys)
+                            // this.seachShow();
                         }
                     })
                 }
@@ -280,10 +301,9 @@
 
                 }
             },
-            confirm(id) {
-
-                this.onDelete(id)
-            }
+            // confirm(id,index) {
+                //this.onDelete(id)
+            // }
         },
 
     }

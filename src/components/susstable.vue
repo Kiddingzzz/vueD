@@ -46,22 +46,30 @@ const columns = [{
 ];    
     export default {
         name: 'susstable',
+        props: ['time'],
         data() {
             return {
                 listfb:[],
                 columns,
                 backMsg: false,
                 spinning: true,
+                
             };
         },
         mounted() {
             // this.seachShow();
             // console.log(this.salevalue)
+            // setInterval(() => {
+            //     console.log("2")
+            //     this.GetShowList()
+            //     this.spinning = false;
+            // }, 2000);
+            console.log("时间"+this.time)
             setTimeout(() => {
                 console.log("2")
                 this.GetShowList()
                 this.spinning = false;
-            }, 18000);
+            }, this.time*11000);
         },
         activated() {
            this.GetShowList()
