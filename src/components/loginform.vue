@@ -391,7 +391,7 @@
                         let that = this;
                         // console.log(JSON.stringify(Response))
                         // console.log(Response.config.data)
-                        if (Response.status == 200) {
+                        if (Response.data.returnValue.code == "200") {
                              this.dis = false;
                             //判断保存的
                           //  let hh = JSON.parse(localStorage.getItem("BackUserPwd"))
@@ -421,13 +421,19 @@
                             
                             this.$router.replace('/index')
                         }
+                        else{
+                             this.$error({
+                                title: '提示',
+                                content:Response.data.returnValue.msg ,
+                                });
+                        }
                     })
                 }
                 catch (e) {
                     console.log(e)
                     this.$error({
                         title: '提示',
-                        content: '账号或密码错误！！！',
+                        content: '系统错误，请重试',
                         });
                     }
                     this.dis = false; 

@@ -3,7 +3,7 @@
         <a-layout>
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
                 <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;margin-top:-55px;">
-                    <a-button type="primary" @click="DeleteList" :disabled="!hasSelected" :loading="loading">
+                    <a-button type="primary" @click="DeleteList" :disabled="!hasSelected" :loading="loadingdele">
                         批量删除
                     </a-button>
                     <a-button style="margin-right: 8px" type="primary" @click="start" :disabled="!hasSelected"
@@ -140,6 +140,7 @@
                 loading: false,
                 list: [],
                 updatelist: [],
+                loadingdele:false,
             };
         },
         computed: {
@@ -181,7 +182,7 @@
             },
            
           async  DeleteList(){
-                  this.loading = true;
+                  this.loadingdele = true;
                 // ajax request after empty completing
                   let that=this
                 const idlist=[]
@@ -197,7 +198,7 @@
                     {       
                            that.$message.success(Response.data.msg);  
                            that.seachShow();
-                           that.loading = false;
+                           that.loadingdele = false;
                            that.selectedRowKeys = [];
                     }
                 })
@@ -208,8 +209,9 @@
                         content: '删除失败，系统繁忙，请重新执行',
                         okText:'确定',
                         onOk(){
-                           that.loading = false;
+                           that.loadingdele = false;
                            that.selectedRowKeys = [];
+                           console.log( that.selectedRowKeys)
                         }
                     });
                     

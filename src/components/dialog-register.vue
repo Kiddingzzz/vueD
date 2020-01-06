@@ -325,21 +325,6 @@
 
             // async sendcode() {
            async  sendcodeh() {
-            //   if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber)) {
-            //     this.$error({
-            //       title: "请填写正确手机号码",
-            //       icon: "none"
-            //     });
-            //     return false;
-            //   }
-            //   const data = {
-            //     phoneNumber: this.phoneNumber,
-            //     type: 10
-            //   };
-            //   // const res = this.$http.post('api/Account/SendCode', data);
-            //   const Statu = `${this.$config.api}/api/Account/SendCode`;
-            //   const res = await this.$http.post(Statu, data);
-            //   console.log(123);
               this.getCodeText = "发送中...";
               this.disabled = true;
               console.log("电话号码：")
@@ -350,19 +335,26 @@
                   return;
               }
               await this.$http.post(`${this.$config.api}/api/cms/acount/sendyanm?phNumber=` + this.phoneNumber).then(pones => {
-                  console.log(pones.data)
-                           if(pones.data.backCode=="OK"){
+                  console.log(pones.data.backCode)
+               
+                   
+                           if(pones.data.returnValue.code=="200"){
+                                   
                                this.Yztext=pones.data.context;
+                               console.log( this.Yztext)
                                 setTimeout(() => {
                                        this.$message.success('验证码发送成功！');
-                                    // this.disabled = false;
+                                    this.disabled = false;
                                     //示例默认1234，生产中请删除这一句。
                                     //this.code=1234;
                                     this.setTimer();
                                 }, 1000);
                            }
                            else{
-                                this.$message.error('验证码发送失败！');
+                                this.disabled = false;
+                                 clearInterval(this.Timer);
+                                this.$message.error(pones.data.returnValue.msg);
+                                 this.getCodeText = "验证码";
                            }
                 })
             //   this.getCodeisWaiting = true;
@@ -410,18 +402,30 @@
                     try {
                         const Statu = `${this.$config.api}/api/cms/acount/register`;
                         const res = await this.$http.post(Statu, data);
-                        // console.log(this.phoneNumber);
-                        this.$emit('childByValue', e.userName, e.password)
-                        setTimeout(() => {
-                            this.showMask = false;
-                            clearInterval(this.Timer);
-                            this.getCodeText = "获取验证码";
-                            this.disabled = false;
-                            this.form.resetFields();
-                            this.sendCode = '';
-                            // console.log("注册成功后后重置输入")
-                        }, 500);
-                        this.dis = false;
+                        console.log("1111")
+                        console.log(res)
+                        if(res.data.returnValue.code=="200"){
+                              this.$emit('childByValue', e.userName, e.password)
+                                setTimeout(() => {
+                                this.showMask = false;
+                                clearInterval(this.Timer);
+                                this.getCodeText = "获取验证码";
+                                this.disabled = false;
+                                this.form.resetFields();
+                                this.sendCode = '';
+                                // console.log("注册成功后后重置输入")
+                             }, 500);
+                                this.dis = false;
+                           }
+                        else{
+                             this.$error({
+                            icon: "none",
+                            title: res.data.returnValue.msg
+                        });
+                         this.dis = false;
+                        }
+                      
+                      
                     } catch (error) {
                         this.$error({
                             icon: "none",
