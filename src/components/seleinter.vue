@@ -141,6 +141,8 @@
                 Fhdata: '空',
                 finalResult: [],
                 controller:{},
+                username:'',
+                userpwd:'',
                 // inter: require("../../assets/logo/58logo.png"),
             };
         },
@@ -163,10 +165,7 @@
             this.def = this.value;
             console.log('value:' + JSON.stringify(this.value))
             this.rav = this.array;
-            
-            console.log('rav:' + JSON.stringify(this.rav))
-            
-            console.log('this.controller:'+this.controller)
+          
             if(this.controller == "200"){
                 console.log('aaaaaaaa')
             }
@@ -421,11 +420,19 @@
                 for (let i = 0; i < arrays.length; i++) {
                     (function (i) {
                         setTimeout(function () {
-                            let recive = {};
+                           
                             //循环调用发布接口
-                            // let update = JSON.parse(localStorage.getItem('update'));
-                            // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
-                            // let data = query.data;
+                            let update = JSON.parse(localStorage.getItem('update'));
+                            that.$http.get(`${that.$config.api}/api/cms/sites/getUserFang?Userid=` + update.userId+'&SiteName='+that.wangvalue).then(Responses=>{
+                                console.log(JSON.stringify(Responses))
+                                this.username=Responses.data.userName;
+                                
+                                this.userpwd=Responses.data.passWord
+                                 console.log("名字："+this.username)
+                            console.log("密码："+this.userpwd)
+                            })
+                            console.log("名字："+this.username)
+                            console.log("密码："+this.userpwd)
                             this.spinning = true;
                             this.pdef = arrays[i];
                             let huxing = this.pdef.huxing
@@ -479,11 +486,12 @@
                                 ting: parseInt(ting),
                                 wei: parseInt(wei),
                                 shi: shis,
-                                // username:datas.userName,
-                                // userpwd:datas.passWord,
+                                username:this.username,
+                                userpwd:this.userpwd ,
 
                             }
-                           
+                            console.log(xingzhi)
+                           console.log(list)
                             let idss = this.pdef.id
                             let dataConsole = '默认值';
                             let dis=null;
@@ -492,7 +500,7 @@
                             $.ajax({
                                 type: 'GET',
                                 async:true,
-                                url: 'http://47.108.24.104:8095/get_user?data=' + JSON.stringify(list),
+                                url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
                                 //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
                                 dataType: 'json', //希望服务器返回json格式的数据
                                 jsonp: "callback",
@@ -502,20 +510,20 @@
                                     console.log(data)
                                     dataConsole = data;
                                     this.controller = data;
-                                   if(data=="200"){
+                                   if(data.status=="ok"){
                                        console.log("成功")
                                      dis=idss
                                      texttypr="已发布"
                                    }
                                   else{
-                                      console.log("错误")
+                                     
                                      dis=idss
-                                     texttypr=data
+                                     texttypr=data.data.title
                                    }
                                 },
                                 error:function(){
                                     dis=idss
-                                    texttypr="错误的选择 暗影"
+                                    texttypr="服务器错误，请重新发布"
                                 }
                             })
                             setTimeout(function(){
@@ -528,6 +536,7 @@
                                     type:texttypr
                                    }
                                  if(dis!=null){
+                                     console.log("发布Id："+dis)
                                      that.$http.post(yuming,datas).then(Responses=>{
                                          if(i==number)
                                             that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
@@ -535,9 +544,9 @@
                                       
                                  }
                                      
-                            }, 30000+(i*10000))                           
+                            }, 18000+(i*2000))                           
                             
-                        }, i*20000);
+                        }, i*9000);
                     })(i)
                 }
                
@@ -755,9 +764,9 @@
                     type: 'GET',
                     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
                     //url: 'http://localhost:8085/get_user?data=' + JSON.stringify(list),
-                    dataType: 'jsonp', //希望服务器返回json格式的数据
-                    jsonp: "callback",
-                    jsonpCallback: "successCallback",//回调方法
+                    dataType:'jsonp', //希望服务器返回json格式的数据
+                    jsonp:"callback",
+                    jsonpCallback:"successCallback",//回调方法
                     success: function (data) {
                         let that = this;
                         console.log("返回值：")
@@ -779,7 +788,6 @@
                             fas(datas)
                         }
                     }
-
                 });
 
 
