@@ -1,26 +1,25 @@
 <template>
     <div class="susswrap">
         <a-layout>
-            <a-layout-content class="content" :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
-               
-                <!-- <div class="content_suss">
-                    <i class="iconfont icon-chenggong"></i>
-                    <div>房源已成功上传,系统审核完成后会通知您。</div>
-                </div> -->
-                <a-table class="fabutable" :columns="columns" :dataSource="listfb" >
-                    <span slot="operation" slot-scope="text, record" class="caozuo">
-                        <!-- <a href="javascript:;" @click="update(record.id)">修改</a>
-                        <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
-                            <a href="#">删除</a>
-                        </a-popconfirm> -->
-                        <div class="yes" v-if="backMsg"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
-                        <div class="yes"><i class="iconfont icon-shibai"></i><span>审核失败</span></div>
-                    </span>
-                </a-table> 
-                <div class="content_btn">
-                    <a-button type="primary" class="goon_btn" @click="goon">继续发布</a-button>
-                    <a-button type="primary" class="goon_btn" @click="redirct()">一键录入</a-button>
-                </div>
+            <a-layout-content class="content" :style="{ background: '#fff',margin: 0, minHeight: '280px' }">   
+                <a-spin tip="房源发布已成功，系统正在审核中，请耐心等待......" :spinning="spinning">
+                    <div class="spin-content">
+                        <a-table class="fabutable" :columns="columns" :dataSource="listfb" >
+                            <span slot="operation" slot-scope="text, record" class="caozuo">
+                                <!-- <a href="javascript:;" @click="update(record.id)">修改</a>
+                                <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
+                                    <a href="#">删除</a>
+                                </a-popconfirm> -->
+                                <div class="yes" v-if="backMsg"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
+                                <div class="yes"><i class="iconfont icon-shibai"></i><span>审核失败</span></div>
+                            </span>
+                        </a-table> 
+                        <div class="content_btn">
+                            <a-button type="primary" class="goon_btn" @click="goon">继续发布</a-button>
+                            <a-button type="primary" class="goon_btn" @click="redirct()">一键录入</a-button>
+                        </div>  
+                    </div>
+                </a-spin>
             </a-layout-content>
         </a-layout>
     </div>
@@ -52,12 +51,17 @@ const columns = [{
                 listfb:[],
                 columns,
                 backMsg: false,
+                spinning: true,
             };
         },
         mounted() {
             // this.seachShow();
-            console.log(this.salevalue)
-            this.GetShowList()
+            // console.log(this.salevalue)
+            setTimeout(() => {
+                console.log("2")
+                this.GetShowList()
+                this.spinning = false;
+            }, 18000);
         },
         activated() {
            this.GetShowList()
