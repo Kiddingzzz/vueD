@@ -1,6 +1,6 @@
 <template>
      <div style="max-width:100%">
-         <a-table  :columns="columns" :dataSource="siteitem">
+         <a-table  :columns="columns" :dataSource="siteitem" :customRow="handleClickRow">
                         <span slot="name" slot-scope="name">
                             <a-tag v-for="tag in name" :key="tag"
                               :color="tag==='loser' ? 'volcano' : (tag.toUpperCase()!='允许发布'? 'rosybrown' : 'skyblue')"
@@ -153,6 +153,7 @@
           openaddress: '',
           siteitem:[],
           opensiteName:'',
+          index: '',
        
       };
     },
@@ -183,6 +184,16 @@
         }
     },
     methods: {
+        handleClickRow(record, index){
+            return {
+                on: {
+                    click: () => {
+                        // console.log('序号索引index' + index)
+                        this.index = index
+                    }
+                }
+            }
+        },
         ///获取站点列表
         GetOpenSiteList(){
             //筛选已开通网站
@@ -247,7 +258,7 @@
                     if(Response.status==200) {
                          if(Response.data=="yes"){
                              //this.Deletesiteuser(id);
-                            this.siteitem.splice(index-1,1)
+                            this.siteitem.splice(this.index,1)
                             //   this.GetOpenSiteList();
                               this.$message.success('删除成功！！');
                          }
