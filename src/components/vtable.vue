@@ -3,7 +3,7 @@
         <a-layout>
             <a-layout-content :style="{ background: '#fff',margin: 0, minHeight: '280px' }">
                 <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;margin-top:-55px;">
-                    <a-button type="primary" @click="start" :disabled="!hasSelected" :loading="loading">
+                    <a-button type="primary" @click="DeleteList" :disabled="!hasSelected" :loading="loading">
                         批量删除
                     </a-button>
                     <a-button style="margin-right: 8px" type="primary" @click="start" :disabled="!hasSelected"
@@ -148,7 +148,6 @@
                 return {
                     onChange: (selectedRowKeys, selectedRows) => {
                     this.selectedRowKeys = selectedRows;
-                    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                     },
                 };
             },
@@ -176,15 +175,52 @@
                 this.loading = true;
                 // ajax request after empty completing
                 console.log("respones.house:" + JSON.stringify(this.selectedRowKeys))
-                this.$emit("getDataList", this.selectedRowKeys);
+             
                 setTimeout(() => {
                     this.loading = false;
                     this.selectedRowKeys = [];
                 }, 1000);
             },
+           
+          async  DeleteList(){
+                  this.loading = true;
+                // ajax request after empty completing
+                  let that=this
+                const idlist=[]
+                 for(var i=0;i<this.selectedRowKeys.length;i++){
+                   idlist.push(this.selectedRowKeys[i].id)
+                }
+                // this.$emit("getDataList", this.selectedRowKeys);
+                console.log(idlist)
+               try{
+                    await this.$http.post(`${this.$config.api}/api/cms/house/publishDeletelist`,idlist).then(Response => {
+                    console.log("返回结果："+JSON.stringify(Response))
+                    if(Response.data.code=="200")
+                    {       
+                           that.$message.success(Response.data.msg);  
+                           that.seachShow();
+                           that.loading = false;
+                           that.selectedRowKeys = [];
+                    }
+                })
+               }
+               catch(e){
+                   that.$error({
+                        title: '提示',
+                        content: '删除失败，系统繁忙，请重新执行',
+                        okText:'确定',
+                        onOk(){
+                           that.loading = false;
+                           that.selectedRowKeys = [];
+                        }
+                    });
+                    
+               }
+              
+
+            },
             //删除
             async onDelete(id) {
-                console.log("asdgsdfgsdrfgsdfsdfhsfdhsfthsfdtgsh")
                 try {
                     await this.$http.post(`${this.$config.api}/api/cms/house/` + id + `/publishDelete`).then(Response => {
                         if (Response.status == 200) {

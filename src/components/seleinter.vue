@@ -499,7 +499,6 @@
                                      texttypr="已发布"
                                    }
                                   else{
-                                     
                                      dis=idss
                                      texttypr=data.data.subMsg
                                    }
