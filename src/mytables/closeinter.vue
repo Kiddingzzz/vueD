@@ -1,6 +1,6 @@
 <template>
      <div style="width:100%">
-         <a-table  :columns="column" :dataSource="closesiteitem">
+         <a-table  :columns="column" :dataSource="closesiteitem" :customRow="handleClickRow">
                         <span slot="name" slot-scope="name">
                             <a-tag v-for="tag in name" :key="tag"
                               :color="tag==='loser' ? 'volcano' : (tag.toUpperCase()!='允许发布'? 'rosybrown' : 'skyblue')"
@@ -144,6 +144,7 @@
             closeaddress: '',
             closesiteitem:[],
             intername:'',
+            index: '',
         
         };
     },
@@ -171,6 +172,16 @@
         }
     },
     methods: {
+        handleClickRow(record, index){
+            return {
+                on: {
+                    click: () => {
+                        // console.log('序号索引index' + index)
+                        this.index = index
+                    }
+                }
+            }
+        },
         ///获取站点列表
          GetCloseSiteList(){
             //筛选已开通网站
@@ -252,9 +263,8 @@
                         if(Response.status==200)
                         {
                             this.$message.success('添加账号成功');
-                            //此处只针对index为1和2的情况
-                            const key = index == 1 ? 0 : 1
-                            this.closesiteitem.splice(key,1)
+
+                            this.closesiteitem.splice(this.index,1)
                             this.closevisible = false;
                             // this.GetCloseSiteList(); 
                         }
