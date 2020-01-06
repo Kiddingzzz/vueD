@@ -404,7 +404,7 @@
                         const res = await this.$http.post(Statu, data);
                         console.log("1111")
                         console.log(res)
-                        if(res.data.returnValue.code=="200"){
+                        if(res.data.code=="200"){
                               this.$emit('childByValue', e.userName, e.password)
                                 setTimeout(() => {
                                 this.showMask = false;
@@ -420,7 +420,7 @@
                         else{
                              this.$error({
                             icon: "none",
-                            title: res.data.returnValue.msg
+                            title: res.data.msg
                         });
                          this.dis = false;
                         }
