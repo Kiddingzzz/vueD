@@ -140,7 +140,7 @@
                 shopshineiList: [],
                 Fhdata: '空',
                 finalResult: [],
-                controller:{},
+               
                 username:'',
                 userpwd:'',
                 // inter: require("../../assets/logo/58logo.png"),
@@ -163,24 +163,15 @@
         },
         mounted() {
             this.def = this.value;
-            console.log('value:' + JSON.stringify(this.value))
             this.rav = this.array;
           
-            if(this.controller == "200"){
-                console.log('aaaaaaaa')
-            }
-            else{
-              
-                console.log('bbbbbb')
-            }
+          
 
         },
-        activated() {
-            console.log('this.controller:'+this.controller)
-        },
+       
         methods: {
             changeimg(e) {
-                console.log("选中：" + e)
+             
                 switch (e) {
                     case "58同城": this.hsd = 0
                         break;
@@ -417,22 +408,16 @@
                 let arrays = this.rav;
                 let that=this
                 let number=arrays.length-1
+                 //循环调用发布接口
+                let update = JSON.parse(localStorage.getItem('update'));
+                that.$http.get(`${that.$config.api}/api/cms/sites/getUserFang?Userid=` + update.userId+'&SiteName='+that.wangvalue).then(Responses=>{
+                 console.log(JSON.stringify(Responses))
+                    this.username=Responses.data.userName;
+                    this.userpwd=Responses.data.passWord
+                  })
                 for (let i = 0; i < arrays.length; i++) {
                     (function (i) {
                         setTimeout(function () {
-                           
-                            //循环调用发布接口
-                            let update = JSON.parse(localStorage.getItem('update'));
-                            that.$http.get(`${that.$config.api}/api/cms/sites/getUserFang?Userid=` + update.userId+'&SiteName='+that.wangvalue).then(Responses=>{
-                                console.log(JSON.stringify(Responses))
-                                this.username=Responses.data.userName;
-                                
-                                this.userpwd=Responses.data.passWord
-                                 console.log("名字："+this.username)
-                            console.log("密码："+this.userpwd)
-                            })
-                            console.log("名字："+this.username)
-                            console.log("密码："+this.userpwd)
                             this.spinning = true;
                             this.pdef = arrays[i];
                             let huxing = this.pdef.huxing
@@ -490,8 +475,6 @@
                                 userpwd:this.userpwd ,
 
                             }
-                            console.log(xingzhi)
-                           console.log(list)
                             let idss = this.pdef.id
                             let dataConsole = '默认值';
                             let dis=null;
@@ -509,8 +492,8 @@
                                     console.log("返回值：")
                                     console.log(data)
                                     dataConsole = data;
-                                    this.controller = data;
-                                   if(data.status=="ok"){
+                                  
+                                   if(data.data.title=="发布成功"){
                                        console.log("成功")
                                      dis=idss
                                      texttypr="已发布"
@@ -518,7 +501,7 @@
                                   else{
                                      
                                      dis=idss
-                                     texttypr=data.data.title
+                                     texttypr=data.data.subMsg
                                    }
                                 },
                                 error:function(){
@@ -536,7 +519,7 @@
                                     type:texttypr
                                    }
                                  if(dis!=null){
-                                     console.log("发布Id："+dis)
+                                    
                                      that.$http.post(yuming,datas).then(Responses=>{
                                          if(i==number)
                                             that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
@@ -628,9 +611,7 @@
                     pwd: datas.passWord,
                     keyId: "10568"
                 }
-                console.log(this.pdef.shopquyu.replace(' ', ''))
-                console.log("s" + ades)
-                console.log(this.pdef.shopAdress)
+             
                 const res = await this.$axios.post(urls, data);
                 const userName = res.data.returnmsgs.userName;
                 this.tokens = res.data.returnmsgs.token;
