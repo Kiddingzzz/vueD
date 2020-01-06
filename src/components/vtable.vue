@@ -173,9 +173,7 @@
             },
             start() {
                 this.loading = true;
-                // ajax request after empty completing
-                console.log("respones.house:" + JSON.stringify(this.selectedRowKeys))
-             
+              this.$emit("getDataList", this.selectedRowKeys);
                 setTimeout(() => {
                     this.loading = false;
                     this.selectedRowKeys = [];
