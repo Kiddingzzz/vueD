@@ -294,8 +294,8 @@
                 try {
                     await this.$http.post(statu, datas).then(Response => {
                         let that = this;
-                        // console.log(JSON.stringify(Response))
-                        // console.log(Response.config.data)
+                        console.log(JSON.stringify(Response))
+                       
                         if (Response.data.returnValue.code == "200") {
                              this.dis = false;
                             //判断保存的

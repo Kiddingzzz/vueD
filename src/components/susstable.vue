@@ -10,8 +10,8 @@
                                 <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
                                     <a href="#">删除</a>
                                 </a-popconfirm> -->
-                                <div class="yes" v-if="backMsg"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
-                                <div class="yes"><i class="iconfont icon-shibai"></i><span>审核失败</span></div>
+                                <div class="yes" v-if="backMsg==true"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
+                                <div class="yes" v-if="backMsg==false"><i class="iconfont icon-shibai"></i><span>审核失败</span></div>
                             </span>
                         </a-table> 
                         <div class="content_btn">
@@ -115,7 +115,7 @@ const columns = [{
             async GetShowList(){
                     let update = JSON.parse(localStorage.getItem('update'));
                     console.log( update.userId)
-                    const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishNoList/` + update.userId);
+                    const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishAllList/` + update.userId);
                     if (respones.status == 200) {
                     
                         this.listfb = respones.data.items;
