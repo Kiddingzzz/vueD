@@ -24,6 +24,10 @@
                             <a href="#">删除</a>
                         </a-popconfirm>
                     </span>
+                    <span slot="jieguo" slot-scope="text, record,index" class="caozuo">
+                        <div class="yes" v-if="record.publishStatus=='已发布'"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
+                        <div class="yes" v-else><i class="iconfont icon-shibai"></i><span>审核失败</span></div>
+                    </span>
             </a-table>   
         </div>
     </div>
@@ -32,7 +36,7 @@
 const columns = [{
         title: '小区名称',
         dataIndex: 'xiaoquName',
-        width:'25%',
+        width:'15%',
     }, {
         title: '发布房源标题',
         dataIndex: 'title',
@@ -47,6 +51,12 @@ const columns = [{
         scopedSlots: { customRender: 'operation' },
         width:'10%'
     },
+    {
+        title: '结果',
+        dataIndex: 'jieguo',
+        scopedSlots: { customRender: 'jieguo' },
+        width:'10%'
+    },
 ];
 
 
@@ -55,6 +65,7 @@ export default {
         return {
             listfb:[],
             columns,
+            backMsg: false,
         }
     },
      activated() {
@@ -91,11 +102,11 @@ export default {
         async GetShowList(){
                 let update = JSON.parse(localStorage.getItem('update'));
                 console.log( update.userId)
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishNoList/` + update.userId);
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishAllList/` + update.userId);
                 if (respones.status == 200) {
                    console.log(respones)
                     this.listfb = respones.data.items;
-
+                   
                 }
         }
     },
@@ -137,6 +148,10 @@ export default {
         margin: 20px 0;
         padding: 25px 15px;
         border-radius: 10px; 
+        .yes{
+            display: flex;
+            align-items: center;
+        }
     }
 }
 </style>

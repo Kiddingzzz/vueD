@@ -351,7 +351,7 @@
                          }
                           else{
                               this.zspinning=false
-                              this.$message.success('您还没有添加网站的账号，请先添加！');
+                              this.$message.success('该发布网站您还未添加对应账号，请先添加！');
                               this.zspinning=false                         }
 
                            

@@ -495,7 +495,7 @@
                                     dataConsole = data;
                                   
                                    if(data.data.title=="发布成功"){
-                                       console.log("成功")
+                                     console.log("成功")
                                      dis=idss
                                      texttypr="已发布"
                                    }
@@ -531,14 +531,14 @@
                 }
                 
                 setTimeout(function(){
-                      that.$emit('getSeconde', 2, arrays.length)
+                        that.$emit('getSeconde', 2, arrays.length);
                         //  that.$message.success('已上传，等待系统审核',2);      
-                         this.loading = true 
-                        
-                   },1000) 
+                        this.loading = true;  
+                        this.disabled = true;
+                   },2000) 
                 ///消息接收
                 // console.log('this.finalResult:'+this.finalResult)
-               
+               this.disabled = false;
             },
             // async fabulist(list) {
             //     await this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + list)
