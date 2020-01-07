@@ -109,6 +109,7 @@
                 //用户名下拉框
                 restaurants: [],
                 test: [],
+                ip: '',
             };
         },
         computed: {
@@ -120,12 +121,17 @@
         },
         mounted() {
             //获取登录前的localStorage存的账号
+            console.log('端口号为'+window.location.host)
             let BackUserPwd =[]
             BackUserPwd = JSON.parse(localStorage.getItem("BackUserPwd"))
             if(BackUserPwd != null){
                 this.restaurants = BackUserPwd
             }
-            // this.getUserIP((ip) => {
+            this.getUserIP((ip) => {
+                this.ip = ip;
+                console.log("ip地址为"+this.ip)
+            });
+                    // this.getUserIP((ip) => {
             //     this.ip = ip;
             //     console.log('登录页面的内网ip=================='+this.ip)
             //     if(this.ip!=null) {
@@ -213,6 +219,34 @@
             reset (){
                 this.password = ''
                this.checked = false
+            },
+            //获取内网ip
+            getUserIP(onNewIP) {
+                let MyPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
+                let pc = new MyPeerConnection({
+                    iceServers: []
+                });
+                let noop = () => {
+                };
+                let localIPs = {};
+                let ipRegex = /([0-9]{1,3}(\.[0-9]{1,3}){3}|[a-f0-9]{1,4}(:[a-f0-9]{1,4}){7})/g;
+                let iterateIP = (ip) => {
+                if (!localIPs[ip]) onNewIP(ip);
+                localIPs[ip] = true;
+                };
+                pc.createDataChannel('');
+                pc.createOffer().then((sdp) => {
+                sdp.sdp.split('\n').forEach(function (line) {
+                    if (line.indexOf('candidate') < 0) return;
+                    line.match(ipRegex).forEach(iterateIP);
+                });
+                pc.setLocalDescription(sdp, noop, noop);
+                }).catch((reason) => {
+                });
+                pc.onicecandidate = (ice) => {
+                if (!ice || !ice.candidate || !ice.candidate.candidate || !ice.candidate.candidate.match(ipRegex)) return;
+                ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
+                };
             },
             ///获取已登录用户及密码
             //  async BackUserPwd()
