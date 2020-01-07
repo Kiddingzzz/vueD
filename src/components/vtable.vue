@@ -142,6 +142,7 @@
                 list: [],
                 updatelist: [],
                 index: [],
+                loadingdele: false,
             };
         },
         computed: {

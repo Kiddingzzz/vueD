@@ -46,7 +46,7 @@ const columns = [{
 ];    
     export default {
         name: 'susstable',
-        props: ['time'],
+        props: ['spintime'],
         data() {
             return {
                 listfb:[],
@@ -64,12 +64,12 @@ const columns = [{
             //     this.GetShowList()
             //     this.spinning = false;
             // }, 2000);
-            console.log("时间"+this.time)
+            console.log("时间"+this.spintime)
             setTimeout(() => {
                 console.log("2")
                 this.GetShowList()
                 this.spinning = false;
-            }, this.time*11000);
+            }, this.spintime*11000);
         },
         activated() {
            this.GetShowList()
