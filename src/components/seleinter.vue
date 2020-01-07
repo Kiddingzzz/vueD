@@ -216,7 +216,7 @@
                                 this.tzvisible=true;
                                 that.$confirm({
                                     title: '提示',
-                                    content: '您还未添加发布网站，请先添加',
+                                    content: '该发布网站您还未添加对应账号，请先添加',
                                     okText: '去添加',
                                     cancelText: '取消',
                                     onOk() {
@@ -408,6 +408,7 @@
                 let arrays = this.rav;
                 let that=this
                 let number=arrays.length-1
+                let itz=false
                  //循环调用发布接口
                 let update = JSON.parse(localStorage.getItem('update'));
                 that.$http.get(`${that.$config.api}/api/cms/sites/getUserFang?Userid=` + update.userId+'&SiteName='+that.wangvalue).then(Responses=>{
@@ -508,36 +509,33 @@
                                     texttypr="服务器错误，请重新发布"
                                 }
                             })
-                            setTimeout(function(){
-                                 console.log("id:")
-                                
-                                 console.log(dis)
-                                 console.log(texttypr)
-                               const datas={
-                                    houserid:dis,
-                                    type:texttypr
-                                   }
-                                 if(dis!=null){
-                                    
-                                     that.$http.post(yuming,datas).then(Responses=>{
-                                         if(i==number){
-                                            that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
-                                         }
-                                     });
-                                      
-                                 }
-                                     
-                            }, 18000+(i*2000))                           
+                            //定时检测变化
+                               const interval= setInterval(async () => {
+                                   
+                                    if(dis!=null){
+                                        const datas={houserid:dis, type:texttypr}
+                                        that.$http.post(yuming,datas).then(Responses=>{
+                                            if(i==number){
+                                                clearInterval(interval);
+                                                that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
+                                                itz=true
+                                            }
+                                        })
+                                    }
+                                  
+                                },2000);
+                                                 
                             
                         }, i*11000);
                     })(i)
                 }
                 
                 setTimeout(function(){
-                        that.$emit('getSeconde', 2, arrays.length)
+                      that.$emit('getSeconde', 2, arrays.length)
                         //  that.$message.success('已上传，等待系统审核',2);      
-                          this.loading = true  
-                   },2000) 
+                         this.loading = true 
+                        
+                   },1000) 
                 ///消息接收
                 // console.log('this.finalResult:'+this.finalResult)
                
@@ -737,10 +735,12 @@
 
                 }
                 // console.log('list:' + JSON.stringify(list))
-                var datatext = ""
+                let that = this;
                 let fff = this.FanhuiData
                 let idss = this.pdef.id
-              
+                let dis=''
+                let texttypr=''
+                let yuming=`${that.$config.api}/api/cms/house/modifyHouseStatus/`
                 $.ajax({
                     type: 'GET',
                     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
@@ -749,34 +749,41 @@
                     jsonp:"callback",
                     jsonpCallback:"successCallback",//回调方法
                     success: function (data) {
-                        let that = this;
                         console.log("返回值：")
                         console.log(data)
-                        if (data == "200") {
-                            that.spinning = false;
-                            const datas = {
-                                houserid: idss,
-                                type: "已发布"
-                            }
-                            fas(datas)
-                        }
-                        else {
-                            that.spinning = false;
-                            const datas = {
-                                houserid: idss,
-                                type: data
-                            }
-                            fas(datas)
-                        }
-                    }
+                         if(data.data.title=="发布成功"){
+                             console.log("成功")
+                            dis=idss
+                             texttypr="已发布"
+                          }
+                         else{
+                             dis=idss
+                             texttypr=data.data.subMsg
+                         }
+                    },
+                    error:function(){
+                          dis=idss
+                          texttypr="服务器错误，请重新发布"
+                     }
                 });
-
+              setTimeout(function(){
+                 console.log("id:")
+                 console.log(dis)
+                console.log(texttypr)
+                 const datas={
+                     houserid:dis,
+                     type:texttypr
+                 }
+                 if(dis!=null){ 
+                     that.$http.post(yuming,datas).then(Responses=>{
+                            that.$message.success('您的审核完毕，可在发布结果查看发布结果',3);
+                    });
+                                      
+                 }                 
+              }, 24000)    
 
             },
-            ///跳转
-            FanhuiData(data, sid) {
-               
-            },
+          
             //aaa
             openNotificationWithIcon(type) {
                 if (type == 'success') {

@@ -138,6 +138,7 @@
                 columns,
                 selectedRowKeys: [], // Check here to configure the default column
                 loading: false,
+                loadingdele:false,
                 list: [],
                 updatelist: [],
                 index: [],

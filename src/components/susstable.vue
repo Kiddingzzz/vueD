@@ -117,7 +117,7 @@ const columns = [{
                     console.log( update.userId)
                     const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishAllList/` + update.userId);
                     if (respones.status == 200) {
-                    
+                        console.log("house："+respones.data.items)
                         this.listfb = respones.data.items;
 
                     }

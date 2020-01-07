@@ -1096,7 +1096,7 @@
                         bottom: '50px',
                         right: '500px',
                         description:
-                            '保存房源成功数据将存入发布房源列表',
+                            '保存房源成功后将存入云发布-出售群发列表',
                     });
                     this.$router.replace('/salerelease')
                 }
