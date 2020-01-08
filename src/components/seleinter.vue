@@ -49,8 +49,8 @@
             <span slot="caozuo" slot-scope="text, record">
                 <a-button type="primary" @click="shopfabuok(record)" :disabled="disabled" :loading="loading">确认发布
                 </a-button>
-                <!-- <a-spin :spinning="spinning">
-                </a-spin> -->
+                <a-spin :spinning="spinning">
+                </a-spin>
             </span>
         </a-table>
     </div>
@@ -129,14 +129,14 @@
                 tzvisible:false,
                 def: {},
                 rav: [],
-                // spinning: false,
+                spinning: false,
                 pdef: {},
                 shineiImgList: [],
                 xiaoquImgList: [],
                 huxingImgList: [],
                 bid: 'a',
                 hsd: 1,
-                wangvalue: '房天下',
+                wangvalue: '58同城',
                 shopshineiList: [],
                 Fhdata: '空',
                 finalResult: [],
@@ -190,15 +190,10 @@
                 try {
 
                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId + '&sitename=' + this.wangvalue).then(Response => {
-                        
-                        if (Response.status == 200) {
-                            if (Response.data == "yes") {
+                            if (Response.data.code == "200") {
                                 if (this.wangvalue == "房天下") {
                                     if (this.rav == '[]') {
                                         this.Fangtianxia();
-                                    }
-                                    else {
-
                                     }
                                 }
                                 if (this.wangvalue == "58同城") {
@@ -216,7 +211,7 @@
                                 this.tzvisible=true;
                                 that.$confirm({
                                     title: '提示',
-                                    content: '该发布网站您还未添加对应账号，请先添加',
+                                    content: Response.data.msg,
                                     okText: '去添加',
                                     cancelText: '取消',
                                     onOk() {
@@ -225,7 +220,7 @@
                                 });
                                
                             }
-                        }
+                        
                     })
                     this.loading = false
                     this.disabled = false;
@@ -259,7 +254,7 @@
 
             ///房天下二手房发布
             async fabuok(e) {
-                // this.spinning = true;
+                this.spinning = true;
                 this.pdef = this.value;
                 var end = this.pdef.address.indexOf('－');
                 this.pdef.addressDetail = this.pdef.address.substring(end + 1, this.pdef.address.length);
@@ -419,7 +414,7 @@
                 for (let i = 0; i < arrays.length; i++) {
                     (function (i) {
                         setTimeout(function () {
-                            // this.spinning = true;
+                            this.spinning = true;
                             this.pdef = arrays[i];
                             let huxing = this.pdef.huxing
                             let shis = huxing.split('室')[0]
@@ -495,7 +490,7 @@
                                     dataConsole = data;
                                   
                                    if(data.data.title=="发布成功"){
-                                     console.log("成功")
+                                       console.log("成功")
                                      dis=idss
                                      texttypr="已发布"
                                    }
@@ -504,10 +499,10 @@
                                      texttypr=data.data.subMsg
                                    }
                                 },
-                                error:function(){
-                                    dis=idss
-                                    texttypr="服务器错误，请重新发布"
-                                }
+                                // error:function(){
+                                //     dis=idss
+                                //     texttypr="服务器错误，请重新发布"
+                                // }
                             })
                             //定时检测变化
                                const interval= setInterval(async () => {
@@ -523,30 +518,27 @@
                                         })
                                     }
                                   
-                                },2000);
-                                                 
-                            
-                        }, i*11000);
+                                },2000);  
+                        }, i*9000);
                     })(i)
                 }
                 
                 setTimeout(function(){
-                        that.$emit('getSeconde', 2, arrays.length);
+                      that.$emit('getSeconde', 2, arrays.length)
                         //  that.$message.success('已上传，等待系统审核',2);      
-                        this.loading = true;  
-                        this.disabled = true;
-                   },2000) 
+                         this.loading = true 
+                        
+                   },1000) 
                 ///消息接收
                 // console.log('this.finalResult:'+this.finalResult)
-               this.disabled = false;
-               this.loading = false; 
+               
             },
             // async fabulist(list) {
             //     await this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + list)
             // },
             ///房天下商铺发布
             async fabuShangpu() {
-                // this.spinning = true;
+                this.spinning = true;
                 this.pdef = this.value;
                 var ades = this.pdef.shopquyu;
                 if (RegExp(/-/).exec(ades))
@@ -678,7 +670,7 @@
                 // let update = JSON.parse(localStorage.getItem('update'));
                 // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
                 // let datas = query.data;
-                // this.spinning = true;
+                this.spinning = true;
                 this.pdef = this.value;
                 let huxing = this.pdef.huxing
                 let shis = huxing.split('室')[0]
@@ -788,7 +780,7 @@
             //aaa
             openNotificationWithIcon(type) {
                 if (type == 'success') {
-                    // this.spinning = false;
+                    this.spinning = false;
                     this.$notification[type]({
                         message: '发布成功',
                         description:

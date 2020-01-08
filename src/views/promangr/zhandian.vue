@@ -23,7 +23,9 @@
             </div>
         </div>
         <div style="padding: 24px 24px 0px;">
+         <a-spin tip="玩命提交中,请稍等......" :spinning="zhanspinning">
              <a-tabs @change="callback" type="card">
+             
                 <a-tab-pane tab="全部网站" key="1">
                     <a-table width="1120px" :columns="columnss" :dataSource="item">
                         <span slot="name" slot-scope="name">
@@ -40,7 +42,7 @@
                           <!-- <a>{{record.inter}}</a>-->
                         </span>
                         <span slot="tiaojian" slot-scope="text, record">
-                            <a-tag v-for="tag in record.tiaojian" @click="ceshi(tag,record.siteName)"
+                            <a-tag v-for="tag in record.tiaojian" @click="ceshi(tag,record.siteName,record.userName)"
                                 :color="tag==='loser' ? 'volcano' : (tag.length > 3? 'geekblue' : 'green')" :key="tag">
 
                                 {{tag.toUpperCase()}}
@@ -68,14 +70,14 @@
                             </a-modal>
                         </span>
                         <span slot="userName" slot-scope="text, record">
-                                <a>{{record.userName}}</a>
+                                <a>{{record.userName}}</a><label class="yangshi">{{record.siteAccountType}}</label>
                         </span>
                         <span slot="action" slot-scope="text, record" >
                             <a-spin :spinning="zspinning"></a-spin>
                             <a-button type="primary" @click="DeleteSite(record.id)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
-                            <a-button type="primary" @click="lookpwdbotton()">查看密码</a-button>
-                            <a-modal title="查看密码" v-model="lookvisible" @ok="lookpwd(record.id)" @cancel="close" cancelText="取消" okText="确定">
+                            <a-button type="primary" @click="lookpwdbotton(record.siteName)">查看密码</a-button>
+                            <a-modal title="查看密码" v-model="lookvisible" @ok="lookpwd" @cancel="close" cancelText="取消" okText="确定">
                                 <label>为了您的账户安全，请输入您在开单王的登陆密码</label>
                                 <a-input
                                     prefix-icon="iconfont icon-User"
@@ -115,6 +117,7 @@
                     <tuijian></tuijian>
                 </a-tab-pane>
             </a-tabs>
+            </a-spin>
         </div>
     </div>
 </template>
@@ -203,7 +206,9 @@
                 ret: [],
                 byte: [],
                 tokens: '',
+                zhanspinning:false,
                 despwd: '',
+                looksitename:'',
                 //房源类型 售 或 租
                 houseType: '',
                 //请求API的授权码 令牌  
@@ -225,6 +230,9 @@
                 item:[],
                 siteName:'',
                 zhandiantu: [require('../../assets/logo/fang.png'),require('../../assets/logo/jingjiren.png')],
+                siteCookie:'',
+                siteAccountType:'',
+                sitesusername:null,
             };
         },
         components:{
@@ -285,6 +293,15 @@
             },
             ///房天下
             async handleOk() {
+              
+                if(this.sitesusername!=null){
+                     this.zhanspinning=false;
+                     this.$message.error("您已添加账号eee，请勿重复操作！");
+                     return;
+                }
+
+                this.visible = false;
+                this.zhanspinning=true
                 if(this.siteUserName == ''){
                     this.usererre = true
                     return;
@@ -294,37 +311,77 @@
                     return;
                 }
                 console.log(this.siteName)
-                let update = JSON.parse(localStorage.getItem('update'));
-                const data = {
-                    // userId: this.$store.userId,
-                    userId:update.userId,
-                    siteUserName: this.siteUserName,
-                    sitePassword: this.sitepwd,
-                    token:'aaa',
-                    biaoshi:this.siteName,
+                const that=this
+                const cookes={username:this.siteUserName,userpwd:this.sitepwd}
+                if(this.siteName=="58同城"){
+                       $.ajax({
+                           type: 'GET',
+                           async:true,
+                           url: 'http://47.108.24.104:8090/Authentic?data=' + JSON.stringify(cookes),
+                           dataType: 'jsonp', //希望服务器返回json格式的数据
+                           jsonp: "callback",
+                           jsonpCallback: "successCallback",//回调方法
+                           success: function (data) {
+                               console.log("返回cookie:")
+                               console.log(data)
+                              if(data=="100"){
+                                  that.siteAccountType="不可用"
+                              }
+                              else{
+                                  that.siteAccountType="可用"
+                                  that.siteCookie=data
+                              }
+                           }
+                       });
                 }
                 
-               try{
-                    await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
-                        if(Response.status==200)
-                        {
-                            this.$message.success('添加账号成功');
-                            this.visible = false;
-                            this.GetSiteList();
-                
-                        }
-                    });
-               }
-               catch(e){
-                   console.log(e)
-                    this.$message.success('您已添加账号');
-                     this.visible = false;
-               }
-               ///关闭添加账号model框时，清空input框数据
-                this.close()            
+                setTimeout(function(){
+                    let update = JSON.parse(localStorage.getItem('update'));
+                    console.log(that.siteAccountType)
+                     console.log(that.siteCookie)
+                    const data = {
+                        // userId: this.$store.userId,
+                        userId:update.userId,
+                        siteUserName: that.siteUserName,
+                        sitePassword: that.sitepwd,
+                        token:that.siteToken,
+                        biaoshi:that.siteName,
+                        siteCookie:that.siteCookie,
+                        SiteAccountType:that.siteAccountType,
+                    }
+                        
+                    try{
+                            that.$http.post(`${that.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
+                                console.log("kkkkkk")
+                                if(Response.data.code=="200")
+                                {
+                                    that.zhanspinning=false;
+                                    that.$message.success('添加账号成功');
+                                   
+                                    that.GetSiteList();
+                        
+                                }
+                                else{
+                                    that.zhanspinning=false;
+                                    that.$message.error(Response.data.msg);
+                                   
+                                }
+                            });
+                    }
+                    catch(e){
+                        console.log(e)
+                            that.$message.success('系统错误，请重试');
+                            
+                            that.zhanspinning=false;
+                    }
+                    ///关闭添加账号model框时，清空input框数据
+                        that.close()
+              }, 12000)    
+                            
             },
-            ceshi(tag,hname) {
+            ceshi(tag,hname,e) {
                 this.siteName=hname;
+                this.sitesusername=e;
                 if(tag == '添加账号'){
                     this.visible = true;            
                 }
@@ -343,27 +400,20 @@
             async DeleteSite(sid){
                this.zspinning=true
                  await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow`).then(Response=>{
-                    if(Response.status==200) {
-                         if(Response.data=="yes"){
+                         if(Response.data.code=="200"){
                               this.GetSiteList();
                               this.zspinning=false
                               this.$message.success('删除成功！！');
                          }
                           else{
                               this.zspinning=false
-                              this.$message.success('该发布网站您还未添加对应账号，请先添加！');
-                              this.zspinning=false                         }
-
-                           
-                    }
-                    else{
-                        this.zspinning=false
-                        this.$message.success('删除错误，请重新删除！');
-                        
-                    }
+                              this.$message.warning(Response.data.msg);
+                         }
                  })
             },
-            lookpwdbotton(){
+            lookpwdbotton(e){
+              
+                    this.looksitename=e
                     this.lookvisible=true;
             },
             //关闭添加账号、查看密码model框时，清空input框数据
@@ -376,32 +426,34 @@
             },
 
             //查看密码
-            async lookpwd(pid)
+            async lookpwd()
             {
                  let update = JSON.parse(localStorage.getItem('update'));
                 const data={
                      userid:update.userId,
                      password:this.lookpwdput,
-                     lookpid:pid,
+                     siteName:this.looksitename,
                     
                 };
               console.log("id:"+update.userId+"密码："+this.lookpwdput)
                 try{
                         await this.$http.post(`${this.$config.api}/api/cms/acount/lookPwd`,data).then(Response=>{
                         console.log(Response)
-                        if(Response.status==200)
+                        if(Response.data.returnValue.code=="200")
                         {
                             this.loolnameok=Response.data.username;
                             this.lookpwdok=Response.data.userpwd;
                             this.lookvisible=false;
                             this.lookpwdvisible=true;
-                            
+                        }
+                        else{
+                             this.$message.error(Response.data.returnValue.msg);
                         }
                 })
                 }
                 catch(e)
                 {
-                    this.$message.success('密码输入错误');
+                    this.$message.warning('系统繁忙，请重试！！！');
                 }
                 //关闭查看密码model框时，清空input框数据
                 this.lookpwdput = '';
@@ -463,5 +515,9 @@
     .interimg{
       width:160px;
        height:65px;
+    }
+    .yangshi{
+       color: orange;
+       margin-left:20%;
     }
 </style>
