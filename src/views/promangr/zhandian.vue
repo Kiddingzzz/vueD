@@ -317,7 +317,7 @@
                        $.ajax({
                            type: 'GET',
                            async:true,
-                           url: 'http://47.108.24.104:8090/Authentic?data=' + JSON.stringify(cookes),
+                           url: 'http://47.108.24.104:8085/get_user?data=' + JSON.stringify(cookes),
                            dataType: 'jsonp', //希望服务器返回json格式的数据
                            jsonp: "callback",
                            jsonpCallback: "successCallback",//回调方法
