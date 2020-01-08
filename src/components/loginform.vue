@@ -48,7 +48,7 @@
                             <el-input type="password" placeholder="请输入密码" v-model="password" class="inputs"
                                 @keyup.enter.native="doLogin()" prefix-icon="iconfont icon-mima"></el-input>
               		    <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
-                            <button class="btns" @click="doLogin()" :disabled="dis">登录</button>
+                            <a-button class="btns" @click="doLogin()" :disabled="dis" :loading="loading">登录</a-button>
                         </div>
                     </div>
                 </div>
@@ -78,6 +78,7 @@
     import dialogRegister from "./dialog-register.vue";
     import forget from './forget.vue'
     import md5 from 'js-md5';
+    import { encryptDes, decryptDes } from '../des';
 
     export default {
         components: {
@@ -86,6 +87,7 @@
         },
         data() {
             return {
+                loading:false,
                 //取消禁止点击
                 dis: false,
       		    checked: false,
@@ -266,7 +268,7 @@
                 // console.log(this.restaurants)
                 var restaurants = this.restaurants;
                 var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants;
-                // 调用 callback 返回建议列表的数据
+                // 调用 callback 返回建议列表的数据            
                 cb(results);
             },
             createFilter(queryString) {
@@ -276,7 +278,7 @@
             },
             handleSelect(item) {
                 if(item.remPasspwd == '是'){
-                    this.password = item.password 
+                    this.password = decryptDes(item.password, '08h0c42y') 
                     this.checked = true
                 }
                 if(item.remPasspwd == '否'){
@@ -310,8 +312,9 @@
                 this.forgetVal = true;
             },
             async doLogin() {
-                 console.log('正在登陆，请耐心等待......')
+                console.log('正在登陆，请耐心等待......')
                 this.dis = 'disabled'
+                this.loading = true
                 if(this.checked == true){
                     this.remember = '是'
                 }else{
@@ -324,6 +327,12 @@
                     adressIp: '129.122.023',
                     remPasspwd: this.remember,
                 };
+                const jiamidatas = {
+                    userNameOrEmailAddress: this.user,
+                    password: encryptDes(this.password, '08h0c42y'),
+                    adressIp: '129.122.023',
+                    remPasspwd: this.remember,
+                };
                 const statu = `${this.$config.api}/api/cms/acount/loginAuthentic`;
                 try {
                     await this.$http.post(statu, datas).then(Response => {
@@ -332,18 +341,19 @@
                        
                         if (Response.data.returnValue.code == "200") {
                              this.dis = false;
+                             this.loading = false;
                             //判断保存的
                           //  let hh = JSON.parse(localStorage.getItem("BackUserPwd"))
                             if(this.restaurants != ''){
                                 for(let i=0;i<this.restaurants.length;i++){
-                                    if(this.restaurants[i].userNameOrEmailAddress == datas.userNameOrEmailAddress){
+                                    if(this.restaurants[i].userNameOrEmailAddress == jiamidatas.userNameOrEmailAddress){
                                         this.restaurants.splice(i,1)
                                     }
                                 }
-                                this.restaurants.push(datas)
+                                this.restaurants.push(jiamidatas)
                                 localStorage.setItem("BackUserPwd",JSON.stringify(this.restaurants))
                             }else{
-                                this.restaurants.push(datas)
+                                this.restaurants.push(jiamidatas)
                                 localStorage.setItem("BackUserPwd",JSON.stringify(this.restaurants))
                             }
                             // window.location.reload();
@@ -376,6 +386,7 @@
                         });
                     }
                     this.dis = false; 
+                    this.loading = false;
                       // uni.setStorageSync('UserInfo', res.user);
                 },
         },

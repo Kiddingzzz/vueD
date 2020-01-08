@@ -19,12 +19,12 @@
             </div>   
             <a-table class="fabutable" :columns="columns" :dataSource="listfb" >
                     <span slot="operation" slot-scope="text, record" class="caozuo">
-                        <a href="javascript:;" @click="update(record.id)">修改</a>
+                        <a v-if="record.publishStatus!='已发布'" href="javascript:;" @click="update(record.id)">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
                     </span>
-                    <span slot="jieguo" slot-scope="text, record,index" class="caozuo">
+                    <span slot="jieguo" slot-scope="text, record" class="caozuo">
                         <div class="yes" v-if="record.publishStatus=='已发布'"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
                         <div class="yes" v-else><i class="iconfont icon-shibai"></i><span>审核失败</span></div>
                     </span>

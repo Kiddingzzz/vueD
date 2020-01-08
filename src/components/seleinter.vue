@@ -49,8 +49,8 @@
             <span slot="caozuo" slot-scope="text, record">
                 <a-button type="primary" @click="shopfabuok(record)" :disabled="disabled" :loading="loading">确认发布
                 </a-button>
-                <a-spin :spinning="spinning">
-                </a-spin>
+                <!-- <a-spin :spinning="spinning">
+                </a-spin> -->
             </span>
         </a-table>
     </div>
@@ -129,7 +129,7 @@
                 tzvisible:false,
                 def: {},
                 rav: [],
-                spinning: false,
+                // spinning: false,
                 pdef: {},
                 shineiImgList: [],
                 xiaoquImgList: [],
@@ -259,7 +259,7 @@
 
             ///房天下二手房发布
             async fabuok(e) {
-                this.spinning = true;
+                // this.spinning = true;
                 this.pdef = this.value;
                 var end = this.pdef.address.indexOf('－');
                 this.pdef.addressDetail = this.pdef.address.substring(end + 1, this.pdef.address.length);
@@ -419,7 +419,7 @@
                 for (let i = 0; i < arrays.length; i++) {
                     (function (i) {
                         setTimeout(function () {
-                            this.spinning = true;
+                            // this.spinning = true;
                             this.pdef = arrays[i];
                             let huxing = this.pdef.huxing
                             let shis = huxing.split('室')[0]
@@ -539,13 +539,14 @@
                 ///消息接收
                 // console.log('this.finalResult:'+this.finalResult)
                this.disabled = false;
+               this.loading = false; 
             },
             // async fabulist(list) {
             //     await this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + list)
             // },
             ///房天下商铺发布
             async fabuShangpu() {
-                this.spinning = true;
+                // this.spinning = true;
                 this.pdef = this.value;
                 var ades = this.pdef.shopquyu;
                 if (RegExp(/-/).exec(ades))
@@ -677,7 +678,7 @@
                 // let update = JSON.parse(localStorage.getItem('update'));
                 // var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserWuba/` + update.userId);
                 // let datas = query.data;
-                this.spinning = true;
+                // this.spinning = true;
                 this.pdef = this.value;
                 let huxing = this.pdef.huxing
                 let shis = huxing.split('室')[0]
@@ -787,7 +788,7 @@
             //aaa
             openNotificationWithIcon(type) {
                 if (type == 'success') {
-                    this.spinning = false;
+                    // this.spinning = false;
                     this.$notification[type]({
                         message: '发布成功',
                         description:

@@ -594,7 +594,7 @@
                         </div>
                         <div class="sellbottomobx">
                             <a-button type="" id='anchor-save' class="sellbuttonfang sellokbutton" v-anchor='anchor'
-                                @click="saveHouse()">保存房源</a-button>
+                                @click="saveHouse()" :disabled="savedisabled" :loading="loading">保存房源</a-button>
                             <a-button type="" class="sellokbutton">保存草稿</a-button>
                         </div>
                     </a-form>
@@ -632,6 +632,9 @@
     export default {
         data() {
             return {
+                loading: false,
+                //禁止点击
+                savedisabled: false,
                 checked: false,
                 anchorerror: '',
                 anchor: 'error',
@@ -1037,12 +1040,16 @@
             },
             //抓取房源保存
             async zhuaqubao() {
+                this.savedisabled = true;
+                this.loading = true;
                 if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
                     this.saveRes.rice == null && this.saveRes.simpleRice == null &&
                     this.saveRes.square == null && this.saveRes.huxing == null &&
                     this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null && this.saveRes.imgHeader == null
                 ) {
                     this.openNotificationWithIcon('error')
+                    this.savedisabled = false;
+                    this.loading = false;
                 }
                 else {
                     //this.saveRes.urlsId = this.$store.userId;
@@ -1055,6 +1062,8 @@
                     this.saveRes.atittude = this.atittude
                     await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
+                            this.savedisabled = false;
+                            this.loading = false;
                             this.openNotificationWithIcon('success')
                             this.saveRes = {}
                         }
@@ -1063,11 +1072,15 @@
             },
 
             async xiugaibao() {
+                this.savedisabled = true;
+                this.loading = true;
                 if (this.ref.xiaoquName == null && this.ref.title == null &&
                     this.ref.rice == null && this.ref.simpleRice == null &&
                     this.ref.square == null && this.ref.huxing == null &&
                     this.ref.louceng == null && this.ref.zhuangxiu == null && this.ref.address == null && this.ref.imgHeader == null
                 ) {
+                    this.savedisabled = false;
+                    this.loading = false;
                     this.openNotificationWithIcon('error')
                 }
                 else {
@@ -1082,6 +1095,8 @@
                     this.ref.publishStatus = '未发布'
                     await this.$http.post(`${this.$config.api}/api/cms/house/baocunData`, this.ref).then(response => {
                         if (response.status == 200) {
+                            this.savedisabled = false;
+                            this.loading = false;
                             this.openNotificationWithIcon('success')
                             this.saveRes = {}
                         }

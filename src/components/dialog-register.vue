@@ -153,7 +153,7 @@
                     </a-checkbox>
                 </a-form-item>
                 <!-- <button class="btn-register" @click="doregister()">完成注册</button> -->
-                <button class="btn-register" html-type="submit" :disabled="dis">完成注册</button>
+                <a-button class="btn-register" html-type="submit" :disabled="dis" :loading="loading">完成注册</a-button>
             </a-form>
             <div class="close-btn" @click="closeMask">
                 <i class="iconfont icon-guanbi"></i>
@@ -193,6 +193,7 @@
         },
         data() {
             return {
+                loading:false,
                 //取消禁止点击
                 dis:false,
                 visible: false,
@@ -222,13 +223,15 @@
             handleOk(e) {
                 console.log(e);
                 this.visible = false;
-                this.sendCode = ''
+                this.sendCode = '';
+                this.loading = false;
             },
 
             closeMask() {
                 this.showMask = false;
                 this.form.resetFields();
-                this.sendCode = ''
+                this.sendCode = '';
+                this.loading = false;
                 console.log("手动关闭后重置输入")
             },
             handleSubmit(e) {
@@ -390,6 +393,7 @@
                 else if(this.sendCode!=''&&this.Yztext==this.sendCode){
                     console.log('正在注册，请耐心等待......')
                     this.dis = 'disabled';
+                    this.loading = true;
                     const data = {
                         //userNameOrEmailAddress: this.phoneNumber,
                         userNameOrEmailAddress: e.userName,
@@ -416,6 +420,7 @@
                                 // console.log("注册成功后后重置输入")
                              }, 500);
                                 this.dis = false;
+                                this.loading = false;
                            }
                         else{
                              this.$error({
@@ -423,6 +428,7 @@
                             title: res.data.msg
                         });
                          this.dis = false;
+                         this.loading = false;
                         }
                       
                       
@@ -432,6 +438,7 @@
                             title: "注册失败"
                         });
                         this.dis = false;
+                        this.loading = false;
                     }
                 }
             }
