@@ -122,11 +122,7 @@ export default {
       // let ip = returnCitySN["cip"];
       // console.log('app.vue的ip=================='+ip)
       this.menuChange()
-      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
-      let update = JSON.parse(localStorage.getItem('update'));
-      if(update.hasLogin != false){
-       this.snow()
-      }
+      
     },
     updated () {
         let update = JSON.parse(localStorage.getItem('update'));
@@ -134,6 +130,11 @@ export default {
         // console.log("登录成功名字=============="+update.userName);
         this.userName = "欢迎您，"+update.userName;
         this.nat = false;
+        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        console.log(update.hasLogin)
+        if(update.hasLogin != false){
+          this.snow()
+        }
 　　},
     watch:{
        $route( to , from ){  
@@ -210,8 +211,10 @@ export default {
           // get the canvas and context
           var canvas = this.$refs.sky;
           console.log("canvas:"+canvas)
+          let update = JSON.parse(localStorage.getItem('update'));
+          if(update.hasLogin != false){
           var ctx = canvas.getContext('2d');
-
+          }
           // set canvas dims to window height and width
           canvas.width = this.W;
           canvas.height = this.H;
@@ -229,11 +232,15 @@ export default {
               d: Math.random() + 0.01
             });
         }
-        this.drawFlakes()
-        setInterval(this.drawFlakes, 50);
+        if(update.hasLogin != false){
+          this.drawFlakes()
+          setInterval(this.drawFlakes, 50);
+        }
       },
       // draw flakes onto canvas
       drawFlakes() {
+        let update = JSON.parse(localStorage.getItem('update'));
+        if(update.hasLogin != false){
           var canvas = this.$refs.sky;
           var ctx = canvas.getContext('2d');
           ctx.clearRect(0, 0, this.W, this.H);
@@ -246,6 +253,7 @@ export default {
           }
           ctx.fill();
           this.moveFlakes();
+        }
       },
       moveFlakes() {
           var angle = 0;
