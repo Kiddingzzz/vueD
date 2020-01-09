@@ -41,18 +41,18 @@
                 </a-form-item>
                 <a-form-item>
                     <label>手机号码:</label>
-                    <a-input type="text" class="inputs-code" placeholder="请输入您的手机号码" v-decorator="['phoneNumber', { 
+                    <a-input type="text" class="inputs-number" placeholder="请输入您的手机号码" v-decorator="['phoneNumber', { 
                   validateTrigger: 'blur',
                   rules: [
                     {
                       validator: checkphoneNumber,
                     },
                   ] }]"></a-input>
-                    <button class="btns-code" @click="sendcodeh()" :disabled='disabled'>{{getCodeText}}</button>
                 </a-form-item>
                 <a-form-item>
                     <label class="codecomfire">验证码:</label>
-                    <a-input type="text" class="inputs-number" placeholder="请确认您手机收到的验证码" v-model="sendCode"></a-input>
+                    <a-input type="text" class="inputs-code" placeholder="请确认您手机收到的验证码" v-model="sendCode"></a-input>
+                    <a-button class="btns-code" @click="sendcodeh()" :disabled='disabledcode'>{{getCodeText}}</a-button>
                 </a-form-item>
                 <a-form-item class="font-size">
                     <a-checkbox v-decorator="['agreement', {
@@ -206,7 +206,7 @@
                 surname: '',
                 respassword: '',
                 getCodeText: '获取验证码',
-                disabled: false,
+                disabledcode: false,
                 Yztext:'',
             };
         },
@@ -239,8 +239,6 @@
                 this.form.validateFields((err, values) => {
                     if (!err) {
                         console.log('正确', values);
-                      
-                       
                         this.doregister(values);
                     }
                 });
@@ -269,7 +267,7 @@
                     callback('请填写正确的手机号');
                 } else {
                      this.phoneNumber=value
-                    callback();
+                    // callback();
                 }
             },
             checkagreement(rule, value, callback) {
@@ -328,15 +326,14 @@
 
             // async sendcode() {
            async  sendcodeh() {
-              this.getCodeText = "发送中...";
-              this.disabled = true;
-              console.log("电话号码：")
-              console.log(this.phoneNumber)
-              if(this.phoneNumber=='')
-              {
-                   this.$message.error('手机号码为空！');
+              this.disabledcode = true;
+              if(this.phoneNumber==''){
+                  this.$message.error('手机号码为空！');
+                  this.disabledcode = false;
                   return;
               }
+              this.getCodeText = "发送中...";
+              console.log("电话号码：")
               await this.$http.post(`${this.$config.api}/api/cms/acount/sendyanm?phNumber=` + this.phoneNumber).then(pones => {
                   console.log(pones.data.backCode)
                
@@ -347,17 +344,16 @@
                                console.log( this.Yztext)
                                 setTimeout(() => {
                                        this.$message.success('验证码发送成功！');
-                                    this.disabled = false;
                                     //示例默认1234，生产中请删除这一句。
                                     //this.code=1234;
                                     this.setTimer();
                                 }, 1000);
                            }
                            else{
-                                this.disabled = false;
+                                this.disabledcode = false;
                                  clearInterval(this.Timer);
                                 this.$message.error(pones.data.returnValue.msg);
-                                 this.getCodeText = "验证码";
+                                 this.getCodeText = "获取验证码";
                            }
                 })
             //   this.getCodeisWaiting = true;
@@ -374,7 +370,7 @@
                 //   this.getCodeBtnColor = "#878787";
                   this.getCodeText = "获取验证码";
                   clearInterval(this.Timer);
-                  this.disabled = false;
+                  this.disabledcode = false;
                   return;
                 }
                 this.getCodeText = "重新获取(" + holdTime + ")";
@@ -414,7 +410,7 @@
                                 this.showMask = false;
                                 clearInterval(this.Timer);
                                 this.getCodeText = "获取验证码";
-                                this.disabled = false;
+                                this.disabledcode = false;
                                 this.form.resetFields();
                                 this.sendCode = '';
                                 // console.log("注册成功后后重置输入")
@@ -450,7 +446,7 @@
             showMask(val) {
                 clearInterval(this.Timer);
                 this.getCodeText = "获取验证码";
-                this.disabled = false;
+                this.disabledcode = false;
                 this.$emit("input", val);
             }
         }

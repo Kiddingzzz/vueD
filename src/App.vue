@@ -1,30 +1,33 @@
 <template>
   <div id="app">
     <a-layout id="components-layout-demo-top-side-2" v-if="$route.meta.keepAlive">
-    <a-layout-header class="header">
-      <div class="logo">
-        <img class="logo" src="../static/logoJXW.png">
-      </div>
-      <div class="login" v-if="$store.hasLogin != false">
-            <!-- 登录成功 -->
-             <span>
-               <a-dropdown>
-                 <div v-if="nat == false">
-                   <a class="ant-dropdown-link" href="#"> <a-icon type="down"/> {{userName}} </a>
-                 </div>
-                 <div v-if="nat != false">
-                   <a class="ant-dropdown-link" href="#"> <a-icon type="down"/> {{_user}} </a>
-                 </div>
-                <a-menu slot="overlay">
-                  <a-menu-item>
-                    <a href="javascript:;" @click="logout">{{_logouttxt}}</a>
-                  </a-menu-item>
-                </a-menu>
-              </a-dropdown>
-             </span>
-      </div>
+    <div class="header-wrapper">
+      <canvas ref="sky" class="sky"></canvas>
+      <a-layout-header class="header">
+        <div class="logo">
+          <img class="logo" src="../static/logoJXW.png">
+        </div>
+        <div class="login" v-if="$store.hasLogin != false">
+              <!-- 登录成功 -->
+              <span>
+                <a-dropdown>
+                  <div v-if="nat == false">
+                    <a class="ant-dropdown-link" href="#"> <a-icon type="down"/> {{userName}} </a>
+                  </div>
+                  <div v-if="nat != false">
+                    <a class="ant-dropdown-link" href="#"> <a-icon type="down"/> {{_user}} </a>
+                  </div>
+                  <a-menu slot="overlay">
+                    <a-menu-item>
+                      <a href="javascript:;" @click="logout">{{_logouttxt}}</a>
+                    </a-menu-item>
+                  </a-menu>
+                </a-dropdown>
+              </span>
+        </div>
 
-    </a-layout-header>
+      </a-layout-header>
+    </div>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
         <!-- :defaultOpenKeys="['sub1']" -->
@@ -108,6 +111,10 @@ export default {
         userName:'',
         nat:true,
         openKeys: [],
+        W: window.innerWidth,
+        H: 64,
+        flakesCount: 25,
+        flakes: [], // flake instances
       };
     },
     mounted(){
@@ -115,6 +122,11 @@ export default {
       // let ip = returnCitySN["cip"];
       // console.log('app.vue的ip=================='+ip)
       this.menuChange()
+      console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+      let update = JSON.parse(localStorage.getItem('update'));
+      if(update.hasLogin != false){
+       this.snow()
+      }
     },
     updated () {
         let update = JSON.parse(localStorage.getItem('update'));
@@ -146,7 +158,6 @@ export default {
       window.addEventListener('beforeunload', e => {
         localStorage.setItem("store",JSON.stringify(this.$store.state))
       });
-    
     },
     methods: {
       // historyWatch () {
@@ -191,15 +202,78 @@ export default {
               // window.localStorage.clear()
               console.log("退出成功======="+localStorage.getItem('update'))
               this.$router.replace('/loginform');
+               clearInterval(this.drawFlakes)
       },
+      snow() {
+      // onLoad(){
+        console.log("onLoad事件")
+          // get the canvas and context
+          var canvas = this.$refs.sky;
+          console.log("canvas:"+canvas)
+          var ctx = canvas.getContext('2d');
+
+          // set canvas dims to window height and width
+          canvas.width = this.W;
+          canvas.height = this.H;
+
+          // generate snowflakes and apply attributes
+          // var flakesCount = 25;
+          // var flakes = []; // flake instances
+
+          // loop through the empty flakes and apply attributes
+          for (var i = 0; i < this.flakesCount; i++) {
+            this.flakes.push({
+              x: Math.random() * this.W,
+              y: Math.random() * this.H,
+              r: Math.random() * 2.5 + 0.8, // 2px - 7px
+              d: Math.random() + 0.01
+            });
+        }
+        this.drawFlakes()
+        setInterval(this.drawFlakes, 50);
+      },
+      // draw flakes onto canvas
+      drawFlakes() {
+          var canvas = this.$refs.sky;
+          var ctx = canvas.getContext('2d');
+          ctx.clearRect(0, 0, this.W, this.H);
+          ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
+          ctx.beginPath();
+          for (var i = 0; i < this.flakesCount; i++) {
+              var flake = this.flakes[i];
+              ctx.moveTo(flake.x, flake.y);
+              ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2, true);
+          }
+          ctx.fill();
+          this.moveFlakes();
+      },
+      moveFlakes() {
+          var angle = 0;
+          angle += 0.01;
+          for (var i = 0; i < this.flakesCount; i++) {
+              var flake = this.flakes[i];
+              flake.y += Math.pow(flake.d, 2) + 0.1;
+              flake.x += Math.sin(angle) * 1;
+
+              if (flake.y > this.H) {
+                this.flakes[i] = { x: Math.random() * this.W, y: 0, r: flake.r, d: flake.d };
+              }
+          }
+      },
+
     },
 }
 </script>
 
 <style lang="less" scoped>
+//  @import '../src/assets/conm.css';
+ 
  /deep/.ant-menu-submenu-title:hover {
     background: #e6f7ff;
     padding-right: 34px;
+}
+/deep/.ant-layout-header, .header-wrapper{
+  background: linear-gradient(to right,#1278f6,#00b4aa);
 }
 .hh:hover{
   background: #e6f7ff;
@@ -210,6 +284,11 @@ export default {
     i {
       margin-right: 5px;
     }
+}
+.sky{
+    position: absolute;
+    width: 100%;
+    height: 64px;
 }
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -223,24 +302,31 @@ export default {
   display: flex;
 }
 #components-layout-demo-top-side-2 .logo {
+    position: absolute;
+    z-index: 999;
     width: 140px;
     height: 55px;
     float: left;
     border-radius: 5px;
-    background: #e7e7e7;
+    // background: #e7e7e7;
   }
   .ant-layout.ant-layout-has-sider{
       height: 100%;
       display: flex;
-      width: 100%;
-      
+      width: 100%; 
   }
+
   .header{
+    background-image: url("../src/assets/header_bg.png");
+    background-size: contain;
     display: flex;
     justify-content:space-between;
     align-items: center;
   }
   .login{
+    position: absolute;
+    z-index: 999;
+    right: 30px;
     span{
       .a{
         color: white !important;
