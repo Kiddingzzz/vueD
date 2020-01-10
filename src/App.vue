@@ -113,8 +113,10 @@ export default {
         openKeys: [],
         W: window.innerWidth,
         H: 64,
-        flakesCount: 25,
+        flakesCount: 25, //雪花片数
         flakes: [], // flake instances
+        canvas: '',
+        ctx: '',
       };
     },
     mounted(){
@@ -130,8 +132,8 @@ export default {
         // console.log("登录成功名字=============="+update.userName);
         this.userName = "欢迎您，"+update.userName;
         this.nat = false;
-        console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-        console.log(update.hasLogin)
+        // console.log("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+        // console.log(update.hasLogin)
         if(update.hasLogin != false){
           this.snow()
         }
@@ -166,7 +168,7 @@ export default {
       // },
       menuChange(){
         //展开当前菜单项 key所对应的 SubMenu 菜单项
-        console.log(this.$route.path)
+      //  console.log(this.$route.path)
         if(this.$route.path == '/index'||this.$route.path == '/zufang'||this.$route.path == '/shops'){
             this.openKeys = ['sub1']
         }else if(this.$route.path == '/lease'||this.$route.path == '/sell'||this.$route.path == '/shangpuluru'||this.$route.path == '/shangpuzuluru'){
@@ -196,24 +198,23 @@ export default {
                   userId:'',
                   user: {},
                   token:'',
-                  isUpdateHome: true
+                  isUpdateHome: true,
               }
               //存入数据
               window.localStorage.setItem('update', JSON.stringify(update));
               // window.localStorage.clear()
               console.log("退出成功======="+localStorage.getItem('update'))
               this.$router.replace('/loginform');
-               clearInterval(this.drawFlakes)
       },
       snow() {
-      // onLoad(){
-        console.log("onLoad事件")
           // get the canvas and context
           var canvas = this.$refs.sky;
-          console.log("canvas:"+canvas)
+          this.canvas = canvas;
+          // console.log("canvas:"+canvas)
           let update = JSON.parse(localStorage.getItem('update'));
           if(update.hasLogin != false){
-          var ctx = canvas.getContext('2d');
+            var ctx = canvas.getContext('2d');
+            this.ctx = ctx;
           }
           // set canvas dims to window height and width
           canvas.width = this.W;
@@ -241,17 +242,17 @@ export default {
       drawFlakes() {
         let update = JSON.parse(localStorage.getItem('update'));
         if(update.hasLogin != false){
-          var canvas = this.$refs.sky;
-          var ctx = canvas.getContext('2d');
-          ctx.clearRect(0, 0, this.W, this.H);
-          ctx.fillStyle = 'rgba(255, 255, 255, 0.6)';
-          ctx.beginPath();
+          // var canvas = this.$refs.sky;
+          // var ctx = canvas.getContext('2d');
+          this.ctx.clearRect(0, 0, this.W, this.H);
+          this.ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+          this.ctx.beginPath();
           for (var i = 0; i < this.flakesCount; i++) {
               var flake = this.flakes[i];
-              ctx.moveTo(flake.x, flake.y);
-              ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2, true);
+              this.ctx.moveTo(flake.x, flake.y);
+              this.ctx.arc(flake.x, flake.y, flake.r, 0, Math.PI * 2, true);
           }
-          ctx.fill();
+          this.ctx.fill();
           this.moveFlakes();
         }
       },

@@ -48,7 +48,7 @@
                         <i class="iconfont icon-tishi"></i>贴心提示:
                     </div>
                     <div class="search_bds_red">
-                        1.如果审核失败，请回到" 第一步 " <a-button type="primary" @click="rest">重新发布</a-button> 。
+                        1.如果审核失败，请回到" 第一步 " 重新发布。
                     </div>
                     <div>
                         2.如果您希望修改"库存满时"与"房源重复"的发送处理方式，请进入<a-button type="link">个人设置</a-button>。
