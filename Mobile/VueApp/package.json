@@ -1,0 +1,17 @@
+{
+  "name": "VueApp",
+  "version": "0.1.0",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "gsap": "^2.0.2",
+    "lodash": "^4.17.11",
+    "onfire.js": "^1.0.6",
+    "vuex-persistedstate": "^2.5.4"
+  }
+}

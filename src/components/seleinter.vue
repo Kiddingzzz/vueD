@@ -246,7 +246,7 @@
                 }
             },
             //批量发布房天下
-            QunfaFangtianxia(){
+            async QunfaFangtianxia(){
                 let arrays = this.rav;
                 let that=this
                 let number=arrays.length-1
