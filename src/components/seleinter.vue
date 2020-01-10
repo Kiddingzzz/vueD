@@ -191,9 +191,13 @@
 
                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId + '&sitename=' + this.wangvalue).then(Response => {
                             if (Response.data.code == "200") {
+                                console.log('this.rav:'+this.rav)
                                 if (this.wangvalue == "房天下") {
-                                    if (this.rav == '[]') {
+                                    if (this.rav.length == 0) {
                                         this.Fangtianxia();
+                                    }
+                                    else {
+                                        this.QunfaFangtianxia()
                                     }
                                 }
                                 if (this.wangvalue == "58同城") {
@@ -241,6 +245,164 @@
                     this.fabuok()
                 }
             },
+            //批量发布房天下
+            QunfaFangtianxia(){
+                let arrays = this.rav;
+                let that=this
+                let number=arrays.length-1
+                let itz=false
+                let update = JSON.parse(localStorage.getItem('update'));
+                
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/?userid=` + update.userId + '&sitename=' + this.wangvalue);
+                let datas = query.data;
+                const urls = 'unity/authenticate';
+                const data = {
+                    userName: datas.userName,
+                    pwd: datas.passWord,
+                    keyId: "10568"
+                }
+                const res = await this.$axios.post(urls, data);
+                const userName = res.data.returnmsgs.userName;
+                this.tokens = res.data.returnmsgs.token;
+                //循环调用发布接口
+                for (let i = 0; i < arrays.length; i++) {
+                    this.spinning = true;
+                    this.pdef = arrays[i];
+                    var end = this.pdef.address.indexOf('－');
+                    this.pdef.addressDetail = this.pdef.address.substring(end + 1, this.pdef.address.length);
+                    this.pdef.address = this.pdef.address.substring(0, end)
+                    this.pdef.fangwuDate = this.pdef.fangwuDate.substring(0, this.pdef.fangwuDate.length - 1);
+                    var roomLength = this.pdef.huxing.indexOf('室');
+                    var room = this.pdef.huxing.substring(0, roomLength);
+                    var toiletLength = this.pdef.huxing.indexOf('厅')
+                    var toilet = this.pdef.huxing.substring(roomLength + 1, toiletLength)
+                    var hallLength = this.pdef.huxing.indexOf('卫')
+                    var hall = this.pdef.huxing.substring(toiletLength + 1, hallLength)
+                    if (this.pdef.fangyuanBiaoqian.indexOf('唯一住房') != -1) {
+                        this.pdef.fangyuanBiaoqian = '不满二';
+                    }
+                    if (this.pdef.fangyuanBiaoqian.indexOf('满两年') != -1 || this.pdef.fangyuanBiaoqian.indexOf('满二唯一') != -1) {
+                        this.pdef.fangyuanBiaoqian = '满二';
+                    }
+                    if (this.pdef.fangyuanBiaoqian.indexOf('满五') != -1) {
+                        this.pdef.fangyuanBiaoqian = '满五';
+                    }
+                    var cengshuLength = this.pdef.louceng.indexOf('/');
+                    var cengshu = this.pdef.louceng.substring(0, cengshuLength);
+                    var zongceng = this.pdef.louceng.substring(cengshuLength + 1, this.pdef.louceng.length);
+                    console.log("this.pdef:"+JSON.stringify(this.pdef))
+                    let weiyiUrl = this.pdef.weiYiUrl
+                    var shineiImg = this.pdef.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
+                    var ss = shineiImg.split(",")
+                    console.log("shineiImgLength:"+ss.length)
+                    for (let i = 0; i < ss.length; i++) {
+                        var imgUrl = {};
+                        var l = i + 1;
+                        imgUrl.name = "室内图" + l;
+                        imgUrl.url = "http://47.108.24.104:8035/imgs/"+weiyiUrl+"/shinei/"+"shinei"+l+".jpg";
+                        this.shineiImgList.push(imgUrl);
+                    }
+
+                    // var xiaoquImg = {};
+                    // xiaoquImg.name = "小区照片";
+                    // xiaoquImg.url = "http://47.108.24.104:8035/imgs/"+weiyiUrl+"/shinei/"+"shinei"+l+".jpg";;
+                    // this.xiaoquImgList.push(xiaoquImg);
+
+                    var HuxingImg = {};
+                    HuxingImg.name = "房型照片";
+                    HuxingImg.url = "http://47.108.24.104:8035/imgs/"+weiyiUrl+"/huxingimg/"+"huxingimg1.jpg";
+                    this.huxingImgList.push(HuxingImg);
+
+                    var chanquanLength = this.pdef.chanquanNianxian.indexOf('年');
+                    this.pdef.chanquanNianxian = this.pdef.chanquanNianxian.substring(0, chanquanLength);
+
+                    const res = await this.$axios.post(urls, data);
+                    const userName = res.data.returnmsgs.userName;
+                    this.tokens = res.data.returnmsgs.token;
+                    const list = {
+                        houseType: "Sale",
+                        purposeType: "House",
+                        newcode: 0,
+                        projname: this.pdef.xiaoquName,
+                        district: this.pdef.address,
+                        comarea: "长阳",
+                        address: this.pdef.addressDetail,
+                        createTime: "1988",
+                        price: this.pdef.rice,
+                        buildingArea: this.pdef.square,
+                        liveArea: this.pdef.square,
+                        innerid: "gz1213",
+                        baseService: "煤气/天然气,暖气,电梯,车位/车库,储藏室/地下室,花园/小院,露台,阁楼",
+                        feature: "平台标签",
+                        trafficinfo: "交通便利，距离地铁500米以内，多路公交车",
+                        subwayinfo: "其他：万豪南苑大酒店、鄞州公园、国际影院、建材超市百安居、数码广场、多家五星级酒店；",
+                        title: this.pdef.title,
+                        content: this.pdef.note,
+                        infocode: "1231",
+                        forward: this.pdef.chaoxiang,
+                        payInfo: this.pdef.fangwuChanquan,
+                        lookhouse: "随时看房",
+                        room: room,
+                        toilet: toilet,
+                        hall: hall,
+                        kitchen: 1,
+                        balcony: 1,
+                        floor: cengshu,
+                        allfloor: zongceng,
+                        fitment: this.pdef.zhuangxiu,
+                        buildingType: "板楼",
+                        houseStructure: "平层",
+                        propertySubType: this.pdef.fangwuLeixing,
+                        photoUrl: this.pdef.imgHeader,
+                        ownerMentality: this.pdef.atittude,
+                        communityMatching: this.pdef.peitaoBiaoqain,
+                        serviceIntroduction: this.pdef.fuwuCondition,
+                        taxAnalysis: "满2年以上就交契税+90平以下首套1+90平以上1.5+未2年的要交土地税5.3+此房满2年",
+                        ptype: 2,
+                        videourl: "",
+                        videotitle: "",
+                        delegateNum: "12",
+                        delegateCompanyName: "21世纪在线",
+                        buildingnumber: "12",
+                        buildingnumbertype: "弄",
+                        unitnumber: "1",
+                        unitnumbertype: "幢",
+                        housenumber: "201",
+                        houseservicelife: "满五",
+                        landUseYear: 70,
+                        houseservicelife: this.pdef.fangyuanBiaoqian,
+                        landUseYear: this.pdef.chanquanNianxian,
+                        image1: this.shineiImgList,
+                        image2: this.xiaoquImgList,
+                        image3: this.huxingImgList,
+                    }
+                    const SaleUrl = '/agent/house/input';
+                    // ?token='+this.tokens+'&Content-Type='+'application/json'+'&keyId='+'10568'+'&FangRequestID='+'fangusername_input_410661884'
+                    const res1 = await this.$axios.post(SaleUrl, list,
+                        {
+                            headers: {
+                                'token': res.data.returnmsgs.token,
+                                'Content-Type': 'application/json',
+                                'keyId': '10568',
+                                'FangRequestID': 'fangusername_input_410661884'
+                            }
+                        }
+                    ).then(res1 => {
+                        // console.log(`出售住宅房源:` + JSON.stringify(res1));
+                        if (res1.data.code == "1") {
+                            // this.innerid = res1.returnmsgs.innerid;
+                            // this.houseurl = res1.returnmsgs.houseurl;
+                            // this.flag = res1.returnmsgs.flag;
+                            // this.houseid = res1.returnmsgs.houseid;
+                            this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id).then(pones => {
+                                this.openNotificationWithIcon('success')
+
+                            })
+
+                        }
+                    })
+                    }
+            },
             ///发布五八同城
             Wuba() {
                 if (this.def.houseType === '商铺') {
@@ -278,25 +440,27 @@
                 var cengshuLength = this.pdef.louceng.indexOf('/');
                 var cengshu = this.pdef.louceng.substring(0, cengshuLength);
                 var zongceng = this.pdef.louceng.substring(cengshuLength + 1, this.pdef.louceng.length);
-
+                console.log("this.pdef:"+JSON.stringify(this.pdef))
+                let weiyiUrl = this.pdef.weiYiUrl
                 var shineiImg = this.pdef.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
                 var ss = shineiImg.split(",")
+                console.log("shineiImgLength:"+ss.length)
                 for (let i = 0; i < ss.length; i++) {
                     var imgUrl = {};
                     var l = i + 1;
                     imgUrl.name = "室内图" + l;
-                    imgUrl.url = ss[i];
+                    imgUrl.url = "http://47.108.24.104:8035/imgs/"+weiyiUrl+"/shinei/"+"shinei"+l+".jpg";
                     this.shineiImgList.push(imgUrl);
                 }
 
-                var xiaoquImg = {};
-                xiaoquImg.name = "小区照片";
-                xiaoquImg.url = this.pdef.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', '');
-                this.xiaoquImgList.push(xiaoquImg);
+                // var xiaoquImg = {};
+                // xiaoquImg.name = "小区照片";
+                // xiaoquImg.url = "http://47.108.24.104:8035/imgs/"+weiyiUrl+"/shinei/"+"shinei"+l+".jpg";;
+                // this.xiaoquImgList.push(xiaoquImg);
 
                 var HuxingImg = {};
                 HuxingImg.name = "房型照片";
-                HuxingImg.url = this.pdef.fangxinImg.replace(/'/g, '').replace('[', '').replace(']', '');
+                HuxingImg.url = "http://47.108.24.104:8035/imgs/"+weiyiUrl+"/huxingimg/"+"huxingimg1.jpg";
                 this.huxingImgList.push(HuxingImg);
 
                 var chanquanLength = this.pdef.chanquanNianxian.indexOf('年');
@@ -304,7 +468,8 @@
 
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + this.$store.userId);
                 let update = JSON.parse(localStorage.getItem('update'));
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + update.userId);
+                
+                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/?userid=` + update.userId + '&sitename=' + this.wangvalue);
                 let datas = query.data;
                 const urls = 'unity/authenticate';
                 const data = {

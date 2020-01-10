@@ -334,11 +334,9 @@
                            }
                        });
                 }
-                
                 setTimeout(function(){
                     let update = JSON.parse(localStorage.getItem('update'));
-                    console.log(that.siteAccountType)
-                     console.log(that.siteCookie)
+                    
                     const data = {
                         // userId: this.$store.userId,
                         userId:update.userId,
@@ -349,10 +347,12 @@
                         siteCookie:that.siteCookie,
                         SiteAccountType:that.siteAccountType,
                     }
-                        
+                    if(data.biaoshi == "房天下"){
+                        data.siteAccountType = '可用'
+                    }
                     try{
                             that.$http.post(`${that.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
-                                console.log("kkkkkk")
+                                console.log("kkkkkk"+JSON.stringify(data))
                                 if(Response.data.code=="200")
                                 {
                                     that.zhanspinning=false;
