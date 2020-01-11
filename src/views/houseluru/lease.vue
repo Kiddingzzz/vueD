@@ -18,7 +18,7 @@
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                 <br /><br />
-                <a-input-search placeholder="复制链接" @search="onSearch" :disabled="disabled" enterButton="立即秒录" size="large" />
+                <a-input-search placeholder="复制链接" @search="onSeaRenTing" :disabled="disabled" enterButton="立即秒录" size="large" />
                 <a-spin :spinning="spinning">
                 </a-spin>
             </p>
@@ -122,15 +122,15 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="地址" has-feedback
                             validate-status="" help="">
-                            <a-input v-model="ref.address" id="validating" placeholder="房源地址" />
+                            <a-input v-model="ref.renTingAddress" id="validating" placeholder="房源地址" />
                         </a-form-item>
 
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
+                       <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
                             validate-status="">
-                            <a-input type="number" v-model="ref.square" id="success" placeholder="占地面积"
+                            <a-input type="number" v-model="ref.renTingMianji" id="success" placeholder="占地面积"
                                 class="mianji" />
                             <label class="smianij">平方米</label>
-                        </a-form-item>
+                        </a-form-item>-->
 
                         <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="使用面积:" has-feedback
                             validate-status="">
@@ -139,7 +139,7 @@
                             <label class="smianij">平方米</label>
                         </a-form-item> -->
 
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
+                        <!--<a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="新三网户室号:" has-feedback
                             validate-status="" help="">
                             <a-input placeholder="" class="shihaow" />
                             <a-select default-value="1" class="shihaoselw mianji">
@@ -176,7 +176,7 @@
                             </a-select>
                             <a-input id="" placeholder="" class="shihaow" />
                             <label>室</label>
-                        </a-form-item>
+                        </a-form-item>-->
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*户型" has-feedback
                             validate-status="">
@@ -214,7 +214,7 @@
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*价格" has-feedback
                             validate-status="">
-                            <a-input type="number" id="" v-model="ref.rice" placeholder="" class="mianji" />
+                            <a-input type="number" id="" v-model="ref.renTingZujin" placeholder="" class="mianji" />
                             <label class="laberall">元/月</label>
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建造年代" has-feedback
@@ -233,14 +233,14 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*租赁方式：" has-feedback
                             validate-status="">
-                            <a-radio-group :options="hezu" :defaultValue="valuehz" />
+                            <a-radio-group :options="hezu" :defaultValue="valuehz" v-model="ref.renTingType" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="待合租面积:" has-feedback
                             validate-status="">
-                            <a-input type="number" v-model="ref.square" placeholder="待合租面积" class="mianji" />
+                            <a-input type="number" v-model="ref.renTingMianji" placeholder="待合租面积" class="mianji" />
                             <label class="smianij">平方米</label>
                         </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*合租方式" has-feedback
+                        <a-form-item v-if="ref.renTingType == '整租'" :label-col="labelCol" :wrapper-col="wrapperCol" label="*合租方式" has-feedback
                             validate-status="">
                             <a-select default-value="1" class="sealefirhuxing " v-model="selectedShi">
                                 <a-select-option v-for="(option,i) in options" :key="i" :value="option">
@@ -259,7 +259,7 @@
                                     {{option}}
                                 </a-select-option>
                             </a-select>
-                            <a-select default-value="性别不限" class="hzsty" v-model="selectedWei">
+                            <a-select default-value="性别不限" class="hzsty" v-model="ref.renTingRoot">
                                 <a-select-option v-for="(option,i) in optionsex" :key="i" :value="option">
                                     {{option}}
                                 </a-select-option>
@@ -268,7 +268,7 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*支付方式：" has-feedback
                             validate-status="">
-                            <a-select default-value="" class="zhuzhaibox ">
+                            <a-select default-value="" class="zhuzhaibox " v-model="ref.fuKuanType">
                                 <a-select-option v-for="(zf,i) in zhifu" :key="i" :value="zf">
                                     {{zf}}
                                 </a-select-option>
@@ -276,21 +276,21 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向：" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncx" :defaultValue="value2" v-model="chaoxiang" />
+                            <a-radio-group :options="plainOptioncx" :defaultValue="value2" v-model="ref.renTingChaoxiang" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncf" :defaultValue="value3" v-model="kanfang" />
+                            <a-radio-group :options="plainOptioncf" :defaultValue="value3" v-model="ref.renTingLookHouse" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptionzx" :defaultValue="value4" v-model="zhuangxiu" />
+                            <a-radio-group :options="plainOptionzx" :defaultValue="value4" v-model="ref.zhuangxiu" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
                             <a-radio-group :options="plainOptiongn" :defaultValue="value5" v-model="gongnuan" />
                         </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
+                        <!--<a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
                             <a-input id="" placeholder="" class="mianji" />
                             <label class="neibula">内部编号为0~20位,只能由数字和字母组成</label>
@@ -302,7 +302,7 @@
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套标签:" validate-status=""
                             help="">
                             <a-input id="" v-model="ref.peitaoBiaoqain" placeholder="" />
-                        </a-form-item>
+                        </a-form-item>-->
                     </a-form>
                 </a-layout-content>
             </a-layout>
@@ -314,7 +314,7 @@
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" />
+                            <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" v-model="ref.houseXingzhi" />
                         </a-form-item>
 
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
@@ -339,7 +339,7 @@
                             <a-checkbox>洗衣机</a-checkbox>
                             <a-checkbox>家具</a-checkbox>
                             <a-checkbox>床</a-checkbox>
-                            <a-checkbox>宽带网</a-checkbox>
+                            <a-checkbox>宽带</a-checkbox>
                             <a-checkbox>微波炉</a-checkbox>
                             <a-checkbox>衣柜</a-checkbox>
                             <a-checkbox>沙发</a-checkbox>
@@ -376,7 +376,7 @@
                                 <label class="sealelabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
                             </div>
                             <div>
-                                <a-input placeholder="字数限制10-30" style="width:50%;" />
+                                <a-input placeholder="字数限制10-30" v-model="ref.renTingTitle" style="width:50%;" />
                             </div>
                         </div>
                         <div class="sealetilerbox">
@@ -384,7 +384,19 @@
                                 <label class="sealelabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
                             </div>
                             <div>
-                                <a-textarea :rows="6" />
+                                <a-textarea :rows="6" v-model="ref.renTingHouse" />
+                                <div>
+                                    <label class="sealeminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲
+                                        《》♀♂⊕⊙＊※【】‖︻ ︼</label>
+                                </div>
+                            </div>
+                        </div>
+                         <div class="sealetilerbox">
+                            <div class="sealetiler-firstbox">
+                                <label class="sealelabeltle">*服务介绍：</label><label>30-300字效果为最佳</label>
+                            </div>
+                            <div>
+                                <a-textarea :rows="6" v-model="ref.renTingFuWu" />
                                 <div>
                                     <label class="sealeminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲
                                         《》♀♂⊕⊙＊※【】‖︻ ︼</label>
@@ -572,7 +584,7 @@
     const plainOptionsy = ['不加水印', '添加水印'];
     const pilianglist = ['批量水印', '批量美颜', '批量水印美颜', '批量恢复原图', '批量调整大小', '批量下载图片'];
     const plainOptionfwlb = ['公寓', '普通住宅', '平房', '其他'];
-    const zhifu = ['押一付一', '押一付二', '押一付三', '押二付一', '押二付二', '押三付三',];
+    const zhifu = ['押一付一', '押一付二', '押一付三', '押二付一', '押二付二', '押三付三','面议'];
     const hezu = ['合租', '整租'];
     const optionaddress = ['主卧', '次卧', '床位', '隔断间'];
     const optionsex = ['性别不限', '限男生', '限女生', '限夫妻',];
@@ -630,7 +642,7 @@
                 provinceData,
                 proquyuseData,
                 houseTypes: '二手房',
-                userId: '48639146-0751-11EA-87FE-305A3A80A208',
+                userId: '',
                 urlss: '',
                 text: '',
                 hutong: '',
@@ -666,6 +678,8 @@
             // this.kanfang="随时看房";
             this.zhuangxiu = "中等装修";
             this.gongnuan = "自供暖";
+             let update = JSON.parse(localStorage.getItem('update'));
+            this.userId = update.userId;
         },
         methods: {
 
@@ -684,7 +698,7 @@
                 console.log(this.text)
             },
             //插入一条url数据链接
-            async onSearch(params) {
+            async onSeaRenTing(params) {
                 //判断URL网址输入是否正确
                 var strRegex = '^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
                 var re = new RegExp(strRegex);
@@ -697,35 +711,39 @@
                 const data = {
                     userId: this.userId,
                     url: this.urlss,
-                    houseType: this.houseTypes,
+                    houseType: "合租",
                     weiYiUrl: this.text
                 };
-                console.log("正在秒录，请耐心等待......")
+                let urllianjie=""
+                
+                 if (RegExp(/cq.58.com/).exec(params))
+                      console.log('选中五八'+this.userId)
+                      urllianjie=`${this.$config.api}/api/cms/wuRenTing/renTingUrl`
                 this.disabled = true;
-                await this.$http.post(`${this.$config.api}/api/cms/urls/url`, data).then(response => {
+                await this.$http.post(urllianjie, data).then(response => {
                     this.spinning = true;
                     console.log(JSON.stringify(response))
                     if (response.status == 200) {
-                        this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseTypes + '&weiYiUrl=' + this.text).then(res => {
+                        this.$http.get(`${this.$config.api}/api/cms/wuRenTing/renTingUrl` + '?weiyiurl=' +  this.text + '&userid=' + this.userId + '&url=' + this.urlss).then(res => {
                             console.log(`222` + JSON.stringify(res))
                             var ret = res.data.address;
                             this.saveRes = res.data;
-                            this.address = ret.split("-")[0];
-                            this.chaoxiang = ret.chaoxiang;
+                            this.address =this.saveRes.renTingQuyu
+                            this.chaoxiang =this.saveRes.chaoxiang;
                             this.spinning = false;
                             this.ref = res.data;
                             console.log(`222` + JSON.stringify(this.ref))
                             //字符串
-                            this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
-                            this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
-                            let shi = this.ref.huxing.indexOf("室");
-                            let ting = this.ref.huxing.indexOf("厅");
-                            let wei = this.ref.huxing.indexOf("卫");
-                            this.selectedShi = this.ref.huxing.substring(0, shi);
-                            this.selectedTing = this.ref.huxing.substring(shi + 1, ting);
-                            this.selectedWei = this.ref.huxing.substring(ting + 1, wei);
+                            this.ceng = this.ref.renTingLouceng.substring(0, this.ref.renTingLouceng.indexOf("/"));
+                            this.lou = this.ref.renTingLouceng.substring(this.ref.renTingLouceng.indexOf("/") + 1, this.ref.renTingLouceng.length);
+                            let shi = this.ref.renTingHuXing.indexOf("室");
+                            let ting = this.ref.renTingHuXing.indexOf("厅");
+                            let wei = this.ref.renTingHuXing.indexOf("卫");
+                            this.selectedShi = this.ref.renTingHuXing.substring(0, shi);
+                            this.selectedTing = this.ref.renTingHuXing.substring(shi + 1, ting);
+                            this.selectedWei = this.ref.renTingHuXing.substring(ting + 1, wei);
                             this.spinning = false;
-                            var shineiImg = res.data.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
+                            var shineiImg = res.data.renTingShineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
                             var ss = shineiImg.split(",")
                             this.weiyiUserId = res.data.weiYiUrl;
                             for (var i = 0; i < ss.length; i++) {
@@ -745,19 +763,19 @@
 
 
                             var imgFangxing = {};
-                            imgFangxing.url = res.data.imgHeader.replace(/'/g, '').replace('[', '').replace(']', ''),
+                            imgFangxing.url = res.data.renTingFengImg.replace(/'/g, '').replace('[', '').replace(']', ''),
                                 imgFangxing.uid = '-1',
                                 imgFangxing.name = 'xxx.jpg',
                                 imgFangxing.status = 'done',
                                 this.fangxinlist.push(imgFangxing);
 
 
-                            var XiaoquImg = {};
-                            XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                XiaoquImg.uid = '-3',
-                                XiaoquImg.name = 'xxx.jpg',
-                                XiaoquImg.status = 'done',
-                                this.xiaoQuList.push(XiaoquImg);
+                            // var XiaoquImg = {};
+                            // XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                            //     XiaoquImg.uid = '-3',
+                            //     XiaoquImg.name = 'xxx.jpg',
+                            //     XiaoquImg.status = 'done',
+                            //     this.xiaoQuList.push(XiaoquImg);
                             setTimeout(() => {
                                 this.visible = false;
                                 this.disabled = false;
@@ -772,15 +790,22 @@
 
             },
             async saveHouse() {
-                if (this.saveRes.xiaoquName == null && this.saveRes.title == null &&
-                    this.saveRes.rice == null && this.saveRes.simpleRice == null &&
-                    this.saveRes.square == null && this.saveRes.huxing == null &&
-                    this.saveRes.louceng == null && this.saveRes.zhuangxiu == null && this.saveRes.address == null && this.saveRes.imgHeader == null
+                    this.saveRes.renTingTitle=this.ref.renTingTitle
+                    this.saveRes.renTingZujin=this.ref.renTingZujin
+                    this.saveRes.renTingMianji=this.ref.renTingMianji
+                    this.saveRes.Zhuangxiu=this.ref.Zhuangxiu
+                    this.saveRes.renTingHouse=this.ref.renTingHouse
+                     this.saveRes.renTingFuWu=this.ref.renTingFuWu
+                if (this.saveRes.xiaoquName == null && this.saveRes.renTingTitle == null &&
+                    this.saveRes.renTingZujin == null  &&
+                    this.saveRes.renTingMianji == null && this.saveRes.renTingHuXing == null &&
+                    this.saveRes.renTingLouceng == null && this.saveRes.zhuangxiu == null && this.saveRes.renTingAddress == null && this.saveRes.renTingFengImg == null
                 ) {
                     this.openNotificationWithIcon('error')
                 }
                 else {
-                    await this.$http.post(`${this.$config.api}/api/cms/pubulish/publishHouse`, this.saveRes).then(response => {
+                    
+                    await this.$http.post(`${this.$config.api}/api/cms/renTing/renTinglishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
                         }
@@ -798,6 +823,7 @@
                         description:
                             '保存房源成功数据将存入发布房源列表',
                     });
+                    this.$router.replace('/rentrelease')
                 }
                 if (type == 'error') {
                     this.$notification[type]({

@@ -138,7 +138,6 @@
                 hsd: 1,
                 wangvalue: '58同城',
                 shopshineiList: [],
-                Fhdata: '空',
                 finalResult: [],
                
                 username:'',

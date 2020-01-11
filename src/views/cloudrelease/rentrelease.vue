@@ -62,7 +62,7 @@
             <div class="tabcontent" v-if="current==0">
                 <a-tabs type="card">
                     <a-tab-pane tab="住宅" key="1">
-                        <rentvtable @getData="getMag"></rentvtable>
+                        <rentvtable @getRenTingData="getRenTingMag"  @RtgetDataList="RtgetMagList"></rentvtable>
                     </a-tab-pane>
                     <a-tab-pane tab="商铺" key="2">
                         <rentshangpu></rentshangpu>
@@ -74,7 +74,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==1">
-                <rentinter @getSeconde="getSeconds" :value="bieshu"></rentinter>
+                <rentinter @getSeconde="getSeconds" :array='RtQunFalist' :value="RenTingbieshu"></rentinter>
             </div>
 
             <div class="tabcontent" v-if="current==2">
@@ -102,7 +102,8 @@
                 selectedRowKeys: [], // Check here to configure the default column
                 list: [],
                 houselist: {},
-                bieshu: {},
+                RenTingbieshu: {},
+                RtQunFalist: [],
             };
         },
         components: {
@@ -117,7 +118,11 @@
             },
 
             pre() {
-                if (this.current-- < 1) this.current = 0;
+                if (this.current-- < 1){
+                    this.current = 0;
+                    this.RtQunFalist = []
+                }
+                  this.RtQunFalist = []
             },
             //继续发布
             //   goon(){           
@@ -127,11 +132,18 @@
                 this.current = data
             },
             //接受house对象 
-            getMag(house) {
+            getRenTingMag(house) {
                 this.houselist = house;
                 if (this.houselist != "" && this.houselist != undefined) {
                     this.current = 1;
-                    this.bieshu = this.houselist;
+                    this.RenTingbieshu = this.houselist;
+                }
+            },
+            RtgetMagList(houseLists){
+                // console.log("house:"+JSON.stringify(houseLists))
+                if (houseLists.length>0) {
+                    this.current = 1;
+                    this.RtQunFalist = houseLists;
                 }
             },
             //第二步操作跳转第三步

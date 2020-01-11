@@ -337,7 +337,7 @@
                 try {
                     await this.$http.post(statu, datas).then(Response => {
                         let that = this;
-                        console.log(JSON.stringify(Response))
+                        console.log("id啊"+JSON.stringify(Response.data.userId))
                        
                         if (Response.data.returnValue.code == "200") {
                              this.dis = false;
