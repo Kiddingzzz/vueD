@@ -1,10 +1,14 @@
 {
   "pages": [
     "pages/index/index",
-    "pages/center/center",
     "pages/home/index",
     "pages/publish/index",
-    "pages/houseSingle/index"
+    "pages/houseSingle/index",
+    "pages/center/center",
+    "pages/publish/layout/rentrelease/rentrelease",
+    "pages/publish/layout/salerelease/salerelease",
+    "pages/center/layout/zhandian/zhandian",
+    "pages/center/layout/closeinter/closeinter"
   ],
   "subPackages": [],
   "window": {

@@ -1,0 +1,92 @@
+.layout {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: column;
+          flex-flow: column;
+}
+.saletishi {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.tsall {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  width: 100%;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-flow: column;
+          flex-flow: column;
+  margin: 0 auto;
+  padding: 24px 24px 0px 24px;
+}
+.tsfilter-wraps {
+  padding: 24px 0px;
+  position: relative;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 auto;
+          flex: 0 0 auto;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+          justify-content: center;
+}
+.tssearch_bds {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+  -webkit-flex-direction: column;
+          flex-direction: column;
+  background: #ffffdd;
+  width: 100%;
+  padding: 12px;
+  line-height: 26px;
+  border-radius: 10px;
+  border: 1px solid #ebedf0;
+}
+.search_bds_red {
+  color: red;
+}
+.step {
+  padding: 25px 15px 20px 15px;
+  background: #ffffff;
+  border-radius: 10px;
+}
+.tabcontent {
+  padding: 25px 15px;
+  border-radius: 10px;
+  background: #ffffff;
+  margin-top: 20px;
+  margin-bottom: 24px;
+}
+.pre {
+  height: 60px;
+  width: 100%;
+  margin: 20px 24px 50px 0;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+          justify-content: flex-end;
+  -webkit-box-align: center;
+  -webkit-align-items: center;
+          align-items: center;
+}
+.next {
+  margin-right: 20px;
+}
+

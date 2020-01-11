@@ -1,53 +1,56 @@
 {
-	"description": "项目配置文件。",
-	"packOptions": {
-		"ignore": []
-	},
-	"setting": {
-		"urlCheck": false
-	},
-	"compileType": "miniprogram",
-	"libVersion": "2.7.0",
-	"appid": "touristappid",
-	"projectname": "VueApp",
-	"condition": {
-		"search": {
-			"current": -1,
-			"list": []
-		},
-		"conversation": {
-			"current": -1,
-			"list": []
-		},
-		"plugin": {
-			"current": -1,
-			"list": []
-		},
-		"game": {
-			"current": -1,
-			"list": []
-		},
-		"gamePlugin": {
-			"current": -1,
-			"list": []
-		},
-		"miniprogram": {
-			"current": 0,
-			"list": [
-				{
-					"id": 0,
-					"name": "",
-					"pathName": "pages/home/center",
-					"query": ""
-				},
-				{
-					"id": 1,
-					"name": "pages/home/index",
-					"pathName": "pages/home/index",
-					"query": "",
-					"scene": null
-				}
-			]
-		}
-	}
+  "description": "项目配置文件。",
+  "packOptions": {
+    "ignore": []
+  },
+  "setting": {
+    "urlCheck": false
+  },
+  "compileType": "miniprogram",
+  "libVersion": "2.9.2",
+  "appid": "touristappid",
+  "projectname": "VueApp",
+  "condition": {
+    "search": {
+      "current": -1,
+      "list": []
+    },
+    "conversation": {
+      "current": -1,
+      "list": []
+    },
+    "game": {
+      "current": -1,
+      "list": []
+    },
+    "miniprogram": {
+      "current": 1,
+      "list": [
+        {
+          "name": "首页",
+          "query": "",
+          "id": 0,
+          "pathName": "pages/home/index"
+        },
+        {
+          "name": "个人房源",
+          "query": "",
+          "id": 1,
+          "pathName": "pages/houseSingle/index"
+        },
+        {
+          "name": "发布",
+          "query": "",
+          "id": 2,
+          "pathName": "pages/publish/index"
+        },
+        {
+          "name": "我的",
+          "query": "",
+          "id": 3,
+          "pathName": "pages/center/center"
+        }
+      ]
+    }
+  }
 }
