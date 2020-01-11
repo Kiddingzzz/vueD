@@ -19,6 +19,12 @@
 			}
 		},
 		{
+		    "path" : "pages/luru/index",
+		    "style" : {
+				"navigationBarTitleText": "录入"
+			}
+		},
+		{
 			"path": "pages/houseSingle/index",
 			"style": {
 				"navigationBarTitleText": "个人房源"
@@ -56,6 +62,7 @@
             "path" : "pages/center/layout/closeinter/closeinter",
             "style" : {}
         }
+       
     ],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
@@ -85,6 +92,12 @@
 				 "iconPath" : "static/APP2_experience.png",
 				"selectedIconPath" : "static/APP2_experience_let.png",
 				"text": "发布"
+			},
+			{
+				"pagePath": "pages/luru/index",
+				 "iconPath" : "static/APP2_experience.png",
+				"selectedIconPath" : "static/APP2_experience_let.png",
+				"text": "录入"
 			},
 			{
 				"pagePath": "pages/center/center",
@@ -122,6 +135,11 @@
 		        "path": "pages/publish/index", //启动页面，必选
 		        "query": "" //启动参数，在页面的onLoad函数里面得到。uid=100&t=1535987051
 		    },
+			{
+			    "name": "录入", //模式名称
+			    "path": "pages/luru/index", //启动页面，必选
+			    "query": "" //启动参数，在页面的onLoad函数里面得到。uid=100&t=1535987051
+			},
 		    {
 		        "name": "我的", //模式名称
 		        "path": "pages/center/center", //启动页面，必选

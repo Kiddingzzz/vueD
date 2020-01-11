@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="layout">
 		<view class="header" v-bind:class="{ status: isH5Plus }">
 			<view class="userinfo">
 				<view class="face"><image :src="userinfo.face"></image></view>
@@ -17,7 +17,7 @@
 		<view class="orders">
 			<image class="donghua" src="../../static/img/centerimg/wave.gif"></image>
 			<view class="box padding-xl shadow-warp radius bg-white margin-top">
-				<view class="label" v-for="(row, index) in orderTypeLise" :key="row.name" hover-class="hover" @tap="toOrderType(index)">
+				<view class="label" v-for="(row, index) in orderTypeLise" :key="row.name" hover-class="hover" @click="toOrderType(index)">
 					<view class="labelcon">
 						<view class="icon">
 							<!-- <view class="badge" v-if="row.badge > 0">{{ row.badge }}</view> -->
@@ -122,8 +122,11 @@ export default {
 <style lang="less">
 @import "../../colorui/main.css";
 @import "../../colorui/icon.css";
-/deep/.shadow-warp {
-	position: relative;
+.layout {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	flex-flow: column;
 }
 page {
 	background-color: #f1f1f1;
