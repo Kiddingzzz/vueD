@@ -1,59 +1,60 @@
-<view class="page_edu">
-	<view class="page_edu_header">
-		<view class="header">
-			<view>
-				<picker @change="bindPickerChange" :value="index" :range="array" range-key="name">
-					<view class="quyu">
-						<image src="/static/icon_main.png" class="btn"></image>
-						<view class="picker">{{array[index].name}}</view>
-					</view>
-				</picker>
-			</view>
-			<view class="input">
-				<image src="/static/search.png" class="search"></image>
-				<input type="text" value="" placeholder="搜索" />
-			</view>
-			<image src="/static/msg.png" class="btn"></image>
-		</view>
-		<view class="header_content">
-			<view class="left">
-				<text class="sub_title">每日最新房源----捷祥旺助手提示</text>
-			</view>
-		</view>
-	</view>
-	<view class="page_content">
-		<view class="menu">
-			<view class="hight" v-for="(it,index) in menus" :key="index">
-				<view class="item" :key="'menu_'+index" @tap="gotoReact(it.url)">
-					<view class="img_view" :style="{background: it.bg}">
-						<image :src="it.icon" class="image"></image>
-					</view>
-					<text class="txt">{{it.txt}}</text>
-				</view>
-			</view>
-		</view>
-		<view class="ad">
-		</view>
-	</view>
-	<view class="tips">
-		<view class="tishi">为您推荐</view>
-		<scroll-view scroll-x="true" class="slider">
-			<template v-for="(it, i) in records">
-				<view class="item" :key="'slider_item_'+i" :style="{background: it.bg, marginRight: i === records.length - 1 ? '15px' : '0px'}">
-					<view class="item_content">
-						<view class="title">
-							<text class="first">{{it.title}}</text>
-							<text class="main">主讲：{{it.mainTeacher}}</text>
-							<text class="sub" :style="{color:it.subColor}">标题名称</text>
+<template>
+	<view class="page_edu">
+		<view class="page_edu_header">
+			<view class="header">
+				<view>
+					<picker @change="bindPickerChange" :value="index" :range="array" range-key="name">
+						<view class="quyu">
+							<image src="/static/icon_main.png" class="btn"></image>
+							<view class="picker">{{array[index].name}}</view>
 						</view>
-						<image class="image" :src="it.icon"></image>
-						<text class="free">免\n费</text>
+					</picker>
+				</view>
+				<view class="input">
+					<image src="/static/search.png" class="search"></image>
+					<input type="text" value="" placeholder="搜索" />
+				</view>
+				<image src="/static/msg.png" class="btn"></image>
+			</view>
+			<view class="header_content">
+				<view class="left">
+					<text class="sub_title">每日最新房源----捷祥旺助手提示</text>
+				</view>
+			</view>
+		</view>
+		<view class="page_content">
+			<view class="menu">
+				<view class="hight" v-for="(it,index) in menus" :key="index">
+					<view class="item" :key="'menu_'+index" @tap="gotoReact(it.url)">
+						<view class="img_view" :style="{background: it.bg}">
+							<image :src="it.icon" class="image"></image>
+						</view>
+						<text class="txt">{{it.txt}}</text>
 					</view>
 				</view>
-			</template>
-		</scroll-view>
+			</view>
+			<view class="ad">
+			</view>
+		</view>
+		<view class="tips">
+			<view class="tishi">为您推荐</view>
+			<scroll-view scroll-x="true" class="slider">
+				<template v-for="(it, i) in records">
+					<view class="item" :key="'slider_item_'+i" :style="{background: it.bg, marginRight: i === records.length - 1 ? '15px' : '0px'}">
+						<view class="item_content">
+							<view class="title">
+								<text class="first">{{it.title}}</text>
+								<text class="main">主讲：{{it.mainTeacher}}</text>
+								<text class="sub" :style="{color:it.subColor}">标题名称</text>
+							</view>
+							<image class="image" :src="it.icon"></image>
+							<text class="free">免\n费</text>
+						</view>
+					</view>
+				</template>
+			</scroll-view>
+		</view>
 	</view>
-</view>
 </template>
 <script>
 	export default {
@@ -169,6 +170,12 @@
 		}
 	}
 </script>
+<style>
+	page {
+		width: 100%;
+		background-color: #ebebeb;
+	}
+</style>
 <style lang="scss" scoped>
 	@function realSize($args) {
 		@return $args / 1.5;
@@ -418,3 +425,4 @@
 			}
 		}
 	}
+</style>
