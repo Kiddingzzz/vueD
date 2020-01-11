@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <view class="page_edu">
 	<view class="page_edu_header">
 		<view class="header">
@@ -54,6 +55,66 @@
 		</scroll-view>
 	</view>
 </view>
+=======
+<template>
+	<view class="page_edu">
+		<view class="page_edu_header">
+			<view class="header">
+				<view>
+					<picker @change="bindPickerChange" :value="index" :range="array" range-key="name">
+						<view class="quyu">
+							<image src="/static/icon_main.png" class="btn"></image>
+							<view class="picker">{{array[index].name}}</view>
+						</view>
+					</picker>
+				</view>
+				<view class="input">
+					<image src="/static/search.png" class="search"></image>
+					<input type="text" value="" placeholder="搜索" />
+				</view>
+				<image src="/static/msg.png" class="btn"></image>
+			</view>
+			<view class="header_content">
+				<view class="left">
+					<text class="sub_title">每日最新房源----捷祥旺助手提示</text>
+				</view>
+			</view>
+		</view>
+		<view class="page_content">
+			<view class="menu">
+				<view class="hight" v-for="(it,index) in menus" :key="index">
+					<view class="item" :key="'menu_'+index" @tap="gotoReact(it.url)">
+						<view class="img_view" :style="{background: it.bg}" >
+							<image :src="it.icon" class="image"></image>
+						</view>
+						<text class="txt">{{it.txt}}</text>
+					</view>
+				</view>
+			</view>
+			<view class="ad">
+				
+			</view>
+		</view>
+		<view class="tips">
+			<view class="tishi">为您推荐</view>
+			<scroll-view scroll-x="true" class="slider">
+				<template v-for="(it, i) in records">
+					<view class="item" :key="'slider_item_'+i" :style="{background: it.bg, marginRight: i === records.length - 1 ? '15px' : '0px'}">
+						<view class="item_content">
+							<view class="title">
+								<text class="first">{{it.title}}</text>
+								<text class="main">主讲：{{it.mainTeacher}}</text>
+								<text class="sub" :style="{color:it.subColor}">标题名称</text>
+							</view>
+							<image class="image" :src="it.icon"></image>
+							<text class="free">免\n费</text>
+						</view>
+					</view>
+				</template>
+			</scroll-view>
+		</view>
+	</view>
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 </template>
 <script>
 	export default {
@@ -79,13 +140,21 @@
 						bg: 'linear-gradient(0deg,rgba(9,216,162,1),rgba(90,242,217,1))',
 						icon: '/static/graduation.png',
 						txt: '二手房',
+<<<<<<< HEAD
 						url: '/pages/home/ershoufang/ershouIndex',
+=======
+						url:'/pages/home/ershoufang/ershouIndex',
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 						isFree: true
 					},
 					{
 						bg: 'linear-gradient(0deg,rgba(251,184,35,1),rgba(255,228,40,1))',
 						icon: '/static/live.png',
+<<<<<<< HEAD
 						url: '/pages/home/shop/shopIndex',
+=======
+						url:'/pages/home/shop/shopIndex',
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 						txt: '商铺',
 						isFree: false
 					},
@@ -93,14 +162,22 @@
 						bg: 'linear-gradient(0deg,rgba(255,126,34,1),rgba(240,184,27,1))',
 						icon: '/static/emblem.png',
 						txt: '租房',
+<<<<<<< HEAD
 						url: '/pages/home/zufang/zufangIndex',
+=======
+						url:'/pages/home/zufang/zufangIndex',
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 						isFree: true
 					},
 					{
 						bg: 'linear-gradient(0deg,rgba(9,177,252,1),rgba(24,200,255,1))',
 						icon: '/static/question_bank.png',
 						txt: '每日推荐',
+<<<<<<< HEAD
 						url: '/pages/home/tuijian/tuijianIndex',
+=======
+						url:'/pages/home/tuijian/tuijianIndex',
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 						isFree: true
 					}
 				],
@@ -152,7 +229,10 @@
 			}
 		},
 		onLoad() {
+<<<<<<< HEAD
 			// this.getequiment();
+=======
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 
 		},
 		methods: {
@@ -160,10 +240,17 @@
 				console.log('picker发送选择改变，携带值为：' + e.target.value)
 				this.index = e.target.value
 			},
+<<<<<<< HEAD
 			gotoReact(url) {
 				console.log(url)
 				uni.navigateTo({
 					url: url
+=======
+			gotoReact(url){
+				console.log(url)
+				uni.navigateTo({
+					url:url
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 				})
 			},
 		}
@@ -174,6 +261,20 @@
 		@return $args / 1.5;
 	}
 
+<<<<<<< HEAD
+=======
+<style>
+	page {
+		width: 100%;
+		background-color: #ebebeb;
+	}
+</style>
+<style lang="scss" scoped>
+	@function realSize($args) {
+		@return $args / 1.5;
+	}
+
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 	.page_edu {
 		width: 100%;
 		height: 100vh;
@@ -193,12 +294,19 @@
 			flex-direction: row;
 			align-items: center;
 			justify-content: space-around;
+<<<<<<< HEAD
+=======
+			padding: realSize(20px);
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 
 			.quyu {
 				display: flex;
 				flex-direction: row;
 				align-items: center;
+<<<<<<< HEAD
 
+=======
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 				.picker {
 					color: #fff;
 					font-size: 32upx;
@@ -271,6 +379,149 @@
 					align-items: center;
 					justify-content: center;
 				}
+<<<<<<< HEAD
+=======
+			}
+		}
+	}
+
+	.page_content {
+		width: 100%;
+		margin-top: -74px;
+
+		.menu {
+			margin-left: 10px;
+			margin-right: 10px;
+			padding-left: 10px;
+			padding-right: 10px;
+			height: realSize(176px);
+			background: rgba(255, 255, 255, 1);
+			box-shadow: 0px 10px 10px 0px rgba(0, 161, 124, 0.1);
+			border-radius: 10px;
+			display: flex;
+			flex-direction: row;
+			align-items: stretch;
+			justify-content: space-between;
+			.hight{
+				margin-top: 40upx;
+			}
+			.item {
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				justify-content: center;
+
+				.img_view {
+					width: 60px;
+					height: 60px;
+					border-radius: 30px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+
+					.image {
+						width: 50px;
+						height: 50px;
+					}
+				}
+
+				.txt {
+					margin-top: 5px;
+					font-size: 14px;
+					color: rgba(51, 51, 51, 1);
+				}
+			}
+		}
+
+		.ad {
+			width: 100%;
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			justify-content: center;
+
+			
+
+		}
+	}
+	.tips{
+		display: flex;
+		background: #fff;
+		flex-flow: column;
+		
+		.tishi{
+			margin-left: 30upx;
+			margin-top: 26upx;
+			color: #000;
+			font-size: 32upx;
+
+		}
+	}
+	.slider {
+		white-space: nowrap;
+		width: 100%;
+		background-color: white;
+
+		.item {
+			display: inline-block;
+			margin-left: 15px;
+			margin-top: 6px;
+			margin-bottom: 13px;
+			width: 60%;
+			height: 125px;
+			border-radius: 10px;
+
+			.item_content {
+				display: flex;
+				flex-direction: row;
+
+				.title {
+					width: 36%;
+					margin: 20px;
+					display: flex;
+					flex-direction: column;
+
+					.first {
+						font-size: 16px;
+						color: rgba(46, 65, 69, 1);
+					}
+
+					.main {
+						font-size: 13px;
+						color: rgba(79, 103, 101, 1);
+						margin-top: 5px;
+					}
+
+					.sub {
+						width: 60px;
+						font-size: 10px;
+						margin-top: 20px;
+						background: rgba(255, 255, 255, 0.4);
+						border-radius: 5px;
+						display: flex;
+						align-items: center;
+						justify-content: center;
+					}
+				}
+
+				.image {
+					margin-top: 35px;
+					width: 80px;
+					height: 80px;
+				}
+
+				.free {
+					background: rgba(11, 147, 252, 1);
+					border-radius: 0px 0px 22px 22px;
+					width: 25px;
+					height: 50px;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+					color: #FFFFFF;
+					font-size: 14px;
+				}
+>>>>>>> edad91e... ------------------------------------------------------------------------------
 			}
 		}
 	}
