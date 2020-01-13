@@ -158,9 +158,7 @@
             },
             //第二步操作跳转第三步
             getSeconds(message) {
-                if (message == 'a') {
-                    this.current = 2;
-                }
+                this.current = 2;
             }
         },
     };

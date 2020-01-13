@@ -340,8 +340,21 @@
                      success: function (data) {
                          console.log("返回值：")
                           console.log(data)
+                           if(RegExp(/发布成功/).exec(data))
+                                 typeCom="已发布";
+                             else
+                                typeCom="发布失败";
                         }
                     });
+            const interval= setInterval(async () => {
+                         if(typeCom!=''){
+                         const datas={houserid:ids, type:typeCom}
+                         that.$http.post(yuming,datas).then(Responses=>{
+                                 clearInterval(interval);
+                           })
+                         }
+                                  
+             },2000);  
             },
            async WuFbList() {
                 let arrays = this.RenTingrav;
@@ -471,14 +484,14 @@
                                     }
                                   
                                 },2000);  
-                        }, i*9000);
+                        }, i*7000);
                     })(i)
                 }
                 
                 setTimeout(function(){
-                    //   that.$emit('getSeconde', 2, arrays.length)
-                    //     //  that.$message.success('已上传，等待系统审核',2);      
-                    //      this.loading = true 
+                      that.$emit('getSeconde', 2, arrays.length)
+                        //  that.$message.success('已上传，等待系统审核',2);      
+                         that.loading = true 
                         
                    },1000) 
                 ///消息接收

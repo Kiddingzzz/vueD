@@ -73,7 +73,7 @@ const columns = [{
                 console.log("2")
                 this.GetShowList()
                 this.spinning = false;
-            }, this.spintime*15000);
+            }, this.spintime*10000);
         },
         activated() {
            this.GetShowList()
@@ -104,7 +104,7 @@ const columns = [{
             },
             async onDeletefb(id) {
                     try {
-                        await this.$http.post(`${this.$config.api}/api/cms/house/` + id + `/publishDelete`).then(Response => {
+                        await this.$http.post(`${this.$config.api}/api/cms/renTing/` + id + `/renTingPubDelete`).then(Response => {
                             if (Response.status == 200) {
                                 this.$message.success('删除成功！！！');
                                 this.GetShowList();
@@ -119,7 +119,7 @@ const columns = [{
             async GetShowList(){
                     let update = JSON.parse(localStorage.getItem('update'));
                     console.log( update.userId)
-                    const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishAllList/` + update.userId);
+                    const respones = await this.$http.get(`${this.$config.api}/api/cms/renTing/rtPubOkList/` + update.userId);
                     if (respones.status == 200) {
                     
                         this.listfb = respones.data.items;
