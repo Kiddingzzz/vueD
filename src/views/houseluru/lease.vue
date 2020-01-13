@@ -286,11 +286,11 @@
                             validate-status="">
                             <a-radio-group :options="plainOptionzx" :defaultValue="value4" v-model="ref.zhuangxiu" />
                         </a-form-item>
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
+                        <!--<a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="供暖情况" has-feedback
                             validate-status="">
                             <a-radio-group :options="plainOptiongn" :defaultValue="value5" v-model="gongnuan" />
                         </a-form-item>
-                        <!--<a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
+                       <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="内部编号:" validate-status=""
                             help="">
                             <a-input id="" placeholder="" class="mianji" />
                             <label class="neibula">内部编号为0~20位,只能由数字和字母组成</label>
@@ -808,6 +808,7 @@
                     await this.$http.post(`${this.$config.api}/api/cms/renTing/renTinglishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
+                            this.leasecearl()
                         }
                     })
                 }
@@ -835,6 +836,21 @@
                             '保存房源失败数据不能为空',
                     });
                 }
+            },
+            leasecearl(){
+                this.ref=[]
+                this.shineiList=[]
+                this.fangxinlist=[]
+                this.imgHeaderList=[]
+                this.chaoxiang=''
+                this.chaoxiang=''
+                this.address=''
+                this.selectedShi = '';
+                this.selectedTing = '';
+                this.selectedWei = '';
+                this.valuehz="合租"
+                this.ceng = '';
+                this.lou = '';
             },
             showModal() {
                 this.visible = true;

@@ -112,6 +112,8 @@
                 restaurants: [],
                 test: [],
                 ip: '',
+                AccountType:'',
+                sitecookie:'',
             };
         },
         computed: {
@@ -347,6 +349,37 @@
                         console.log("id啊"+JSON.stringify(Response.data.userId))
                        
                         if (Response.data.returnValue.code == "200") {
+                              if(Response.data.sitename!=''){
+                                const that=this
+                                const cookes={username:Response.data.sitename,userpwd:Response.data.sitepwd}
+                                $.ajax({
+                                        type: 'GET',
+                                        async:true,
+                                        url: 'http://47.108.24.104:8085/get_user?data=' + JSON.stringify(cookes),
+                                        dataType: 'jsonp', //希望服务器返回json格式的数据
+                                        jsonp: "callback",
+                                        jsonpCallback: "successCallback",//回调方法
+                                        success: function (data) {
+                                            console.log("返回cookie:")
+                                            console.log(data)
+                                            if(data=="100"){
+                                                that.AccountType="不可用"
+                                            }
+                                            else{
+                                                that.AccountType="可用"
+                                                that.sitecookie=data
+                                            }
+                                        }
+                                    });
+                                      setTimeout(function(){
+                                         
+                                          const cooklist={userid:Response.data.userId,cookie:that.sitecookie,types: that.AccountType}
+                                          console.log("列表：")
+                                          console.log(cooklist)
+                                          that.$http.post(`${that.$config.api}/api/cms/sites/siteeUpcookie`, cooklist)
+                                     }, 12000)    
+                              }
+                     
                              this.dis = false;
                              this.loading = false;
                             //判断保存的

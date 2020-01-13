@@ -189,6 +189,7 @@
                 try {
 
                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId + '&sitename=' + this.wangvalue).then(Response => {
+                        console.log("fanhui:"+JSON.stringify(Response))
                             if (Response.data.returnValue.code == "200") {
                                 console.log(Response)
                                     this.stusername=Response.data.userName;
