@@ -139,9 +139,9 @@
                 wangvalue: '58同城',
                 shopshineiList: [],
                 finalResult: [],
-               
-                username:'',
-                userpwd:'',
+                stusername:'',
+                stuserpwd:'',
+                sitecookie:'',
                 // inter: require("../../assets/logo/58logo.png"),
             };
         },
@@ -189,8 +189,12 @@
                 try {
 
                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId + '&sitename=' + this.wangvalue).then(Response => {
-                            if (Response.data.code == "200") {
-                                console.log('this.rav:'+this.rav)
+                            if (Response.data.returnValue.code == "200") {
+                                console.log(Response)
+                                    this.stusername=Response.data.userName;
+                                    this.stuserpwd=Response.data.passWord;
+                                    this.sitecookie=Response.data.siteCookie
+                                    
                                 if (this.wangvalue == "房天下") {
                                     if (this.rav.length == 0) {
                                         this.Fangtianxia();
@@ -252,12 +256,11 @@
                 let itz=false
                 let update = JSON.parse(localStorage.getItem('update'));
                 
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/?userid=` + update.userId + '&sitename=' + this.wangvalue);
-                let datas = query.data;
+              
                 const urls = 'unity/authenticate';
                 const data = {
-                    userName: datas.userName,
-                    pwd: datas.passWord,
+                    userName:this.stusername,
+                    pwd: this.stuserpwd,
                     keyId: "10568"
                 }
                 const res = await this.$axios.post(urls, data);
@@ -472,8 +475,8 @@
                 let datas = query.data;
                 const urls = 'unity/authenticate';
                 const data = {
-                    userName: datas.userName,
-                    pwd: datas.passWord,
+                    userName: this.stusername,
+                    pwd: this.stuserpwd,
                     keyId: "10568"
                 }
                 const res = await this.$axios.post(urls, data);
@@ -569,12 +572,7 @@
                 let number=arrays.length-1
                 let itz=false
                  //循环调用发布接口
-                let update = JSON.parse(localStorage.getItem('update'));
-                that.$http.get(`${that.$config.api}/api/cms/sites/getUserFang?Userid=` + update.userId+'&SiteName='+that.wangvalue).then(Responses=>{
-                 console.log(JSON.stringify(Responses))
-                    this.username=Responses.data.userName;
-                    this.userpwd=Responses.data.passWord
-                  })
+               
                 for (let i = 0; i < arrays.length; i++) {
                     (function (i) {
                         setTimeout(function () {
@@ -604,6 +602,7 @@
                                 if (RegExp(/满五/).exec(xingzhi)) {
                                     xingzhi = "满五"
                                 }
+                                 console.log("coolikes:"+that.sitecookie)
                             const list = {
                                 xiaoquanme: this.pdef.xiaoquName,
                                 mianji: parseFloat(this.pdef.square),
@@ -631,10 +630,12 @@
                                 ting: parseInt(ting),
                                 wei: parseInt(wei),
                                 shi: shis,
-                                username:this.username,
-                                userpwd:this.userpwd ,
+                                username:this.stusername,
+                                userpwd:this.stuserpwd ,
+                                cookies:encodeURIComponent(String(that.sitecookie))
 
                             }
+                            console.log(list)
                             let idss = this.pdef.id
                             let dataConsole = '默认值';
                             let dis=null;
@@ -757,13 +758,11 @@
                     this.shopshineiList.push(imgUrl);
                 }
                 //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + this.$store.userId);
-                let update = JSON.parse(localStorage.getItem('update'));
-                var query = await this.$http.get(`${this.$config.api}/api/cms/sites/getUserFang/` + update.userId);
-                let datas = query.data;
+                
                 const urls = 'unity/authenticate';
                 const data = {
-                    userName: datas.userName,
-                    pwd: datas.passWord,
+                    userName: this.stusername,
+                    pwd: this.stuserpwd,
                     keyId: "10568"
                 }
              
@@ -887,8 +886,9 @@
                     ting: parseInt(ting),
                     wei: parseInt(wei),
                     shi: shis,
-                    // username:datas.userName,
-                    // userpwd:datas.passWord,
+                    username:this.stusername,
+                    userpwd:this.stuserpwd,
+                    cookies:encodeURIComponent(String(this.sitecookie))
 
                 }
                 // console.log('list:' + JSON.stringify(list))

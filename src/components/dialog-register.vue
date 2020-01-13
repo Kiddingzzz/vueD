@@ -235,8 +235,10 @@
                 console.log("手动关闭后重置输入")
             },
             handleSubmit(e) {
+                console.log('正确');
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
+                     console.log('正确', values);
                     if (!err) {
                         console.log('正确', values);
                         this.doregister(values);
@@ -267,7 +269,7 @@
                     callback('请填写正确的手机号');
                 } else {
                      this.phoneNumber=value
-                    // callback();
+                    callback();
                 }
             },
             checkagreement(rule, value, callback) {
@@ -378,6 +380,7 @@
               }, 1000);
             },
             async doregister(e) {
+                
                 if(this.Yztext!=this.sendCode){
                     this.$message.error('验证码输入错误！');
                     return;

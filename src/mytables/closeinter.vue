@@ -38,7 +38,7 @@
                                     ></el-input>
                                     <div class="erre" v-if='pwderre'>密码不能为空</div>
                             </a-modal>
-                            <a-modal title="登录账号" v-model="closevisible" @ok="closehandle58">
+                            <a-modal title="登录账号" v-model="closevisible" @ok="closehandle58(record.siteName)">
                                 <el-input
                                     prefix-icon="iconfont icon-User"
                                     v-model="closesiteUserName"
@@ -145,7 +145,9 @@
             closesiteitem:[],
             intername:'',
             index: '',
-        
+            colsesiteAccountType:'',
+            colsesiteCookie:'',
+            
         };
     },
     mounted() {
@@ -205,26 +207,31 @@
                 this.pwderre = false
             }
         },    
-            // async GetCloseSiteList(){
-            //     //var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?UserId=`+this.$store.userId)
-            //     let update = JSON.parse(localStorage.getItem('update'));
-            //     var query = await this.$http.get(`${this.$config.api}/api/cms/sites/closeSite?userId=`+update.userId)
-                
-            //     this.closesiteitem = query.data.items; 
-            //     for(var i=0;i<this.closesiteitem.length;i++){
-            //          this.closesiteitem[i].name = ['允许发布', '允许推送']
-            //          this.closesiteitem[i].key = ''+(i+1)+'';
-            //          this.closesiteitem[i].tiaojian = ['添加账号', '去注册']
-            //     }
-            //     // this.closesiteitem[0].name = ['允许发布', '允许推送'];
-            //     // this.closesiteitem[0].tiaojian = ['添加账号', '去注册'];
-            //     // this.closesiteitem[0].key = '1';
-            //     // this.closesiteitem[1].name = ['允许发布', '允许推送'];
-            //     // this.closesiteitem[1].tiaojian = ['添加账号', '去注册'];
-            //     // this.closesiteitem[1].key = '2';
-            // },
-            ///58tongcheng
+            
             async closehandle58(e) {
+                 const that=this
+                const cookes={username:this.closesiteUserName,userpwd:this.closesitepwd}
+                if(this.siteName=="58同城"){
+                       $.ajax({
+                           type: 'GET',
+                           async:true,
+                           url: 'http://47.108.24.104:8085/get_user?data=' + JSON.stringify(cookes),
+                           dataType: 'jsonp', //希望服务器返回json格式的数据
+                           jsonp: "callback",
+                           jsonpCallback: "successCallback",//回调方法
+                           success: function (data) {
+                               console.log("返回cookie:")
+                               console.log(data)
+                              if(data=="100"){
+                                  that.colsesiteAccountType="不可用"
+                              }
+                              else{
+                                  that.colsesiteAccountType="可用"
+                                  that.colsesiteCookie=data
+                              }
+                           }
+                       });
+                }
                 let update = JSON.parse(localStorage.getItem('update'));
                 const data = {
                     // userId: this.$store.userId,
@@ -232,7 +239,7 @@
                     siteUserName: this.closesiteUserName,
                     sitePassword: this.closesitepwd,
                     token:'aaa',
-                    biaoshi:'58同城'
+                    biaoshi:e
                 }
                 
                 var query = await this.$http.post(`${this.$config.api}/api/cms/sites/modifyUser`,data);

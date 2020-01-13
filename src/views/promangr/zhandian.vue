@@ -296,7 +296,7 @@
               
                 if(this.sitesusername!=null){
                      this.zhanspinning=false;
-                     this.$message.error("您已添加账号eee，请勿重复操作！");
+                     this.$message.error("您已添加账号，请勿重复操作！");
                      return;
                 }
 

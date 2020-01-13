@@ -40,7 +40,7 @@
                         </span>
                         <span slot="action" slot-scope="text, record">
                             <!-- <a-button type="primary" @click="openDeleteSite(record.id)">删除</a-button> -->
-                            <a-button type="primary" @click="openDeleteSite(record.key,record.id,record.siteName)">删除</a-button>
+                            <a-button type="primary" @click="openDeleteSite(record.key,record.id)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary" @click="openlookpwdbotton()">查看密码</a-button>
                             <a-modal title="查看密码" v-model="openlookvisible" @ok="openlookpwd(record.id,record.siteName)" @cancel="close" okText='确定' cancelText='取消'>
@@ -255,8 +255,8 @@
             //删除房源
             async openDeleteSite(index,sid,gname){
                  await this.$http.get(`${this.$config.api}/api/cms/sites/`+sid+`/siteShow`).then(Response=>{
-                    if(Response.status==200) {
-                         if(Response.data=="yes"){
+                   
+                         if(Response.data.code=="200"){
                              //this.Deletesiteuser(id);
                             this.siteitem.splice(this.index,1)
                             //   this.GetOpenSiteList();
@@ -265,13 +265,6 @@
                           else{
                               this.$message.success('您还没有添加网站的账号，请先添加！');
                          }
-
-                           
-                    }
-                    else{
-                        this.$message.success('删除错误，请重新删除！');
-                    }   
-
                  })
             },
             lookpwdbotton(){

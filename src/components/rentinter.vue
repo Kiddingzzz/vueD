@@ -194,6 +194,7 @@
                                  that.username=Response.data.userName;
                                  that.userpwd=Response.data.passWord;
                                  that.sitecookie=Response.data.siteCookie
+                                 console.log("cookie:"+that.sitecookie)
                                  if(that.wangvalue=="58同城"){
                                     if(that.RenTingrav.length!=0){
                                      console.log("e嗯哼："+JSON.stringify(that.wangvalue))
@@ -290,6 +291,12 @@
                     if(fukuan==fukuans[i])
                        fukuan=i+1;
                 }
+            //      let ele = document.createElement('span')
+            // ele.appendChild(document.createTextNode(str))
+            // return ele.innerHTML
+            let cookies=[]
+            cookies.push(that.sitecookie)
+            let ss=that.sitecookie
 
                 const list={
                     weiyiurl:text.weiYiUrl,
@@ -317,7 +324,7 @@
                     params_198:fukuan,
                     title:text.renTingTitle,
                     content_fangyuanxiangqing:text.renTingHouse,
-                    cookies:that.sitecookie
+                    cookies:encodeURIComponent(String(ss))
                 };
             
             console.log("传送的值：")
@@ -327,6 +334,7 @@
                      async:true,
                       url: 'http://47.108.24.104:8086/get_user?data=' + JSON.stringify(list),
                       dataType: 'jsonp', //希望服务器返回json格式的数据
+                      contentType:"application/json",
                      jsonp: "callback",
                      jsonpCallback: "successCallback",//回调方法
                      success: function (data) {
@@ -361,9 +369,9 @@
                             let louceng2=text.renTingLouceng.split('/')[1];
                             let mianji=text.renTingMianji;
                             let allmianji=(parseInt(selectedShi)+1.5)*parseInt(mianji)
-                            let rtype="11"
+                            let rtype="12"
                             if(text.renTingType=="整租"){
-                                rtype="12";
+                                rtype="11";
                                 allmianji=mianji;
                             }  
                             const xingzhis=['普通住宅','公寓','别墅','平房','其他']
@@ -387,7 +395,7 @@
                                         chaoxiang=j+1;
                             }
                             const xianzhis=['男女不限','限男生','限女生','限夫妻']
-                            let xianzhi=''
+                            let xianzhi='1'
                             for(var j=0;j<xianzhis.length;j++){
                                 if(text.renTingRoot==xianzhis[j])
                                         xianzhi=(j+1);
@@ -432,7 +440,7 @@
                                 params_198:fukuan,
                                 title:text.renTingTitle,
                                 content_fangyuanxiangqing:text.renTingHouse,
-                                cookies:that.sitecookie
+                                cookies:encodeURIComponent(String(that.sitecookie))
                             };
                              $.ajax({
                                     type: 'GET',

@@ -312,6 +312,13 @@
                 this.forgetVal = true;
             },
             async doLogin() {
+                if(this.user==""||this.password==""){
+                   this.$error({
+                        title: '提示',
+                        content:"账号或密码不能为空！" ,
+                    });
+                    return;
+                }
                 console.log('正在登陆，请耐心等待......')
                 this.dis = 'disabled'
                 this.loading = true
