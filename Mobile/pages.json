@@ -53,14 +53,46 @@
 			"style": {
 				"navigationBarTitleText": "出售群发"
 			}
-		}
-	    ,{
+		},{
             "path" : "pages/center/layout/zhandian/zhandian",
-            "style" : {}
-        }
-        ,{
+            "style" : {
+				"navigationBarTitleText": "全部网站"
+			}
+        },{
             "path" : "pages/center/layout/closeinter/closeinter",
-            "style" : {}
+            "style" : {
+				"navigationBarTitleText": "未开通网站"
+			}
+        },{
+		    "path" : "pages/center/layout/allinter/allinter",
+		    "style" : {
+				"navigationBarTitleText": "已开通网站"
+			}
+		},{
+            "path" : "pages/home/ershoufang/ershouDetails",
+            "style" : {
+				"navigationBarTitleText": "详情页面"
+			}
+        },{
+            "path" : "pages/home/ershoufang/ershouIndex",
+            "style" : {
+				"navigationBarTitleText": "二手房"
+			}
+        },{
+            "path" : "pages/home/shop/shopIndex",
+            "style" : {
+				"navigationBarTitleText": "商铺"
+			}
+        },{
+            "path" : "pages/home/zufang/zufangIndex",
+            "style" : {
+				"navigationBarTitleText": "租房"
+			}
+        },{
+            "path" : "pages/home/tuijian/tuijianIndex",
+            "style" : {
+				"navigationBarTitleText": "每日推荐"
+			}
         }
        
     ],

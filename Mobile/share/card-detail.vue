@@ -10,7 +10,7 @@
 					<view class="cit">东</view>
 				</view>
 				<view class="price">
-					118万
+					<strong>118万</strong>
 				</view>
 			</view>
 			<view class="local">
@@ -18,7 +18,7 @@
 				<view>12400元/㎡</view>
 			</view>
 			<view class="biaoqian">
-				<view style="color:#FFA19F;">佣金优惠</view>
+				<view style="color:#FFFFFF;background:linear-gradient(to right bottom,#ff4a00,#ffbf00);">佣金优惠</view>
 				<view>满五</view>
 				<view>近地铁</view>
 				<view>配套成熟</view>
@@ -73,7 +73,7 @@
 				white-space: nowrap;
 				overflow: hidden;
 				font-weight: bold;
-				margin-bottom: 20upx;
+				margin-bottom: 12upx;
 			}
 			
 			.xiangqing{
@@ -81,7 +81,7 @@
 				flex-direction: row;
 				align-items: center;
 				justify-content: space-between;
-				
+				color: #a3a8ad;
 				.gnt{
 					display: flex;
 					flex-direction: row;
@@ -94,7 +94,7 @@
 				
 				.price{
 					font-size: 30upx;
-					color: #FFA19F;
+					color: #fa4600;
 				}
 				
 			}
@@ -103,13 +103,19 @@
 				display: flex;
 				justify-content: space-between;
 				font-size: 24upx;
+				margin-bottom: 12upx;
+				color: #555;
 			}
 			.biaoqian{
-				border: 1px solid #F6F6F6;
-				background: #F6F6F6;
+				// border: 1px solid #F6F6F6;
+				// background: #F6F6F6;
+				color: #7caee8;
 				font-size: 24upx;
 				display: flex;
 				view{
+					border-radius: 8upx;
+					background: #f3f8fa;
+					padding: 0 8upx;
 					margin-right: 26upx;
 				}
 			}
