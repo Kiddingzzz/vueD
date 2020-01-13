@@ -46,14 +46,14 @@ const columns = [{
 ];    
     export default {
         name: 'susstable',
-        props: ['spintime'],
+        props: ['spintime','checkedKey'],
         data() {
             return {
                 listfb:[],
                 columns,
                 backMsg: false,
                 spinning: true,
-                
+                routerUrl: '/sell',
             };
         },
         mounted() {
@@ -64,6 +64,12 @@ const columns = [{
             //     this.GetShowList()
             //     this.spinning = false;
             // }, 2000);
+            // console.log(this.checkedKey)
+            if(this.checkedKey=='1'){
+                this.routerUrl = '/sell'
+            }else if(this.checkedKey=='2'){
+                this.routerUrl = '/shangpuluru'
+            }
             console.log("时间"+this.spintime)
             setTimeout(() => {
                 console.log("2")
@@ -83,7 +89,7 @@ const columns = [{
                 this.$emit('goonfun', 0)
             },
             redirct() {
-                this.$router.replace('/sell')
+                this.$router.replace(this.routerUrl)
             },
             backlist(){
                 this.$router.replace('/fuburesult')

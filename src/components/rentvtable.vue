@@ -16,7 +16,7 @@
                         </template>
                     </span>-->
                 </div>
-                <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">
+                <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record">
                         <a-popconfirm title="确定删除么？" @confirm="confirm(record.id)" okText="确认" cancelText="取消">
                             <a href="#">删除</a>
@@ -139,25 +139,26 @@
                 list: [],
                 loadingRenTing:false,
                 loadingFb:false,
+                selectedRows: [],
             };
         },
          computed: {
-            rowSelection() {
-                const { selectedRowKeys } = this;
-                return {
-                    onChange: (selectedRowKeys, selectedRows) => {
-                        this.selectedRowKeys = selectedRows;
-                    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-                        this.index = selectedRowKeys
-                    },
-                    // getCheckboxProps: record => ({
-                    //     props: {
-                    //         // disabled: record.name === 'Disabled User', // Column configuration not to be checked
-                    //         // name: record.name,console.log(record),
-                    //     }
-                    // }),
-                };
-            },
+            // rowSelection() {
+            //     const { selectedRowKeys } = this;
+            //     return {
+            //         onChange: (selectedRowKeys, selectedRows) => {
+            //             this.selectedRowKeys = selectedRows;
+            //         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            //             this.index = selectedRowKeys
+            //         },
+            //         // getCheckboxProps: record => ({
+            //         //     props: {
+            //         //         // disabled: record.name === 'Disabled User', // Column configuration not to be checked
+            //         //         // name: record.name,console.log(record),
+            //         //     }
+            //         // }),
+            //     };
+            // },
             hasSelected() {
                 console.log(this.selectedRowKeys)
                 return this.selectedRowKeys.length > 0;
@@ -167,14 +168,22 @@
             console.log(123)
             this.RtseachShow();
         },
+        activated(){
+            this.RtseachShow();
+        },
         methods: {
-            onSelectChange(selectedRowKeys) {
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
-                this.selectedRowKeys = selectedRowKeys;
+            // onSelectChange(selectedRowKeys) {
+            //     console.log('selectedRowKeys changed: ', selectedRowKeys);
+            //     this.selectedRowKeys = selectedRowKeys;
+            // },
+            onSelectChange (selectedRowKeys,selectedRows) {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                this.selectedRowKeys = selectedRowKeys
+                this.selectedRows = selectedRows
             },
            start() {
                 this.loadingFb = true;
-              this.$emit("RtgetDataList", this.selectedRowKeys);
+              this.$emit("RtgetDataList", this.selectedRows);
                 setTimeout(() => {
                     this.loadingFb = false;
                     this.selectedRowKeys = [];
@@ -191,7 +200,7 @@
                             // this.datas = datas.filter(item => item.key !== key)
                             // this.list.splice(index,1)
                             this.$message.success('删除成功！！！');
-                            // this.selectedRowKeys = [];
+                            this.selectedRowKeys = [];
                             // console.log(this.selectedRowKeys)
                             // this.seachShow();
                         }
@@ -207,8 +216,8 @@
                   this.loadingRenTing = true;
                   let that=this
                  const idlist=[]
-                 for(var i=0;i<this.selectedRowKeys.length;i++){
-                   idlist.push(this.selectedRowKeys[i].id)
+                 for(var i=0;i<this.selectedRows.length;i++){
+                   idlist.push(this.selectedRows[i].id)
                 }
                try{
                     await this.$http.post(`${this.$config.api}/api/cms/renTing/renTingDeletelist`,idlist).then(Response => {

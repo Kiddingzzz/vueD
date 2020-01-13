@@ -25,13 +25,18 @@
 			<view class="item01"></view>
 			<view class="item01"></view>
 		</view>
-		<uni-goods-nav class="dibu" :fill="true" :options="options" :button-group="buttonGroup" @click="onClick" @buttonClick="buttonClick"></uni-goods-nav>
+		<nav-bottom></nav-bottom>
+		<!-- <uni-goods-nav class="dibu" :fill="true" :options="options" :button-group="buttonGroup" @click="onClick" @buttonClick="buttonClick"></uni-goods-nav> -->
 	</view>
 </template>
 <script>
 import uniGoodsNav from '@/components/uni-goods-nav/uni-goods-nav.vue';
+import navBottom from '@/share/nav-bottom.vue';
 export default {
-	components: { uniGoodsNav },
+	components: { 
+		uniGoodsNav,
+		navBottom
+	},
 	data() {
 		return {
 			swiperList: [

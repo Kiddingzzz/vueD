@@ -5,7 +5,7 @@
                 <div style="margin-bottom: 16px;display:flex;flex-direction: row-reverse;margin-top:-55px;">
                     <a-button type="primary" @click="DeleteList" :disabled="!hasSelected" :loading="loadingdele">
                         批量删除
-                    </a-button>
+                    </a-button> 
                     <a-button style="margin-right: 8px" type="primary" @click="start" :disabled="!hasSelected"
                         :loading="loading">
                         批量发布
@@ -16,7 +16,8 @@
                         </template>
                     </span>-->
                 </div>
-                <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list" click> 
+                <!-- <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">  -->
+                    <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list">
                     <span slot="operation" slot-scope="text, record, index" class="caozuo">
                         <a href="javascript:;" @click="updateItem(record.id)">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="onDelete(record.id,index)"  okText="确定" cancelText="取消">
@@ -143,25 +144,20 @@
                 updatelist: [],
                 index: [],
                 loadingdele: false,
+                selectedRows: []
             };
         },
         computed: {
-            rowSelection() {
-                const { selectedRowKeys } = this;
-                return {
-                    onChange: (selectedRowKeys, selectedRows) => {
-                        this.selectedRowKeys = selectedRows;
-                    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
-                        this.index = selectedRowKeys
-                    },
-                    // getCheckboxProps: record => ({
-                    //     props: {
-                    //         // disabled: record.name === 'Disabled User', // Column configuration not to be checked
-                    //         // name: record.name,console.log(record),
-                    //     }
-                    // }),
-                };
-            },
+            // rowSelection() {
+            //     const { selectedRowKeys } = this;
+            //     return {
+            //         onChange: (selectedRowKeys, selectedRows) => {
+            //             this.selectedRowKeys = selectedRows;
+            //         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            //             this.index = selectedRowKeys
+            //         },
+            //     };
+            // },
             hasSelected() {
                 console.log(this.selectedRowKeys)
                 return this.selectedRowKeys.length > 0;
@@ -174,7 +170,12 @@
             this.seachShow();
         },
         methods: {
-            //批量删除
+            onSelectChange (selectedRowKeys,selectedRows) {
+                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+                this.selectedRowKeys = selectedRowKeys
+                this.selectedRows = selectedRows
+            },
+            // //批量删除
             // deleteAll(){
             //     console.log("批量删除" + this.index)
             //     for(let i=0;i<this.index.length;i++){
@@ -193,7 +194,7 @@
             },
             start() {
                 this.loading = true;
-              this.$emit("getDataList", this.selectedRowKeys);
+              this.$emit("getDataList", this.selectedRows);
                 setTimeout(() => {
                     this.loading = false;
                     this.selectedRowKeys = [];
@@ -205,8 +206,8 @@
                 // ajax request after empty completing
                   let that=this
                 const idlist=[]
-                 for(var i=0;i<this.selectedRowKeys.length;i++){
-                   idlist.push(this.selectedRowKeys[i].id)
+                 for(var i=0;i<this.selectedRows.length;i++){
+                   idlist.push(this.selectedRows[i].id)
                 }
                 // this.$emit("getDataList", this.selectedRowKeys);
                 console.log(idlist)
@@ -250,7 +251,7 @@
                             this.list.splice(index,1)
                             this.$message.success('删除成功！！！');
                             this.selectedRowKeys = [];
-                            console.log(this.selectedRowKeys)
+                            console.log(this.selectedRows)
                             // this.seachShow();
                         }
                     })

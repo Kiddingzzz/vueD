@@ -60,11 +60,11 @@
             </div>
             <!-- tab标签页 -->
             <div class="tabcontent" v-if="current==0">
-                <a-tabs type="card">
-                    <a-tab-pane tab="住宅" key="1">
+                <a-tabs type="card" v-model="activeKey">
+                    <a-tab-pane tab="住宅" :key="1">
                         <rentvtable @getRenTingData="getRenTingMag"  @RtgetDataList="RtgetMagList"></rentvtable>
                     </a-tab-pane>
-                    <a-tab-pane tab="商铺" key="2">
+                    <a-tab-pane tab="商铺" :key="2">
                         <rentshangpu></rentshangpu>
                     </a-tab-pane>
                     <!-- <a-tab-pane tab="写字楼" key="3">
@@ -78,7 +78,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==2">
-                <rentsusstable @goonfun="getcurrentFormSon"></rentsusstable>
+                <rentsusstable @goonfun="getcurrentFormSon" :checkedKey="activeKey"></rentsusstable>
             </div>
             <!-- 上/下一步 -->
             <div class="pre">
@@ -98,6 +98,7 @@
     export default {
         data() {
             return {
+                activeKey: 1,
                 current: 0,
                 selectedRowKeys: [], // Check here to configure the default column
                 list: [],
@@ -111,6 +112,15 @@
             rentinter,
             rentsusstable,
             rentshangpu,
+        },
+        watch:{   //监听路由变化
+            $route( to , from ){   
+           //  console.log( to , from )
+                this.current = 0;
+                if(to.path == '/rentrelease'&& from.path == '/shangpuzuluru'){
+                    this.activeKey = 2
+                }
+            }
         },
         methods: {
             adduser() {

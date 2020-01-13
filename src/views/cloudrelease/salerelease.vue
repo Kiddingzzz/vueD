@@ -78,7 +78,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==2">
-                <susstable @goonfun="getcurrentFormSon" :spintime="spintime"></susstable>
+                <susstable @goonfun="getcurrentFormSon" :spintime="spintime" :checkedKey="activeKey"></susstable>
             </div>
             <!-- 上/下一步 -->
             <div class="pre">

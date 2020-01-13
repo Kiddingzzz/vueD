@@ -9,7 +9,7 @@
 		<view class="tab-bottom" v-for="(item,index) in options" :key="index">
 			<view class="item">
 				<image class="image" :src="item.icon"/>
-				<view class="text">item.text</view>
+				<view class="text">{{item.text}}</view>
 			</view>
 		</view>
 	</view>
@@ -35,4 +35,15 @@
 .layout{
 	width: 100%;
 }
+.tab-bottom{
+	display:flex;
+	.item{
+		display:flex;
+		flex-direction: column;
+	}
+}
+.image {
+		width: 20px;
+		height: 20px;
+	}
 </style>
