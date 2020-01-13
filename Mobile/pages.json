@@ -13,41 +13,6 @@
 			}
 		},
 		{
-			"path": "pages/home/ershoufang/ershouDetails",
-			"style": {
-				"navigationBarTitleText": "",
-				"app-plus": {
-					"titleNView": false,
-					"bounce": "none",
-					"scrollIndicator": "none"
-				}
-			}
-		},
-		{
-			"path": "pages/home/ershoufang/ershouIndex",
-			"style": {
-				"navigationBarTitleText": "二手房"
-			}
-		},
-		{
-			"path": "pages/home/shop/shopIndex",
-			"style": {
-				"navigationBarTitleText": "商铺"
-			}
-		},
-		{
-			"path": "pages/home/tuijian/tuijianIndex",
-			"style": {
-				"navigationBarTitleText": "每日推荐"
-			}
-		},
-		{
-			"path": "pages/home/zufang/zufangIndex",
-			"style": {
-				"navigationBarTitleText": "租房"
-			}
-		},
-		{
 			"path": "pages/publish/index",
 			"style": {
 				"navigationBarTitleText": "发布"

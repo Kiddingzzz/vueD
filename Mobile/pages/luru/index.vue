@@ -7,6 +7,7 @@
 				</view>
 			</view>
 		</scroll-view>
+		<button class="lurubtn" @click="showModal" data-target="Modal">秒录</button>
 		<view class="zufang" v-if="TabCur == 0">
 			<view class="sellsearch_bds">
 				<view class="tishi-wraps">
@@ -17,7 +18,6 @@
 					<view>1.随时抓取经纪人在外网发布的任意一套房源信息，方便、快捷、高效。</view>
 					<view>
 						2.针对房源图片可以完美去除网站LOGO水印。
-						<button class="cu-btn bg-blue" style="font-size: 24upx;height: 50upx;padding: 0 20upx;" @click="showModal" data-target="Modal">一键录入</button>
 					</view>
 				</view>
 			</view>
@@ -161,9 +161,21 @@ export default {
 	height: 100%;
 	flex-flow: column;
 }
+.lurubtn{
+	position: absolute;
+	bottom: 0upx;
+	right: 10upx;
+	height: 100upx;
+	width: 100upx;
+	background: #1579f4;
+	color: #FFFFFF;
+	border-radius: 50%;
+	font-size: 28upx;
+	padding: 0 0;
+}
 .zufang {
 	padding: 24upx;
-	font-size: 24upx !important;
+	font-size: 28upx !important;
 	.sellsearch_bds {
 		width: 100%;
 		.tishi-wraps {
