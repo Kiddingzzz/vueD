@@ -10,7 +10,7 @@
                                 <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
                                     <a href="#">删除</a>
                                 </a-popconfirm> -->
-                                <div class="yes" v-if="record.publishStatus=='已发布'"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
+                                <div class="yes" v-if="record.renTingComplet=='已发布'"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
                                 <div class="yes" v-else><i class="iconfont icon-shibai"></i><span>审核失败</span></div>
                             </span>
                         </a-table> 
@@ -31,11 +31,11 @@ const columns = [{
         width:'25%',
     }, {
         title: '发布房源标题',
-        dataIndex: 'title',
+        dataIndex: 'renTingTitle',
         width:'40 %',
     }, {
         title: '审核信息',
-        dataIndex: 'publishStatus',
+        dataIndex: 'renTingComplet',
         width:'25%'
     },{
         title: '审核结果',

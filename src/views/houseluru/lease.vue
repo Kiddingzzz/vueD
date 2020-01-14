@@ -720,8 +720,9 @@
                 let urllianjie=""
                 
                  if (RegExp(/cq.58.com/).exec(params))
-                      console.log('选中五八'+this.userId)
-                      urllianjie=`${this.$config.api}/api/cms/wuRenTing/renTingUrl`
+                      urllianjie=`${this.$config.api}/api/cms/wuRenTing/renTingUrl`;
+                if (RegExp(/cq.zu.anjuke.com/).exec(params))
+                      urllianjie=`${this.$config.api}/api/cms/anRt/anRenTingUrl`
                 this.disabled = true;
                 await this.$http.post(urllianjie, data).then(response => {
                     this.spinning = true;
