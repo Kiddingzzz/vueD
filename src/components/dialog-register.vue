@@ -225,6 +225,7 @@
                 this.visible = false;
                 this.sendCode = '';
                 this.loading = false;
+                 this.phoneNumber = ''
             },
 
             closeMask() {
@@ -233,6 +234,7 @@
                 this.sendCode = '';
                 this.loading = false;
                 console.log("手动关闭后重置输入")
+                this.phoneNumber = ''
             },
             handleSubmit(e) {
                 console.log('正确');
@@ -266,9 +268,10 @@
             },
             checkphoneNumber(rule, value, callback) {
                 if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(value)) {
+                    this.phoneNumber=''
                     callback('请填写正确的手机号');
                 } else {
-                     this.phoneNumber=value
+                    this.phoneNumber=value
                     callback();
                 }
             },
@@ -328,18 +331,17 @@
 
             // async sendcode() {
            async  sendcodeh() {
+               console.log("发送验证码前的电话号码:"+this.phoneNumber)
               this.disabledcode = true;
-              if(this.phoneNumber==''){
-                  this.$message.error('手机号码为空！');
+              if(this.phoneNumber=='' || !/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber)){
+                  this.$message.error('手机号码不能为空,且手机号码必须格式正确！');
                   this.disabledcode = false;
                   return;
               }
               this.getCodeText = "发送中...";
               console.log("电话号码：")
               await this.$http.post(`${this.$config.api}/api/cms/acount/sendyanm?phNumber=` + this.phoneNumber).then(pones => {
-                  console.log(pones.data.backCode)
-               
-                   
+                  console.log(pones.data.backCode) 
                            if(pones.data.returnValue.code=="200"){
                                    
                                this.Yztext=pones.data.context;
@@ -354,8 +356,9 @@
                            else{
                                 this.disabledcode = false;
                                  clearInterval(this.Timer);
-                                this.$message.error(pones.data.returnValue.msg);
                                  this.getCodeText = "获取验证码";
+                                 this.$message.error(pones.data.returnValue.msg);
+                                //  return pones.data.returnValue.msg;
                            }
                 })
             //   this.getCodeisWaiting = true;
@@ -411,6 +414,7 @@
                               this.$emit('childByValue', e.userName, e.password)
                                 setTimeout(() => {
                                 this.showMask = false;
+                                this.phoneNumber ='';
                                 clearInterval(this.Timer);
                                 this.getCodeText = "获取验证码";
                                 this.disabledcode = false;
@@ -445,10 +449,14 @@
         watch: {
             value(newVal, oldVal) {
                 this.showMask = newVal;
+                if(this.showMask==false){
+                    this.phoneNumber = ''
+                }
             },
             showMask(val) {
                 clearInterval(this.Timer);
                 this.getCodeText = "获取验证码";
+                this.phoneNumber = ''
                 this.disabledcode = false;
                 this.$emit("input", val);
             }

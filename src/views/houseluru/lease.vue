@@ -13,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk"
+        <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk" @cancel="cancelClick"
             :destroyOnClose="true" cancelText="取消" okText="确定">
             <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
             <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
@@ -317,7 +317,7 @@
                             <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" v-model="ref.houseXingzhi" />
                         </a-form-item>
 
-                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
+                        <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
                             validate-status="">
                             <a-checkbox>水</a-checkbox>
                             <a-checkbox>电</a-checkbox>
@@ -328,10 +328,11 @@
                             <a-checkbox>露台</a-checkbox>
                             <a-checkbox>阁楼</a-checkbox>
                             <a-checkbox>储藏室/地下室</a-checkbox>
-                        </a-form-item>
+                        </a-form-item> -->
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套设施" has-feedback
                             validate-status="">
-                            <a-checkbox>电话</a-checkbox>
+                            <a-checkbox-group :options="plainOptionspeitao" v-model="peitaocheckedList" />
+                            <!-- <a-checkbox>电话</a-checkbox>
                             <a-checkbox>热水器</a-checkbox>
                             <a-checkbox>彩电</a-checkbox>
                             <a-checkbox>空调</a-checkbox>
@@ -344,7 +345,7 @@
                             <a-checkbox>衣柜</a-checkbox>
                             <a-checkbox>沙发</a-checkbox>
                             <a-checkbox>厨具（可做饭）</a-checkbox>
-                            <a-checkbox>独立卫生间</a-checkbox>
+                            <a-checkbox>独立卫生间</a-checkbox> -->
                         </a-form-item>
                     </a-form>
                 </a-layout-content>
@@ -588,6 +589,7 @@
     const hezu = ['合租', '整租'];
     const optionaddress = ['主卧', '次卧', '床位', '隔断间'];
     const optionsex = ['性别不限', '限男生', '限女生', '限夫妻',];
+    const plainOptionspeitao = ['阳台', '热水器', '电视', '空调', '冰箱', '洗衣机', '床', '宽带', '暖气', '衣柜', '沙发', '可做饭', '卫生间'];
     export default {
         data() {
             return {
@@ -596,7 +598,6 @@
                 visible: false,
                 addxq: false,
                 addshowxqu: false,
-
                 spinning: false,
                 confirmLoading: false,
                 labelCol: {
@@ -611,6 +612,8 @@
                 plainOptionsy,
                 plainOptionfwlb,
                 optionaddress,
+                plainOptionspeitao,
+                peitaocheckedList: [],
                 hezu,
                 zhifu,
                 optionsex,
@@ -733,6 +736,7 @@
                             this.spinning = false;
                             this.ref = res.data;
                             console.log(`222` + JSON.stringify(this.ref))
+                            this.peitaocheckedList = this.ref.renTingPeiTao
                             //字符串
                             this.ceng = this.ref.renTingLouceng.substring(0, this.ref.renTingLouceng.indexOf("/"));
                             this.lou = this.ref.renTingLouceng.substring(this.ref.renTingLouceng.indexOf("/") + 1, this.ref.renTingLouceng.length);
@@ -848,9 +852,14 @@
                 this.selectedShi = '';
                 this.selectedTing = '';
                 this.selectedWei = '';
+                this.peitaocheckedList = [];
                 this.valuehz="合租"
                 this.ceng = '';
                 this.lou = '';
+            },
+            cancelClick(){
+                this.spinning = false;
+                this.disabled = false;
             },
             showModal() {
                 this.visible = true;

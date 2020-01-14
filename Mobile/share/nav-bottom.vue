@@ -2,7 +2,9 @@
 	<view class="layout">
 		<view class="tab-bottom">
 			<view class="lianxiren">
-				<image class="imageinfo" src="https://pic1.ajkimg.com/display/anjuke/237c94b741db9d0b3508e652ba32a4f4/200x265x0x45/100x133.jpg"></image>
+				<view class="touxiang">
+					<image class="imageinfo" src="https://pic1.ajkimg.com/display/anjuke/237c94b741db9d0b3508e652ba32a4f4/200x265x0x45/100x133.jpg"></image>
+				</view>
 				<view class="info">
 					张媛媛
 				</view>
@@ -75,10 +77,15 @@ export default {
 	height: 40upx;
 	margin-right: 20upx;
 }
-.imageinfo{
+.touxiang{
 	width: 70upx;
 	height: 70upx;
 	border-radius: 50%;
 	margin-right: 20upx;
+	overflow: hidden;
+	.imageinfo{
+		width: 100%;
+		height: 100%;
+	}
 }
 </style>
