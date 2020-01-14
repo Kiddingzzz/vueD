@@ -78,7 +78,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==2">
-                <rentsusstable @goonfun="getcurrentFormSon" :checkedKey="activeKey"></rentsusstable>
+                <rentsusstable @goonfun="getcurrentFormSon" :spintime="spintime" :checkedKey="activeKey"></rentsusstable>
             </div>
             <!-- 上/下一步 -->
             <div class="pre">
@@ -105,6 +105,7 @@
                 houselist: {},
                 RenTingbieshu: {},
                 RtQunFalist: [],
+                spintime: '',
             };
         },
         components: {
@@ -157,8 +158,10 @@
                 }
             },
             //第二步操作跳转第三步
-            getSeconds(message) {
-                this.current = 2;
+            getSeconds(current,length) {
+                this.current = current
+                this.spintime = length
+                this.spintime = length
             }
         },
     };
