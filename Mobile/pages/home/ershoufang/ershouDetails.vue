@@ -147,9 +147,9 @@ export default {
 	flex-flow: column;
 }
 .xiangqing-table {
-	padding: 30upx;
+	padding: 30upx 30upx 100upx 30upx;
 	.biaoti {
-		font-size: 40upx;
+		font-size: 34upx;
 		overflow: hidden;
 		text-overflow: ellipsis;
 		display: -webkit-box;

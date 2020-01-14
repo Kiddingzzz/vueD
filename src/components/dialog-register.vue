@@ -9,7 +9,10 @@
                 validateTrigger: 'blur',
                 rules: [
                   { required: true, message: '会员名不能为空' },
-                  { min: 5, max:25, message: '请输入5-25个字符组成的会员名' }
+                  { min: 5, max:25, message: '请输入5-25个字符组成的会员名' },
+                  {
+                    validator: validatecheckUser,
+                  },
                 ] }]">
                     </a-input>
                     <!-- <span class="message" v-if="!$v.userName.required">会员名不能为空</span>
@@ -208,6 +211,8 @@
                 getCodeText: '获取验证码',
                 disabledcode: false,
                 Yztext:'',
+                checkPhonevalue: false,
+                checkUservalue: false,
             };
         },
         beforeCreate() {
@@ -251,6 +256,19 @@
                 const value = e.target.value;
                 this.confirmDirty = this.confirmDirty || !!value;
             },
+            validatecheckUser(rule, value, callback){
+                const form = this.form;
+                if(value!=''){
+                    this.checkUser()
+                    console.log('执行方法后值'+this.checkUservalue)
+                    if(this.checkUservalue == true){
+                        callback('此账号已经被注册');
+                    }else{
+                        callback();
+                    }
+                }
+                
+            },
             compareToFirstPassword(rule, value, callback) {
                 const form = this.form;
                 if (value && value !== form.getFieldValue('password')) {
@@ -267,13 +285,19 @@
                 callback();
             },
             checkphoneNumber(rule, value, callback) {
+                this.checkPhone()
+                console.log("出来吧"+this.checkPhone())
                 if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(value)) {
                     this.phoneNumber=''
                     callback('请填写正确的手机号');
-                } else {
-                    this.phoneNumber=value
-                    callback();
-                }
+                }else{
+                    if(this.checkPhonevalue == true){                  
+                    callback("该手机号已经绑定账号，请更换手机号");                                      
+                    }else{
+                        this.phoneNumber= value
+                        callback();
+                    }
+                }  
             },
             checkagreement(rule, value, callback) {
                 //console.log("同意、、、、、、、、、、、、、"+value)
@@ -328,10 +352,8 @@
             //     });
             //   }
             // },
-
-            // async sendcode() {
            async  sendcodeh() {
-               console.log("发送验证码前的电话号码:"+this.phoneNumber)
+              console.log("发送验证码前的电话号码:"+this.phoneNumber)
               this.disabledcode = true;
               if(this.phoneNumber=='' || !/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber)){
                   this.$message.error('手机号码不能为空,且手机号码必须格式正确！');
@@ -361,9 +383,6 @@
                                 //  return pones.data.returnValue.msg;
                            }
                 })
-            //   this.getCodeisWaiting = true;
-            //   this.getCodeBtnColor = "rgba(135,135,135,1)";
-              //示例用定时器模拟请求效果
               
             },
             setTimer() {
@@ -371,8 +390,6 @@
               this.getCodeText = "重新获取(60)";
               this.Timer = setInterval(() => {
                 if (holdTime <= 0) {
-                //   this.getCodeisWaiting = false;
-                //   this.getCodeBtnColor = "#878787";
                   this.getCodeText = "获取验证码";
                   clearInterval(this.Timer);
                   this.disabledcode = false;
@@ -444,7 +461,35 @@
                         this.loading = false;
                     }
                 }
-            }
+            },
+            //判断手机号重复
+            async checkPhone(){
+                // console.log("判断手机号重复"+this.form.getFieldValue('phoneNumber'))
+                await this.$http.post(`${this.$config.api}/api/cms/acount/phoneIS?phNumber=` + this.form.getFieldValue('phoneNumber')).then(res => {
+                    // console.log(JSON.stringify(res))
+                    if(res.data.code=="-1"){
+                        this.checkPhonevalue = true
+                        // return this.checkPhonevalue
+                    }else{
+                        this.checkPhonevalue = false
+                    }
+                })
+            },
+            //判断账号是否重复
+            async checkUser(){
+                console.log("判断用户名重复"+this.form.getFieldValue('userName'))
+                await this.$http.post(`${this.$config.api}/api/cms/acount/usernameIS?username=` + this.form.getFieldValue('userName')).then(res => {
+                    console.log(JSON.stringify(res))
+                    if(res.data.code=="-1"){
+                        
+                        this.checkUservalue == true
+                         console.log("正确重复")
+                         console.log('执行方法'+this.checkUservalue)
+                    }else{
+                        this.checkUservalue == false
+                    }
+                })
+            },
         },
         watch: {
             value(newVal, oldVal) {
