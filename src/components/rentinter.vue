@@ -236,7 +236,8 @@
                 let that=this
                
                 let text= that.defRenTing
-                
+                let typeCom='';
+                let ids=text.id;
                 let shi = text.renTingHuXing.indexOf("室");
                 let ting = text.renTingHuXing.indexOf("厅");
                 let wei = text.renTingHuXing.indexOf("卫");
@@ -346,6 +347,7 @@
                                 typeCom="发布失败";
                         }
                     });
+            let yuming=`${that.$config.api}/api/cms/renTing/xiuGaiComPlet/`
             const interval= setInterval(async () => {
                          if(typeCom!=''){
                          const datas={houserid:ids, type:typeCom}
