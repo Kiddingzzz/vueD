@@ -162,10 +162,7 @@
         },
         mounted() {
             this.def = this.value;
-            this.rav = this.array;
-          
-          
-
+            this.rav = this.array;         
         },
        
         methods: {
@@ -656,11 +653,13 @@
                                     dataConsole = data;
                                   
                                    if(data.data.title=="发布成功"){
+                                    //    that.$emit('getMsg', "sussMsg")
                                        console.log("成功")
                                      dis=idss
                                      texttypr="已发布"
                                    }
                                   else{
+                                    // that.$emit('getMsg', "errMsg")
                                      dis=idss
                                      texttypr=data.data.subMsg
                                    }
@@ -678,7 +677,8 @@
                                         that.$http.post(yuming,datas).then(Responses=>{
                                             if(i==number){
                                                 clearInterval(interval);
-                                                that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
+                                                // that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
+                                                that.Msg('success')
                                                 itz=true
                                             }
                                         })
@@ -934,7 +934,8 @@
                  }
                  if(dis!=null){ 
                      that.$http.post(yuming,datas).then(Responses=>{
-                            that.$message.success('您的审核完毕，可在发布结果查看发布结果',3);
+                            // that.$message.success('您的审核完毕，可在发布结果查看发布结果',3);
+                            that.Msg('success')
                     });
                                       
                  }                 
@@ -952,7 +953,7 @@
                             '房源发布成功请在网站后台查看',
                     });
 
-                    this.$emit("getSeconde", this.bid);
+                    // this.$emit("getSeconde", this.bid);
                 }
                 if (type == 'error') {
                     this.$notification[type]({
@@ -965,6 +966,18 @@
                     });
                 }
             },
+            Msg(type){
+                if (type == 'success') {
+                    this.$notification[type]({
+                        message: '审核成功',
+                        placement: 'bottomRight',
+                        bottom: '50px',
+                        right: '500px',
+                        description:
+                            '您的房源已全部审核完毕，可在发布结果查看发布结果',
+                    });
+                }
+            }
         },
 
     };

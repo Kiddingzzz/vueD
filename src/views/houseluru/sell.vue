@@ -15,33 +15,39 @@
         </div>
         <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @cancel="cancelClick" @ok="handleOk" :destroyOnClose="true"
             cancelText="取消" okText="确定">
-            <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
-            <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
-                <br /><br />
-                <a-input-search placeholder="复制链接" @search="onSearch" :disabled="disabled" enterButton="立即秒录"
-                    size="large" />
-                <a-spin :spinning="spinning">
-                </a-spin>
-            </p>
-            <div class="selllogo">
-                <a href="https://cq.58.com/ershoufang" target="_blank"><img class="wuba"
-                        src="../../assets/logo/58logo.png"></a>
-                <a href="https://chongqing.anjuke.com/sale" target="_blank"><img class="anju"
-                        src="../../assets/logo/anjuke.jpg"></a>
-                <a href="https://cq.esf.fang.com" target="_blank"><img class="fang"
-                        src="../../assets/logo/fangtianxia.jpg"></a>
-            </div>
-            <div class="sellfontU">
-                <ul class="sellsale-content-tip clear" style="margin:0px">
-                    <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
-                    <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
-                    <li><span>2.秒入图片小于600*450自动过滤;</span></li>
-                    <li><span>3.本功能暂时只支持秒录 58同城、安居客、房天下、
-                            今题网、去114网、新浪网、焦点网、列表网、第一时间房源网、
-                            赶场网、久久厂房网、开州在线网、优优好房、阿里司法拍卖、
-                            京东司法拍卖、公拍网、人民法院诉讼资产网、中国拍卖行业协会的房源;</span></li>
-                </ul>
-            </div>
+            <a-spin :spinning="spinning" tip="正在录入中，请耐心等候...">
+                <div style="height:420px;display:flex;flex-direction: column;justify-content: space-between;" >
+                    <div>
+                        <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
+                        <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
+                            <br /><br />
+                            <a-input-search placeholder="例如：https://cq.58.com/zufang/40823717413021x.shtml" @search="onSearch" :disabled="disabled" enterButton="立即秒录"
+                                size="large" />
+                            <!-- <a-spin :spinning="spinning">
+                            </a-spin> -->
+                        </p>
+                        <div class="selllogo">
+                            <a href="https://cq.58.com/ershoufang" target="_blank"><img class="wuba"
+                                    src="../../assets/logo/58logo.png"></a>
+                            <a href="https://chongqing.anjuke.com/sale" target="_blank"><img class="anju"
+                                    src="../../assets/logo/anjuke.jpg"></a>
+                            <a href="https://cq.esf.fang.com" target="_blank"><img class="fang"
+                                    src="../../assets/logo/fangtianxia.jpg"></a>
+                        </div>
+                    </div>
+                    <div class="sellfontU">
+                        <ul class="sellsale-content-tip clear" style="margin:0px">
+                            <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
+                            <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
+                            <li><span>2.秒入图片小于600*450自动过滤;</span></li>
+                            <li><span>3.本功能暂时只支持秒录 58同城、安居客、房天下、
+                                    今题网、去114网、新浪网、焦点网、列表网、第一时间房源网、
+                                    赶场网、久久厂房网、开州在线网、优优好房、阿里司法拍卖、
+                                    京东司法拍卖、公拍网、人民法院诉讼资产网、中国拍卖行业协会的房源;</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </a-spin>
         </a-modal>
         <!--   <a-modal title="添加小区" v-model="addxq" @ok="addok">
             <div style="width:100%">
@@ -364,7 +370,7 @@
                             </div>
                             <div>
                                 <!-- <a-input v-model="ref.title" placeholder="字数限制10-30" style="width:50%;" /> -->
-                                <a-input v-model="title" placeholder="字数限制10-30" style="width:50%;"
+                                <a-input v-model="title" placeholder="字数限制10-30" style="width:70%;"
                                     @blur="blur('title')" />
                                 <span class="errormsg" v-if="titleerror">信息标题不能为空</span>
                                 <span class="errormsg" v-if="titlezishu">内容不能包含“最”</span>
@@ -376,9 +382,9 @@
                                 <label class="selllabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
                             </div>
                             <div>
-                                <a-textarea v-model="note" style="width:50%;" :rows="6" @blur="blur('note')" />
+                                <a-textarea v-model="note" style="width:70%;" :rows="6" @blur="blur('note')" />
                                 <span class="errormsg" v-if="noteerror">信息描述不能为空</span>
-                                <span class="errormsg" v-if="notezishu">字数限制在30-300，且不能包含“最”</span>
+                                <span class="errormsg" v-if="notezishu">字数限制在20-300，且不能包含“最”</span>
                                 <div>
                                     <label class="sellminganlabel">信息描述内容避免使用敏感字符; 部分网站不允许使用特殊字符: ▲◎☆★◇◆□■▽▼●○△▲
                                         《》♀♂⊕⊙＊※【】‖︻ ︼</label>
@@ -392,7 +398,7 @@
                                     class="putnumber">(字数限制20-300)</label>
                             </div>
                             <div>
-                                <a-textarea v-model="atittude" style="width:50%;" :rows="5" @blur="blur('atittude')" />
+                                <a-textarea v-model="atittude" style="width:70%;" :rows="5" @blur="blur('atittude')" />
                                 <span class="errormsg" v-if="atittudeerror">业主心态不能为空</span>
                                 <span class="errormsg" v-if="atittudezishu">字数限制在20-300，且不能包含“最”</span>
                                 <div>
@@ -409,7 +415,7 @@
                                 <label class="sellputnumber">(字数限制20-300)</label>
                             </div>
                             <div>
-                                <a-textarea :rows="5" style="width:50%;" v-model="fuwuCondition"
+                                <a-textarea :rows="5" style="width:70%;" v-model="fuwuCondition"
                                     @blur="blur('fuwuCondition')" />
                                 <span class="errormsg" v-if="fuwuConditionerror">服务介绍不能为空</span>
                                 <span class="errormsg" v-if="fuwuConditionzishu">字数限制在20-300，且不能包含“最”</span>
@@ -420,7 +426,7 @@
                                 <label class="selllabeltle">*小区配套:</label><label>从交通、教育、医疗、内部环境、车位情况、安保措施方面来描述</label>
                             </div>
                             <div>
-                                <a-textarea :rows="5" style="width:50%;" />
+                                <a-textarea :rows="5" style="width:70%;" />
                             </div>
                         </div>
                         <div class="selltilerbox">
@@ -429,7 +435,7 @@
                                     class="selllabeltle">税费信息:</label><label>相关费用，描述越详尽您的房源质量就会越高，展示给网友的机会就会增加(仅搜房帮)</label>
                             </div>
                             <div>
-                                <a-textarea :rows="5" style="width:50%;" />
+                                <a-textarea :rows="5" style="width:70%;" />
                             </div>
                         </div>
 
@@ -464,7 +470,7 @@
             <a-layout class="res" style="padding:24px;">
                 <a-layout-content :style="{ background: '#fff', margin: 0, minHeight: '280px' }">
                     <a-form>
-                        <div class="picdivbox selldivallbox">
+                        <!-- <div class="picdivbox selldivallbox">
                             <div class="selllaberboxtitle">上传方式:</div>
                             <div class="laberboxla">
                                 <a-radio-group :options="plainOptionsc" :defaultValue="value6" />
@@ -476,7 +482,7 @@
                                 <a-radio-group :options="plainOptionsy" :defaultValue="value7" />
                             </div>
 
-                        </div>
+                        </div> -->
                         <div class="sellshinei selldivallbox">
                             <div class="selllaberbox">
                                 <span class="selllaberboxtitle">&nbsp;封&nbsp;面&nbsp;图:</span>
@@ -494,12 +500,15 @@
                             <div class="selllaberbox">
                                 <span class="selllaberboxtitle">室内照片: </span>
                                 <div class="shineipadd">
+                                    最多20张。您可以<span class="sellorangelaber">发布客厅/卧室/厨房</span>
+                                </div>等3张以上照片可帮助您获得较好效果！
+                                <!-- <div class="shineipadd">
                                     最多20张。您可以<label class="sellpiclaber">从我的图库选择</label>
                                     <a-button type="" class="sellbuttontuku">我的图库</a-button>
                                     <a-button type="" class="sellbuttontuku">高清图库</a-button>
                                     客厅/卧室/厨房等3张以上照片可帮助您获得较好效果！
                                     <label class="orangelaber">可拖拽交换位置</label>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="selltupianbox">
                                 <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -518,11 +527,10 @@
                             <div class="selllaberbox">
                                 <span class="selllaberboxtitle">&nbsp;房&nbsp;型&nbsp;图:</span>
                                 <div class="shineipadd">
-                                    <label
-                                        class="orangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图</label>
-                                    <a-button type="" class="sellbuttontuku">我的图库</a-button>
+                                    <label class="sellorangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图</label>
+                                    <!-- <a-button type="" class="sellbuttontuku">我的图库</a-button>
                                     <a-button type="" class="sellorangetuku">房型图库</a-button>
-                                    <a-button type="" class="sellbuttontuku">在线绘制</a-button>
+                                    <a-button type="" class="sellbuttontuku">在线绘制</a-button> -->
                                 </div>
                             </div>
                             <div class="selltupianbox">
@@ -536,14 +544,15 @@
                             <div class="selllaberbox">
                                 <span class="selllaberboxtitle">小区图片:</span>
                                 <div class="shineipadd">
-                                    <span>最多10张。您可以</span>
+                                    <span>最多10张。</span>
+                                    <!-- <span>最多10张。您可以</span>
                                     <label class="sellpiclaber">从我的图库选择</label>
                                     <span>或者</span>
                                     <label class="sellpiclaber">从小区图库选择</label>
                                     <a-button type="" class="sellbuttontuku">我的图库</a-button>
-                                    <a-button type="" class="sellbuttontuku">小区图库</a-button>
+                                    <a-button type="" class="sellbuttontuku">小区图库</a-button> -->
                                 </div>
-                                <div class="sellxiala">
+                                <!-- <div class="sellxiala">
                                     <a-dropdown>
                                         <a-menu slot="overlay">
                                             <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
@@ -553,7 +562,7 @@
                                             <a-icon type="up" />
                                         </a-button>
                                     </a-dropdown>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="sellradisflex">
                                 <div class="selltupianbox">
@@ -583,13 +592,13 @@
                             <div class="selllaberbox">
                                 <span class="selllaberboxtitle">房源视频:</span>
                                 <label> 视频大小在300M内，视频长度在1-3分钟为最佳，视频过短新三网审核不予通过。</label>
-                                <div>
+                                <!-- <div>
                                     <a-upload name="file" :multiple="true"
                                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers">
                                         <a-button class="sellupdatedspbutton">
                                             <a-icon type="upload" />添加视频 </a-button>
                                     </a-upload>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="sellbottomobx">
@@ -796,7 +805,7 @@
                     this.notezishu = false
                 } else if (data == "note" & this.note != '') {
                     this.noteerror = false
-                    if (this.note.length <= 30 || this.note.length >= 300 || this.note.includes('最') == true) {
+                    if (this.note.length <= 20 || this.note.length >= 300 || this.note.includes('最') == true) {
                         this.notezishu = true
                     } else {
                         this.notezishu = false
@@ -855,6 +864,7 @@
                     weiYiUrl: this.text
                 };
                 console.log("正在秒录，请耐心等待......")
+                this.spinning = true;
                 this.disabled = true;
                 //清空原有数据
                 this.clear()
@@ -867,7 +877,6 @@
                 if (RegExp(/esf.fang./).exec(params))
                     this.ZhuaquUrl = `${this.$config.api}/api/cms/fang/fangUrl`
                 await this.$http.post(this.ZhuaquUrl, data).then(response => {
-                    this.spinning = true;
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseType + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`抓取数据:` + JSON.stringify(res.data))
@@ -983,7 +992,7 @@
                     this.anchorerror = 'title'
                     return;
                 }
-                if (this.note == '' || this.note.length <= 30 || this.note.length >= 300 || this.note.includes('最') == true) {
+                if (this.note == '' || this.note.length <= 20 || this.note.length >= 300 || this.note.includes('最') == true) {
                     if (this.note == '') {
                         this.noteerror = true
                     } else {
@@ -1392,11 +1401,11 @@
         float: left;
     }
 
-    .sellfontU {
-        position: absolute;
-        bottom: 50px;
-        right: 0px;
-    }
+    // .sellfontU {
+    //     position: absolute;
+    //     bottom: 50px;
+    //     right: 0px;
+    // }
 
     /* .ant-table-row ant-table-row-level-0 {
         display: flex;
@@ -1481,7 +1490,8 @@
         border-bottom: 1px solid #ebedf0;
         width: 100% !important;
         padding-left: 20px;
-
+        height: 40px !important;
+        line-height: 40px;
     }
 
     .sellpicdivbox {
@@ -1533,7 +1543,7 @@
         display: flex;
         width: 100% !important;
         padding-left: 20px;
-        height: 70px !important;
+        height: 40px !important;
     }
 
     .sellbottomobx {
@@ -1542,7 +1552,7 @@
         border-bottom: 1px solid #ebedf0;
         width: 100% !important;
         padding-left: 20px;
-        height: 40px !important;
+        height: 80px !important;
     }
 
     .sellbuttonfang {

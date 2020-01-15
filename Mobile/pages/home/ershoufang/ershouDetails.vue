@@ -22,8 +22,71 @@
 					<text>76.5万</text>
 				</view>
 			</view>
-			<view class="item01"></view>
-			<view class="item01"></view>
+			<view class="jinbenInfo">
+				<view class="jinbenInfo-item">
+					<view>
+						<text class="item-ti">单价</text>
+						<text class="item-zi">59471元/平米</text>
+					</view>
+					<view>
+						<text class="item-ti">朝向</text>
+						<text class="item-zi">南</text>
+					</view>
+				</view>
+				<view class="jinbenInfo-item">
+					<view>
+						<text class="item-ti">楼层</text>
+						<text class="item-zi">59471元/平米</text>
+					</view>
+					<view>
+						<text class="item-ti">装修</text>
+						<text class="item-zi">南</text>
+					</view>
+				</view>
+				<view class="jinbenInfo-item">
+					<view>
+						<text class="item-ti">年代</text>
+						<text class="item-zi">59471元/平米</text>
+					</view>
+					<view>
+						<text class="item-ti">房本年限</text>
+						<text class="item-zi">南</text>
+					</view>
+				</view>
+				<view class="jinbenInfo-item">
+					<view>
+						<text class="item-ti">类型</text>
+						<text class="item-zi">59471元/平米</text>
+					</view>
+					<view>
+						<text class="item-ti">产权</text>
+						<text class="item-zi">南</text>
+					</view>
+				</view>
+			</view>
+			<view class="desc-container">
+				<view class="desc-title">
+					<h2>房源详情</h2>
+				</view>
+				<view class="desc-section">
+					<h3>核心卖点</h3>
+					<text>户型结构：建筑面积121平米，3室2厅2卫，钢混结构，户型方正，楼层适中，三面采光。紧凑的户型没有浪费面积，是*的闹市区经典房源。装修情况：精致新装。</text>
+				</view>
+				<view class="desc-section">
+					<h3>业主心态</h3>
+					<text>房子是准备自己住一辈子的，现在工作换地方，诚心出售，遇有缘人</text>
+				</view>
+				<view class="desc-section">
+					<h3>服务介绍</h3>
+					<text>本人从事房地产多年，公司有大量好房源，欢迎进入我的店铺查看，欢迎随时电话*，相信我的专业，为您置业安家保驾护航</text>
+				</view>
+			</view>
+			<view class="map-bar">
+				<view class="xiaoqu">
+					<h2>小区：申佳上海时光</h2>
+				</view>
+				<view class="address">渝北－银梭大道1号</view>
+			</view>
 		</view>
 		<nav-bottom></nav-bottom>
 		<!-- <uni-goods-nav class="dibu" :fill="true" :options="options" :button-group="buttonGroup" @click="onClick" @buttonClick="buttonClick"></uni-goods-nav> -->
@@ -147,7 +210,7 @@ export default {
 	flex-flow: column;
 }
 .xiangqing-table {
-	padding: 30upx 30upx 100upx 30upx;
+	padding: 30upx 30upx 110upx 30upx;
 	.biaoti {
 		font-size: 34upx;
 		overflow: hidden;
@@ -157,7 +220,61 @@ export default {
 		-webkit-line-clamp: 2;
 	}
 	.detail-bar{
+		width: 100%;
 		display: flex;
+		border-bottom: 1upx solid #f0f0f0;
+		view{
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			flex: 1;
+		}
+	}
+	.jinbenInfo{
+		border-bottom: 1upx solid #f0f0f0;
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		padding: 38upx 0 10upx 0;
+		font-size: 30upx;
+		color: #333;
+		.jinbenInfo-item{
+			width: 100%;
+			display: flex;
+			margin-bottom: 28upx;
+			view{
+				width: 50%;
+				.item-ti{
+					margin-right: 12px;
+					color: #9AA0A6;
+				}
+			}
+		}
+	}
+	.desc-container{
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		padding: 28upx 0;
+		font-size: 28upx;
+		border-bottom: 1upx solid #f0f0f0;
+		color: #333;
+		view{
+			display: flex;
+			flex-direction: column;
+			padding: 14upx 0;
+		}
+	}
+	.map-bar{
+		display: flex;
+		flex-direction: column;
+		width: 100%;
+		padding: 28upx 0;
+		font-size: 26upx;
+		.address{
+			color: #999;
+			margin: 14upx 0;
+		}
 	}
 }
 .dibu{
@@ -165,5 +282,14 @@ export default {
 	position: fixed;
 	bottom: 0upx;
 	right: 0upx;
+}
+h2{
+	font-size: 32upx;
+	padding: 0 0;
+}
+h3{
+	color: #999;
+	font-weight: 400;
+	margin-bottom: 12upx;
 }
 </style>

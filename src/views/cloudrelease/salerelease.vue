@@ -74,7 +74,7 @@
             </div>
 
             <div class="tabcontent" v-if="current==1">
-                <seleinter @getSeconde="getSeconds" :array='QunFalist' :value="bieshu"></seleinter>
+                <seleinter @getSeconde="getSeconds"  @getMsg="getSussmsg" :array='QunFalist' :value="bieshu"></seleinter>
             </div>
 
             <div class="tabcontent" v-if="current==2">
@@ -132,6 +132,9 @@
                 // to.path  ( 表示的是要跳转到的路由的地址 eg: /home );
             }
         },
+        mounted(){
+            // this.openNotificationWithIcon('success')
+        },
         methods: {
             callback(key) {
                // console.log('点击tab改变'+key);
@@ -185,7 +188,42 @@
             rest(){
                 this.current = 0
                 // console.log("切换"+this.current)
-            }
+            },
+            //左下角提示单条结果
+            getSussmsg(Msg){
+                console.log("单条结果"+Msg)
+                if(Msg=='sussMsg'){
+                    this.openNotificationWithIcon('success')
+                }else{
+                    this.openNotificationWithIcon('success')
+                }
+            },
+            openNotificationWithIcon(type) {
+                if (type == 'success') {
+                    this.$notification[type]({
+                        message: '发布成功',
+                        placement: 'bottomRight',
+                        bottom: '50px',
+                        right: '500px',
+                        
+                        description:
+                            '22',
+                    });
+
+                    // this.$emit("getSeconde", this.bid);
+                }
+                if (type == 'error') {
+                    this.$notification[type]({
+                        message: '发布失败',
+                        placement: 'bottomRight',
+                        bottom: '50px',
+                        right: '500px',
+                        duration: 2,
+                        description:
+                            '房源失败数据不能为空',
+                    });
+                }
+            },
         },
     };
 </script>

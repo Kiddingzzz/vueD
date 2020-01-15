@@ -2,24 +2,29 @@
     <div class="susswrap">
         <a-layout>
             <a-layout-content class="content" :style="{ background: '#fff',margin: 0, minHeight: '280px' }">   
-                <a-spin tip="房源发布已成功，系统正在审核中，请耐心等待......" :spinning="spinning">
+                <div class="content_suss">
+                    <i class="iconfont icon-chenggong" style="font-size: 70px;"></i>
+                    <h2>房源发布已成功，系统正在审核中，可在发布结果查看审核结果</h2>
+                    <div class="content_btn">
+                        <a-button type="primary" class="goon_btn" @click="goon">继续发布</a-button>
+                        <a-button type="primary" class="goon_btn" @click=" backlist()">查看结果</a-button>
+                    </div>
+                </div>
+                <!-- <a-spin tip="房源发布已成功，系统正在审核中，请耐心等待......" :spinning="spinning">
                     <div class="spin-content">
                         <a-table class="fabutable" :columns="columns" :dataSource="listfb" >
                             <span slot="operation" slot-scope="text, record" class="caozuo">
-                                <!-- <a href="javascript:;" @click="update(record.id)">修改</a>
+                                <a href="javascript:;" @click="update(record.id)">修改</a>
                                 <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
                                     <a href="#">删除</a>
-                                </a-popconfirm> -->
+                                </a-popconfirm>
                                 <div class="yes" v-if="record.publishStatus=='已发布'"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
                                 <div class="yes" v-else><i class="iconfont icon-shibai"></i><span>审核失败</span></div>
                             </span>
                         </a-table> 
-                        <div class="content_btn">
-                            <a-button type="primary" class="goon_btn" @click="goon">继续发布</a-button>
-                            <a-button type="primary" class="goon_btn" @click="redirct()">一键录入</a-button>
-                        </div>  
+                          
                     </div>
-                </a-spin>
+                </a-spin> -->
             </a-layout-content>
         </a-layout>
     </div>
@@ -46,7 +51,7 @@ const columns = [{
 ];    
     export default {
         name: 'susstable',
-        props: ['spintime','checkedKey'],
+        // props: ['spintime','checkedKey'],
         data() {
             return {
                 listfb:[],
@@ -70,12 +75,12 @@ const columns = [{
             }else if(this.checkedKey=='2'){
                 this.routerUrl = '/shangpuluru'
             }
-            console.log("时间"+this.spintime)
-            setTimeout(() => {
-                console.log("2")
-                this.GetShowList()
-                this.spinning = false;
-            }, this.spintime*15000);
+            // console.log("时间"+this.spintime)
+            // setTimeout(() => {
+            //     console.log("2")
+            //     this.GetShowList()
+            //     this.spinning = false;
+            // }, this.spintime*15000);
         },
         activated() {
            this.GetShowList()
@@ -141,20 +146,19 @@ const columns = [{
         .content {
             display: flex;
             flex-direction: column;
-            .fabutable{
-                .caozuo{
-                    .yes{
-                        display: flex;
-                        align-items: center;
-                    }
-                }
-            }
-            // .content_suss {
-            //     display: flex;
-            //     flex-direction: column;
-            //     align-items: center;
-            //     font-size: 25px;
+            // .fabutable{
+            //     .caozuo{
+            //         .yes{
+            //             display: flex;
+            //             align-items: center;
+            //         }
+            //     }
             // }
+            .content_suss {
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+            }
             .content_btn {
                 display: flex;
                 justify-content: flex-end;

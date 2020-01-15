@@ -14,7 +14,7 @@
                     </a-input>
                 </a-form-item>
                 <a-form-item>
-                    <label>登录密码:</label>
+                    <label>新密码:</label>
                     <a-input type="password" class="inputs" placeholder="请输入6-20个由大小字母、数字、标点组成的密码" v-decorator="['password', { 
                 validateTrigger: 'blur',
                 rules: [
@@ -46,13 +46,13 @@
                       validator: checkphoneNumber,
                     },
                   ] }]"></a-input>
-                <button class="btns-code" @click="sendcodeh()" :disabled='disabled'>{{getCodeText}}</button> 
+                <a-button class="btns-code" @click="sendcodeh()" :disabled='disabled'>{{getCodeText}}</a-button> 
                 </a-form-item>
                 <a-form-item>
                     <label class="codecomfire">验证码:</label>
                     <a-input type="text" class="inputs-number" placeholder="请确认您手机收到的验证码" v-model="sendCode"></a-input>
                 </a-form-item>
-                <button class="btn-forget" html-type="submit">提交</button>
+                <button class="btn-forget" html-type="submit" :disabled="dis" :loading="loading">提交</button>
             </a-form>
             <div class="close-btn" @click="closeMask">
                 <i class="iconfont icon-guanbi"></i>
@@ -92,6 +92,9 @@
         },
         data() {
             return {
+                loading:false,
+                //取消禁止点击
+                dis:false,
                 visible: false,
                 showMask: false,
                 hobby2: '',
@@ -119,10 +122,16 @@
             handleOk(e) {
                 console.log(e);
                 this.visible = false;
+                this.sendCode = '';
+                this.loading = false;
+                 this.phoneNumber = ''
             },
             closeMask() {
                 this.showMask = false;
                 this.form.resetFields();
+                this.sendCode = '';
+                this.loading = false;
+                this.phoneNumber = ''
                 //console.log("手动关闭后重置输入")
             },
             handleSubmit(e) {
@@ -155,6 +164,7 @@
             },
             checkphoneNumber(rule, value, callback) {
                 if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(value)) {
+                    this.phoneNumber=''
                     callback('请填写正确的手机号');
                 } else {
                     this.phoneNumber=value
@@ -162,8 +172,14 @@
                 }
             },
             async  sendcodeh() {
-                this.getCodeText = "发送中...";
+                console.log("发送验证码前的电话号码:"+this.phoneNumber)
                 this.disabled = true;
+                if(this.phoneNumber=='' || !/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber)){
+                    this.$message.error('手机号码不能为空,且手机号码必须格式正确！');
+                    this.disabled = false;
+                    return;
+                }
+                this.getCodeText = "发送中...";
                 console.log("电话号码：")
                 console.log(this.phoneNumber)
                 if(this.phoneNumber=='')
@@ -182,6 +198,9 @@
                                     }, 1000);
                             }
                             else{
+                                this.disabled = false;
+                                 clearInterval(this.Timer);
+                                 this.getCodeText = "获取验证码"
                                 this.$message.error('验证码发送失败！');
                            }
                 })
@@ -233,6 +252,9 @@
         watch: {
             value(newVal, oldVal) {
                 this.showMask = newVal;
+                if(this.showMask==false){
+                    this.phoneNumber = ''
+                }
             },
             showMask(val) {
                 clearInterval(this.Timer);

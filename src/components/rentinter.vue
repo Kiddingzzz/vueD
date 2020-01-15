@@ -477,8 +477,8 @@
                                         that.$http.post(yuming,datas).then(Responses=>{
                                             if(i==number){
                                                 clearInterval(interval);
-                                                that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
-                                               
+                                                // that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
+                                                that.Msg('success')
                                             }
                                         })
                                     }
@@ -521,6 +521,18 @@
                     });
                 }
             },
+            Msg(type){
+                if (type == 'success') {
+                    this.$notification[type]({
+                        message: '审核成功',
+                        placement: 'bottomRight',
+                        bottom: '50px',
+                        right: '500px',
+                        description:
+                            '您的房源已全部审核完毕，可在发布结果查看发布结果',
+                    });
+                }
+            }
         },
 
     };

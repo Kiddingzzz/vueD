@@ -15,32 +15,39 @@
         </div>
         <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk" @cancel="cancelClick"
             :destroyOnClose="true" cancelText="取消" okText="确定">
-            <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
-            <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
-                <br /><br />
-                <a-input-search placeholder="复制链接" @search="onSeaRenTing" :disabled="disabled" enterButton="立即秒录" size="large" />
-                <a-spin :spinning="spinning">
-                </a-spin>
-            </p>
-            <div class="leaselogo">
-                <a href="https://cq.58.com/zufang" target="_blank"><img class="wuba"
-                        src="../../assets/logo/58logo.png"></a>
-                <a href="https://cq.zu.anjuke.com" target="_blank"><img class="anju"
-                        src="../../assets/logo/anjuke.jpg"></a>
-                <a href="https://cq.zu.fang.com" target="_blank"><img class="fang"
-                        src="../../assets/logo/fangtianxia.jpg"></a>
-            </div>
-            <div class="leasefilter">
-                <ul class="leasesale-content-tip clear" style="margin:0px">
-                    <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
-                    <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
-                    <li><span>2.秒入图片小于600*450自动过滤;</span></li>
-                    <li><span>3.本功能暂时只支持秒录 58同城、安居客、房天下、
-                            今题网、去114网、新浪网、焦点网、列表网、第一时间房源网、
-                            赶场网、久久厂房网、开州在线网、优优好房、阿里司法拍卖、
-                            京东司法拍卖、公拍网、人民法院诉讼资产网、中国拍卖行业协会的房源;</span></li>
-                </ul>
-            </div>
+             <a-spin :spinning="spinning">
+                <div style="height:420px;display:flex;flex-direction: column;justify-content: space-between;" >
+                    <div>
+                        <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
+                        <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
+                            <br /><br />
+                            <a-input-search placeholder="例如：https://cq.58.com/zufang/40823717413021x.shtml" @search="onSeaRenTing" :disabled="disabled" enterButton="立即秒录" size="large" />
+                            <!-- <a-spin :spinning="spinning">
+                            </a-spin> -->
+                        </p>
+                        <div class="leaselogo">
+                            <a href="https://cq.58.com/zufang" target="_blank"><img class="wuba"
+                                    src="../../assets/logo/58logo.png"></a>
+                            <a href="https://cq.zu.anjuke.com" target="_blank"><img class="anju"
+                                    src="../../assets/logo/anjuke.jpg"></a>
+                            <a href="https://cq.zu.fang.com" target="_blank"><img class="fang"
+                                    src="../../assets/logo/fangtianxia.jpg"></a>
+                        </div>
+                    </div>
+                    <div class="leasefilter">
+                        <ul class="leasesale-content-tip clear" style="margin:0px">
+                            <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
+                            <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
+                            <li><span>2.秒入图片小于600*450自动过滤;</span></li>
+                            <li><span>3.本功能暂时只支持秒录 58同城、安居客、房天下、
+                                    今题网、去114网、新浪网、焦点网、列表网、第一时间房源网、
+                                    赶场网、久久厂房网、开州在线网、优优好房、阿里司法拍卖、
+                                    京东司法拍卖、公拍网、人民法院诉讼资产网、中国拍卖行业协会的房源;</span></li>
+                        </ul>
+                    </div>
+                </div>
+            
+            </a-spin>
         </a-modal>
         <!-- <a-modal title="添加小区" v-model="addxq" @ok="addok">
             <div style="width:100%">
@@ -317,9 +324,10 @@
                             <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" v-model="ref.houseXingzhi" />
                         </a-form-item>
 
-                        <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
+                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
                             validate-status="">
-                            <a-checkbox>水</a-checkbox>
+                            <a-checkbox-group :options="plainOptionsjichu" v-model="jichucheckedList" />
+                            <!--<a-checkbox>水</a-checkbox>
                             <a-checkbox>电</a-checkbox>
                             <a-checkbox>煤气/天然气</a-checkbox>
                             <a-checkbox>有线电视</a-checkbox>
@@ -327,8 +335,8 @@
                             <a-checkbox>车位</a-checkbox>
                             <a-checkbox>露台</a-checkbox>
                             <a-checkbox>阁楼</a-checkbox>
-                            <a-checkbox>储藏室/地下室</a-checkbox>
-                        </a-form-item> -->
+                            <a-checkbox>储藏室/地下室</a-checkbox> -->
+                        </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*配套设施" has-feedback
                             validate-status="">
                             <a-checkbox-group :options="plainOptionspeitao" v-model="peitaocheckedList" />
@@ -377,12 +385,12 @@
                                 <label class="sealelabeltle">*信息标题：</label><label>好的标题是增加点击，吸引眼球第一步！</label>
                             </div>
                             <div>
-                                <a-input placeholder="字数限制10-30" v-model="ref.renTingTitle" style="width:50%;" />
+                                <a-input placeholder="字数限制10-30" v-model="ref.renTingTitle" style="width:70%;" />
                             </div>
                         </div>
-                        <div class="sealetilerbox">
+                        <div class="sealetilerbox" style="width: 70%;">
                             <div class="sealetiler-firstbox">
-                                <label class="sealelabeltle">*信息描述：</label><label>30-300字效果为最佳</label>
+                                <label class="sealelabeltle">*信息描述：</label><label>20-300字效果为最佳</label>
                             </div>
                             <div>
                                 <a-textarea :rows="6" v-model="ref.renTingHouse" />
@@ -392,9 +400,9 @@
                                 </div>
                             </div>
                         </div>
-                         <div class="sealetilerbox">
+                         <div class="sealetilerbox" style="width: 70%;">
                             <div class="sealetiler-firstbox">
-                                <label class="sealelabeltle">*服务介绍：</label><label>30-300字效果为最佳</label>
+                                <label class="sealelabeltle">*服务介绍：</label><label>20-300字效果为最佳</label>
                             </div>
                             <div>
                                 <a-textarea :rows="6" v-model="ref.renTingFuWu" />
@@ -464,12 +472,15 @@
                             <div class="laberbox">
                                 <span class="laberboxtitle">室内照片: </span>
                                 <div class="shineipadd">
+                                    最多20张。您可以<span class="sellorangelaber">发布客厅/卧室/厨房</span>
+                                </div>等3张以上照片可帮助您获得较好效果！
+                                <!-- <div class="shineipadd">
                                     最多10张。您可以<label class="piclaber">从我的图库选择</label>
                                     <a-button type="" class="buttontuku">我的图库</a-button>
                                     <a-button type="" class="buttontuku">高清图库</a-button>
                                     客厅/卧室/厨房等3张以上照片可帮助您获得较好效果！
                                     <label class="orangelaber">可拖拽交换位置</label>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="tupianbox">
                                 <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
@@ -489,9 +500,9 @@
                                 <div class="shineipadd">
                                     <label
                                         class="orangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图</label>
-                                    <a-button type="" class="buttontuku">我的图库</a-button>
+                                    <!-- <a-button type="" class="buttontuku">我的图库</a-button>
                                     <a-button type="" class="orangetuku">房型图库</a-button>
-                                    <a-button type="" class="buttontuku">在线绘制</a-button>
+                                    <a-button type="" class="buttontuku">在线绘制</a-button> -->
                                 </div>
                             </div>
                             <div class="tupianbox">
@@ -505,14 +516,14 @@
                             <div class="laberbox">
                                 <span class="laberboxtitle">小区图片:</span>
                                 <div class="shineipadd">
-                                    <span>最多10张。您可以</span>
-                                    <label class="piclaber">从我的图库选择</label>
+                                    <span>最多10张。</span>
+                                    <!-- <label class="piclaber">从我的图库选择</label>
                                     <span>或者</span>
                                     <label class="piclaber">从小区图库选择</label>
                                     <a-button type="" class="buttontuku">我的图库</a-button>
-                                    <a-button type="" class="buttontuku">小区图库</a-button>
+                                    <a-button type="" class="buttontuku">小区图库</a-button> -->
                                 </div>
-                                <div class="xiala">
+                                <!-- <div class="xiala">
                                     <a-dropdown>
                                         <a-menu slot="overlay">
                                             <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
@@ -522,7 +533,7 @@
                                             <a-icon type="up" />
                                         </a-button>
                                     </a-dropdown>
-                                </div>
+                                </div> -->
                             </div>
                             <div class="radisflex">
                                 <div class="tupianbox">
@@ -551,13 +562,13 @@
                             <div class="laberbox">
                                 <span class="laberboxtitle">房源视频:</span>
                                 <label> 视频大小在300M内，视频长度在1-3分钟为最佳，视频过短新三网审核不予通过。</label>
-                                <div>
+                                <!-- <div>
                                     <a-upload name="file" :multiple="true"
                                         action="https://www.mocky.io/v2/5cc8019d300000980a055e76" :headers="headers">
                                         <a-button class="updatedspbutton">
                                             <a-icon type="upload" />添加视频 </a-button>
                                     </a-upload>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                         <div class="bottomobx">
@@ -589,7 +600,8 @@
     const hezu = ['合租', '整租'];
     const optionaddress = ['主卧', '次卧', '床位', '隔断间'];
     const optionsex = ['性别不限', '限男生', '限女生', '限夫妻',];
-    const plainOptionspeitao = ['阳台', '热水器', '电视', '空调', '冰箱', '洗衣机', '床', '宽带', '暖气', '衣柜', '沙发', '可做饭', '卫生间'];
+    const plainOptionsjichu = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室'];
+    const plainOptionspeitao = ['桌椅', '燃气灶', '抽烟机','阳台', '热水器', '电视', '空调', '冰箱', '洗衣机', '床', '宽带', '暖气', '衣柜', '沙发', '可做饭', '卫生间'];
     export default {
         data() {
             return {
@@ -614,6 +626,8 @@
                 optionaddress,
                 plainOptionspeitao,
                 peitaocheckedList: [],
+                plainOptionsjichu,
+                jichucheckedList: [],
                 hezu,
                 zhifu,
                 optionsex,
@@ -739,6 +753,7 @@
                             console.log(`222` + JSON.stringify(this.ref))
                             this.peitaocheckedList = this.ref.renTingPeiTao
                             //字符串
+                            this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
                             this.ceng = this.ref.renTingLouceng.substring(0, this.ref.renTingLouceng.indexOf("/"));
                             this.lou = this.ref.renTingLouceng.substring(this.ref.renTingLouceng.indexOf("/") + 1, this.ref.renTingLouceng.length);
                             let shi = this.ref.renTingHuXing.indexOf("室");
@@ -857,6 +872,7 @@
                 this.valuehz="合租"
                 this.ceng = '';
                 this.lou = '';
+                this.jichucheckedList = []
             },
             cancelClick(){
                 this.spinning = false;
@@ -900,6 +916,9 @@
     }
 </script>
 <style lang="less" scoped>
+.ant-checkbox-group {
+        margin-top: 10px;
+    }
     .leaselogo {
         display: flex;
         align-items: center;
@@ -1117,7 +1136,7 @@
     .laberbox {
         display: flex;
         align-items: center;
-
+        height: 40px;
         .laberboxtitle {
             color: red;
             padding-right: 10px;
@@ -1156,7 +1175,7 @@
         display: flex;
         width: 100% !important;
         padding-left: 20px;
-        height: 70px !important;
+        height: 40px !important;
     }
 
     .bottomobx {
@@ -1165,7 +1184,7 @@
         border-bottom: 1px solid #ebedf0;
         width: 100% !important;
         padding-left: 20px;
-        height: 40px !important;
+        height: 70px !important;
     }
 
     .buttonfang {

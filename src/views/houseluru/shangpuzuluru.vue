@@ -15,32 +15,38 @@
         </div>
         <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @ok="handleOk" :destroyOnClose="true"
             cancelText="取消" okText="确定">
-            <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
-            <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
-                <br /><br />
-                <a-input-search placeholder="复制链接" @search="onSearch" :disabled="disabled" enterButton="立即秒录" size="large" />
-                <a-spin :spinning="spinning">
-                </a-spin>
-            </p>
-            <div class="shangpulogo">
-                <a href="https://cq.58.com/shangpu" target="_blank"><img class="wuba"
-                        src="../../assets/logo/58logo.png"></a>
-                <a href="https://cq.sydc.anjuke.com/sp-zu" target="_blank"><img class="anju"
-                        src="../../assets/logo/anjuke.jpg"></a>
-                <a href="https://cq.shop.fang.com/zu/house/kw/" target="_blank"><img class="fang"
-                        src="../../assets/logo/fangtianxia.jpg"></a>
-            </div>
-            <div class="lurufontU">
-                <ul class="lurusale-content-tip clear" style="margin:0px">
-                    <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
-                    <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
-                    <li><span>2.秒入图片小于600*450自动过滤;</span></li>
-                    <li><span>3.本功能暂时只支持秒录 58同城、安居客、房天下、
-                            今题网、去114网、新浪网、焦点网、列表网、第一时间房源网、
-                            赶场网、久久厂房网、开州在线网、优优好房、阿里司法拍卖、
-                            京东司法拍卖、公拍网、人民法院诉讼资产网、中国拍卖行业协会的房源;</span></li>
-                </ul>
-            </div>
+            <a-spin :spinning="spinning">
+                <div style="height:420px;display:flex;flex-direction: column;justify-content: space-between;" >
+                    <div>
+                        <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
+                        <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
+                            <br /><br />
+                            <a-input-search placeholder="例如：https://cq.58.com/zufang/40823717413021x.shtml" @search="onSearch" :disabled="disabled" enterButton="立即秒录" size="large" />
+                            <a-spin :spinning="spinning">
+                            </a-spin>
+                        </p>
+                        <div class="shangpulogo">
+                            <a href="https://cq.58.com/shangpu" target="_blank"><img class="wuba"
+                                    src="../../assets/logo/58logo.png"></a>
+                            <a href="https://cq.sydc.anjuke.com/sp-zu" target="_blank"><img class="anju"
+                                    src="../../assets/logo/anjuke.jpg"></a>
+                            <a href="https://cq.shop.fang.com/zu/house/kw/" target="_blank"><img class="fang"
+                                    src="../../assets/logo/fangtianxia.jpg"></a>
+                        </div>
+                    </div>
+                    <div class="lurufontU">
+                        <ul class="lurusale-content-tip clear" style="margin:0px">
+                            <li><span><i class="iconfont icon-tishi"></i>贴心提示:</span></li>
+                            <li><span>1.由于最近安居客、58、赶集对图片审核比较严格，尽量不要秒录图片带有网站水印的房源;图例</span></li>
+                            <li><span>2.秒入图片小于600*450自动过滤;</span></li>
+                            <li><span>3.本功能暂时只支持秒录 58同城、安居客、房天下、
+                                    今题网、去114网、新浪网、焦点网、列表网、第一时间房源网、
+                                    赶场网、久久厂房网、开州在线网、优优好房、阿里司法拍卖、
+                                    京东司法拍卖、公拍网、人民法院诉讼资产网、中国拍卖行业协会的房源;</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </a-spin>
         </a-modal>
         <!-- 基本信息 -->
         <div class="luruwrap">
