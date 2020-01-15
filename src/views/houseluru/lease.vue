@@ -688,8 +688,14 @@
                 saveRes: {},
                 leasestyle: {
                     height: '470px'
-                }
+                },
+                RtreciveId:'',
             }
+        },
+        activated() {
+            this.RtreciveId = this.$route.params.id
+            if (this.RtreciveId!= undefined && this.RtreciveId!= null)
+                this.Rtbackfbdatas(this.RtreciveId);
         },
         mounted() {
             // this.kanfang="随时看房";
@@ -699,7 +705,7 @@
             this.userId = update.userId;
         },
         methods: {
-
+           
             uuid() {
                 var s = [];
                 var hexDigits = "0123456789abcdef";
@@ -776,7 +782,7 @@
                             }
                             var imgH = {};
                             imgH.url = ss[0],
-                                imgH.uid = '-1',
+                                imgH.uid = '1',
                                 imgH.name = 'xxx.jpg',
                                 imgH.status = 'done',
                                 this.imgHeaderList.push(imgH);
@@ -784,7 +790,7 @@
 
                             var imgFangxing = {};
                             imgFangxing.url = res.data.renTingFengImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                imgFangxing.uid = '-1',
+                                imgFangxing.uid = '50',
                                 imgFangxing.name = 'xxx.jpg',
                                 imgFangxing.status = 'done',
                                 this.fangxinlist.push(imgFangxing);
@@ -810,12 +816,19 @@
 
             },
             async saveHouse() {
-                    this.saveRes.renTingTitle=this.ref.renTingTitle
-                    this.saveRes.renTingZujin=this.ref.renTingZujin
-                    this.saveRes.renTingMianji=this.ref.renTingMianji
-                    this.saveRes.Zhuangxiu=this.ref.Zhuangxiu
-                    this.saveRes.renTingHouse=this.ref.renTingHouse
-                     this.saveRes.renTingFuWu=this.ref.renTingFuWu
+                let lujing=`${this.$config.api}/api/cms/renTing/renTinglishHouse`;
+                console.log(this.RtreciveId)
+                if(this.RtreciveId!=undefined&&this.RtreciveId!=null){
+                    lujing=`${this.$config.api}/api/cms/renTing/rtupdatedatahouse`;
+                     this.saveRes.id=this.RtreciveId
+                }
+                    
+                this.saveRes.renTingTitle=this.ref.renTingTitle
+                this.saveRes.renTingZujin=this.ref.renTingZujin
+                this.saveRes.renTingMianji=this.ref.renTingMianji
+                this.saveRes.Zhuangxiu=this.ref.Zhuangxiu
+                this.saveRes.renTingHouse=this.ref.renTingHouse
+                this.saveRes.renTingFuWu=this.ref.renTingFuWu
                 if (this.saveRes.xiaoquName == null && this.saveRes.renTingTitle == null &&
                     this.saveRes.renTingZujin == null  &&
                     this.saveRes.renTingMianji == null && this.saveRes.renTingHuXing == null &&
@@ -824,8 +837,8 @@
                     this.openNotificationWithIcon('error')
                 }
                 else {
-                    
-                    await this.$http.post(`${this.$config.api}/api/cms/renTing/renTinglishHouse`, this.saveRes).then(response => {
+                    console.log(lujing)
+                    await this.$http.post(lujing, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
                             this.leasecearl()
@@ -833,6 +846,56 @@
                     })
                 }
 
+            },
+            async Rtbackfbdatas(id){
+               console.log("ttttt")
+               console.log('ok?'+id)
+              await this.$http.get(`${this.$config.api}/api/cms/renTing/`+id+`/renTingbackdata`).then(res => {
+                var ret = res.data.address;
+                this.saveRes = res.data;
+                this.address =this.saveRes.renTingQuyu
+                this.chaoxiang =this.saveRes.chaoxiang;
+                this.spinning = false;
+                this.ref = res.data;
+                console.log(`222` + JSON.stringify(this.ref))
+                this.peitaocheckedList = this.ref.renTingPeiTao
+                //字符串
+                this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
+                this.ceng = this.ref.renTingLouceng.substring(0, this.ref.renTingLouceng.indexOf("/"));
+                this.lou = this.ref.renTingLouceng.substring(this.ref.renTingLouceng.indexOf("/") + 1, this.ref.renTingLouceng.length);
+                let shi = this.ref.renTingHuXing.indexOf("室");
+                let ting = this.ref.renTingHuXing.indexOf("厅");
+                let wei = this.ref.renTingHuXing.indexOf("卫");
+                this.selectedShi = this.ref.renTingHuXing.substring(0, shi);
+                this.selectedTing = this.ref.renTingHuXing.substring(shi + 1, ting);
+                this.selectedWei = this.ref.renTingHuXing.substring(ting + 1, wei);
+                this.spinning = false;
+                var shineiImg = res.data.renTingShineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
+                var ss = shineiImg.split(",")
+                this.weiyiUserId = res.data.weiYiUrl;
+                for (var i = 0; i < ss.length; i++) {
+                    var imgUrl = {};
+                    imgUrl.url = ss[i];
+                    imgUrl.uid = i;
+                    imgUrl.name = 'xxx.jpg';
+                    imgUrl.status = 'done';
+                    this.shineiList.push(imgUrl);
+                }
+                var imgH = {};
+                    imgH.url = ss[0],
+                    imgH.uid = '1',
+                    imgH.name = 'xxx.jpg',
+                    imgH.status = 'done',
+                    this.imgHeaderList.push(imgH);
+
+
+                var imgFangxing = {};
+                imgFangxing.url = res.data.renTingFengImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                imgFangxing.uid = '50',
+                imgFangxing.name = 'xxx.jpg',
+                imgFangxing.status = 'done',
+                this.fangxinlist.push(imgFangxing);    
+                })    
             },
             openNotificationWithIcon(type) {
                 if (type == 'success') {

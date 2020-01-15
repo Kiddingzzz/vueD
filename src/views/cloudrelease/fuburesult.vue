@@ -22,7 +22,7 @@
             </div>   
             <a-table class="fabutable" :columns="columns" :dataSource="listfb" >
                     <span slot="operation" slot-scope="text, record" class="caozuo">
-                        <a v-if="record.publishStatus!='已发布'" href="javascript:;" @click="update(record.id)">修改</a>
+                        <a v-if="record.publishStatus!='已发布'" href="javascript:;" @click="update(record)">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="confirm(record)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
@@ -84,12 +84,21 @@ export default {
         this.GetShowList()
     },
     methods: {
-        update(sid){
-            const that = this.$router
-            that.replace({
-                       name: 'Sell',
-                        params: { id: sid }
-                 })   
+        update(list){
+              const that = this.$router
+            if(list.houseType=="二手房"){
+                that.replace({
+                        name: 'Sell',
+                            params: { id: list.id }
+                    })   
+            }
+             if(list.houseType=="整租"||list.houseType=="合租"){
+               that.replace({
+                        name: 'Lease',
+                            params: { id: list.id }
+                    })   
+            }
+           
         },
         confirm(list) {
             this.onDeletefb(list)
