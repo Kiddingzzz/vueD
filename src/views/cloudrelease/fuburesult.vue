@@ -15,12 +15,15 @@
                     <div>
                         3.库存满时，不想自动删除最旧房源，发布时推送设置可以选择待上架，再去网站后台上架房源。
                     </div>
+                    <div>
+                        4.发布结果只会显示三天之内发布的。请妥善处理
+                    </div>
                 </div>
             </div>   
             <a-table class="fabutable" :columns="columns" :dataSource="listfb" >
                     <span slot="operation" slot-scope="text, record" class="caozuo">
                         <a v-if="record.publishStatus!='已发布'" href="javascript:;" @click="update(record.id)">修改</a>
-                        <a-popconfirm title="确定删除?" @confirm="confirm(record.id)"  okText="确定" cancelText="取消">
+                        <a-popconfirm title="确定删除?" @confirm="confirm(record)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
                     </span>
@@ -44,12 +47,18 @@ const columns = [{
     }, {
         title: '发布信息',
         dataIndex: 'publishStatus',
-        width:'35%'
+        width:'20%'
     },{
+        title: '房源类型',
+        dataIndex: 'houseType',
+        scopedSlots: { customRender: 'houseType' },
+        width:'15%'
+    },
+    {
         title: '操作',
         dataIndex: 'operation',
         scopedSlots: { customRender: 'operation' },
-        width:'10%'
+        width:'15%'
     },
     {
         title: '结果',
@@ -82,23 +91,44 @@ export default {
                         params: { id: sid }
                  })   
         },
-        confirm(id) {
-            this.onDeletefb(id)
+        confirm(list) {
+            this.onDeletefb(list)
         },
-        async onDeletefb(id) {
+        async onDeletefb(list) {
+              if(list.houseType=="二手房")
+                     this.ErDelete(list.id);
+              if(list.houseType=="整租"||list.houseType=="合租")
+                      this.RtDelete(list.id);
+                           
+
+            },
+        async ErDelete(id){
                 try {
                     await this.$http.post(`${this.$config.api}/api/cms/house/` + id + `/publishDelete`).then(Response => {
-                        if (Response.status == 200) {
-                            this.$message.success('删除成功！！！');
+                        if (Response.data.code == 200) {
+                            this.$message.success(Response.data.msg);
                             this.GetShowList();
                         }
                     })
                 }
                 catch (e) {
-                    this.$message.warning('系统繁忙，请稍后再试！！！');
+                    this.$message.warning(Response.data.msg);
+                }
+        },
+        async RtDelete(id){
+            try {
+                    await this.$http.post(`${this.$config.api}/api/cms/renTing/` + id + `/renTingPubDelete`).then(Response => {
+                        if (Response.data.code == 200) {
+                          this.GetShowList()
+                            this.$message.success(Response.data.msg);
+                        }
+                    })
+                }
+                catch (e) {
+                    this.$message.warning(Response.data.msg);
                 }
 
-            },
+        },
         async GetShowList(){
                 let update = JSON.parse(localStorage.getItem('update'));
                 console.log( update.userId)
