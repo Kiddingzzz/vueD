@@ -30,11 +30,11 @@
     </div>
     <a-layout>
       <a-layout-sider width="200" style="background: #fff">
-        <!-- :defaultOpenKeys="['sub1']" -->
+        <!--  :openKeys="openKeys" @openChange="onOpenChange" -->
         <a-menu
           mode="inline"
           :defaultSelectedKeys="['/index']"
-          :openKeys="openKeys" @openChange="onOpenChange" 
+          :defaultOpenKeys="['sub1']"
           :style="{ height: '100%', borderRight: 0 }"
           :selectedKeys="[this.$route.path]"
         >
@@ -111,7 +111,8 @@ export default {
         userinfo: [],
         userName:'',
         nat:true,
-        openKeys: [],
+        // openKeys: [],
+        OpenKeys: '',
         W: window.innerWidth,
         H: 64,
         flakesCount: 25, //雪花片数
@@ -124,7 +125,7 @@ export default {
       // console.log(222)
       // let ip = returnCitySN["cip"];
       // console.log('app.vue的ip=================='+ip)
-      this.menuChange()
+      // this.menuChange()
       
     },
     updated () {
@@ -139,11 +140,11 @@ export default {
           this.snow()
         }
 　　},
-    watch:{
-       $route( to , from ){  
-          this.menuChange()
-        }
-    },
+    // watch:{
+    //    $route( to , from ){  
+    //       this.menuChange()
+    //     }
+    // },
     computed:{
       _user(){
         let update = JSON.parse(localStorage.getItem('update'));
@@ -164,30 +165,30 @@ export default {
       });
     },
     methods: {
-      // historyWatch () {
-      //   this.news = (this.$route.path === '/sell' ? 1 : 0);
-      // },
-      menuChange(){
-        //展开当前菜单项 key所对应的 SubMenu 菜单项
-      //  console.log(this.$route.path)
-        if(this.$route.path == '/index'||this.$route.path == '/zufang'||this.$route.path == '/shops'){
-            this.openKeys = ['sub1']
-        }else if(this.$route.path == '/lease'||this.$route.path == '/sell'||this.$route.path == '/shangpuluru'||this.$route.path == '/shangpuzuluru'){
-            this.openKeys = ['sub2']
-        }else if(this.$route.path == '/rentrelease'||this.$route.path == '/salerelease'||this.$route.path == '/fuburesult'){
-            this.openKeys = ['sub3']
-        }else if(this.$route.path == '/zhandian'||this.$route.path == '/tuijian'){
-            this.openKeys = ['sub4']
-        }
-      },
-      onOpenChange(openKeys) {
-        const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
-        if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
-          this.openKeys = openKeys;
-        } else {
-          this.openKeys = latestOpenKey ? [latestOpenKey] : [];
-        }
-      },
+    //   // historyWatch () {
+    //   //   this.news = (this.$route.path === '/sell' ? 1 : 0);
+    //   // },
+    //   menuChange(){
+    //     //展开当前菜单项 key所对应的 SubMenu 菜单项
+    //   //  console.log(this.$route.path)
+    //     if(this.$route.path == '/index'||this.$route.path == '/zufang'||this.$route.path == '/shops'){
+    //         this.openKeys = ['sub1']
+    //     }else if(this.$route.path == '/lease'||this.$route.path == '/sell'||this.$route.path == '/shangpuluru'||this.$route.path == '/shangpuzuluru'){
+    //         this.openKeys = ['sub2']
+    //     }else if(this.$route.path == '/rentrelease'||this.$route.path == '/salerelease'||this.$route.path == '/fuburesult'){
+    //         this.openKeys = ['sub3']
+    //     }else if(this.$route.path == '/zhandian'||this.$route.path == '/tuijian'){
+    //         this.openKeys = ['sub4']
+    //     }
+    //   },
+    //   onOpenChange(openKeys) {
+    //     const latestOpenKey = openKeys.find(key => this.openKeys.indexOf(key) === -1);
+    //     if (this.rootSubmenuKeys.indexOf(latestOpenKey) === -1) {
+    //       this.openKeys = openKeys;
+    //     } else {
+    //       this.openKeys = latestOpenKey ? [latestOpenKey] : [];
+    //     }
+    //   },
       logout(){
               // 清空数据
               //,,,

@@ -73,8 +73,7 @@
                                 <a>{{record.userName}}</a><label class="yangshi">{{record.siteAccountType}}</label>
                         </span>
                         <span slot="action" slot-scope="text, record" >
-                            <a-spin :spinning="zspinning"></a-spin>
-                            <a-button type="primary" @click="DeleteSite(record.id)">删除</a-button>
+                            <a-button type="primary" :spinning="zspinning" @click="DeleteSite(record.id)">删除</a-button>
                             <a-button type="primary">修改密码</a-button>
                             <a-button type="primary" @click="lookpwdbotton(record.siteName)">查看密码</a-button>
                             <a-modal title="查看密码" v-model="lookvisible" @ok="lookpwd" @cancel="close" cancelText="取消" okText="确定">

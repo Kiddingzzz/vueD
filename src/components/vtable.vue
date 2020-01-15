@@ -17,7 +17,7 @@
                     </span>-->
                 </div>
                 <!-- <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">  -->
-                    <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list">
+                <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list" :customRow="handleClickRow">
                     <span slot="operation" slot-scope="text, record, index" class="caozuo">
                         <a href="javascript:;" @click="updateItem(record.id)">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="onDelete(record.id,index)"  okText="确定" cancelText="取消">
@@ -144,7 +144,8 @@
                 updatelist: [],
                 index: [],
                 loadingdele: false,
-                selectedRows: []
+                selectedRows: [],
+                select: true,
             };
         },
         computed: {
@@ -159,7 +160,7 @@
             //     };
             // },
             hasSelected() {
-                console.log(this.selectedRowKeys)
+                // console.log(this.selectedRowKeys)
                 return this.selectedRowKeys.length > 0;
             },
         },
@@ -170,6 +171,23 @@
             this.seachShow();
         },
         methods: {
+            handleClickRow(record, index){
+                return {
+                    on: {
+                        click: () => {
+                            // console.log('序号索引index' + JSON.stringify(record))
+                            if(this.select==true){
+                                this.selectedRowKeys.push(index)
+                                this.selectedRows.push(record)
+                            }else{
+                                this.selectedRowKeys = []
+                                this.selectedRows = []
+                            }
+                            this.select = !this.select
+                        }
+                    }
+                }
+            },
             onSelectChange (selectedRowKeys,selectedRows) {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                 this.selectedRowKeys = selectedRowKeys
@@ -200,7 +218,6 @@
                     this.selectedRowKeys = [];
                 }, 1000);
             },
-           
           async  DeleteList(){
                   this.loadingdele = true;
                 // ajax request after empty completing
@@ -240,7 +257,7 @@
 
             },
             //删除
-            async onDelete(id,index) {
+            async onDelete(id,index) {                
                 console.log("asdgsdfgsdrfgsdfsdfhsfdhsfthsfdtgsh")
                 try {
                     await this.$http.post(`${this.$config.api}/api/cms/house/` + id + `/publishDelete`).then(Response => {

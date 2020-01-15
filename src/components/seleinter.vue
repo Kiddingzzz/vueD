@@ -108,7 +108,7 @@
         {
             key: '1',
             // inter: '/static/img/logoJXW.2d85d52.png',
-            inter: [require('../assets/logo/jingjiren.png'), require('../assets/logo/fang.png')],
+            inter: [require('../assets/logo/fang.png'), require('../assets/logo/jingjiren.png')],
             acctionkey: ['15624687', '可用'],
             leibie: ['第一个', '第二个'],
 
@@ -216,7 +216,7 @@
                                 this.tzvisible=true;
                                 that.$confirm({
                                     title: '提示',
-                                    content: Response.data.msg,
+                                    content: Response.data.returnValue.msg,
                                     okText: '去添加',
                                     cancelText: '取消',
                                     onOk() {

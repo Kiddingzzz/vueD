@@ -6,7 +6,7 @@
                     <i class="iconfont icon-chenggong" style="font-size: 70px;"></i>
                     <h2>房源发布已成功，系统正在审核中，可在发布结果查看审核结果</h2>
                     <div class="content_btn">
-                        <a-button type="primary" class="goon_btn" @click="goon">继续发布</a-button>
+                        <!-- <a-button type="primary" class="goon_btn" @click="goon">继续发布</a-button> -->
                         <a-button type="primary" class="goon_btn" @click=" backlist()">查看结果</a-button>
                     </div>
                 </div>

@@ -16,7 +16,7 @@
                         </template>
                     </span>-->
                 </div>
-                <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list">
+                <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list" :customRow="handleClickRow">
                     <span slot="operation" slot-scope="text, record">
                         <a-popconfirm title="确定删除么？" @confirm="confirm(record.id)" okText="确认" cancelText="取消">
                             <a href="#">删除</a>
@@ -140,6 +140,7 @@
                 loadingRenTing:false,
                 loadingFb:false,
                 selectedRows: [],
+                select: true,
             };
         },
          computed: {
@@ -160,7 +161,7 @@
             //     };
             // },
             hasSelected() {
-                console.log(this.selectedRowKeys)
+                // console.log(this.selectedRowKeys)
                 return this.selectedRowKeys.length > 0;
             },
         },
@@ -172,10 +173,21 @@
             this.RtseachShow();
         },
         methods: {
-            // onSelectChange(selectedRowKeys) {
-            //     console.log('selectedRowKeys changed: ', selectedRowKeys);
-            //     this.selectedRowKeys = selectedRowKeys;
-            // },
+            handleClickRow(record, index){
+                return {
+                    on: {
+                        click: () => {
+                            // console.log('序号索引index' + index)
+                            if(this.select==true){
+                                this.selectedRowKeys.push(index)
+                            }else{
+                                this.selectedRowKeys = []
+                            }
+                            this.select = !this.select
+                        }
+                    }
+                }
+            },
             onSelectChange (selectedRowKeys,selectedRows) {
                 console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                 this.selectedRowKeys = selectedRowKeys
