@@ -3,7 +3,7 @@
         <div class="forget-container">
             <div class="forget-title">{{title}}</div>
             <a-form class="content" :form="form" @submit="handleSubmit">
-                <a-form-item>
+                <!--<a-form-item>
                     <label>会员名称:</label>
                     <a-input type="text" class="inputs" placeholder="请输入您的会员名" v-decorator="['userName', { 
                 validateTrigger: 'blur',
@@ -12,7 +12,7 @@
                   { min: 5, max:25, message: '请输入5-25个字符组成的会员名' }
                 ] }]">
                     </a-input>
-                </a-form-item>
+                </a-form-item>-->
                 <a-form-item>
                     <label>新密码:</label>
                     <a-input type="password" class="inputs" placeholder="请输入6-20个由大小字母、数字、标点组成的密码" v-decorator="['password', { 
@@ -179,7 +179,7 @@
                     this.disabled = false;
                     return;
                 }
-                this.getCodeText = "发送中...";
+              
                 console.log("电话号码：")
                 console.log(this.phoneNumber)
                 if(this.phoneNumber=='')
@@ -187,6 +187,14 @@
                     this.$message.error('手机号码为空！');
                     return;
                 }
+                var pones=  await this.$http.post(`${this.$config.api}/api/cms/acount/phoneIS?phNumber=` + this.phoneNumber)
+                if(pones.data.code=="200"){
+                    this.$message.error('该手机号未注册，请查实！');
+                    this.disabled = false;
+                    return;
+               }
+               else{
+                    this.getCodeText = "发送中...";
                 await this.$http.post(`${this.$config.api}/api/cms/acount/sendyanm?phNumber=` + this.phoneNumber).then(pones => {
                     console.log(pones.data)
                             if(pones.data.backCode=="OK"){
@@ -204,6 +212,8 @@
                                 this.$message.error('验证码发送失败！');
                            }
                 })
+               }
+               
             },
             setTimer() {
                 let holdTime = 60;
@@ -211,7 +221,7 @@
                 this.Timer = setInterval(() => {
                     if (holdTime <= 0) {
                     //   this.getCodeisWaiting = false;
-                    //   this.getCodeBtnColor = "#878787";
+                    //   this.getCodeBtnColor = "#878787";     
                     this.getCodeText = "获取验证码";
                     clearInterval(this.Timer);
                     this.disabled = false;
@@ -221,33 +231,39 @@
                     holdTime--;
                 }, 1000);
             },
-            // async doregister(e) {
-            //     const data = {
-            //         //userNameOrEmailAddress: this.phoneNumber,
-            //         userNameOrEmailAddress: e.userName,
-            //         password: e.password,
-            //         phoneNumber: e.phoneNumber
-            //         // sendCode: this.sendCode,
-            //         // surname: this.phoneNumber
-            //     };
-            //     console.log(`aaaaaaaaaaaaaaaaa` + data)
-            //     try {
-            //         const Statu = `${this.$config.api}/api/cms/acount/register`;
-            //         const res = await this.$http.post(Statu, data);
-            //         console.log(this.phoneNumber);
-            //         this.$emit('childValue', e.userName, e.password)
-            //         setTimeout(() => {
-            //             this.showMask = false;
-            //             this.form.resetFields();
-            //             console.log("注册成功后后重置输入")
-            //         }, 500);
-            //     } catch (error) {
-            //         this.$error({
-            //             icon: "none",
-            //             title: "注册失败"
-            //         });
-            //     }
-            // }
+            async doregister(e) {
+                  console.log(e)
+                if( this.Yztext!=this.sendCode){
+                    this.$message.error('验证码错误！');
+                    return;
+                }
+              
+               else{
+                    const data = {
+                    UserPwd: e.respassword,
+                    phonenumbei: e.phoneNumber
+                    };
+                console.log(`aaaaaaaaaaaaaaaaa` + data)
+                try {
+                    const Statu = `${this.$config.api}/api/cms/acount/rempwd`;
+                    const res = await this.$http.post(Statu, data).then(res=>{
+                       
+                        // this.$emit('childValue', e.userName, e.respassword)
+                        setTimeout(() => {
+                            this.showMask = false;
+                            this.form.resetFields();
+                        }, 500);
+
+                    });
+                   
+                } catch (error) {
+                    this.$error({
+                        icon: "none",
+                        title: "注册失败"
+                    });
+                }
+               }
+            }
         },
         watch: {
             value(newVal, oldVal) {
