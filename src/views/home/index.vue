@@ -342,7 +342,7 @@
                 const res = respones.data;
                 if (pi == undefined) {
                     this.list = res.items;
-                    return
+                    return;
                 } else {
                     if (pi == '不限') {
                         this.quyu = ''
@@ -379,7 +379,7 @@
                         });
                     }
                     //筛选租金
-                    const that = this
+                    const that = this;
                     this.listt = this.listt.filter(function (item) {
                         if (that.ricehigh == 'more') {
                             return that.ricelow <= item.rice

@@ -13,16 +13,16 @@
                 </div>
             </div>
         </div>
-        <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @cancel="cancelClick" @ok="handleOk" :destroyOnClose="true"
-            cancelText="取消" okText="确定">
+        <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="visible" @cancel="cancelClick" @ok="handleOk"
+            :destroyOnClose="true" cancelText="取消" okText="确定">
             <a-spin :spinning="spinning" tip="正在录入中，请耐心等候...">
-                <div style="height:420px;display:flex;flex-direction: column;justify-content: space-between;" >
+                <div style="height:420px;display:flex;flex-direction: column;justify-content: space-between;">
                     <div>
                         <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
                         <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                             <br /><br />
-                            <a-input-search placeholder="例如：https://cq.58.com/zufang/40823717413021x.shtml" @search="onSearch" :disabled="disabled" enterButton="立即秒录"
-                                size="large" />
+                            <a-input-search placeholder="例如：https://cq.58.com/zufang/40823717413021x.shtml"
+                                @search="onSearch" :disabled="disabled" enterButton="立即秒录" size="large" />
                             <!-- <a-spin :spinning="spinning">
                             </a-spin> -->
                         </p>
@@ -155,13 +155,13 @@
                                     {{index}}
                                 </a-select-option>
                             </a-select>
-                            <a-input  placeholder="" class="sellshihaow" />
+                            <a-input placeholder="" class="sellshihaow" />
                             <a-select default-value="单元" class="sellshihaoselw sellmianji">
                                 <a-select-option v-for="(index,i) in zhuang" :key="i" :value="index">
                                     {{index}}
                                 </a-select-option>
                             </a-select>
-                            <a-input  placeholder="" class="sellshihaow" />
+                            <a-input placeholder="" class="sellshihaow" />
                             <label class="sellsmianij">室</label>
                         </a-form-item>
 
@@ -302,7 +302,7 @@
                             <label class="yongjinlabel">≤</label>
                             <a-input-number :min="0" :max="10" :step="0.5" v-model="yongjin" />
                             <label class="sellyongjingbox">%</label>
-                        </a-form-item> 
+                        </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*电梯" has-feedback
                             validate-status="">
                             <a-checkbox :checked="checked" @change="onChange"></a-checkbox>
@@ -496,7 +496,7 @@
                                 <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
                             </a-modal>
                         </div>
-                        <div class="sellshinei selldivallbox">
+                        <div class="sellshinei selldivallbox" style="min-height: 480px !important;">
                             <div class="selllaberbox">
                                 <span class="selllaberboxtitle">室内照片: </span>
                                 <div class="shineipadd">
@@ -511,23 +511,26 @@
                                 </div> -->
                             </div>
                             <div class="selltupianbox">
-                                <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                <!-- <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     listType="picture-card" :fileList="shineiList" @preview="handlePreview"
                                     @change="handleChange">
-                                    <!-- <a-button class="updatedbutton">
-                                            <a-icon type="upload" />上传图片</a-button> -->
+                                    
                                 </a-upload>
-                                <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null"
+                                <a-modal :bodyStyle="style" :visible="previewVisible" :footer="null"  
                                     @cancel="handleCancel">
                                     <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
-                                </a-modal>
+                                </a-modal> -->
+                            </div>
+                            <div style="width:100%;display:flex;flex-wrap: wrap;">
+                                <img-list v-for="(item,index) in PicktureList" :value="item" :key="index"></img-list>
                             </div>
                         </div>
                         <div class="sellshinei selldivallbox">
                             <div class="selllaberbox">
                                 <span class="selllaberboxtitle">&nbsp;房&nbsp;型&nbsp;图:</span>
                                 <div class="shineipadd">
-                                    <label class="sellorangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图</label>
+                                    <label
+                                        class="sellorangelaber">图片来源于互联网，房源如果需要做保真、安选等需要押金的操作时，为避免违规情况，请尽量自己上传原房源户型图</label>
                                     <!-- <a-button type="" class="sellbuttontuku">我的图库</a-button>
                                     <a-button type="" class="sellorangetuku">房型图库</a-button>
                                     <a-button type="" class="sellbuttontuku">在线绘制</a-button> -->
@@ -543,7 +546,7 @@
                         <div class="sellshinei selldivallbox">
                             <div class="selllaberbox">
                                 <span class="selllaberboxtitle">小区图片:</span>
-                                <div class="shineipadd">
+                                <div class="shineipadd"> 
                                     <span>最多10张。</span>
                                     <!-- <span>最多10张。您可以</span>
                                     <label class="sellpiclaber">从我的图库选择</label>
@@ -616,6 +619,7 @@
 </template>
 <script>
     import moment from 'moment';
+    import imgList from './components/img-list.vue';
     const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北', '南北'];
@@ -639,6 +643,9 @@
     const plainOptionsjichu = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室'];
 
     export default {
+        components: {
+            imgList,
+        },
         data() {
             return {
                 loading: false,
@@ -761,11 +768,11 @@
                 notezishu: false,
                 fuwuConditionzishu: false,
                 atittudezishu: false,
-
                 titleerror: false,
                 noteerror: false,
                 atittudeerror: false,
                 fuwuConditionerror: false,
+                PicktureList:[],
             }
         },
         activated(options) {
@@ -786,7 +793,7 @@
             this.gongnuan = "自供暖";
         },
         methods: {
-            onChange (e) {
+            onChange(e) {
                 this.checked = e.target.checked
             },
             blur(data) {
@@ -880,15 +887,15 @@
                     if (response.status == 200) {
                         this.$http.get(`${this.$config.api}/api/cms/urls/url` + '?userId=' + this.userId + '&url=' + this.urlss + '&houseType=' + this.houseType + '&weiYiUrl=' + this.text).then(res => {
                             console.log(`抓取数据:` + JSON.stringify(res.data))
-                            this.yongjin= '2.0', //佣金比例
+                            this.yongjin = '2.0', //佣金比例
                             this.peitaocheckedList = ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间']
                             this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
                             this.checked = true
                             this.laf = res.data;
                             var ret = res.data.address;
-                            if(RegExp(/简/).exec(this.laf.zhuangxiu))
-                                 this.laf.zhuangxiu="简装修";
-                            console.log(this.laf.zhuangxiu)  
+                            if (RegExp(/简/).exec(this.laf.zhuangxiu))
+                                this.laf.zhuangxiu = "简装修";
+                            console.log(this.laf.zhuangxiu)
                             var refQu = ret.indexOf('－');
                             this.refQuyu = ret.substring(0, refQu);
                             this.saveRes = res.data;
@@ -908,16 +915,16 @@
                             const nianqi = this.ref.fangyuanBiaoqian.replace(/<[^>]+>/g, "")
                             // console.log(nianqi)
                             if (nianqi == '新上') {
-                            // console.log("sdgsfsfd")
+                                // console.log("sdgsfsfd")
                                 this.fangyuanBiaoqian = "不满二年";
                                 this.nianxian = this.fangyuanBiaoqian;
-                            }else if(nianqi != '满五年' || nianqi != '满二年' || nianqi != '不满二年'){
+                            } else if (nianqi != '满五年' || nianqi != '满二年' || nianqi != '不满二年') {
                                 this.fangyuanBiaoqian = "满二年";
                                 this.nianxian = this.fangyuanBiaoqian;
-                            }else{
+                            } else {
                                 this.fangyuanBiaoqian = nianqi;
                                 this.nianxian = this.fangyuanBiaoqian;
-                            } 
+                            }
                             // console.log("去掉房源标签含有的html标签成功？==========" + this.fangyuanBiaoqian);
                             this.ceng = this.ref.louceng.substring(0, this.ref.louceng.indexOf("/"));
                             this.lou = this.ref.louceng.substring(this.ref.louceng.indexOf("/") + 1, this.ref.louceng.length);
@@ -944,8 +951,9 @@
                                 imgUrl.url = ss[i];
                                 imgUrl.uid = i;
                                 imgUrl.name = 'xxx.jpg';
-                                imgUrl.status = 'done';
+                                imgUrl.status = 'shinei';
                                 this.shineiList.push(imgUrl);
+                                this.PicktureList.push(imgUrl);
                             }
                             this.imgH.url = ss[0],
                                 this.imgH.uid = '20',
@@ -961,9 +969,8 @@
                                 imgFangxing.status = 'done',
                                 this.fangxinlist.push(imgFangxing);
 
-
                             var XiaoquImg = {};
-                            XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                                XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
                                 XiaoquImg.uid = '60',
                                 XiaoquImg.name = 'xxx.jpg',
                                 XiaoquImg.status = 'done',
@@ -1067,13 +1074,53 @@
                     this.saveRes.imgHeader = this.imgH.url;
                     this.saveRes.title = this.title;
                     this.saveRes.note = this.note;
-                    this.saveRes.fuwuCondition = this.fuwuCondition
-                    this.saveRes.atittude = this.atittude
+                    this.saveRes.fuwuCondition = this.fuwuCondition;
+                    this.saveRes.atittude = this.atittude;
                     await this.$http.post(`${this.$config.api}/api/cms/house/publishHouse`, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.savedisabled = false;
                             this.loading = false;
                             this.openNotificationWithIcon('success')
+                            const arr = this.PicktureList;
+                            const target = {};
+                            let ShineinewObj = [];
+                            let ShiwainewObj = [];
+                            arr.forEach(a => {
+                                const source = JSON.parse(`{"${a.status}":"${a.url}"}`);//利用JSON.parse将对象//格式直接造出来
+                                Object.assign(target,source);
+                                if('shinei' in source){
+                                    ShineinewObj.push(source)
+                                }
+                                else{
+                                    ShiwainewObj.push(source)
+                                }
+                            })
+                            console.log('ShiwainewObj:'+JSON.stringify(ShiwainewObj))
+                            var shineis = [];
+                            var shiwais = [];
+                            for (let index = 0; index < ShineinewObj.length; index++) {
+                                const element = ShineinewObj[index].shinei;
+                                shineis.push(element)
+                            }
+
+                            for (let g = 0; g < ShiwainewObj.length; g++) {
+                                const gs = ShiwainewObj[g].shiwai;
+                                shiwais.push(gs)
+                            }
+                            const res = {
+                                shinei:encodeURIComponent(String(shineis)),
+                                shiwai:encodeURIComponent(String(shiwais)),
+                                weiyiurl: encodeURI(this.text),
+                            }
+                            console.log(res)
+                            $.ajax({
+                                type: 'GET',
+                                async:true,
+                                url: 'http://47.108.24.104:8087/get_user?data=' + JSON.stringify(res),
+                                dataType: 'json', //希望服务器返回json格式的数据
+                                jsonp: "callback",
+                                jsonpCallback: "successCallback",//回调方法
+                            })
                             this.saveRes = {}
                         }
                     })
@@ -1107,7 +1154,8 @@
                             this.savedisabled = false;
                             this.loading = false;
                             this.openNotificationWithIcon('success')
-                            this.saveRes = {}
+                            this.saveRes = {};
+
                         }
                     })
                 }
@@ -1144,7 +1192,7 @@
             // addshowxaqu() {
             //     this.addshowxqu = true;
             // },
-            cancelClick(){
+            cancelClick() {
                 this.spinning = false;
                 this.disabled = false;
             },
@@ -1166,6 +1214,7 @@
                 this.previewVisible = false;
             },
             handlePreview(file) {
+                console.log('file:'+JSON.stringify(file));
                 this.previewImage = file.url || file.thumbUrl;
                 this.previewVisible = true;
             },
@@ -1176,8 +1225,8 @@
             async backfbdata(backid) {
                 console.log("返回id：" + backid)
                 await this.$http.post(`${this.$config.api}/api/cms/house/` + backid + `/backPubData`).then(res => {
-                    this.yongjin= '2.0', //佣金比例
-                    this.peitaocheckedList = ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间']
+                    this.yongjin = '2.0', //佣金比例
+                        this.peitaocheckedList = ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间']
                     this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
                     this.checked = true
                     // console.log(`抓取数据:` + JSON.stringify(res.data))
@@ -1189,8 +1238,8 @@
                     this.chaoxiang = ret.chaoxiang;
                     this.spinning = false;
                     this.ref = res.data;
-                    if(RegExp(/简/).exec(this.laf.zhuangxiu))
-                        this.laf.zhuangxiu="简装修";
+                    if (RegExp(/简/).exec(this.laf.zhuangxiu))
+                        this.laf.zhuangxiu = "简装修";
                     //产权年限
                     this.chanquanNianxian = this.ref.chanquanNianxian
                     //信息标题、价格、面积、房源地址、配套标签
@@ -1257,7 +1306,8 @@
                 })
             },
             //清空数据
-            clear(){
+            clear() {
+                this.PicktureList = [],
                 this.ref.xiaoquName = ''
                 this.ref.chaoxiang = '东'
                 this.ref.address = ''
@@ -1289,8 +1339,8 @@
                 this.imgHeaderList = []
                 this.xiaoQuList = []
                 this.fangxinlist = []
-                this.yongjin= '', //佣金比例
-                this.peitaocheckedList = []
+                this.yongjin = '', //佣金比例
+                    this.peitaocheckedList = []
                 this.jichucheckedList = []
                 this.checked = false
             }
@@ -1516,7 +1566,7 @@
     }
 
     .sellshinei {
-        min-height: 180px !important;
+        min-height: 240px !important;
         flex-flow: column;
         flex: 0 0 auto;
     }

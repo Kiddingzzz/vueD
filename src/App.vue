@@ -42,7 +42,7 @@
             <span slot="title" class="hh"><a-icon type="user" />个人房源</span>
             <a-menu-item key="/index" class="hh">
               <router-link to="index"><i class="iconfont icon-ershoufang"></i>二手房</router-link>
-              <router-link to="test"><i class="iconfont icon-ershoufang"></i>test</router-link>
+              <!-- <router-link to="test"><i class="iconfont icon-ershoufang"></i>test</router-link> -->
             </a-menu-item>
             <a-menu-item key="/zufang" class="hh">
               <router-link to="zufang"><i class="iconfont icon-zufang"></i>租房</router-link>

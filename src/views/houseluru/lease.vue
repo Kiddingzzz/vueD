@@ -483,15 +483,16 @@
                                 </div> -->
                             </div>
                             <div class="tupianbox">
-                                <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+                                <!-- <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     listType="picture-card" :fileList="shineiList" @preview="handlePreview"
                                     @change="handleChange">
-                                    <!-- <a-button class="updatedbutton">
-                                            <a-icon type="upload" />上传图片</a-button> -->
                                 </a-upload>
                                 <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                                     <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
-                                </a-modal>
+                                </a-modal> -->
+                            </div>
+                            <div style="width:100%;display:flex;flex-wrap: wrap;">
+                                <img-list v-for="(item,index) in ZuFangPictureList" :value="item" :key="index"></img-list>
                             </div>
                         </div>
                         <div class="shinei divallbox">
@@ -586,6 +587,7 @@
 </template>
 <script>
     import moment from 'moment';
+    import imgZuFlist from './components/img-ZuFlist.vue';
     const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北', '南北'];
@@ -690,6 +692,7 @@
                     height: '470px'
                 },
                 RtreciveId:'',
+                ZuFangPictureList:[],
             }
         },
         activated() {
@@ -779,6 +782,7 @@
                                 imgUrl.name = 'xxx.jpg';
                                 imgUrl.status = 'done';
                                 this.shineiList.push(imgUrl);
+                                this.PicktureList.push(ZuFangPictureList);
                             }
                             var imgH = {};
                             imgH.url = ss[0],
@@ -841,6 +845,43 @@
                     await this.$http.post(lujing, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
+                            let ShineinewObj = [];
+                            let ShiwainewObj = [];
+                            arr.forEach(a => {
+                                const source = JSON.parse(`{"${a.status}":"${a.url}"}`);//利用JSON.parse将对象//格式直接造出来
+                                Object.assign(target,source);
+                                if('shinei' in source){
+                                    ShineinewObj.push(source)
+                                }
+                                else{
+                                    ShiwainewObj.push(source)
+                                }
+                            })
+                            console.log('ShiwainewObj:'+JSON.stringify(ShiwainewObj))
+                            var shineis = [];
+                            var shiwais = [];
+                            for (let index = 0; index < ShineinewObj.length; index++) {
+                                const element = ShineinewObj[index].shinei;
+                                shineis.push(element)
+                            }
+                            for (let g = 0; g < ShiwainewObj.length; g++) {
+                                const gs = ShiwainewObj[g].shiwai;
+                                shiwais.push(gs)
+                            }
+                            const res = {
+                                shinei:encodeURIComponent(String(shineis)),
+                                shiwai:encodeURIComponent(String(shiwais)),
+                                weiyiurl: encodeURI(this.text),
+                            }
+                            console.log(res)
+                            $.ajax({
+                                type: 'GET',
+                                async:true,
+                                url: 'http://47.108.24.104:8086/get_user?data=' + JSON.stringify(res),
+                                dataType: 'json', //希望服务器返回json格式的数据
+                                jsonp: "callback",
+                                jsonpCallback: "successCallback",//回调方法
+                            })
                             this.leasecearl()
                         }
                     })
@@ -848,7 +889,6 @@
 
             },
             async Rtbackfbdatas(id){
-               console.log("ttttt")
                console.log('ok?'+id)
               await this.$http.get(`${this.$config.api}/api/cms/renTing/`+id+`/renTingbackdata`).then(res => {
                 var ret = res.data.address;
@@ -857,7 +897,6 @@
                 this.chaoxiang =this.saveRes.chaoxiang;
                 this.spinning = false;
                 this.ref = res.data;
-                console.log(`222` + JSON.stringify(this.ref))
                 this.peitaocheckedList = this.ref.renTingPeiTao
                 //字符串
                 this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
@@ -910,7 +949,7 @@
                     this.$router.replace('/rentrelease')
                 }
                 if (type == 'error') {
-                    this.$notification[type]({
+                    this.$notification[type]({     
                         message: '保存失败',
                         placement: 'bottomRight',
                         bottom: '50px',
