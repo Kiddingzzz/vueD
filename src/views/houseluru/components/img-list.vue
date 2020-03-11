@@ -6,12 +6,18 @@
                 @cancel="handleCancel">
                 <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
             </a-modal>
-            <div class="selects">
-                <a-select defaultValue="shinei" style="width: 120px" @change="handleChange">
-                <a-select-option value="shinei">室内图</a-select-option>
-                <a-select-option value="shiwai">室外图</a-select-option>
-            </a-select>
+            <div style="display:flex;display-deriction:row">
+                <div class="selects">
+                    <a-select :defaultValue="value.status" style="width: 100px" @change="handleChange">
+                        <a-select-option value="shinei">室内图</a-select-option>
+                        <a-select-option value="shiwai">室外图</a-select-option>
+                    </a-select>
+                </div>
+                 <div>
+                    <a-button type="" class="sellokbutton" @click="Delete()">删除</a-button>
+                </div>
             </div>
+           
             
         </div>
     </div>
@@ -32,19 +38,19 @@ export default {
 		}
     },
     mounted(){
-        console.log(`aaa：`+JSON.stringify(this.value))
+        // console.log(`aaa：`+JSON.stringify(this.value))
     },
     methods:{
+        Delete(){
+            this.$emit("DeleteValue",this.value)
+        },
         handleChange(value) {
-            console.log('asdasd:'+value)
             if(value == 'shiwai'){
                 this.value.status = 'shiwai'
             }
             else{
                 this.value.status = 'shinei'
             }
-            console.log(`aaa：`+JSON.stringify(this.value.url))
-            console.log(`selected ${value}`);
         },
         handlePreview (file) {
             this.previewVisible = true
@@ -59,7 +65,6 @@ export default {
  .bg{
      margin-right: 10px;
      height: 180px;
-     border: 1px solid red;
      .ss{
          display: flex;
          flex-flow: column;

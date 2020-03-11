@@ -64,9 +64,9 @@
                     <a-tab-pane tab="住宅" :key="1">
                         <vtable @getData="getMag" @getDataList="getMagList"></vtable>
                     </a-tab-pane>
-                    <a-tab-pane tab="商铺" :key="2">
+                    <!-- <a-tab-pane tab="商铺" :key="2">
                         <saleshangpu @getData="getMag"></saleshangpu>
-                    </a-tab-pane>
+                    </a-tab-pane> -->   
                     <!-- <a-tab-pane tab="写字楼" :key="3">
                         <vtable></vtable>
                     </a-tab-pane> -->
@@ -191,7 +191,7 @@
             },
             //左下角提示单条结果
             getSussmsg(Msg){
-                console.log("单条结果"+Msg)
+                // console.log("单条结果"+Msg)
                 if(Msg=='sussMsg'){
                     this.openNotificationWithIcon('success')
                 }else{

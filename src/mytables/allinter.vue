@@ -271,7 +271,6 @@
                     this.lookvisible=true;
             },
             openceshi(tag,hname) {
-                console.log("23135213")
                 this.opensiteName=hname;
                 if(tag == '添加账号'){
                     // this.openvisible = true;   
@@ -299,10 +298,8 @@
                      password:this.openlookpwdput,
                      lookpid:pid,
                 };
-                console.log("id:"+update.userId+"密码："+this.openlookpwdput)
                 try{
                         await this.$http.post(`${this.$config.api}/api/cms/acount/lookPwd`,data).then(Response=>{
-                        console.log(Response)
                         if(Response.status==200)
                         {
                             this.openloolnameok=Response.data.username;

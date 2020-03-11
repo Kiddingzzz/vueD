@@ -76,9 +76,7 @@ const columns = [{
             }else if(this.checkedKey=='2'){
                 this.routerUrl = '/shangpuzuluru'
             }
-            console.log("时间"+this.spintime)
             setTimeout(() => {
-                console.log("2")
                 this.GetShowList()
                 this.spinning = false;
             }, this.spintime*10000);
@@ -126,7 +124,6 @@ const columns = [{
                 },
             async GetShowList(){
                     let update = JSON.parse(localStorage.getItem('update'));
-                    console.log( update.userId)
                     const respones = await this.$http.get(`${this.$config.api}/api/cms/renTing/rtPubOkList/` + update.userId);
                     if (respones.status == 200) {
                     

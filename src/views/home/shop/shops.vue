@@ -57,7 +57,7 @@
             <!-- 筛选条件 -->
       
             <!-- 租金 -->
-            <dl id="secitem-rent" class="secitem">
+            <!-- <dl id="secitem-rent" class="secitem">
               <dt class="fl" style="margin-top:2px;">租金：</dt>
               <dd>
                 <a-radio-group defaultValue="租金不限" size="small" buttonStyle="solid"  @change="zujinChange">
@@ -66,12 +66,9 @@
                   <a-radio-button value="80-130"  @click="reset('80-130')">80-130万</a-radio-button>
                   <a-radio-button value="130-180"  @click="reset('130-180')">130-180万</a-radio-button>
                   <a-radio-button value="180-more"  @click="reset('180-more')">180万以上</a-radio-button>
-                  <!-- <span class="shaixuanbtn none">
-                    <a-radio-button value="万元/户"  href="javascript:;" onClick="clickLog('from=fcpc_list_cq_Zujin_shaixuan')">万元/户</a-radio-button>
-                  </span> -->
                 </a-radio-group>
               </dd>
-            </dl>
+            </dl> -->
       
             <!-- 厅室 -->
             <dl class="secitem">
@@ -99,33 +96,11 @@
                     style="width: 120px; margin-right:20px;"
                     @change="chaoxiangChange"
                   >
-                    <a-select-option value="朝向不限" @click="reset('朝向不限')">朝向不限</a-select-option>
-                    <a-select-option value="东" @click="reset('东')">东</a-select-option>
-                    <a-select-option value="南" @click="reset('南')">南</a-select-option>
-                    <a-select-option value="西" @click="reset('西')">西</a-select-option>
-                    <a-select-option value="北" @click="reset('北')">北</a-select-option>
-                    <a-select-option value="南北" @click="reset('南北')">南北</a-select-option>
-                    <a-select-option value="东西" @click="reset('东西')">东西</a-select-option>
-                    <a-select-option value="东南" @click="reset('东南')">东南</a-select-option>
-                    <a-select-option value="西南" @click="reset('西南')">西南</a-select-option>
-                    <a-select-option value="东北" @click="reset('东北')">东北</a-select-option>
-                    <a-select-option value="西北" @click="reset('西北')">西北</a-select-option>
+                    <a-select-option value="朝向不限" @click="reset('商铺类型')">商铺类型</a-select-option>
+                    <a-select-option value="东" @click="reset('出租')">出租</a-select-option>
+                    <a-select-option value="南" @click="reset('出售')">出售</a-select-option>
                   </a-select>
-                </div><!-- moniselectcon -->
-                <div class="moniselectcon">
-                   <a-select
-                    labelInValue
-                    :defaultValue="{ key: '装修不限' }"
-                    style="width: 120px"
-                    @change="zhuangxiuChange"
-                  >
-                    <a-select-option value="装修不限" @click="reset('装修不限')">装修不限</a-select-option>
-                    <a-select-option value="毛坯" @click="reset('毛坯')">毛坯</a-select-option>
-                    <a-select-option value="简单装修" @click="reset('简单装修')">简单装修</a-select-option>
-                    <a-select-option value="精装修" @click="reset('精装修')">精装修</a-select-option>
-                    <a-select-option value="豪华装修" @click="reset('西北')">豪华装修</a-select-option>
-                  </a-select>
-                </div><!-- moniselectcon -->
+                </div><!-- moniselectcon --><!-- moniselectcon -->
               </dd>
             </dl>
             </div>
@@ -183,7 +158,7 @@
             width:'10%'
           },
           {
-            title: '价格/万',
+            title: '价格',
             dataIndex: 'rice',
             key: 'rice',
             width:'7%'
@@ -195,10 +170,10 @@
              width:'7%'
           },
           {
-            title: '户型',
-            dataIndex: 'huxing',
+            title: '租赁方式',
+            dataIndex: 'saleType',
             key: 'chaoxiang',
-             width:'8%'
+            width:'8%'
           },
           {
             title: '楼层',
@@ -256,6 +231,9 @@
           mounted() {
             this.getDashboard();
           },
+          activated(){
+            this.getDashboard();
+          },
           methods: {
             quyuChange(e){
               if(e.target.value != '不限'){
@@ -274,62 +252,48 @@
                 this.ricehigh = e.target.value.split("-")[1]
               }
             },
-            zhuangxiuChange(value) {
-              if(value.key != '朝向不限'){
-                this.zhuangxiuselect = value.key
-              }
-            },
             chaoxiangChange(value) {
-              if(value.key != '朝向不限'){
+              if(value.key != '商铺类型'){
                 this.chaoxiangselect = value.key
               }
             },
             async getDashboard(pi) {        
               //@param condition 过滤条件
               //@param data 需要过滤的数据
-              let filter=(condition,filterdata)=>{
-                  return filterdata.filter( item => {
-                      return Object.keys( condition ).every( key => {
-                        return String( item[ key ] ).toLowerCase() == String( condition[ key ] ).trim().toLowerCase() ? true : false
-                          } )
-                  } )
-              }
-              const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList`);
-              console.log(respones)
-              const res = respones.data;
-              if(pi == undefined || (this.zhuangxiuselect == '装修不限' & this.chaoxiangselect == '朝向不限')){
-                  this.list = res.items;
-                  return;
-              }else if(this.zhuangxiuselect == '装修不限' & this.chaoxiangselect != '朝向不限'){
-                  //假设选择的条件为具体的朝向
-                  let condition={chaoxiang:this.chaoxiangselect}
-                  this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
-              }else if(this.zhuangxiuselect != '装修不限' & this.chaoxiangselect == '朝向不限'){
-                  //假设选择的条件为具体的装修
-                  let condition={zhuangxiu:this.zhuangxiuselect}
-                  this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
-              }else{
-                  //假设选择的条件为具体的装修 和 具体的朝向
-                  let condition={zhuangxiu:this.zhuangxiuselect,chaoxiang:this.chaoxiangselect}
-                  this.list = filter(condition,res.items) //[ {name: 'Andy',age: 13}]
-              }
-              // const data = {
-              //   SearchName:pi
+              // let filter=(condition,filterdata)=>{
+              //     return filterdata.filter( item => {
+              //         return Object.keys( condition ).every( key => {
+              //           return String( item[ key ] ).toLowerCase() == String( condition[ key ] ).trim().toLowerCase() ? true : false
+              //             } )
+              //     } )
               // }
-              // const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList?Searchname=`+ data.SearchName);
+              // const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList`);
+              // console.log(respones)
               // const res = respones.data;
-              // this.list = res.items;
+              // if(pi == undefined || (this.zhuangxiuselect == '装修不限')){
+              //     this.list = res.items;
+              //     return;
+              // }
+              if(pi == undefined || pi == '商铺类型' || pi == '不限' || pi == '厅室不限'){
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList`);
+                const res = respones.data;
+                this.list = res.items;
+              }
+              else{
+                const data = {
+                SearchName:pi
+                }
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList?SearchName=`+ data.SearchName);
+                const res = respones.data;
+                this.list = res.items;
+              }
+              
             },
             reset(data){
               //确定选项里的值是属于装修还是朝向
               const  hh = data
               const str = "装修不限毛坯简单装修精装修豪华装修";
               const reg = new RegExp(hh);
-              if(reg.test(str)){
-                this.zhuangxiuselect = data;
-              }else{
-                this.chaoxiangselect = data;
-              }
               this.getDashboard(data)
             },
           }

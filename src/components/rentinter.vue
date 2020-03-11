@@ -72,13 +72,13 @@
             width: '20%',
             scopedSlots: { customRender: 'acctionkey' },
         },
-        {
-            title: '类别',
-            key: 'leibie',
-            dataIndex: 'leibie',
-            width: '17%',
-            scopedSlots: { customRender: 'leibie' },
-        },
+        // {
+        //     title: '类别',
+        //     key: 'leibie',
+        //     dataIndex: 'leibie',
+        //     width: '17%',
+        //     scopedSlots: { customRender: 'leibie' },
+        // },
         {
             title: '库存满时发送处理',
             key: 'kumansing',
@@ -109,9 +109,9 @@
         {
             key: '1',
             // inter: '/static/img/logoJXW.2d85d52.png',
-            inter: [require('../assets/logo/jingjiren.png'), require('../assets/logo/fang.png')],
-            acctionkey: ['15624687', '可用'],
-            leibie: ['第一个', '第二个'],
+            inter: [ require('../assets/logo/fang.png'),require('../assets/logo/jingjiren.png')],
+            acctionkey: ['', '可用'],
+            // leibie: ['第一个', '第二个'],
 
         }
 
@@ -526,12 +526,12 @@
             Msg(type){
                 if (type == 'success') {
                     this.$notification[type]({
-                        message: '审核成功',
+                        message: '发布成功',
                         placement: 'bottomRight',
                         bottom: '50px',
                         right: '500px',
                         description:
-                            '您的房源已全部审核完毕，可在发布结果查看发布结果',
+                            '您的房源已全部发布完毕，可在发布结果查看发布结果',
                     });
                 }
             }

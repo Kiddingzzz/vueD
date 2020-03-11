@@ -189,7 +189,6 @@
                 }
             },
             onSelectChange (selectedRowKeys,selectedRows) {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                 this.selectedRowKeys = selectedRowKeys
                 this.selectedRows = selectedRows
             },
@@ -212,13 +211,13 @@
             },
             start() {
                 this.loading = true;
-              this.$emit("getDataList", this.selectedRows);
+                this.$emit("getDataList", this.selectedRows);
                 setTimeout(() => {
                     this.loading = false;
                     this.selectedRowKeys = [];
                 }, 1000);
             },
-          async  DeleteList(){
+            async  DeleteList(){
                   this.loadingdele = true;
                 // ajax request after empty completing
                   let that=this
@@ -227,10 +226,8 @@
                    idlist.push(this.selectedRows[i].id)
                 }
                 // this.$emit("getDataList", this.selectedRowKeys);
-                console.log(idlist)
                try{
                     await this.$http.post(`${this.$config.api}/api/cms/house/publishDeletelist`,idlist).then(Response => {
-                    console.log("返回结果："+JSON.stringify(Response))
                     if(Response.data.code=="200")
                     {       
                            that.$message.success(Response.data.msg);  
@@ -248,7 +245,6 @@
                         onOk(){
                            that.loadingdele = false;
                            that.selectedRowKeys = [];
-                           console.log( that.selectedRowKeys)
                         }
                     });
                     
@@ -258,24 +254,21 @@
             },
             //删除
             async onDelete(id,index) {                
-                console.log("asdgsdfgsdrfgsdfsdfhsfdhsfthsfdtgsh")
                 try {
                     await this.$http.post(`${this.$config.api}/api/cms/house/` + id + `/publishDelete`).then(Response => {
                         if (Response.status == 200) {
-                            console.log(Response)
                             // const datas = [...this.data];
                             // this.datas = datas.filter(item => item.key !== key)
                             this.list.splice(index,1)
                             this.$message.success('删除成功！！！');
                             this.selectedRowKeys = [];
-                            console.log(this.selectedRows)
                             // this.seachShow();
-                        }
-                    })
-                }
-                catch (e) {
-                    this.$message.warning('系统繁忙，请稍后再试！！！');
-                }
+                            }
+                        })
+                    }
+                    catch (e) {
+                        this.$message.warning('系统繁忙，请稍后再试！！！');
+                    }
 
             },
             //传房源对象并判断此账号是否已有添加网站

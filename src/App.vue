@@ -44,9 +44,9 @@
               <router-link to="index"><i class="iconfont icon-ershoufang"></i>二手房</router-link>
               <!-- <router-link to="test"><i class="iconfont icon-ershoufang"></i>test</router-link> -->
             </a-menu-item>
-            <a-menu-item key="/zufang" class="hh">
+            <!-- <a-menu-item key="/zufang" class="hh">
               <router-link to="zufang"><i class="iconfont icon-zufang"></i>租房</router-link>
-            </a-menu-item>
+            </a-menu-item> -->
             <a-menu-item key="/shops" class="hh">
               <router-link to="shops"><i class="iconfont icon-shangpu01"></i>商铺</router-link>
             </a-menu-item>
@@ -59,12 +59,12 @@
             <a-menu-item key="/sell" class="hh">
                  <router-link to="sell"><i class="iconfont icon-ershoufang"></i>售房录入</router-link>
             </a-menu-item>
-            <a-menu-item key="/shangpuzuluru" class="hh">
+            <!-- <a-menu-item key="/shangpuzuluru" class="hh">
                  <router-link to="shangpuzuluru"><i class="iconfont icon-shangpu01"></i>商铺出租录入</router-link>
             </a-menu-item>
             <a-menu-item key="/shangpuluru" class="hh">
                  <router-link to="shangpuluru"><i class="iconfont icon-shangpu01"></i>商铺出售录入</router-link>
-            </a-menu-item>
+            </a-menu-item> -->
           </a-sub-menu>
 
           <a-sub-menu key="sub3">
@@ -84,9 +84,9 @@
             <a-menu-item key="/zhandian" class="hh">
               <router-link to="zhandian"><i class="iconfont icon-wangzhan"></i>站点管理</router-link>
             </a-menu-item>
-            <a-menu-item key="/tuijian" class="hh">
+            <!-- <a-menu-item key="/tuijian" class="hh">
               <router-link to="tuijian"><i class="iconfont icon-wangzhan"></i><span>站点管理</span></router-link>
-            </a-menu-item>
+            </a-menu-item> -->
           </a-sub-menu>
         </a-menu>
       </a-layout-sider>

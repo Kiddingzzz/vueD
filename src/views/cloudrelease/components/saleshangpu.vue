@@ -145,12 +145,10 @@
                 return {
                     onChange: (selectedRowKeys, selectedRows) => {
                     this.selectedRowKeys = selectedRows;
-                    console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                     },
                 };
             },
             hasSelected() {
-                console.log(this.selectedRowKeys)
                 return this.selectedRowKeys.length > 0;
             },
         },
@@ -159,13 +157,11 @@
         },
         methods: {
             onSelectChange(selectedRowKeys) {
-                console.log('selectedRowKeys changed: ', selectedRowKeys);
                 this.selectedRowKeys = selectedRowKeys;
             },
             start() {
                 this.loading = true;
                 // ajax request after empty completing
-                console.log("respones.house:" + JSON.stringify(this.selectedRowKeys))
                 this.$emit("getDataList", this.selectedRowKeys);
                 setTimeout(() => {
                     this.loading = false;
@@ -174,12 +170,10 @@
             },
             //删除
             async shoponDelete(id) {
-                 console.log(id)
                 try{
                    await this.$http.post(`${this.$config.api}/api/cms/shopPub/`+id+`/shoplishDelete`).then(Response=>{
                        if(Response.status==200)
                        {
-                           console.log(Response)
                         // const datas = [...this.data];
                         // this.datas = datas.filter(item => item.key !== key)
                         this.$message.success('删除成功！！！');
@@ -226,7 +220,6 @@
                 let update = JSON.parse(localStorage.getItem('update'));
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/showlishList/` + update.userId);
                 if (respones.status == 200) {
-                    console.log("商铺数据：" + JSON.stringify(respones))
                     this.list = respones.data.items;
                 }
             },

@@ -64,9 +64,9 @@
                     <a-tab-pane tab="住宅" :key="1">
                         <rentvtable @getRenTingData="getRenTingMag"  @RtgetDataList="RtgetMagList"></rentvtable>
                     </a-tab-pane>
-                    <a-tab-pane tab="商铺" :key="2">
+                    <!-- <a-tab-pane tab="商铺" :key="2">
                         <rentshangpu></rentshangpu>
-                    </a-tab-pane>
+                    </a-tab-pane> -->
                     <!-- <a-tab-pane tab="写字楼" key="3">
                         <rentvtable></rentvtable>
                     </a-tab-pane> -->

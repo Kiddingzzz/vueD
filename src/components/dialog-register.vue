@@ -226,7 +226,6 @@
                 this.visible = true;
             },
             handleOk(e) {
-                console.log(e);
                 this.visible = false;
                 this.sendCode = '';
                 this.loading = false;
@@ -238,16 +237,12 @@
                 this.form.resetFields();
                 this.sendCode = '';
                 this.loading = false;
-                console.log("手动关闭后重置输入")
                 this.phoneNumber = ''
             },
             handleSubmit(e) {
-                console.log('正确');
                 e.preventDefault();
                 this.form.validateFields((err, values) => {
-                     console.log('正确', values);
                     if (!err) {
-                        console.log('正确', values);
                         this.doregister(values);
                     }
                 });
@@ -260,7 +255,6 @@
                 const form = this.form;
                 if(value!=''){
                     this.checkUser()
-                    console.log('执行方法后值'+this.checkUservalue)
                     if(this.checkUservalue == true){
                         callback('此账号已经被注册');
                     }else{
@@ -286,7 +280,6 @@
             },
             checkphoneNumber(rule, value, callback) {
                 this.checkPhone()
-                console.log("出来吧"+this.checkPhone())
                 if (!/^1(3|4|5|6|7|8|9)\d{9}$/.test(value)) {
                     this.phoneNumber=''
                     callback('请填写正确的手机号');
@@ -300,7 +293,6 @@
                 }  
             },
             checkagreement(rule, value, callback) {
-                //console.log("同意、、、、、、、、、、、、、"+value)
                 if (value == false) {
                     callback('请勾选我同意');
                 } else {
@@ -353,7 +345,6 @@
             //   }
             // },
            async  sendcodeh() {
-              console.log("发送验证码前的电话号码:"+this.phoneNumber)
               this.disabledcode = true;
               if(this.phoneNumber=='' || !/^1(3|4|5|6|7|8|9)\d{9}$/.test(this.phoneNumber)){
                   this.$message.error('手机号码不能为空,且手机号码必须格式正确！');
@@ -361,13 +352,10 @@
                   return;
               }
               this.getCodeText = "发送中...";
-              console.log("电话号码：")
               await this.$http.post(`${this.$config.api}/api/cms/acount/sendyanm?phNumber=` + this.phoneNumber).then(pones => {
-                  console.log(pones.data.backCode) 
                            if(pones.data.returnValue.code=="200"){
                                    
                                this.Yztext=pones.data.context;
-                               console.log( this.Yztext)
                                 setTimeout(() => {
                                        this.$message.success('验证码发送成功！');
                                     //示例默认1234，生产中请删除这一句。
@@ -410,7 +398,6 @@
                     return;
                 }
                 else if(this.sendCode!=''&&this.Yztext==this.sendCode){
-                    console.log('正在注册，请耐心等待......')
                     this.dis = 'disabled';
                     this.loading = true;
                     const data = {
@@ -421,12 +408,9 @@
                         // sendCode: this.sendCode,
                         // surname: this.phoneNumber
                     };
-                    console.log(`aaaaaaaaaaaaaaaaa` + data)
                     try {
                         const Statu = `${this.$config.api}/api/cms/acount/register`;
                         const res = await this.$http.post(Statu, data);
-                        console.log("1111")
-                        console.log(res)
                         if(res.data.code=="200"){
                               this.$emit('childByValue', e.userName, e.password)
                                 setTimeout(() => {
@@ -437,7 +421,6 @@
                                 this.disabledcode = false;
                                 this.form.resetFields();
                                 this.sendCode = '';
-                                // console.log("注册成功后后重置输入")
                              }, 500);
                                 this.dis = false;
                                 this.loading = false;
@@ -464,9 +447,7 @@
             },
             //判断手机号重复
             async checkPhone(){
-                // console.log("判断手机号重复"+this.form.getFieldValue('phoneNumber'))
                 await this.$http.post(`${this.$config.api}/api/cms/acount/phoneIS?phNumber=` + this.form.getFieldValue('phoneNumber')).then(res => {
-                    // console.log(JSON.stringify(res))
                     if(res.data.code=="-1"){
                         this.checkPhonevalue = true
                         // return this.checkPhonevalue
@@ -477,14 +458,10 @@
             },
             //判断账号是否重复
             async checkUser(){
-                console.log("判断用户名重复"+this.form.getFieldValue('userName'))
                 await this.$http.post(`${this.$config.api}/api/cms/acount/usernameIS?username=` + this.form.getFieldValue('userName')).then(res => {
-                    console.log(JSON.stringify(res))
                     if(res.data.code=="-1"){
                         
                         this.checkUservalue == true
-                         console.log("正确重复")
-                         console.log('执行方法'+this.checkUservalue)
                     }else{
                         this.checkUservalue == false
                     }

@@ -39,7 +39,7 @@
             <span slot="tuiaction" slot-scope="text, record">
                 <a-select default-value="58同城" v-model="wangvalue" @change="changeimg(wangvalue)" class="seleshangjia">
                     <a-select-option value="58同城">
-                        58同城
+                        中国网络经纪人
                     </a-select-option>
                     <a-select-option value="房天下">
                         房天下
@@ -109,7 +109,8 @@
             key: '1',
             // inter: '/static/img/logoJXW.2d85d52.png',
             inter: [require('../assets/logo/fang.png'), require('../assets/logo/jingjiren.png')],
-            acctionkey: ['15624687', '可用'],
+            // acctionkey: ['15624687', '可用'],
+            acctionkey: ['', '可用'],
             leibie: ['第一个', '第二个'],
 
         }
@@ -167,11 +168,10 @@
        
         methods: {
             changeimg(e) {
-             
                 switch (e) {
-                    case "58同城": this.hsd = 0
+                    case "58同城": this.hsd = 1
                         break;
-                    case "房天下": this.hsd = 1
+                    case "房天下": this.hsd = 0
                         break;
 
                 }
@@ -179,16 +179,13 @@
             },
             async shopfabuok(e) {
                 //禁止再次点击
-                console.log('正在发布中，请耐心等待......')
                 this.disabled = true;
                 this.loading = true
                 let update = JSON.parse(localStorage.getItem('update'));
                 try {
 
                     await this.$http.get(`${this.$config.api}/api/cms/sites/userInter?userid=` + update.userId + '&sitename=' + this.wangvalue).then(Response => {
-                        console.log("fanhui:"+JSON.stringify(Response))
                             if (Response.data.returnValue.code == "200") {
-                                console.log(Response)
                                     this.stusername=Response.data.userName;
                                     this.stuserpwd=Response.data.passWord;
                                     this.sitecookie=Response.data.siteCookie
@@ -290,11 +287,9 @@
                     var cengshuLength = this.pdef.louceng.indexOf('/');
                     var cengshu = this.pdef.louceng.substring(0, cengshuLength);
                     var zongceng = this.pdef.louceng.substring(cengshuLength + 1, this.pdef.louceng.length);
-                    console.log("this.pdef:"+JSON.stringify(this.pdef))
                     let weiyiUrl = this.pdef.weiYiUrl
                     var shineiImg = this.pdef.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
                     var ss = shineiImg.split(",")
-                    console.log("shineiImgLength:"+ss.length)
                     for (let i = 0; i < ss.length; i++) {
                         var imgUrl = {};
                         var l = i + 1;
@@ -409,7 +404,6 @@
 
                 }
                 if (this.def.houseType === '二手房') {
-                    console.log("22211")
                     this.TwoHouseWuba()
                 }
             },
@@ -440,11 +434,9 @@
                 var cengshuLength = this.pdef.louceng.indexOf('/');
                 var cengshu = this.pdef.louceng.substring(0, cengshuLength);
                 var zongceng = this.pdef.louceng.substring(cengshuLength + 1, this.pdef.louceng.length);
-                console.log("this.pdef:"+JSON.stringify(this.pdef))
                 let weiyiUrl = this.pdef.weiYiUrl
                 var shineiImg = this.pdef.shineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
                 var ss = shineiImg.split(",")
-                console.log("shineiImgLength:"+ss.length)
                 for (let i = 0; i < ss.length; i++) {
                     var imgUrl = {};
                     var l = i + 1;
@@ -600,7 +592,6 @@
                                 if (RegExp(/满五/).exec(xingzhi)) {
                                     xingzhi = "满五"
                                 }
-                                 console.log("coolikes:"+that.sitecookie)
                             const list = {
                                 xiaoquanme: this.pdef.xiaoquName,
                                 mianji: parseFloat(this.pdef.square),
@@ -623,7 +614,7 @@
                                 title: this.pdef.title,
                                 housejieshao: this.pdef.note,
                                 yehzuxintai: encodeURI(this.pdef.atittude),
-                                fuwujiwshao: encodeURI(this.pdef.fuwuCondition),
+                                fuwujiwshao: encodeURI(String(this.pdef.fuwuCondition)),
                                 weiyiurl: encodeURI(this.pdef.weiYiUrl),
                                 ting: parseInt(ting),
                                 wei: parseInt(wei),
@@ -633,7 +624,6 @@
                                 cookies:encodeURIComponent(String(that.sitecookie))
 
                             }
-                            console.log(list)
                             let idss = this.pdef.id
                             let dataConsole = '默认值';
                             let dis=null;
@@ -648,20 +638,17 @@
                                 jsonp: "callback",
                                 jsonpCallback: "successCallback",//回调方法
                                 success: function (data) {
-                                    console.log("返回值：")
-                                    console.log(data)
                                     dataConsole = data;
-                                  
-                                   if(data.data.title=="发布成功"){
+
+                                   if(dataConsole.status=="ok"){
                                     //    that.$emit('getMsg', "sussMsg")
-                                       console.log("成功")
-                                     dis=idss
-                                     texttypr="已发布"
+                                        dis=idss
+                                        texttypr="已发布"
                                    }
                                   else{
                                     // that.$emit('getMsg', "errMsg")
-                                     dis=idss
-                                     texttypr=data.data.subMsg
+                                        dis=idss
+                                        texttypr=data.message
                                    }
                                 },
                                 // error:function(){
@@ -685,7 +672,7 @@
                                     }
                                   
                                 },2000);  
-                        }, i*9000);
+                        }, i*7000);
                     })(i)
                 }
                 
@@ -907,12 +894,9 @@
                     jsonp:"callback",
                     jsonpCallback:"successCallback",//回调方法
                     success: function (data) {
-                        console.log("返回值：")
-                        console.log(data)
                          if(data.data.title=="发布成功"){
-                             console.log("成功")
                             dis=idss
-                             texttypr="已发布"
+                            texttypr="已发布"
                           }
                          else{
                              dis=idss
@@ -925,13 +909,10 @@
                      }
                 });
               setTimeout(function(){
-                 console.log("id:")
-                 console.log(dis)
-                console.log(texttypr)
-                 const datas={
-                     houserid:dis,
-                     type:texttypr
-                 }
+                    const datas={
+                        houserid:dis,
+                        type:texttypr
+                    }
                  if(dis!=null){ 
                      that.$http.post(yuming,datas).then(Responses=>{
                             // that.$message.success('您的审核完毕，可在发布结果查看发布结果',3);
@@ -997,7 +978,7 @@
     }
 
     .seleshangjia {
-        width: 90px;
+        width: 142px;
     }
 
     .ant-checkbox-wrapper+.ant-checkbox-wrapper {

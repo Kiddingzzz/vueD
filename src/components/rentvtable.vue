@@ -18,6 +18,7 @@
                 </div>
                 <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list" :customRow="handleClickRow">
                     <span slot="operation" slot-scope="text, record">
+                        <a href="javascript:;" @click="ZuupdateItem(record.id)">修改</a>
                         <a-popconfirm title="确定删除么？" @confirm="confirm(record.id)" okText="确认" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
@@ -166,7 +167,6 @@
             },
         },
         mounted() {
-            console.log(123)
             this.RtseachShow();
         },
         activated(){
@@ -180,8 +180,10 @@
                             // console.log('序号索引index' + index)
                             if(this.select==true){
                                 this.selectedRowKeys.push(index)
+                                this.selectedRows.push(record)
                             }else{
                                 this.selectedRowKeys = []
+                                this.selectedRows = []
                             }
                             this.select = !this.select
                         }
@@ -189,32 +191,30 @@
                 }
             },
             onSelectChange (selectedRowKeys,selectedRows) {
-                console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
                 this.selectedRowKeys = selectedRowKeys
                 this.selectedRows = selectedRows
             },
            start() {
                 this.loadingFb = true;
-              this.$emit("RtgetDataList", this.selectedRows);
-                setTimeout(() => {
-                    this.loadingFb = false;
-                    this.selectedRowKeys = [];
-                }, 1000);
+                this.$emit("RtgetDataList", this.selectedRows);
+                    setTimeout(() => {
+                        this.loadingFb = false;
+                        this.selectedRowKeys = [];
+                    }, 1000);
             },
             
             //删除
-            async  onRenDelete(id) {
+            async onRenDelete(id) {
                 try {
                     await this.$http.post(`${this.$config.api}/api/cms/renTing/` + id + `/renTingPubDelete`).then(Response => {
                         if (Response.status == 200) {
-                            console.log(Response)
                             // const datas = [...this.data];
                             // this.datas = datas.filter(item => item.key !== key)
                             // this.list.splice(index,1)
                             this.$message.success('删除成功！！！');
                             this.selectedRowKeys = [];
                             // console.log(this.selectedRowKeys)
-                            // this.seachShow();
+                            this.RtseachShow();
                         }
                     })
                 }
@@ -222,6 +222,13 @@
                     this.$message.warning('系统繁忙，请稍后再试！！！');
                 }
 
+            },
+            ZuupdateItem(sid) {           
+                const that = this.$router
+                that.replace({
+                        name: 'Lease',
+                            params: { id: sid }
+                    })  
             },
             ///多条删除
             async  RtDeleteList(){
@@ -267,7 +274,6 @@
                 let update = JSON.parse(localStorage.getItem('update'));
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/renTing/renTingPubList/` + update.userId);
                 if (respones.status == 200) {
-                    console.log("respones.status:" + JSON.stringify(respones))
                     this.list = respones.data.items;
                 }
             },

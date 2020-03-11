@@ -208,7 +208,7 @@
             width: '7.2%'
         },
         {
-            title: '租赁方式',
+            title: '单价',
             dataIndex: 'simpleRice',
             key: 'simpleRice',
             width: '7%'
@@ -226,12 +226,6 @@
             width: '4.5%'
         },
         {
-            title: '户型',
-            dataIndex: 'huxing',
-            key: 'huxing',
-            width: '6%'
-        },
-        {
             title: '楼层',
             dataIndex: 'louceng',
             key: 'louceng',
@@ -241,20 +235,20 @@
             title: '装修',
             dataIndex: 'zhuangxiu',
             key: 'zhuangxiu',
-            width: '7%'
+            width: '6%'
         },
         {
             title: '联系人',
             dataIndex: 'lianxiPeople',
             key: 'lianxiPeople',
-            width: '6.5%'
+            width: '7.4%'
         },
         {
             title: '电话',
             dataIndex: 'phone',
             key: 'phone',
             scopedSlots: { customRender: 'phones' },
-            width: '7.2%'
+            width: '7.7%'
 
         },
         {
@@ -293,6 +287,9 @@
         mounted() {
             this.getDashboard();
         },
+        activated(){
+            this.getDashboard();
+          },
         methods: {
             inputFocus() {
                 this.inputChange = true

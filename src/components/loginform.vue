@@ -38,14 +38,14 @@
                                 class="inline-input"
                                 v-model="user"
                                 :fetch-suggestions="querySearch"
-                                placeholder="请输入姓名"
+                                placeholder="请输入会员名称或手机号码"
                                 value-key="userNameOrEmailAddress"
                                 @input = "reset"
                                 @select="handleSelect"
                                 @keyup.enter.native="doLogin()"
                                 ></el-autocomplete>
                                 
-                            <el-input type="password" placeholder="请输入密码" v-model="password" class="inputs"
+                            <el-input type="password" autocomplete="off" placeholder="请输入密码" v-model="password" class="inputs"
                                 @keyup.enter.native="doLogin()" prefix-icon="iconfont icon-mima"></el-input>
               		    <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
                             <a-button class="btns" @click="doLogin()" :disabled="dis" :loading="loading">登录</a-button>
@@ -69,6 +69,9 @@
                         <div @click="openforget" class="forget">忘记密码</div>
                     </div>
                 </div>
+            </div>
+            <div style="position: absolute;bottom: 20px;left: 10px;">
+                <a href="http://www.beian.miit.gov.cn" target="_blank">备案号:渝ICP备20000393号-1</a>
             </div>
         </div>
     </div>
@@ -125,7 +128,6 @@
         },
         mounted() {
             //获取登录前的localStorage存的账号
-            console.log('端口号为'+window.location.host)
             let BackUserPwd =[]
             BackUserPwd = JSON.parse(localStorage.getItem("BackUserPwd"))
             if(BackUserPwd != null){
@@ -133,7 +135,6 @@
             }
             this.getUserIP((ip) => {
                 this.ip = ip;
-                console.log("ip地址为"+this.ip)
             });
                     // this.getUserIP((ip) => {
             //     this.ip = ip;
@@ -289,7 +290,6 @@
             },
             ...mapMutations(['login', 'update']),
             onChange(e) {
-                console.log(e.target.checked);
             },
             getDate(userName, password) {
                 // childValue就是子组件传过来的值
@@ -302,7 +302,6 @@
                 this.password = password;
             },
             hide() {
-                console.log(111);
                 this.payvisible = false;
                 this.weixinvisible = false;
                 this.qqvisible = false;
@@ -321,7 +320,6 @@
                     });
                     return;
                 }
-                console.log('正在登陆，请耐心等待......')
                 this.dis = 'disabled'
                 this.loading = true
                 if(this.checked == true){
@@ -346,22 +344,19 @@
                 try {
                     await this.$http.post(statu, datas).then(Response => {
                         let that = this;
-                        console.log("id啊"+JSON.stringify(Response.data.userId))
                        
                         if (Response.data.returnValue.code == "200") {
-                              if(Response.data.sitename!=''){
+                              if(Response.data.sitename!='' && Response.data.refreshCookie == '需要刷新'){
                                 const that=this
-                                const cookes={username:Response.data.sitename,userpwd:Response.data.sitepwd}
+                                const cookes={username:Response.data.sitename,userpwd:Response.data.sitepwd,userid:Response.data.userId,cookie:that.sitecookie,types: that.AccountType}
                                 $.ajax({
                                         type: 'GET',
                                         async:true,
-                                        url: 'http://47.108.24.104:8085/get_user?data=' + JSON.stringify(cookes),
+                                        url: 'http://47.108.24.104:8084/get_user?data=' + JSON.stringify(cookes),
                                         dataType: 'jsonp', //希望服务器返回json格式的数据
                                         jsonp: "callback",
                                         jsonpCallback: "successCallback",//回调方法
                                         success: function (data) {
-                                            console.log("返回cookie:")
-                                            console.log(data)
                                             if(data=="100"){
                                                 that.AccountType="不可用"
                                             }
@@ -371,19 +366,13 @@
                                             }
                                         }
                                     });
-                                      setTimeout(function(){
-                                         
-                                          const cooklist={userid:Response.data.userId,cookie:that.sitecookie,types: that.AccountType}
-                                          console.log("列表：")
-                                          console.log(cooklist)
-                                          that.$http.post(`${that.$config.api}/api/cms/sites/siteeUpcookie`, cooklist)
-                                     }, 12000)    
                               }
-                     
                              this.dis = false;
                              this.loading = false;
                             //判断保存的
                           //  let hh = JSON.parse(localStorage.getItem("BackUserPwd"))
+
+                          
                             if(this.restaurants != ''){
                                 for(let i=0;i<this.restaurants.length;i++){
                                     if(this.restaurants[i].userNameOrEmailAddress == jiamidatas.userNameOrEmailAddress){
@@ -396,6 +385,8 @@
                                 this.restaurants.push(jiamidatas)
                                 localStorage.setItem("BackUserPwd",JSON.stringify(this.restaurants))
                             }
+
+
                             // window.location.reload();
                             //this.$store.login(Response.data.userNameOrEmailAddress)
                             // this.$store.userId = Response.data.userId; 
@@ -409,6 +400,7 @@
                             localStorage.setItem('update', JSON.stringify(update));
                             
                             this.$router.replace('/index')
+                            
                         }
                         else{
                              this.$error({
@@ -419,7 +411,6 @@
                     })
                 }
                 catch (e) {
-                    console.log(e)
                     this.$error({
                         title: '提示',
                         content: '系统错误，请重试',

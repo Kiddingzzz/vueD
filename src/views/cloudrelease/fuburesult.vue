@@ -143,7 +143,7 @@ export default {
                 console.log( update.userId)
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishAllList/` + update.userId);
                 if (respones.status == 200) {
-                   console.log(respones)
+                    console.log(respones)
                     this.listfb = respones.data.items;
                    
                 }

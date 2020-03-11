@@ -292,7 +292,6 @@
             },
             ///房天下
             async handleOk() {
-              
                 if(this.sitesusername!=null){
                      this.zhanspinning=false;
                      this.$message.error("您已添加账号，请勿重复操作！");
@@ -309,20 +308,18 @@
                     this.pwderre = true
                     return;
                 }
-                console.log(this.siteName)
+                let update = JSON.parse(localStorage.getItem('update'));
                 const that=this
-                const cookes={username:this.siteUserName,userpwd:this.sitepwd}
+                const cookes={username:this.siteUserName,userpwd:this.sitepwd,userid:update.userId}
                 if(this.siteName=="58同城"){
                        $.ajax({
                            type: 'GET',
                            async:true,
-                           url: 'http://47.108.24.104:8085/get_user?data=' + JSON.stringify(cookes),
+                           url: 'http://47.108.24.104:8084/get_user?data=' + JSON.stringify(cookes),
                            dataType: 'jsonp', //希望服务器返回json格式的数据
                            jsonp: "callback",
                            jsonpCallback: "successCallback",//回调方法
                            success: function (data) {
-                               console.log("返回cookie:")
-                               console.log(data)
                               if(data=="100"){
                                   that.siteAccountType="不可用"
                               }
@@ -351,7 +348,6 @@
                     }
                     try{
                             that.$http.post(`${that.$config.api}/api/cms/sites/modifyUser`,data).then(Response=>{
-                                console.log("kkkkkk"+JSON.stringify(data))
                                 if(Response.data.code=="200")
                                 {
                                     that.zhanspinning=false;
@@ -368,14 +364,13 @@
                             });
                     }
                     catch(e){
-                        console.log(e)
                             that.$message.success('系统错误，请重试');
                             
                             that.zhanspinning=false;
                     }
                     ///关闭添加账号model框时，清空input框数据
                         that.close()
-              }, 12000)    
+              }, 17000)    
                             
             },
             ceshi(tag,hname,e) {
@@ -411,7 +406,6 @@
                  })
             },
             lookpwdbotton(e){
-              
                     this.looksitename=e
                     this.lookvisible=true;
             },
@@ -434,10 +428,8 @@
                      siteName:this.looksitename,
                     
                 };
-              console.log("id:"+update.userId+"密码："+this.lookpwdput)
                 try{
                         await this.$http.post(`${this.$config.api}/api/cms/acount/lookPwd`,data).then(Response=>{
-                        console.log(Response)
                         if(Response.data.returnValue.code=="200")
                         {
                             this.loolnameok=Response.data.username;
@@ -446,7 +438,8 @@
                             this.lookpwdvisible=true;
                         }
                         else{
-                             this.$message.error(Response.data.returnValue.msg);
+                            alert('请添加站点账号密码')
+                            // this.$message.error(Response.data.returnValue.msg);
                         }
                 })
                 }

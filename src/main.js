@@ -85,7 +85,7 @@ Date.prototype.Format = function (fmt) { //author: meizz
 
 Vue.config.productionTip = false;
 Vue.prototype.$config = {
-	//api:'http://localhost:57992'
+	// api:'http://localhost:57992'
 	api:'http://47.108.24.104:8072'
 }
 Vue.prototype.encryptDes=encryptDes;
@@ -103,7 +103,7 @@ router.beforeEach((to, from, next) => {
 		document.title = '开单网';
 	}
 	next();
-	// 
+	//  
 	// if (to.meta.loginRequest) { // 判断跳转的路由是否需要登录
     //     if (this.$store.hasLogin == true) { // vuex.state判断token是否存在
     //         next() // 已登录

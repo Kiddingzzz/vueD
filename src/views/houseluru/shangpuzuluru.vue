@@ -539,7 +539,7 @@
                         </div>
                         <div class="lurubottomobx">
                             <a-button type="" class="lurubuttonfang luruokbutton" @click="saveHouse()">保存房源</a-button>
-                            <a-button type="" class="luruokbutton">保存草稿</a-button>
+                            <!-- <a-button type="" class="luruokbutton">保存草稿</a-button> -->
                         </div>
                     </a-form>
                 </a-layout-content>

@@ -13,25 +13,26 @@
                 </div>
             </div>
         </div>
-        <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk" @cancel="cancelClick"
-            :destroyOnClose="true" cancelText="取消" okText="确定">
-             <a-spin :spinning="spinning">
-                <div style="height:420px;display:flex;flex-direction: column;justify-content: space-between;" >
+        <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk"
+            @cancel="cancelClick" :destroyOnClose="true" cancelText="取消" okText="确定">
+            <a-spin :spinning="spinning">
+                <div style="height:420px;display:flex;flex-direction: column;justify-content: space-between;">
                     <div>
                         <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
                         <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                             <br /><br />
-                            <a-input-search placeholder="例如：https://cq.58.com/zufang/40823717413021x.shtml" @search="onSeaRenTing" :disabled="disabled" enterButton="立即秒录" size="large" />
+                            <a-input-search placeholder="例如：https://cq.58.com/zufang/40823717413021x.shtml"
+                                @search="onSeaRenTing" :disabled="disabled" enterButton="立即秒录" size="large" />
                             <!-- <a-spin :spinning="spinning">
                             </a-spin> -->
                         </p>
                         <div class="leaselogo">
                             <a href="https://cq.58.com/zufang" target="_blank"><img class="wuba"
                                     src="../../assets/logo/58logo.png"></a>
-                            <a href="https://cq.zu.anjuke.com" target="_blank"><img class="anju"
+                            <!-- <a href="https://cq.zu.anjuke.com" target="_blank"><img class="anju"
                                     src="../../assets/logo/anjuke.jpg"></a>
                             <a href="https://cq.zu.fang.com" target="_blank"><img class="fang"
-                                    src="../../assets/logo/fangtianxia.jpg"></a>
+                                    src="../../assets/logo/fangtianxia.jpg"></a> -->
                         </div>
                     </div>
                     <div class="leasefilter">
@@ -46,7 +47,7 @@
                         </ul>
                     </div>
                 </div>
-            
+
             </a-spin>
         </a-modal>
         <!-- <a-modal title="添加小区" v-model="addxq" @ok="addok">
@@ -132,7 +133,7 @@
                             <a-input v-model="ref.renTingAddress" id="validating" placeholder="房源地址" />
                         </a-form-item>
 
-                       <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
+                        <!-- <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*建筑面积:" has-feedback
                             validate-status="">
                             <a-input type="number" v-model="ref.renTingMianji" id="success" placeholder="占地面积"
                                 class="mianji" />
@@ -247,8 +248,8 @@
                             <a-input type="number" v-model="ref.renTingMianji" placeholder="待合租面积" class="mianji" />
                             <label class="smianij">平方米</label>
                         </a-form-item>
-                        <a-form-item v-if="ref.renTingType == '整租'" :label-col="labelCol" :wrapper-col="wrapperCol" label="*合租方式" has-feedback
-                            validate-status="">
+                        <a-form-item v-if="ref.renTingType == '整租'" :label-col="labelCol" :wrapper-col="wrapperCol"
+                            label="*合租方式" has-feedback validate-status="">
                             <a-select default-value="1" class="sealefirhuxing " v-model="selectedShi">
                                 <a-select-option v-for="(option,i) in options" :key="i" :value="option">
                                     {{option}}
@@ -283,11 +284,13 @@
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*朝向：" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncx" :defaultValue="value2" v-model="ref.renTingChaoxiang" />
+                            <a-radio-group :options="plainOptioncx" :defaultValue="value2"
+                                v-model="ref.renTingChaoxiang" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="看房时间" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptioncf" :defaultValue="value3" v-model="ref.renTingLookHouse" />
+                            <a-radio-group :options="plainOptioncf" :defaultValue="value3"
+                                v-model="ref.renTingLookHouse" />
                         </a-form-item>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="装修程度" has-feedback
                             validate-status="">
@@ -321,10 +324,11 @@
                     <a-form>
                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="房屋类别：" has-feedback
                             validate-status="">
-                            <a-radio-group :options="plainOptionfwlb" :defaultValue="value8" v-model="ref.houseXingzhi" />
+                            <a-radio-group :options="plainOptionfwlb" :defaultValue="value8"
+                                v-model="ref.houseXingzhi" />
                         </a-form-item>
 
-                         <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
+                        <a-form-item :label-col="labelCol" :wrapper-col="wrapperCol" label="*基础设施" has-feedback
                             validate-status="">
                             <a-checkbox-group :options="plainOptionsjichu" v-model="jichucheckedList" />
                             <!--<a-checkbox>水</a-checkbox>
@@ -400,7 +404,7 @@
                                 </div>
                             </div>
                         </div>
-                         <div class="sealetilerbox" style="width: 70%;">
+                        <div class="sealetilerbox" style="width: 70%;">
                             <div class="sealetiler-firstbox">
                                 <label class="sealelabeltle">*服务介绍：</label><label>20-300字效果为最佳</label>
                             </div>
@@ -468,9 +472,9 @@
                                 <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
                             </a-modal>
                         </div>
-                        <div class="shinei divallbox">
+                        <div class="shinei divallbox" style="min-height: 480px !important;">
                             <div class="laberbox">
-                                <span class="laberboxtitle">室内照片: </span>
+                                <span class="laberboxtitle">房源照片: </span>
                                 <div class="shineipadd">
                                     最多20张。您可以<span class="sellorangelaber">发布客厅/卧室/厨房</span>
                                 </div>等3张以上照片可帮助您获得较好效果！
@@ -492,7 +496,8 @@
                                 </a-modal> -->
                             </div>
                             <div style="width:100%;display:flex;flex-wrap: wrap;">
-                                <img-list v-for="(item,index) in ZuFangPictureList" :value="item" :key="index"></img-list>
+                                <img-ZuFlist v-for="(item,index) in ZuFangPictureList" @DeleteValueZu="getMSDZu"
+                                    :value="item" :key="index"></img-ZuFlist>
                             </div>
                         </div>
                         <div class="shinei divallbox">
@@ -513,52 +518,6 @@
                                 </a-upload>
                             </div>
                         </div>
-                        <div class="shinei divallbox">
-                            <div class="laberbox">
-                                <span class="laberboxtitle">小区图片:</span>
-                                <div class="shineipadd">
-                                    <span>最多10张。</span>
-                                    <!-- <label class="piclaber">从我的图库选择</label>
-                                    <span>或者</span>
-                                    <label class="piclaber">从小区图库选择</label>
-                                    <a-button type="" class="buttontuku">我的图库</a-button>
-                                    <a-button type="" class="buttontuku">小区图库</a-button> -->
-                                </div>
-                                <!-- <div class="xiala">
-                                    <a-dropdown>
-                                        <a-menu slot="overlay">
-                                            <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
-                                                <a-icon type="user" />{{pilaingsy}}</a-menu-item>
-                                        </a-menu>
-                                        <a-button class="tupianchuli">图片处理
-                                            <a-icon type="up" />
-                                        </a-button>
-                                    </a-dropdown>
-                                </div> -->
-                            </div>
-                            <div class="radisflex">
-                                <div class="tupianbox">
-                                    <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
-                                        listType="picture-card" :fileList="xiaoQuList" @preview="handlePreview"
-                                        @change="handleChange">
-                                    </a-upload>
-                                    <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
-                                        <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
-                                    </a-modal>
-                                </div>
-                                <!-- <div class="xiala">
-                                        <a-dropdown>
-                                            <a-menu slot="overlay">
-                                                <a-menu-item v-for="(pilaingsy,index) of pilianglist" :key="index">
-                                                    <a-icon type="user" />{{pilaingsy}}</a-menu-item>
-                                            </a-menu>
-                                             <a-button class="tupianchuli">图片处理
-                                                <a-icon type="up" />
-                                            </a-button>
-                                        </a-dropdown>
-                                    </div> -->
-                            </div>
-                        </div>
                         <div class="fangyuansp">
                             <div class="laberbox">
                                 <span class="laberboxtitle">房源视频:</span>
@@ -574,8 +533,7 @@
                         </div>
                         <div class="bottomobx">
                             <a-button type="" class="buttonfang okbutton" @click="saveHouse()">保存房源</a-button>
-                            <a-button type="" class="okbutton">保存草稿</a-button>
-
+                            <!-- <a-button type="" class="okbutton">保存草稿</a-button> -->
                         </div>
                     </a-form>
                 </a-layout-content>
@@ -598,13 +556,16 @@
     const plainOptionsy = ['不加水印', '添加水印'];
     const pilianglist = ['批量水印', '批量美颜', '批量水印美颜', '批量恢复原图', '批量调整大小', '批量下载图片'];
     const plainOptionfwlb = ['公寓', '普通住宅', '平房', '其他'];
-    const zhifu = ['押一付一', '押一付二', '押一付三', '押二付一', '押二付二', '押三付三','面议'];
+    const zhifu = ['押一付一', '押一付二', '押一付三', '押二付一', '押二付二', '押三付三', '面议'];
     const hezu = ['合租', '整租'];
     const optionaddress = ['主卧', '次卧', '床位', '隔断间'];
     const optionsex = ['性别不限', '限男生', '限女生', '限夫妻',];
     const plainOptionsjichu = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室'];
-    const plainOptionspeitao = ['桌椅', '燃气灶', '抽烟机','阳台', '热水器', '电视', '空调', '冰箱', '洗衣机', '床', '宽带', '暖气', '衣柜', '沙发', '可做饭', '卫生间'];
+    const plainOptionspeitao = ['桌椅', '燃气灶', '抽烟机', '阳台', '热水器', '电视', '空调', '冰箱', '洗衣机', '床', '宽带', '暖气', '衣柜', '沙发', '可做饭', '卫生间'];
     export default {
+        components: {
+            imgZuFlist,
+        },
         data() {
             return {
                 disabled: false,
@@ -691,24 +652,38 @@
                 leasestyle: {
                     height: '470px'
                 },
-                RtreciveId:'',
-                ZuFangPictureList:[],
+                RtreciveId: '',
+                ZuFangPictureList: [],
             }
         },
-        activated() {
+        activated(options) {
             this.RtreciveId = this.$route.params.id
-            if (this.RtreciveId!= undefined && this.RtreciveId!= null)
+            if (this.RtreciveId != undefined && this.RtreciveId != null)
                 this.Rtbackfbdatas(this.RtreciveId);
         },
         mounted() {
             // this.kanfang="随时看房";
             this.zhuangxiu = "中等装修";
             this.gongnuan = "自供暖";
-             let update = JSON.parse(localStorage.getItem('update'));
+            let update = JSON.parse(localStorage.getItem('update'));
             this.userId = update.userId;
         },
         methods: {
-           
+            getMSDZu(value) {
+                if (this.ZuFangPictureList.length >= 4) {
+                    var ress = []
+                    for (let index = 0; index < this.ZuFangPictureList.length; index++) {
+                        const element = this.ZuFangPictureList[index];
+                        if (element.url != value.url) {
+                            ress.push(element)
+                        }
+                    }
+                    this.ZuFangPictureList = ress;
+                }
+                else {
+                    alert('房源图片至少保留4张')
+                }
+            },
             uuid() {
                 var s = [];
                 var hexDigits = "0123456789abcdef";
@@ -721,7 +696,6 @@
 
                 var uuid = s.join("");
                 this.text = uuid
-                console.log(this.text)
             },
             //插入一条url数据链接
             async onSeaRenTing(params) {
@@ -732,6 +706,10 @@
                     alert("请输入正确的url地址");
                     return;
                 }
+                if (params.indexOf('ershoufang') != -1) {
+                    alert("请输入租房地址")
+                    return;
+                }
                 this.uuid()
                 this.urlss = params;
                 const data = {
@@ -740,124 +718,154 @@
                     houseType: "合租",
                     weiYiUrl: this.text
                 };
-                let urllianjie=""
-                
-                 if (RegExp(/cq.58.com/).exec(params))
-                      urllianjie=`${this.$config.api}/api/cms/wuRenTing/renTingUrl`;
-                if (RegExp(/.zu.anjuke.com/).exec(params))
-                      urllianjie=`${this.$config.api}/api/cms/anRt/anRenTingUrl`
-                this.disabled = true;
-                await this.$http.post(urllianjie, data).then(response => {
-                    this.spinning = true;
-                    console.log(JSON.stringify(response))
-                    if (response.status == 200) {
-                        this.$http.get(`${this.$config.api}/api/cms/wuRenTing/renTingUrl` + '?weiyiurl=' +  this.text + '&userid=' + this.userId + '&url=' + this.urlss).then(res => {
-                            console.log(`222` + JSON.stringify(res))
-                            var ret = res.data.address;
-                            this.saveRes = res.data;
-                            this.address =this.saveRes.renTingQuyu
-                            this.chaoxiang =this.saveRes.chaoxiang;
-                            this.spinning = false;
-                            this.ref = res.data;
-                            console.log(`222` + JSON.stringify(this.ref))
-                            this.peitaocheckedList = this.ref.renTingPeiTao
-                            //字符串
-                            this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
-                            this.ceng = this.ref.renTingLouceng.substring(0, this.ref.renTingLouceng.indexOf("/"));
-                            this.lou = this.ref.renTingLouceng.substring(this.ref.renTingLouceng.indexOf("/") + 1, this.ref.renTingLouceng.length);
-                            let shi = this.ref.renTingHuXing.indexOf("室");
-                            let ting = this.ref.renTingHuXing.indexOf("厅");
-                            let wei = this.ref.renTingHuXing.indexOf("卫");
-                            this.selectedShi = this.ref.renTingHuXing.substring(0, shi);
-                            this.selectedTing = this.ref.renTingHuXing.substring(shi + 1, ting);
-                            this.selectedWei = this.ref.renTingHuXing.substring(ting + 1, wei);
-                            this.spinning = false;
-                            var shineiImg = res.data.renTingShineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
-                            var ss = shineiImg.split(",")
-                            this.weiyiUserId = res.data.weiYiUrl;
-                            for (var i = 0; i < ss.length; i++) {
-                                var imgUrl = {};
-                                imgUrl.url = ss[i];
-                                imgUrl.uid = i;
-                                imgUrl.name = 'xxx.jpg';
-                                imgUrl.status = 'done';
-                                this.shineiList.push(imgUrl);
-                                this.PicktureList.push(ZuFangPictureList);
-                            }
-                            var imgH = {};
-                            imgH.url = ss[0],
-                                imgH.uid = '1',
-                                imgH.name = 'xxx.jpg',
-                                imgH.status = 'done',
-                                this.imgHeaderList.push(imgH);
+                let urllianjie = "";
 
-
-                            var imgFangxing = {};
-                            imgFangxing.url = res.data.renTingFengImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                                imgFangxing.uid = '50',
-                                imgFangxing.name = 'xxx.jpg',
-                                imgFangxing.status = 'done',
-                                this.fangxinlist.push(imgFangxing);
-
-
-                            // var XiaoquImg = {};
-                            // XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                            //     XiaoquImg.uid = '-3',
-                            //     XiaoquImg.name = 'xxx.jpg',
-                            //     XiaoquImg.status = 'done',
-                            //     this.xiaoQuList.push(XiaoquImg);
-                            setTimeout(() => {
-                                this.visible = false;
-                                this.disabled = false;
-                            }, 500);
-                            this.visible = false;
-                            this.disabled = false;
-                        });
-
+                if (RegExp(/cq.58.com/).exec(params)) {
+                    urllianjie = `${this.$config.api}/api/cms/wuRenTing/renTingUrl`;
+                    const datast = {
+                        userId: encodeURI(this.userId),
+                        url: encodeURIComponent(String(this.urlss)),
+                        weiYiUrl: encodeURI(this.text),
+                        houseType: "合租",
                     }
+                    var that = this;
+                    $.ajax({
+                        type: 'GET',
+                        async: true,
+                        url: 'http://47.108.24.104:8077/get_user?data=' + JSON.stringify(datast),
+                        dataType: 'json', //希望服务器返回json格式的数据
+                        jsonp: "callback",
+                        // jsonpCallback: "successCallback",//回调方法
+                        success: function (data) {
+                        },
+                    }).fail(function (data) {
+                        if (data.status == '500') {
+                            that.spinning = false;
+                            that.disabled = false;
+                            alert("房源录入系统错误，请稍后再试")
+                            return;
+                        }
+                    })
+                }
+                if (RegExp(/.zu.anjuke.com/).exec(params))
+                    urllianjie = `${this.$config.api}/api/cms/anRt/anRenTingUrl`
+                this.disabled = true;
+                // await this.$http.post(urllianjie, data).then(response => {
+                this.spinning = true;
+                // if (response.status == 200) {
+                this.$http.get(`${this.$config.api}/api/cms/wuRenTing/renTingUrl` + '?weiyiurl=' + this.text + '&userid=' + this.userId + '&url=' + this.urlss).then(res => {
+                    var ret = res.data.address;
+                    this.saveRes = res.data;
+                    this.address = this.saveRes.renTingQuyu
+                    this.chaoxiang = this.saveRes.chaoxiang;
+                    this.spinning = false;
+                    this.ref = res.data;
+                    // this.peitaocheckedList = this.ref.renTingPeiTao
+                    this.peitaocheckedList = ['电磁炉', '宽带', '床', '衣柜', '沙发', '电视', '空调', '洗衣机', '冰箱', '暖气', '热水器', '独立卫生间', '独立阳台', '桌椅', '微波炉', '燃气灶', '智能门锁', '抽烟机']
+                    //字符串
+                    this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
+                    this.ceng = this.ref.renTingLouceng.substring(0, this.ref.renTingLouceng.indexOf("/"));
+                    this.lou = this.ref.renTingLouceng.substring(this.ref.renTingLouceng.indexOf("/") + 1, this.ref.renTingLouceng.length);
+                    let shi = this.ref.renTingHuXing.indexOf("室");
+                    let ting = this.ref.renTingHuXing.indexOf("厅");
+                    let wei = this.ref.renTingHuXing.indexOf("卫");
+                    this.selectedShi = this.ref.renTingHuXing.substring(0, shi);
+                    this.selectedTing = this.ref.renTingHuXing.substring(shi + 1, ting);
+                    this.selectedWei = this.ref.renTingHuXing.substring(ting + 1, wei);
+                    this.spinning = false;
+                    var shineiImg = res.data.renTingShineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
+                    var ss = shineiImg.split(",")
+                    this.weiyiUserId = res.data.weiYiUrl;
+                    for (var i = 0; i < ss.length; i++) {
+                        var imgUrl = {};
+                        imgUrl.url = ss[i];
+                        imgUrl.uid = i;
+                        imgUrl.name = 'xxx.jpg';
+                        imgUrl.status = 'shinei';
+                        this.shineiList.push(imgUrl);
+                        this.ZuFangPictureList.push(imgUrl);
+                    }
+                    var imgH = {};
+                    imgH.url = ss[0],
+                        imgH.uid = '1',
+                        imgH.name = 'xxx.jpg',
+                        imgH.status = 'done',
+                        this.imgHeaderList.push(imgH);
+
+
+                    var imgFangxing = {};
+                    imgFangxing.url = res.data.renTingFengImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                        imgFangxing.uid = '50',
+                        imgFangxing.name = 'xxx.jpg',
+                        imgFangxing.status = 'done',
+                        this.fangxinlist.push(imgFangxing);
+
+
+                    // var XiaoquImg = {};
+                    // XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                    //     XiaoquImg.uid = '-3',
+                    //     XiaoquImg.name = 'xxx.jpg',
+                    //     XiaoquImg.status = 'done',
+                    //     this.xiaoQuList.push(XiaoquImg);
+                    setTimeout(() => {
+                        this.visible = false;
+                        this.disabled = false;
+                    }, 500);
+                    this.visible = false;
+                    this.disabled = false;
                 });
+
+                // }
+                // });
 
 
             },
-            async saveHouse() {
-                let lujing=`${this.$config.api}/api/cms/renTing/renTinglishHouse`;
-                console.log(this.RtreciveId)
-                if(this.RtreciveId!=undefined&&this.RtreciveId!=null){
-                    lujing=`${this.$config.api}/api/cms/renTing/rtupdatedatahouse`;
-                     this.saveRes.id=this.RtreciveId
+            async Type() {
+                if (this.reciveId == '' || this.reciveId == undefined) {
+                    this.saveHouse();
                 }
-                    
-                this.saveRes.renTingTitle=this.ref.renTingTitle
-                this.saveRes.renTingZujin=this.ref.renTingZujin
-                this.saveRes.renTingMianji=this.ref.renTingMianji
-                this.saveRes.Zhuangxiu=this.ref.Zhuangxiu
-                this.saveRes.renTingHouse=this.ref.renTingHouse
-                this.saveRes.renTingFuWu=this.ref.renTingFuWu
+                else {
+                    this.xiugaiZubao();
+                }
+            },
+            async saveHouse() {
+                let lujing = `${this.$config.api}/api/cms/renTing/renTinglishHouse`;
+                if (this.RtreciveId != undefined && this.RtreciveId != null) {
+                    lujing = `${this.$config.api}/api/cms/renTing/rtupdatedatahouse`;
+                    this.saveRes.id = this.RtreciveId
+                }
+
+                this.saveRes.renTingTitle = this.ref.renTingTitle
+                this.saveRes.renTingZujin = this.ref.renTingZujin
+                this.saveRes.renTingMianji = this.ref.renTingMianji
+                this.saveRes.Zhuangxiu = this.ref.Zhuangxiu
+                this.saveRes.renTingHouse = this.ref.renTingHouse
+                this.saveRes.renTingFuWu = this.ref.renTingFuWu
                 if (this.saveRes.xiaoquName == null && this.saveRes.renTingTitle == null &&
-                    this.saveRes.renTingZujin == null  &&
+                    this.saveRes.renTingZujin == null &&
                     this.saveRes.renTingMianji == null && this.saveRes.renTingHuXing == null &&
                     this.saveRes.renTingLouceng == null && this.saveRes.zhuangxiu == null && this.saveRes.renTingAddress == null && this.saveRes.renTingFengImg == null
                 ) {
                     this.openNotificationWithIcon('error')
                 }
                 else {
-                    console.log(lujing)
                     await this.$http.post(lujing, this.saveRes).then(response => {
                         if (response.status == 200) {
                             this.openNotificationWithIcon('success')
+                            const arr = this.ZuFangPictureList;
+                            const target = {};
                             let ShineinewObj = [];
                             let ShiwainewObj = [];
                             arr.forEach(a => {
                                 const source = JSON.parse(`{"${a.status}":"${a.url}"}`);//利用JSON.parse将对象//格式直接造出来
-                                Object.assign(target,source);
-                                if('shinei' in source){
+                                Object.assign(target, source);
+                                if ('shinei' in source) {
                                     ShineinewObj.push(source)
                                 }
-                                else{
+                                else {
                                     ShiwainewObj.push(source)
                                 }
                             })
-                            console.log('ShiwainewObj:'+JSON.stringify(ShiwainewObj))
                             var shineis = [];
                             var shiwais = [];
                             for (let index = 0; index < ShineinewObj.length; index++) {
@@ -869,15 +877,22 @@
                                 shiwais.push(gs)
                             }
                             const res = {
-                                shinei:encodeURIComponent(String(shineis)),
-                                shiwai:encodeURIComponent(String(shiwais)),
+                                shinei: encodeURIComponent(String(shineis)),
+                                shiwai: encodeURIComponent(String(shiwais)),
                                 weiyiurl: encodeURI(this.text),
                             }
-                            console.log(res)
+                            const shineiRes = {
+                                shineiList: shineis.join(';'),
+                                shiwaiList: shiwais.join(';'),
+                                weiyiurl: this.text,
+                                type: '租房'
+                            }
+                            var res7 =  this.$http.post(`${this.$config.api}/api/cms/imgM/imgType`, shineiRes)
+
                             $.ajax({
                                 type: 'GET',
-                                async:true,
-                                url: 'http://47.108.24.104:8086/get_user?data=' + JSON.stringify(res),
+                                async: true,
+                                url: 'http://47.108.24.104:8083/get_user?data=' + JSON.stringify(res),
                                 dataType: 'json', //希望服务器返回json格式的数据
                                 jsonp: "callback",
                                 jsonpCallback: "successCallback",//回调方法
@@ -888,53 +903,142 @@
                 }
 
             },
-            async Rtbackfbdatas(id){
-               console.log('ok?'+id)
-              await this.$http.get(`${this.$config.api}/api/cms/renTing/`+id+`/renTingbackdata`).then(res => {
-                var ret = res.data.address;
-                this.saveRes = res.data;
-                this.address =this.saveRes.renTingQuyu
-                this.chaoxiang =this.saveRes.chaoxiang;
-                this.spinning = false;
-                this.ref = res.data;
-                this.peitaocheckedList = this.ref.renTingPeiTao
-                //字符串
-                this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
-                this.ceng = this.ref.renTingLouceng.substring(0, this.ref.renTingLouceng.indexOf("/"));
-                this.lou = this.ref.renTingLouceng.substring(this.ref.renTingLouceng.indexOf("/") + 1, this.ref.renTingLouceng.length);
-                let shi = this.ref.renTingHuXing.indexOf("室");
-                let ting = this.ref.renTingHuXing.indexOf("厅");
-                let wei = this.ref.renTingHuXing.indexOf("卫");
-                this.selectedShi = this.ref.renTingHuXing.substring(0, shi);
-                this.selectedTing = this.ref.renTingHuXing.substring(shi + 1, ting);
-                this.selectedWei = this.ref.renTingHuXing.substring(ting + 1, wei);
-                this.spinning = false;
-                var shineiImg = res.data.renTingShineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
-                var ss = shineiImg.split(",")
-                this.weiyiUserId = res.data.weiYiUrl;
-                for (var i = 0; i < ss.length; i++) {
-                    var imgUrl = {};
-                    imgUrl.url = ss[i];
-                    imgUrl.uid = i;
-                    imgUrl.name = 'xxx.jpg';
-                    imgUrl.status = 'done';
-                    this.shineiList.push(imgUrl);
+
+            //修改房源
+            async xiugaiZubao() {
+                if (this.ref.xiaoquName == null && this.ref.title == null &&
+                    this.ref.rice == null && this.ref.simpleRice == null &&
+                    this.ref.square == null && this.ref.huxing == null &&
+                    this.ref.louceng == null && this.ref.zhuangxiu == null && this.ref.address == null && this.ref.imgHeader == null
+                ) {
+                    this.savedisabled = false;
+                    this.loading = false;
+                    this.openNotificationWithIcon('error')
                 }
-                var imgH = {};
+                else {
+                    //this.saveRes.urlsId = this.$store.userId;
+                    this.ref.renTingAddress = this.address;
+                    this.ref.xiaoquName = this.xiaoquName;
+                    this.ref.renTingTitle = this.title;
+                    this.ref.renTingHuXing = this.renTingHuXing;
+                    this.ref.huxing = this.selectedShi+'室'+this.selectedTing+'厅'+this.selectedWei+'卫' 
+                    const arr = this.ZuFangPictureList;
+                    const target = {};
+                    let ShineinewObj = [];
+                    let ShiwainewObj = [];
+                    arr.forEach(a => {
+                        const source = JSON.parse(`{"${a.status}":"${a.url}"}`);//利用JSON.parse将对象//格式直接造出来
+                        Object.assign(target, source);
+                        if ('shinei' in source) {
+                            ShineinewObj.push(source)
+                        }
+                        else {
+                            ShiwainewObj.push(source)
+                        }
+                    })
+                    var shineis = [];
+                    var shiwais = [];
+                    for (let index = 0; index < ShineinewObj.length; index++) {
+                        const element = ShineinewObj[index].shinei;
+                        shineis.push(element)
+                    }
+
+                    for (let g = 0; g < ShiwainewObj.length; g++) {
+                        const gs = ShiwainewObj[g].shiwai;
+                        shiwais.push(gs)
+                    }
+                    const resg = {
+                        shinei: encodeURIComponent(String(shineis)),
+                        shiwai: encodeURIComponent(String(shiwais)),
+                        weiyiurl: encodeURI(this.weiyiUserId),
+                    }
+                    $.ajax({
+                        type: 'GET',
+                        async: true,
+                        url: 'http://47.108.24.104:8083/get_user?data=' + JSON.stringify(resg),
+                        dataType: 'json', //希望服务器返回json格式的数据
+                        jsonp: "callback",
+                        jsonpCallback: "successCallback",//回调方法
+                    })
+
+                    await this.$http.post(`${this.$config.api}/api/cms/house/ZuFangBaocunData`, this.ref).then(response => {
+                        if (response.status == 200) {
+                            this.savedisabled = false;
+                            this.loading = false;
+                            this.openNotificationWithIcon('success')
+                            this.saveRes = {};
+
+                        }
+                    })
+                }
+
+
+            },
+
+            async Rtbackfbdatas(id) {
+                await this.$http.get(`${this.$config.api}/api/cms/renTing/` + id + `/renTingbackdata`).then(res => {
+                    
+                    var ret = res.data.address;
+                    var weiyiUrlId = res.data.weiYiUrl;
+                    this.$http.get(`${this.$config.api}/api/cms/imgM/getImgType?weiyiUrl=` + weiyiUrlId).then(req => {
+                        var shineiList1 = req.data.shineiList.split(';');
+
+                        var shineiList2 = shineiList1;
+                        var shineiSS = shineiList2
+                        for (let index = 0; index < shineiSS.length; index++) {
+                            var imgUrls = {};
+                            imgUrls.url = shineiSS[index];
+                            imgUrls.status = 'shinei';
+                            this.ZuFangPictureList.push(imgUrls);
+                        }
+                        if(req.data.shiwaiList != ''){
+                            var shiwaiList1 = req.data.shiwaiList.split(';');
+                            var shiwaiList2 = shiwaiList1   
+                            var shiwaiSS = shiwaiList2
+                            for (let index = 0; index < shiwaiSS.length; index++) {
+                                var imgUrls = {};
+                                imgUrls.url = shiwaiSS[index];
+                                imgUrls.status = 'shiwai';
+                                this.ZuFangPictureList.push(imgUrls);
+                            }
+                        }
+                        
+                    })
+                    this.saveRes = res.data;
+                    this.ref = res.data;
+                    this.address = this.ref.renTingQuyu
+                    this.chaoxiang = this.ref.chaoxiang;
+                    this.spinning = false;
+                    this.peitaocheckedList = ['宽带', '床', '衣柜', '沙发', '电视', '空调', '洗衣机', '冰箱', '暖气', '独立卫生间', '桌椅', '智能门锁']
+                    //字符串
+                    this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
+                    this.ceng = this.ref.renTingLouceng.substring(0, this.ref.renTingLouceng.indexOf("/"));
+                    this.lou = this.ref.renTingLouceng.substring(this.ref.renTingLouceng.indexOf("/") + 1, this.ref.renTingLouceng.length);
+                    let shi = this.ref.renTingHuXing.indexOf("室");
+                    let ting = this.ref.renTingHuXing.indexOf("厅");
+                    let wei = this.ref.renTingHuXing.indexOf("卫");
+                    this.selectedShi = this.ref.renTingHuXing.substring(0, shi);
+                    this.selectedTing = this.ref.renTingHuXing.substring(shi + 1, ting);
+                    this.selectedWei = this.ref.renTingHuXing.substring(ting + 1, wei);
+                    this.spinning = false;
+                    var shineiImg = res.data.renTingShineiImg.replace(/'/g, '').replace('[', '').replace(']', '');
+                    var ss = shineiImg.split(",")
+                    this.weiyiUserId = res.data.weiYiUrl;
+                    var imgH = {};
                     imgH.url = ss[0],
-                    imgH.uid = '1',
-                    imgH.name = 'xxx.jpg',
-                    imgH.status = 'done',
-                    this.imgHeaderList.push(imgH);
+                        imgH.uid = '-7',
+                        imgH.name = 'xxx.jpg',
+                        imgH.status = 'done',
+                        this.imgHeaderList.push(imgH);
 
 
-                var imgFangxing = {};
-                imgFangxing.url = res.data.renTingFengImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                imgFangxing.uid = '50',
-                imgFangxing.name = 'xxx.jpg',
-                imgFangxing.status = 'done',
-                this.fangxinlist.push(imgFangxing);    
-                })    
+                    var imgFangxing = {};
+                    imgFangxing.url = res.data.renTingFengImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                        imgFangxing.uid = '-5',
+                        imgFangxing.name = 'xxx.jpg',
+                        imgFangxing.status = 'done',
+                        this.fangxinlist.push(imgFangxing);
+                })
             },
             openNotificationWithIcon(type) {
                 if (type == 'success') {
@@ -949,7 +1053,7 @@
                     this.$router.replace('/rentrelease')
                 }
                 if (type == 'error') {
-                    this.$notification[type]({     
+                    this.$notification[type]({
                         message: '保存失败',
                         placement: 'bottomRight',
                         bottom: '50px',
@@ -959,24 +1063,25 @@
                     });
                 }
             },
-            leasecearl(){
-                this.ref=[]
-                this.shineiList=[]
-                this.fangxinlist=[]
-                this.imgHeaderList=[]
-                this.chaoxiang=''
-                this.chaoxiang=''
-                this.address=''
+            leasecearl() {
+                this.ref = []
+                this.shineiList = []
+                this.fangxinlist = []
+                this.imgHeaderList = []
+                this.ZuFangPictureList = []
+                this.chaoxiang = ''
+                this.chaoxiang = ''
+                this.address = ''
                 this.selectedShi = '';
                 this.selectedTing = '';
                 this.selectedWei = '';
                 this.peitaocheckedList = [];
-                this.valuehz="合租"
+                this.valuehz = "合租"
                 this.ceng = '';
                 this.lou = '';
                 this.jichucheckedList = []
             },
-            cancelClick(){
+            cancelClick() {
                 this.spinning = false;
                 this.disabled = false;
             },
@@ -990,17 +1095,14 @@
             //     this.addshowxqu = true;
             // },
             leasehanderOk(e) {
-                console.log(e);
                 this.visible = false;
                 this.spinning = false;
                 this.disabled = false;
             },
             addok(e) {
-                console.log(e);
                 this.addxq = false;
             },
             addshowok(e) {
-                console.log(e);
                 this.addshowxqu = false;
             },
             handleCancel() {
@@ -1018,9 +1120,10 @@
     }
 </script>
 <style lang="less" scoped>
-.ant-checkbox-group {
+    .ant-checkbox-group {
         margin-top: 10px;
     }
+
     .leaselogo {
         display: flex;
         align-items: center;
@@ -1239,6 +1342,7 @@
         display: flex;
         align-items: center;
         height: 40px;
+
         .laberboxtitle {
             color: red;
             padding-right: 10px;
