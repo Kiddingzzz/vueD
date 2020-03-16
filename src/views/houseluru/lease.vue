@@ -29,9 +29,9 @@
                         <div class="leaselogo">
                             <a href="https://cq.58.com/zufang" target="_blank"><img class="wuba"
                                     src="../../assets/logo/58logo.png"></a>
-                            <!-- <a href="https://cq.zu.anjuke.com" target="_blank"><img class="anju"
+                            <a href="https://cq.zu.anjuke.com" target="_blank"><img class="anju"
                                     src="../../assets/logo/anjuke.jpg"></a>
-                            <a href="https://cq.zu.fang.com" target="_blank"><img class="fang"
+                            <!-- <a href="https://cq.zu.fang.com" target="_blank"><img class="fang"
                                     src="../../assets/logo/fangtianxia.jpg"></a> -->
                         </div>
                     </div>
@@ -747,8 +747,35 @@
                         }
                     })
                 }
-                if (RegExp(/.zu.anjuke.com/).exec(params))
+                if (RegExp(/.zu.anjuke.com/).exec(params)){
                     urllianjie = `${this.$config.api}/api/cms/anRt/anRenTingUrl`
+                    const datast = {
+                        userId: encodeURI(this.userId),
+                        url: encodeURIComponent(String(this.urlss)),
+                        weiYiUrl: encodeURI(this.text),
+                        houseType: "合租",
+                    }
+                    var that = this;
+                    $.ajax({
+                        type: 'GET',
+                        async: true,
+                        url: 'http://47.108.24.104:8071/get_user?data=' + JSON.stringify(datast),
+                        // url: 'http://127.0.0.1:8071/get_user?data=' + JSON.stringify(datast),
+                        dataType: 'json', //希望服务器返回json格式的数据
+                        jsonp: "callback",
+                        // jsonpCallback: "successCallback",//回调方法
+                        success: function (data) {
+                        },
+                    }).fail(function (data) {
+                        if (data.status == '500') {
+                            that.spinning = false;
+                            that.disabled = false;
+                            alert("房源录入系统错误，请稍后再试")
+                            return;
+                        }
+                    })
+                }
+                   
                 this.disabled = true;
                 // await this.$http.post(urllianjie, data).then(response => {
                 this.spinning = true;
@@ -794,7 +821,8 @@
 
 
                     var imgFangxing = {};
-                    imgFangxing.url = res.data.renTingFengImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                    imgFangxing.url = res.data.renTingHuxingImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                  
                         imgFangxing.uid = '50',
                         imgFangxing.name = 'xxx.jpg',
                         imgFangxing.status = 'done',
