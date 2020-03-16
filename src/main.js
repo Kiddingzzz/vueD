@@ -100,7 +100,7 @@ router.beforeEach((to, from, next) => {
 	if (to.meta.title) {
 		document.title = to.meta.title;
 	} else {
-		document.title = '开单网';
+		document.title = '开单王';
 	}
 	next();
 	//  

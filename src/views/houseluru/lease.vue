@@ -657,6 +657,7 @@
             }
         },
         activated(options) {
+            this.leasecearl()
             this.RtreciveId = this.$route.params.id
             if (this.RtreciveId != undefined && this.RtreciveId != null)
                 this.Rtbackfbdatas(this.RtreciveId);
@@ -681,7 +682,7 @@
                     this.ZuFangPictureList = ress;
                 }
                 else {
-                    alert('房源图片至少保留4张')
+                    alert('房源图片至少保留3张')
                 }
             },
             uuid() {
@@ -951,6 +952,7 @@
                     this.ref.renTingHuXing = this.renTingHuXing;
                     this.ref.huxing = this.selectedShi+'室'+this.selectedTing+'厅'+this.selectedWei+'卫' 
                     const arr = this.ZuFangPictureList;
+                    this.ref = this.saveRes;
                     const target = {};
                     let ShineinewObj = [];
                     let ShiwainewObj = [];
@@ -1114,7 +1116,13 @@
                 this.disabled = false;
             },
             showModal() {
-                this.visible = true;
+                if(this.RtreciveId != undefined || this.RtreciveId != null){
+                    alert('请修改房源之后再录入哦!')
+                    return;
+                }
+                else{
+                    this.visible = true;
+                }
             },
             // addxiaoqu() {
             //     this.addxq = true;

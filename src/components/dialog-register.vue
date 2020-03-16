@@ -5,7 +5,7 @@
             <a-form class="content" :form="form" @submit="handleSubmit">
                 <a-form-item>
                     <label>会员名称:</label>
-                    <a-input type="text" class="inputs" placeholder="请输入5-25个字符组成的会员名，推荐使用中文" v-decorator="['userName', { 
+                    <a-input type="text" class="inputs" placeholder="请输入5-25个字符组成的会员名，推荐使用英文" v-decorator="['userName', { 
                 validateTrigger: 'blur',
                 rules: [
                   { required: true, message: '会员名不能为空' },
@@ -67,7 +67,7 @@
                     },
                   ]
                 }]">
-                        我同意开单网的
+                        我同意开单王的
                         <a href="#" @click="showModal">《商家合作协议》</a>
                         <a-modal class="xieyi" title="《商家合作协议》" width="80vw" okText="确认" cancelText="取消"
                             v-model="visible" @ok="handleOk">

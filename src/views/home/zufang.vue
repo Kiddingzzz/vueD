@@ -57,24 +57,9 @@
                 <!-- 筛选条件 -->
 
                 <!-- 租金 -->
-                <dl id="secitem-rent" class="secitem">
+                <!-- <dl id="secitem-rent" class="secitem">
                     <dt class="fl" style="margin-top:2px;">租金：</dt>
                     <dd>
-                        <!-- <a class='select' @click="getDashboard()">不限</a>
-                  <a href="https://cq.58.com/chuzu/0/b1/?pagetype=area"
-                    onClick="clickLog('from=fcpc_list_cq_Zujin_0_500')">500元以下</a>
-                  <a href="https://cq.58.com/chuzu/0/b2/?pagetype=area"
-                    onClick="clickLog('from=fcpc_list_cq_Zujin_500_1000')">500-1000元</a>
-                  <a href="https://cq.58.com/chuzu/0/b3/?pagetype=area"
-                    onClick="clickLog('from=fcpc_list_cq_Zujin_1000_1500')">1000-1500元</a>
-                  <a href="https://cq.58.com/chuzu/0/b4/?pagetype=area"
-                    onClick="clickLog('from=fcpc_list_cq_Zujin_1500_2000')">1500-2000元</a>
-                  <a href="https://cq.58.com/chuzu/0/b5/?pagetype=area"
-                    onClick="clickLog('from=fcpc_list_cq_Zujin_2000_3000')">2000-3000元</a>
-                  <a href="https://cq.58.com/chuzu/0/b6/?pagetype=area"
-                    onClick="clickLog('from=fcpc_list_cq_Zujin_3000_4500')">3000-4500元</a>
-                  <a href="https://cq.58.com/chuzu/0/b7/?pagetype=area"
-                    onClick="clickLog('from=fcpc_list_cq_Zujin_4500_9999999')">4500元以上</a> -->
                         <a-radio-group v-model="zujinvalue" size="small" buttonStyle="solid" @change="zujinChange">
                             <a-radio-button value="租金不限" @click="reset('租金不限')" class='select'>不限</a-radio-button>
                             <a-radio-button value="0-500" @click="reset('0-500')">500元以下</a-radio-button>
@@ -100,7 +85,7 @@
                             <span class="errorMsg">{{errorMsg}}</span>
                         </span>
                     </dd>
-                </dl>
+                </dl> -->
                 <!-- 厅室 -->
                 <dl class="secitem">
                     <dt>厅室：</dt>
@@ -120,7 +105,7 @@
                 <dl class="secitem">
                     <dt style="margin-top: 7px;">其他：</dt>
                     <dd id="secitem-other" style="display:flex;">
-                        <div class="moniselectcon">
+                        <!-- <div class="moniselectcon">
                             <a-select labelInValue :defaultValue="{ key: '朝向不限' }"
                                 style="width: 120px; margin-right:20px;" @change="chaoxiangChange">
                                 <a-select-option value="朝向不限" @click="reset('朝向不限')">朝向不限</a-select-option>
@@ -135,7 +120,7 @@
                                 <a-select-option value="东北" @click="reset('东北')">东北</a-select-option>
                                 <a-select-option value="西北" @click="reset('西北')">西北</a-select-option>
                             </a-select>
-                        </div><!-- moniselectcon -->
+                        </div> -->
                         <div class="moniselectcon">
                             <a-select labelInValue :defaultValue="{ key: '装修不限' }" style="width: 120px"
                                 @change="zhuangxiuChange">
@@ -143,7 +128,7 @@
                                 <a-select-option value="毛坯" @click="reset('毛坯')">毛坯</a-select-option>
                                 <a-select-option value="简单装修" @click="reset('简单装修')">简单装修</a-select-option>
                                 <a-select-option value="精装修" @click="reset('精装修')">精装修</a-select-option>
-                                <a-select-option value="豪华装修" @click="reset('西北')">豪华装修</a-select-option>
+                                <a-select-option value="豪华装修" @click="reset('豪华装修')">豪华装修</a-select-option>
                             </a-select>
                         </div><!-- moniselectcon -->
                     </dd>
@@ -153,16 +138,16 @@
         <div class="wrap">
             <a-layout style="padding: 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-                    <a-table :columns="columns" :dataSource="list">
+                    <a-table :columns="columns" :dataSource="list" :loading="loading" @change="handleTableChange" :pagination="pagination">
                         <span slot="customTitle">
                             <!-- <a-icon type="smile-o"/> --> 时间</span>
                         <span slot="customTitles">
                             <!-- <a-icon type="smile-o"/> --> 标题</span>
-                        <template slot="phones" slot-scope="text, record">
-                            <a :href="record.url" target="_blank">{{record.phone}}</a>
+                        <template slot="rtPhone" slot-scope="text, record">
+                            <a :href="record.url" target="_blank">{{record.rtPhone}}</a>
                         </template>
                         <template slot="titles" slot-scope="text, record">
-                            <a :href="record.url" target="_blank">{{record.title}}</a>
+                            <a :href="record.url" target="_blank">{{record.renTingTitle}}</a>
                         </template>
                         <template slot="def" slot-scope="text, record">
                             <a :href="record.url" target="_blank">{{record.def}}</a>
@@ -195,40 +180,34 @@
             width: '7%'
         },
         {
-            dataIndex: 'title',
-            key: 'title',
+            dataIndex: 'renTingTitle',
+            key: 'renTingTitle',
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
             width: '10%'
         },
         {
             title: '价格元/月',
-            dataIndex: 'rice',
-            key: 'rice',
+            dataIndex: 'renTingZujin',
+            key: 'renTingZujin',
             width: '7.2%'
         },
         {
-            title: '单价',
-            dataIndex: 'simpleRice',
-            key: 'simpleRice',
-            width: '7%'
-        },
-        {
             title: '面积㎡',
-            dataIndex: 'square',
-            key: 'square',
+            dataIndex: 'renTingMianji',
+            key: 'renTingMianji',
             width: '7%'
         },
         {
-            title: '朝向',
-            dataIndex: 'chaoxiang',
-            key: 'chaoxiang',
-            width: '4.5%'
+            title: '户型',
+            dataIndex: 'renTingHuXing',
+            key: 'renTingHuXing',
+            width: '6%'
         },
         {
             title: '楼层',
-            dataIndex: 'louceng',
-            key: 'louceng',
+            dataIndex: 'renTingLouceng',
+            key: 'renTingLouceng',
             width: '5.5%'
         },
         {
@@ -239,28 +218,28 @@
         },
         {
             title: '联系人',
-            dataIndex: 'lianxiPeople',
-            key: 'lianxiPeople',
+            dataIndex: 'people',
+            key: 'people',
             width: '7.4%'
         },
         {
             title: '电话',
-            dataIndex: 'phone',
-            key: 'phone',
-            scopedSlots: { customRender: 'phones' },
+            dataIndex: 'rtPhone',
+            key: 'rtPhone',
+            scopedSlots: { customRender: 'rtPhone' },
             width: '7.7%'
 
         },
         {
             title: '地址',
-            dataIndex: 'address',
-            key: 'address',
+            dataIndex: 'renTingAddress',
+            key: 'renTingAddress',
             width: '7.5%'
         },
         {
             title: '来源',
-            dataIndex: 'source',
-            key: 'source',
+            dataIndex: 'renTingSource',
+            key: 'renTingSource',
             width: '6.8%'
         },
     ];
@@ -282,6 +261,23 @@
                 inputChange: false,
                 zujinvalue: '租金不限',
                 errorMsg: '',
+                pagination: {
+                    total: 0,
+                    pageSize: 10,//每页中显示10条数据
+                    showSizeChanger: true,
+                    pageSizeOptions: ["10", "20", "50", "100"],//每页中显示的数据
+                    showTotal: total => `共有 ${total} 条数据`,  //分页中显示总的数据
+                },
+                loading: true,
+                // 查询参数
+                queryParam: {
+                    page: 1,//第几页
+                    size: 10,//每页中显示数据的条数
+                    hosName: "",
+                    hosCode: "",
+                    province: "",
+                    city: ""
+                },
             };
         },
         mounted() {
@@ -291,6 +287,14 @@
             this.getDashboard();
           },
         methods: {
+            handleTableChange(pagination) {
+                this.pagination.current = pagination.current;
+                this.pagination.pageSize = pagination.pageSize;
+                this.queryParam.page = pagination.current;
+                this.queryParam.size = pagination.pageSize;
+                // this.getDashboard();
+                this.pagination = pagination;
+            },
             inputFocus() {
                 this.inputChange = true
             },
@@ -324,124 +328,68 @@
             async getDashboard(pi) {
                 // @param condition 过滤条件
                 //@param data 需要过滤的数据
-                let mohufilter = (condition, filterdata) => {
-                    return filterdata.filter(item => {
-                        return Object.keys(condition).every(key => {
-                            return String(item[key]).toLowerCase().includes(
-                                String(condition[key]).trim().toLowerCase())
-                        })
-                    })
+                const mohufilter=(condition, filterdata)=>{
+                        return filterdata.filter(item => {
+                            return Object.keys(condition).every(key => {
+                                return String(item[key]).toLowerCase().includes(
+                                    String(condition[key]).trim().toLowerCase() 
+                                )
+                        } )
+                    } )
                 }
-                let chaoxiangfilter = (condition, filterdata) => {
-                    return filterdata.filter(item => {
-                        return Object.keys(condition).every(key => {
-                            return String(item[key]).toLowerCase() == String(condition[key]).trim().toLowerCase() ? true : false
-                        })
-                    })
-                }
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList`);
+                const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/renPythonHomeList`);
                 const res = respones.data;
-                if (pi == undefined) {
+                if (pi == undefined || pi == '商铺类型' || pi == '厅室不限' || pi == '装修不限' || pi == '租金不限' || pi == '不限') {
+                    const pagination = { ...this.pagination };
+                    // pagination.total = res.totalCount;
                     this.list = res.items;
+                    this.pagination = pagination;
+                    this.loading = false;
                     return
                 } else {
-                    if (pi == '不限') {
-                        this.quyu = ''
+                    const datas = {
+                        SearchName:pi
                     }
-                    if (pi == '厅室不限') {
-                        this.huxingselect = ''
-                    }
-                    if (pi == '朝向不限') {
-                        this.chaoxiangselect = ''
-                    }
-                    if (pi == '装修不限') {
-                        this.zhuangxiuselect = ''
-                    }
-                    if (pi == '租金不限') {
-                        this.zujin = ''
-                        this.ricehigh = ''
-                    }
-                    //筛选装修和地区
-                    let condition = { chaoxiang: this.chaoxiangselect, zhuangxiu: this.zhuangxiuselect, address: this.quyu }
-                    this.listt = mohufilter(condition, res.items)
-                    //筛选具体朝向
-                    if (this.chaoxiangselect != '') {
-                        let chaoxiangcondition = { chaoxiang: this.chaoxiangselect }
-                        this.listt = chaoxiangfilter(chaoxiangcondition, this.listt);
-                    }
-                    //筛选户型huxing:this.huxingselect
-                    if (this.huxingselect != 'moreroom') {
-                        let huxingcondition = { huxing: this.huxingselect }
-                        this.listt = mohufilter(huxingcondition, this.listt);
-                    }
-                    if (this.huxingselect == 'moreroom') {
-                        this.listt = this.listt.filter(function (item) {
-                            return 5 <= item.huxing.split("室")[0]
-                        });
-                    }
-                    //筛选租金
-                    const that = this
-                    if (this.ricehighinput == '') {
-                        this.listt = this.listt.filter(function (item) {
+                    const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/renPythonHomeList?SearchName=`+ datas.SearchName);
+                    const res = respones.data;
+                    const pagination = { ...this.pagination };
+                    // pagination.total = res.totalCount;
+                    this.pagination = pagination;
+                    this.loading = false;
+                    this.list = res.items;
+                    const that = this;
+                    if (that.ricehighinput == '') {
+                        that.listt = that.list.filter(function (item) {
                             if (that.ricehigh == 'more') {
-                                return that.ricelow <= item.rice
+                                return that.ricelow <= item.renTingZujin
                             } else if (that.ricehigh == '') {
-                                return 0 <= item.rice
+                                return 0 <= item.renTingZujin
                             } else {
-                                return that.ricelow <= item.rice & item.rice <= that.ricehigh
+                                return that.ricelow <= item.renTingZujin & item.renTingZujin <= that.ricehigh
                             }
                         });
                     }
-                    //根据输入的价格进行筛选
-                    if (this.ricehighinput != '' & this.ricelowinput != '') {
-                        this.listt = this.listt.filter(function (item) {
-                            return that.ricelowinput <= item.rice & item.rice <= that.ricehighinput
-                        });
-                        this.inputChange = false
-                    }
-                    this.list = this.listt
+                    this.list = that.listt
                 }
             },
             reset(data) {
-                if (data == '租金不限' || data == '0-500' || data == '500-1000' || data == '1000-1500' ||
-                    data == '1500-2000' || data == '2000-3000' || data == '3000-4500' || data == '4500-more') {
-                    this.errorMsg = ''
-                    this.ricehighinput = ''
-                    this.ricelowinput = ''
-                    this.inputChange = false
+                // if (data == '租金不限' || data == '0-500' || data == '500-1000' || data == '1000-1500' ||
+                //     data == '1500-2000' || data == '2000-3000' || data == '3000-4500' || data == '4500-more') {
+                //     this.errorMsg = ''
+                //     this.ricehighinput = ''
+                //     this.ricelowinput = ''
+                //     this.inputChange = false
+                //     this.getDashboard(data)
+                // } 
+                // } else {
+                //     console.log(data)
+                //     this.errorMsg = ''
+                //     this.inputChange = false
+                //     this.getDashboard(data)
+                // }
+                // else{
                     this.getDashboard(data)
-                } else if (data == 'shaiRice') {
-                    console.log('ff最高' + this.ricehighinput)
-                    console.log('ff最低' + this.ricelowinput)
-                    this.zujinvalue = '租金不限'
-                    if (this.ricehighinput == '' || this.ricelowinput == '') {
-                        console.log('最低' + this.ricelowinput)
-                        this.errorMsg = '价格不能为空'
-                    } else if (this.ricehighinput != '' && this.ricelowinput != '') {
-                        // if(parseFloat(this.ricelowinput)<0){
-                        //   this.ricelowinput = 0
-                        // }
-                        // if(parseFloat(this.ricelowinput)>9999999){
-                        //   this.ricelowinput = 9999999
-                        // }
-                        // if(parseFloat(this.ricehighinput)<0){
-                        //   this.ricehighinput = 0
-                        // } 
-                        // if(parseFloat(this.ricehighinput)>9999999){
-                        //   this.ricehighinput = 9999999
-                        // }
-                        if (parseFloat(this.ricelowinput) > parseFloat(this.ricehighinput)) {
-                            this.errorMsg = '最高价格不能低于最低价格'
-                        } else {
-                            this.errorMsg = ''
-                            this.getDashboard(data)
-                        }
-                    }
-                } else {
-                    this.errorMsg = ''
-                    this.inputChange = false
-                    this.getDashboard(data)
-                }
+                // }
             },
 
         },

@@ -71,7 +71,7 @@
             </dl> -->
       
             <!-- 厅室 -->
-            <dl class="secitem">
+            <!-- <dl class="secitem">
               <dt>厅室：</dt>
               <dd id="secitem-room">
                 <a-radio-group defaultValue="厅室不限" size="small" buttonStyle="solid"  @change="huxingChange">
@@ -83,7 +83,7 @@
                   <a-radio-button value="moreroom" @click="reset('四室以上')">四室以上</a-radio-button>
                 </a-radio-group>
               </dd>
-            </dl>
+            </dl> -->
       
             <!-- 其他 -->
             <dl class="secitem">
@@ -108,7 +108,7 @@
           <div class="shopwrap">
             <a-layout style="padding: 24px 24px 24px 24px">
               <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-                <a-table :columns="columns" :dataSource="list">
+                <a-table :columns="columns" :dataSource="list" :loading="loading" @change="handleTableChange" :pagination="pagination">
                   <span slot="customTitle">
                     <!-- <a-icon type="smile-o"/> --> 时间</span>
                   <span slot="customTitles">
@@ -226,6 +226,23 @@
               zujin: '',
               ricehigh: '',
               ricelow: '',
+              pagination: {
+                    total: 0,
+                    pageSize: 10,//每页中显示10条数据
+                    showSizeChanger: true,
+                    pageSizeOptions: ["10", "20", "50", "100"],//每页中显示的数据
+                    showTotal: total => `共有 ${total} 条数据`,  //分页中显示总的数据
+                },
+                loading: true,
+                // 查询参数
+                queryParam: {
+                    page: 1,//第几页
+                    size: 10,//每页中显示数据的条数
+                    hosName: "",
+                    hosCode: "",
+                    province: "",
+                    city: ""
+                },
             };
           },
           mounted() {
@@ -235,6 +252,13 @@
             this.getDashboard();
           },
           methods: {
+            handleTableChange(pagination) {
+                this.pagination.current = pagination.current;
+                this.pagination.pageSize = pagination.pageSize;
+                this.queryParam.page = pagination.current;
+                this.queryParam.size = pagination.pageSize;
+                this.pagination = pagination;
+            },
             quyuChange(e){
               if(e.target.value != '不限'){
                 this.quyu = e.target.value
@@ -277,14 +301,22 @@
               if(pi == undefined || pi == '商铺类型' || pi == '不限' || pi == '厅室不限'){
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList`);
                 const res = respones.data;
+                const pagination = { ...this.pagination };
+                // pagination.total = res.totalCount;
+                this.pagination = pagination;
+                this.loading = false;
                 this.list = res.items;
               }
               else{
                 const data = {
-                SearchName:pi
+                  SearchName:pi
                 }
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList?SearchName=`+ data.SearchName);
                 const res = respones.data;
+                const pagination = { ...this.pagination };
+                // pagination.total = res.totalCount;
+                this.pagination = pagination;
+                this.loading = false;
                 this.list = res.items;
               }
               

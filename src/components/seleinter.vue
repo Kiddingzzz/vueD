@@ -4,18 +4,18 @@
             <span slot="inter" slot-scope="res,record">
                 <img class="wangyeimg" :src="record.inter[hsd]">
             </span>
-            <span slot="acctionkey" slot-scope="acctionkey, record">
+            <!-- <span slot="acctionkey" slot-scope="acctionkey, record">
                 <a-checkbox></a-checkbox>
                 <label class="organlabel">{{record.acctionkey[0]}}</label>
                 <label class="organlabel">{{record.acctionkey[1]}}</label>
 
-            </span>
-            <span slot="leibie" slot-scope="leibie">
+            </span> -->
+            <!-- <span slot="leibie" slot-scope="leibie">
                 <a-checkbox v-for="tag in leibie" :key="tag">
                     {{tag.toUpperCase()}}
                 </a-checkbox>
 
-            </span>
+            </span> -->
             <span slot="kumansing" slot-scope="text, record">
                 <a-select default-value="2" class="opseles">
                     <a-select-option value="1">
@@ -64,20 +64,20 @@
             width: '8%',
             scopedSlots: { customRender: 'inter' },
         },
-        {
-            title: '账号状态',
-            dataIndex: 'acctionkey',
-            key: 'acctionkey',
-            width: '20%',
-            scopedSlots: { customRender: 'acctionkey' },
-        },
-        {
-            title: '类别',
-            key: 'leibie',
-            dataIndex: 'leibie',
-            width: '17%',
-            scopedSlots: { customRender: 'leibie' },
-        },
+        // {
+        //     title: '账号状态',
+        //     dataIndex: 'acctionkey',
+        //     key: 'acctionkey',
+        //     width: '20%',
+        //     scopedSlots: { customRender: 'acctionkey' },
+        // },
+        // {
+        //     title: '类别',
+        //     key: 'leibie',
+        //     dataIndex: 'leibie',
+        //     width: '17%',
+        //     scopedSlots: { customRender: 'leibie' },
+        // },
         {
             title: '库存满时发送处理',
             key: 'kumansing',
@@ -110,7 +110,7 @@
             // inter: '/static/img/logoJXW.2d85d52.png',
             inter: [require('../assets/logo/fang.png'), require('../assets/logo/jingjiren.png')],
             // acctionkey: ['15624687', '可用'],
-            acctionkey: ['', '可用'],
+            // acctionkey: ['', '可用'],
             leibie: ['第一个', '第二个'],
 
         }
@@ -549,9 +549,7 @@
                         // this.houseid = res1.returnmsgs.houseid;
                         this.$http.post(`${this.$config.api}/api/cms/house/modifyHouseStatus/` + this.value.id).then(pones => {
                             this.openNotificationWithIcon('success')
-
                         })
-
                     }
                 })
             },

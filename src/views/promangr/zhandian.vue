@@ -103,18 +103,18 @@
                         </span>
                     </a-table>
                 </a-tab-pane>
-                <a-tab-pane tab="已开通网站" key="2">
+                <!-- <a-tab-pane tab="已开通网站" key="2">
                     <allinter :item = 'item'></allinter>
                 </a-tab-pane>
                 <a-tab-pane tab="未开通网站" key="3">
                     <closeinter :item = 'item'></closeinter>
-                </a-tab-pane>
-                <a-tab-pane tab="操作日志" key="4">
+                </a-tab-pane> -->
+                <!-- <a-tab-pane tab="操作日志" key="4">
                     <rizhi></rizhi>
                 </a-tab-pane>
                 <a-tab-pane tab="向平台推荐网站" key="5">
                     <tuijian></tuijian>
-                </a-tab-pane>
+                </a-tab-pane> -->
             </a-tabs>
             </a-spin>
         </div>
@@ -438,7 +438,7 @@
                             this.lookpwdvisible=true;
                         }
                         else{
-                            alert('请添加站点账号密码')
+                            alert('请重新检查密码')
                             // this.$message.error(Response.data.returnValue.msg);
                         }
                 })

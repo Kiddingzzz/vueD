@@ -22,7 +22,7 @@
                         <a-popconfirm title="确定删除么？" @confirm="confirm(record.id)" okText="确认" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
-                        <a href="javascript:;" @click="onfabu(record)">未发布</a>
+                        <!-- <a href="javascript:;" @click="onfabu(record)">未发布</a> -->
                     </span>
                     <span slot="customTitles">
                         <a-icon type="smile-o" /> 标题</span>
@@ -177,15 +177,14 @@
                 return {
                     on: {
                         click: () => {
-                            // console.log('序号索引index' + index)
                             if(this.select==true){
                                 this.selectedRowKeys.push(index)
                                 this.selectedRows.push(record)
                             }else{
-                                this.selectedRowKeys = []
+                                this.selectedRowKeys = [] 
                                 this.selectedRows = []
                             }
-                            this.select = !this.select
+                            // this.select = !this.select   
                         }
                     }
                 }

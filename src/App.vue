@@ -44,9 +44,9 @@
               <router-link to="index"><i class="iconfont icon-ershoufang"></i>二手房</router-link>
               <!-- <router-link to="test"><i class="iconfont icon-ershoufang"></i>test</router-link> -->
             </a-menu-item>
-            <!-- <a-menu-item key="/zufang" class="hh">
+            <a-menu-item key="/zufang" class="hh">
               <router-link to="zufang"><i class="iconfont icon-zufang"></i>租房</router-link>
-            </a-menu-item> -->
+            </a-menu-item>
             <a-menu-item key="/shops" class="hh">
               <router-link to="shops"><i class="iconfont icon-shangpu01"></i>商铺</router-link>
             </a-menu-item>
@@ -212,7 +212,7 @@ export default {
           // get the canvas and context
           var canvas = this.$refs.sky;
           this.canvas = canvas;
-          // console.log("canvas:"+canvas)
+          console.log("canvas:"+canvas)
           let update = JSON.parse(localStorage.getItem('update'));
           if(update.hasLogin != false){
             var ctx = canvas.getContext('2d');

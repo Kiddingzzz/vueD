@@ -27,9 +27,12 @@
                     <img src="../assets/qqlogo.png" class="imgs" @click="type = 'qq'">
                   </div>           
                 </div> -->
-                    </div>
+                </div>
 
                     <div v-if="account == 'username'">
+                        <div style="    position: absolute;text-align: center;left: 98px;top: 112px;font-size: 16px;font-weight: 550;color: #1f9dcb;">
+                            房源群发 一键采集 开单就是这么简单！
+                        </div>
                         <div class="logins">
                             <!-- <el-input prefix-icon="iconfont icon-User" v-model="user" placeholder="请输入姓名" class="inputs"
                                 @keyup.enter.native="doLogin()"></el-input> -->
@@ -47,28 +50,31 @@
                                 
                             <el-input type="password" autocomplete="off" placeholder="请输入密码" v-model="password" class="inputs"
                                 @keyup.enter.native="doLogin()" prefix-icon="iconfont icon-mima"></el-input>
-              		    <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
+              		        <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
                             <a-button class="btns" @click="doLogin()" :disabled="dis" :loading="loading">登录</a-button>
+                            <a-button class="btns" @click="openMask" :disabled="dis">注册</a-button>
                         </div>
                     </div>
                 </div>
-                <div class="account">
+                <!-- <div class="account">
                     <div class="g2-cad" :class="{'active':account == 'qcode'}" @click="account = 'qcode'">二维码</div>
                     <div class="g2-cad" :class="{'active':account == 'username'}" @click="account = 'username'">账号</div>
-                </div>
+                </div> -->
 
-                <dialog-register v-model="sendVal" @childByValue="getDate" type="danger" title="欢迎注册开单网">
+                <dialog-register v-model="sendVal" @childByValue="getDate" type="danger" title="欢迎注册开单王">
                 </dialog-register>
                 <forget v-model="forgetVal" @childValue="getforgetVal" type="danger" title="找回密码">
                 </forget>
 
                 <div class="btm">
-                    <div class="tip2">开单网</div>
                     <div class="pwd" v-if="account == 'username'">
-                        <div @click="openMask" class="reg">注册</div>
+                        <!-- <div @click="openMask" class="reg">注册</div> -->
                         <div @click="openforget" class="forget">忘记密码</div>
                     </div>
                 </div>
+            
+            
+            
             </div>
             <div style="position: absolute;bottom: 20px;left: 10px;">
                 <a href="http://www.beian.miit.gov.cn" target="_blank">备案号:渝ICP备20000393号-1</a>
@@ -99,7 +105,7 @@
                 qqvisible: false,
                 type: "pay",
                 imgType: "",
-                account: "qcode",
+                account: "username",
                 sendVal: false,
                 forgetVal: false,
                 user: "",
@@ -136,88 +142,6 @@
             this.getUserIP((ip) => {
                 this.ip = ip;
             });
-                    // this.getUserIP((ip) => {
-            //     this.ip = ip;
-            //     console.log('登录页面的内网ip=================='+this.ip)
-            //     if(this.ip!=null) {
-            //         this.BackUserPwd()
-            //     }                
-            // });
-            //获取58令牌
-            // const WuBaApi = 'https://openapi.58.com/v2/auth/show?app_key=e36309f80bd9030c879d69ba4155a74b&redirect_uri=http://972133.vip'
-
-            // const resWuba = this.$http.get(WuBaApi);
-            // console.log(`resWuba:`+JSON.stringify(resWuba))
-            //获取授权令牌
-            // var sortList = [{code:resWuba.code},{timestamp:'1496829295748'},{app_key:'e36309f80bd9030c879d69ba4155a74b'}];
-
-            // //排序
-            // var cc = sortList.sort(function (a,b) {
-            //     return Object.keys(a) > Object.keys(b)
-            // });
-
-            // // console.log(cc);//获得一个新数组
-            // //转成字符串数组
-            // var strArr = [];
-            // cc.forEach(function (value,currentIndex) {
-            //     //取出key值和value值
-            //     var arrValue = Object.keys(value)+'='+value[Object.keys(value)];
-            //     strArr.push(arrValue)
-            // });
-            // var sortValue = strArr[0]+'&'+strArr[1]+'&'+strArr[2]+'&1b879acf2eb74ce52a6a1c0023cda398'
-            // console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`+sortValue) 
-
-            // //结果转换为小写并MD5加密
-            // var MD5SortValue =  md5(sortValue).toLowerCase();
-            // console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`+MD5SortValue)
-            // const TokenApi = 'https://openapi.58.com/v2/auth/access_token?code='+resWuba.code+'&timestamp='+'1496829295748'+'&app_key='+'e36309f80bd9030c879d69ba4155a74b'+'&sig='+MD5SortValue
-
-            //获取token令牌以及refreshtoken和openId
-            //  await this.$http.get(TokenApi).then(response => {
-            //    if(response.code == 0){
-            //       this.TokenRES = TokenApi.data;
-            //       this.openId = TokenApi.data.openid;
-            //       this.access_token = TokenApi.data.access_token;
-            //       this.refresh_token = TokenApi.data.refresh_token;
-
-            //       var refreshsortList = [{openid:this.openId},{access_token:this.access_token},{refresh_token:this.refresh_token},{timestamp:'1496829295748'},{app_key:'e36309f80bd9030c879d69ba4155a74b'}];
-            //       var bb = refreshsortList.sort(function (a,b) {
-            //           return Object.keys(a) > Object.keys(b)
-            //       });
-            //       var RefreshstrArr = [];
-            //       bb.forEach(function (value,currentIndex) {
-            //           //取出key值和value值
-            //           var fresharrValue = Object.keys(value)+'='+value[Object.keys(value)];
-            //           RefreshstrArr.push(fresharrValue)
-            //       });
-            //       var RefreshsortValue = RefreshstrArr[0]+'&'+RefreshstrArr[1]+'&'+RefreshstrArr[2]+'&'+RefreshstrArr[3]+'&'+RefreshstrArr[4]+'&1b879acf2eb74ce52a6a1c0023cda398'
-            //       var RefreshMD5SortValue =  md5(RefreshsortValue).toLowerCase();
-            //       console.log(`~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~`+RefreshMD5SortValue) 
-            //       const RefreshTokenApi = 'https://openapi.58.com/v2/auth/access_token?openid='+this.openId+'&access_token'+this.access_token+'&refresh_token'+this.refresh_token+'&timestamp='+'1496829295748'+'&app_key='+'e36309f80bd9030c879d69ba4155a74b'+'&sig='+RefreshMD5SortValue
-
-            //       this.$http.get(RefreshTokenRES).then(response =>{
-            //         if(response.code == 0){
-            //           this.RefreshTokenRES = response.data;
-            //           const data = {
-            //             openid: this.RefreshTokenRES.openId,
-            //             access_token: this.RefreshTokenRES.access_token,
-            //             access_token_expires: this.RefreshTokenRES.access_token_expires,
-            //             refresh_token: this.RefreshTokenRES.refresh_token,
-            //             refresh_token_expires: this.RefreshTokenRES.refresh_token_expires,
-            //             UserName:'15523358281',
-            //             WubaPassword:'Admin',
-            //             UserId:this.userId,
-            //           }
-            //           this.$http.post('',data).then(response => {
-            //             if(response.data == 200){
-            //               console.log('刷新令牌成功')
-            //             }
-            //           })
-
-            //         }
-            //       })
-            //    }
-            //  });
         },
         methods: {
             //重置
@@ -406,7 +330,7 @@
                              this.$error({
                                 title: '提示',
                                 content:Response.data.returnValue.msg ,
-                                });
+                            });
                         }
                     })
                 }
@@ -477,12 +401,13 @@
             }
 
             .item-qcode {
-                margin-top: -10px;
+                margin-top: 5px;
 
                 .icons {
                     display: flex;
                     flex-direction: row;
                     justify-content: space-around;
+                    // justify-content: center;
                     margin: -20px 90px;
                     height: 50px;
 
@@ -524,7 +449,7 @@
                     display: flex;
                     flex-flow: column;
                     align-items: center;
-                    height: 230px;
+                    height: 250px;
 
                     .el-input__inner {
                         background-color: rgba(255, 255, 255, 1);
@@ -554,14 +479,15 @@
                         text-align: center;
                         font-family: Roboto;
                         border: none;
-          margin-top: 30px;
+                        margin-top: 5px;
                     }
                 }
             }
 
             .account {
                 display: flex;
-                justify-content: space-between;
+                // justify-content: space-between;
+                justify-content: center;
                 width: 184px;
                 height: 36px;
                 margin: 35px auto;
@@ -603,7 +529,8 @@
                     }
 
                     .forget {
-                        margin-right: 20px;
+                        margin-left: 344px;
+                        margin-top: 30px;
                     }
                 }
             }

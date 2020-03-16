@@ -151,7 +151,7 @@
         <div class="wrap">
             <a-layout style="padding: 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-                    <a-table :columns="columns" :dataSource="list">
+                    <a-table :columns="columns" :dataSource="list" :loading="loading" @change="handleTableChange" :pagination="pagination">
                         <span slot="customTitle">
                             <!-- <a-icon type="smile-o"/> --> 时间</span>
                         <span slot="customTitles">
@@ -282,19 +282,40 @@
                 zujin: '',
                 ricehigh: '',
                 ricelow: '',
+                pagination: {
+                    total: 0,
+                    pageSize: 10,//每页中显示10条数据
+                    showSizeChanger: true,
+                    pageSizeOptions: ["10", "20", "50", "100"],//每页中显示的数据
+                    showTotal: total => `共有 ${total} 条数据`,  //分页中显示总的数据
+                },
+                loading: true,
+                // 查询参数
+                queryParam: {
+                    page: 1,//第几页
+                    size: 10,//每页中显示数据的条数
+                    hosName: "",
+                    hosCode: "",
+                    province: "",
+                    city: ""
+                },
             };
         },
         activated(){
             this.getDashboard();
-          },
+        },
         mounted() {
             let update = JSON.parse(localStorage.getItem('update'));
             this.getDashboard();
-
-            // let ip = returnCitySN["cip"];
-            // console.log('index.vue的ip==================' + ip)
         },
         methods: {
+            handleTableChange(pagination) {
+                this.pagination.current = pagination.current;
+                this.pagination.pageSize = pagination.pageSize;
+                this.queryParam.page = pagination.current;
+                this.queryParam.size = pagination.pageSize;
+                this.getDashboard(pagination);
+            },
             quyuChange(e) {
                 if (e.target.value != '不限') {
                     this.quyu = e.target.value
@@ -343,11 +364,20 @@
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/pythonHomeList`);
                 const res = respones.data;
                 if (pi == undefined) {
+                    const pagination = { ...this.pagination };
+                    // pagination.total = res.totalCount;
                     this.list = res.items;
+                    this.pagination = pagination;
+                    this.loading = false;
                     return;
                 } else {
+                    const pagination = { ...this.pagination };
+                    this.list = res.items;
+                    this.pagination = pagination;
+                    this.loading = false;
+                    
                     if (pi == '不限') {
-                        this.quyu = ''
+                        this.quyu = '';
                     }
                     if (pi == '厅室不限') {
                         this.huxingselect = ''
@@ -392,6 +422,10 @@
                         }
                     });
                     this.list = this.listt
+                    // const pagination = { ...this.pagination };
+                    // this.list = this.listt;
+                    // this.pagination = pagination;
+                    // this.loading = false;
                 }
             },
             reset(data) {

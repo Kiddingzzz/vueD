@@ -47,6 +47,10 @@
                 </div>
             </a-spin>
         </a-modal>
+        <a-modal title="秒录房源" width='800px' :bodyStyle="tstyle" v-model="leavePage" @cancel="cancelClick"
+            :destroyOnClose="true" cancelText="取消">
+                <div></div>
+        </a-modal>
         <!--   <a-modal title="添加小区" v-model="addxq" @ok="addok">
             <div style="width:100%">
                 <div>
@@ -609,6 +613,7 @@
                 disabled: false,
                 url: '11',
                 visible: false,
+                leavePage:false,
                 addxq: false,
                 addshowxqu: false,
                 spinning: false,
@@ -678,7 +683,7 @@
                 provinceData,
                 proquyuseData,
                 houseType: '二手房',
-                userId: '48639146-0751-11EA-87FE-305A3A80A208',
+                userId: '',
                 urlss: '',
                 text: '',
                 hutong: '',
@@ -730,11 +735,12 @@
             }
         },
         activated(options) {
-            //页面变化时，清空原有数据
             this.clear()
+            //页面变化时，清空原有数据
             this.reciveId = this.$route.params.id
             if (this.$route.params.id != undefined || this.$route.params.id != null)
                 this.backfbdata(this.$route.params.id);
+            
         },
         computed: {
         },
@@ -774,7 +780,7 @@
                     this.atittudezishu = false
                 } else if (data == "atittude" & this.atittude != '') {
                     this.atittudeerror = false
-                    if (this.atittude.length <= 20 || this.atittude.length >= 300 || this.atittude.includes('最') == true) {
+                    if (this.atittude.length <= 10 || this.atittude.length >= 300 || this.atittude.includes('最') == true) {
                         this.atittudezishu = true
                     } else {
                         this.atittudezishu = false
@@ -807,6 +813,8 @@
             },
             //插入一条url数据链接
             async onSearch(params) {
+                let update = JSON.parse(localStorage.getItem('update'));
+                this.userId = update.userId;
                 //判断URL网址输入是否正确
                 var strRegex = '^(https?|ftp|file)://[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]';
                 var re = new RegExp(strRegex);
@@ -983,7 +991,7 @@
 
 
                     var imgFangxing = {};
-                    imgFangxing.url = res.data.fangxinImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                        imgFangxing.url = res.data.fangxinImg.replace(/'/g, '').replace('[', '').replace(']', ''),
                         imgFangxing.uid = '40',
                         imgFangxing.name = 'xxx.jpg',
                         imgFangxing.status = 'done',
@@ -1066,7 +1074,7 @@
                     this.PicktureList = res
                 }
                 else {
-                    alert('房源图片至少保留4张')
+                    alert('房源图片至少保留3张')
                 }
             },
             //抓取房源保存
@@ -1174,7 +1182,9 @@
                     this.ref.fuwuCondition = this.fuwuCondition
                     this.ref.atittude = this.atittude
                     this.ref.publishStatus = '未发布'
-                    this.ref.huxing = this.selectedShi+'室'+this.selectedTing+'厅'+this.selectedWei+'卫' 
+                    this.ref.huxing = this.selectedShi+'室'+this.selectedTing+'厅'+this.selectedWei+'卫';
+                    this.ref = this.saveRes;
+                    this.ref.jianzaoniandai = this.jianzaoniandai;
                     const arr = this.PicktureList;
                     const target = {};
                     let ShineinewObj = [];
@@ -1257,7 +1267,13 @@
                 }
             },
             showModal() {
-                this.visible = true;
+                if(this.reciveId != undefined || this.reciveId != null){
+                    alert('请修改房源之后再录入哦!')
+                    return;
+                }
+                else{
+                    this.visible = true;
+                }
             },
             // addxiaoqu() {
             //     this.addxq = true;
@@ -1400,7 +1416,7 @@
             //清空数据
             clear() {
                 this.PicktureList = [],
-                    this.ref.xiaoquName = ''
+                this.ref.xiaoquName = ''
                 this.ref.chaoxiang = '东'
                 this.ref.address = ''
                 this.ref.square = ''

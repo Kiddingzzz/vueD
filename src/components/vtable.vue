@@ -23,7 +23,7 @@
                         <a-popconfirm title="确定删除?" @confirm="onDelete(record.id,index)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
-                        <a href="javascript:;" @click="onfabu(record)">未发布</a>
+                        <!-- <a href="javascript:;" @click="onfabu(record)">未发布</a> -->
                     </span>
                     <span slot="customTitles">
                         <a-icon type="smile-o" /> 标题</span>
@@ -154,13 +154,12 @@
             //     return {
             //         onChange: (selectedRowKeys, selectedRows) => {
             //             this.selectedRowKeys = selectedRows;
-            //         console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
+            //             console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
             //             this.index = selectedRowKeys
             //         },
             //     };
             // },
             hasSelected() {
-                // console.log(this.selectedRowKeys)
                 return this.selectedRowKeys.length > 0;
             },
         },
@@ -183,14 +182,21 @@
                                 this.selectedRowKeys = []
                                 this.selectedRows = []
                             }
-                            this.select = !this.select
+                            // this.select = !this.select
+                        },
+                        dblclick:()=>{
+                            // this.select = !this.select
+                            // this.selectedRowKeys = this.selectedRowKeys.splice(index+1,1)
+                            // this.selectedRows = this.selectedRows.splice(index+1,1)
+                            // console.log(index)
                         }
                     }
                 }
             },
             onSelectChange (selectedRowKeys,selectedRows) {
-                this.selectedRowKeys = selectedRowKeys
-                this.selectedRows = selectedRows
+                console.log(this.selectedRowKeys)
+                this.selectedRowKeys = selectedRowKeys;
+                this.selectedRows = selectedRows;
             },
             // //批量删除
             // deleteAll(){
@@ -323,11 +329,11 @@
 
 </script>
 <style scoped lang="less">
-    .caozuo{
-        display:flex;
-        flex-direction: column;
-        align-items: center;
-    }
+    // .caozuo{
+    //     display:flex;
+    //     flex-direction: column;
+    //     align-items: center;
+    // }
 
     .wrap {
         width: 100%;
