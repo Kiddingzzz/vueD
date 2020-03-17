@@ -57,18 +57,38 @@
             <!-- 筛选条件 -->
       
             <!-- 租金 -->
-            <!-- <dl id="secitem-rent" class="secitem">
-              <dt class="fl" style="margin-top:2px;">租金：</dt>
-              <dd>
-                <a-radio-group defaultValue="租金不限" size="small" buttonStyle="solid"  @change="zujinChange">
+            <dl id="secitem-rent" class="secitem">
+              <dt class="fl" style="margin-top:2px;">价格：</dt>
+               <dd v-if="this.chaoxiangselect == ''">
+                <a-radio-group :defaultValue="zujinAny" size="small" buttonStyle="solid"  @change="zujinChange">
                   <a-radio-button value="租金不限" @click="reset('租金不限')" class='select'>不限</a-radio-button>
-                  <a-radio-button value="0-80"  @click="reset('0-80')">80万以下</a-radio-button>
-                  <a-radio-button value="80-130"  @click="reset('80-130')">80-130万</a-radio-button>
-                  <a-radio-button value="130-180"  @click="reset('130-180')">130-180万</a-radio-button>
-                  <a-radio-button value="180-more"  @click="reset('180-more')">180万以上</a-radio-button>
                 </a-radio-group>
               </dd>
-            </dl> -->
+              <dd v-if="this.chaoxiangselect == '出租'">
+                <a-radio-group :defaultValue="zujinAny" size="small" buttonStyle="solid"  @change="zujinChange">
+                  <a-radio-button value="租金不限" @click="reset('租金不限')" class='select'>不限</a-radio-button>
+                  <a-radio-button value="100-1500"  @click="reset('100-1500')">1500元/月以下</a-radio-button>
+                  <a-radio-button value="1500-3500"  @click="reset('1500-3500')">1500-3500元/月</a-radio-button>
+                  <a-radio-button value="3500-5000"  @click="reset('3500-5000')">3500-5000元/月</a-radio-button>
+                  <a-radio-button value="5000-7000"  @click="reset('5000-7000')">5000-7000元/月</a-radio-button>
+                  <a-radio-button value="7000-10000"  @click="reset('7000-10000')">7000-10000元/月</a-radio-button>
+                  <a-radio-button value="0-100"  @click="reset('0-100')">1万以上/月</a-radio-button>
+                </a-radio-group>
+              </dd>
+              <dd v-if="this.chaoxiangselect == '出售'">
+                <a-radio-group :defaultValue="zujinAny" size="small" buttonStyle="solid"  @change="zujinChange">
+                  <a-radio-button value="租金不限" @click="reset('租金不限')" class='select reselect'>不限</a-radio-button>
+                  <a-radio-button value="0-50"  @click="reset('0-50')">50万以下</a-radio-button>
+                  <a-radio-button value="50-100"  @click="reset('50-100')">50-100万</a-radio-button>
+                  <a-radio-button value="100-150"  @click="reset('100-150')">100-150万</a-radio-button>
+                  <a-radio-button value="150-200"  @click="reset('150-200')">150-200万</a-radio-button>
+                  <a-radio-button value="200-300"  @click="reset('200-300')">200-300万</a-radio-button>
+                  <a-radio-button value="300-500"  @click="reset('300-500')">300-500万</a-radio-button>
+                  <a-radio-button value="500-800"  @click="reset('500-800')">500-800万</a-radio-button>
+                  <a-radio-button value="800-more"  @click="reset('800-more')">800万以上</a-radio-button>
+                </a-radio-group>
+              </dd>
+            </dl>
       
             <!-- 厅室 -->
             <!-- <dl class="secitem">
@@ -92,13 +112,13 @@
                 <div class="moniselectcon">
                   <a-select
                     labelInValue
-                    :defaultValue="{ key: '朝向不限' }"
+                    :defaultValue="{ key: '商铺类型' }"
                     style="width: 120px; margin-right:20px;"
                     @change="chaoxiangChange"
                   >
-                    <a-select-option value="朝向不限" @click="reset('商铺类型')">商铺类型</a-select-option>
-                    <a-select-option value="东" @click="reset('出租')">出租</a-select-option>
-                    <a-select-option value="南" @click="reset('出售')">出售</a-select-option>
+                    <a-select-option value="商铺类型" @click="reset('商铺类型')">商铺类型</a-select-option>
+                    <a-select-option value="出租" @click="reset('出租')">出租</a-select-option>
+                    <a-select-option value="出售" @click="reset('出售')">出售</a-select-option>
                   </a-select>
                 </div><!-- moniselectcon --><!-- moniselectcon -->
               </dd>
@@ -218,6 +238,8 @@
             return {
               columns,
               list: [],
+              listt: [],//每步筛选结果
+              zujinAny: '租金不限',
               searchName:'11',
               chaoxiangselect: '',
               zhuangxiuselect: '',
@@ -226,6 +248,7 @@
               zujin: '',
               ricehigh: '',
               ricelow: '',
+              ricehighinput: '',
               pagination: {
                     total: 0,
                     pageSize: 20,//每页中显示10条数据
@@ -264,11 +287,6 @@
                 this.quyu = e.target.value
               }
             },
-            huxingChange(e){
-              if(e.target.value != '厅室不限'){
-                this.huxingselect = e.target.value
-              }
-            },
             zujinChange(e) {
               if(e.target.value != '租金不限'){
                 this.zujin = e.target.value
@@ -280,52 +298,99 @@
               if(value.key != '商铺类型'){
                 this.chaoxiangselect = value.key
               }
+              if(this.chaoxiangselect != value){
+                console.log("1")
+                this.zujinAny = '租金不限'  
+                this.zujin = ""
+                this.ricelow = ""
+                this.ricehigh = ""
+              }
             },
             async getDashboard(pi) {        
               //@param condition 过滤条件
               //@param data 需要过滤的数据
-              // let filter=(condition,filterdata)=>{
-              //     return filterdata.filter( item => {
-              //         return Object.keys( condition ).every( key => {
-              //           return String( item[ key ] ).toLowerCase() == String( condition[ key ] ).trim().toLowerCase() ? true : false
-              //             } )
-              //     } )
-              // }
-              // const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList`);
+              let filter=(condition, filterdata)=>{
+                        return filterdata.filter(item => {
+                            return Object.keys(condition).every(key => {
+                                return String(item[key]).toLowerCase().includes(
+                                    String(condition[key]).trim().toLowerCase() 
+                                )
+                        } )
+                    } )
+              }
+              const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList`);
               // console.log(respones)
-              // const res = respones.data;
+              const res = respones.data;
               // if(pi == undefined || (this.zhuangxiuselect == '装修不限')){
               //     this.list = res.items;
               //     return;
               // }
-              if(pi == undefined || pi == '商铺类型' || pi == '不限' || pi == '厅室不限'){
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList`);
-                const res = respones.data;
+              if(pi == undefined){
+                // const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList`);
+                // const res = respones.data;
                 const pagination = { ...this.pagination };
                 // pagination.total = res.totalCount;
                 this.pagination = pagination;
                 this.loading = false;
                 this.list = res.items;
+                return
               }
               else{
-                const data = {
-                  SearchName:pi
+                    // const data = {
+                    //   SearchName:pi
+                    // }
+                    // const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList?SearchName=`+ data.SearchName);
+                    // const res = respones.data;
+                    const pagination = { ...this.pagination };
+                    // pagination.total = res.totalCount;
+                    this.pagination = pagination;
+                    this.loading = false;
+                    this.list = res.items;
+                    if (pi == '不限') {
+                        this.quyu = '';
+                    }
+                    if (pi == '租金不限') {
+                        this.zujin = ''
+                        this.ricehigh = ''
+                    }
+                    if (pi == '商铺类型') {
+                        this.chaoxiangselect = ''
+                    }
+                    //筛选地区
+                    let condition = { address: this.quyu }
+                    this.listt = filter(condition, res.items)
+                    console.log(pi)
+                    
+
+                    //筛选商铺类型
+                    let chaoxiangcondition = { saleType: this.chaoxiangselect }
+                    this.listt = filter(chaoxiangcondition, this.listt);
+
+                    //筛选租金
+                    const that = this;
+                    // if (this.ricehighinput == '') {
+                        this.listt = this.listt.filter(function (item) {
+                            if (that.ricehigh == 'more') {
+                                return that.ricelow <= item.rice
+                            } else if (that.ricehigh == '') {
+                                return 0 <= item.rice
+                            } else {
+                                return that.ricelow <= Number(item.rice) & Number(item.rice) <= that.ricehigh
+                              // if(that.chaoxiangselect == '出租'){  
+                              //   return that.ricelow <= Number(item.rice) & Number(item.rice) <= that.ricehigh
+                              // }
+                            }
+                        });
+                    // }
+                    this.list = this.listt
                 }
-                const respones = await this.$http.get(`${this.$config.api}/api/cms/shopPub/shopPythonHomeList?SearchName=`+ data.SearchName);
-                const res = respones.data;
-                const pagination = { ...this.pagination };
-                // pagination.total = res.totalCount;
-                this.pagination = pagination;
-                this.loading = false;
-                this.list = res.items;
-              }
               
             },
             reset(data){
               //确定选项里的值是属于装修还是朝向
-              const  hh = data
-              const str = "装修不限毛坯简单装修精装修豪华装修";
-              const reg = new RegExp(hh);
+              // const  hh = data
+              // const str = "装修不限毛坯简单装修精装修豪华装修";
+              // const reg = new RegExp(hh);
               this.getDashboard(data)
             },
           }

@@ -334,7 +334,7 @@
                 }
             },
             zhuangxiuChange(value) {
-                if (value.key != '朝向不限') {
+                if (value.key != '裝修不限') {
                     this.zhuangxiuselect = value.key
                 }
             },

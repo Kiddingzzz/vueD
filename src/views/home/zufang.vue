@@ -57,7 +57,7 @@
                 <!-- 筛选条件 -->
 
                 <!-- 租金 -->
-                <!-- <dl id="secitem-rent" class="secitem">
+                <dl id="secitem-rent" class="secitem">
                     <dt class="fl" style="margin-top:2px;">租金：</dt>
                     <dd>
                         <a-radio-group v-model="zujinvalue" size="small" buttonStyle="solid" @change="zujinChange">
@@ -70,7 +70,7 @@
                             <a-radio-button value="3000-4500" @click="reset('3000-4500')">3000-4500元</a-radio-button>
                             <a-radio-button value="4500-more" @click="reset('4500-more')">4500元以上</a-radio-button>
                         </a-radio-group>
-                        <span class="prifilter">
+                        <!-- <span class="prifilter">
                             <span class="text">
                                 <input type="number" style="width:60px;" v-model="ricelowinput" @focus="inputFocus" />
                             </span>
@@ -83,9 +83,9 @@
                                 <a-button type="primary" v-if="inputChange" @click="reset('shaiRice')">价格筛选</a-button>
                             </span>
                             <span class="errorMsg">{{errorMsg}}</span>
-                        </span>
+                        </span> -->
                     </dd>
-                </dl> -->
+                </dl>
                 <!-- 厅室 -->
                 <dl class="secitem">
                     <dt>厅室：</dt>
@@ -248,6 +248,7 @@
             return {
                 columns,
                 list: [],
+                listt: [],//每步筛选值
                 searchName: '11',
                 chaoxiangselect: '',
                 zhuangxiuselect: '',
@@ -316,7 +317,7 @@
                 }
             },
             zhuangxiuChange(value) {
-                if (value.key != '朝向不限') {
+                if (value.key != '裝修不限') {
                     this.zhuangxiuselect = value.key
                 }
             },
@@ -339,7 +340,8 @@
                 }
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/renPythonHomeList`);
                 const res = respones.data;
-                if (pi == undefined || pi == '商铺类型' || pi == '厅室不限' || pi == '装修不限' || pi == '租金不限' || pi == '不限') {
+              //  if (pi == undefined || pi == '商铺类型' || pi == '厅室不限' || pi == '装修不限' || pi == '租金不限' || pi == '不限') {
+                if (pi == undefined) {
                     const pagination = { ...this.pagination };
                     // pagination.total = res.totalCount;
                     this.list = res.items;
@@ -347,29 +349,59 @@
                     this.loading = false;
                     return
                 } else {
-                    const datas = {
-                        SearchName:pi
-                    }
-                    const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/renPythonHomeList?SearchName=`+ datas.SearchName);
-                    const res = respones.data;
+                    // const datas = {
+                    //     SearchName:pi
+                    // }
+                    // const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/renPythonHomeList?SearchName=`+ datas.SearchName);
+                    // const res = respones.data;
                     const pagination = { ...this.pagination };
                     // pagination.total = res.totalCount;
                     this.pagination = pagination;
                     this.loading = false;
                     this.list = res.items;
+                    if (pi == '不限') {
+                        this.quyu = '';
+                    }
+                    if (pi == '厅室不限') {
+                        this.huxingselect = ''
+                    }
+                   
+                    if (pi == '装修不限') {
+                        this.zhuangxiuselect = ''
+                    }
+                    if (pi == '租金不限') {
+                        this.zujin = ''
+                        this.ricehigh = ''
+                    }
+                    //筛选装修和地区
+                    let condition = { zhuangxiu: this.zhuangxiuselect, renTingAddress: this.quyu }
+                    this.listt = mohufilter(condition, res.items)
+                   
+                    //筛选户型
+                    if (this.huxingselect != 'moreroom') {
+                        let huxingcondition = { renTingHuXing: this.huxingselect }
+                        this.listt = mohufilter(huxingcondition, this.listt);
+                    }
+                    if (this.huxingselect == 'moreroom') {
+                        this.listt = this.listt.filter(function (item) {
+                            return 5 <= item.renTingHuXing.split("室")[0]
+                        });
+                    }
+                    
+                    //筛选租金
                     const that = this;
-                    if (that.ricehighinput == '') {
-                        that.listt = that.list.filter(function (item) {
+                    if (this.ricehighinput == '') {
+                        this.listt = this.listt.filter(function (item) {
                             if (that.ricehigh == 'more') {
                                 return that.ricelow <= item.renTingZujin
                             } else if (that.ricehigh == '') {
                                 return 0 <= item.renTingZujin
                             } else {
-                                return that.ricelow <= item.renTingZujin & item.renTingZujin <= that.ricehigh
+                                return that.ricelow <= Number(item.renTingZujin) & Number(item.renTingZujin) <= that.ricehigh
                             }
                         });
                     }
-                    this.list = that.listt
+                    this.list = this.listt
                 }
             },
             reset(data) {
