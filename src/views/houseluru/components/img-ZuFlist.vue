@@ -11,6 +11,7 @@
                     <a-select :defaultValue="value.status" style="width: 100px" @change="handleChange">
                         <a-select-option value="shinei">室内图</a-select-option>
                         <a-select-option value="shiwai">室外图</a-select-option>
+                        <a-select-option value="huxing">户型图</a-select-option>
                     </a-select>
                 </div>
                  <div>

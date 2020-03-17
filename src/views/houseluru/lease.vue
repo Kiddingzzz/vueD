@@ -826,13 +826,16 @@
 
                     var imgFangxing = {};
                     imgFangxing.url = res.data.renTingHuxingImg.replace(/'/g, '').replace('[', '').replace(']', ''),
-                  
-                        imgFangxing.uid = '50',
-                        imgFangxing.name = 'xxx.jpg',
-                        imgFangxing.status = 'done',
-                        this.fangxinlist.push(imgFangxing);
+                    imgFangxing.uid = '50',
+                    imgFangxing.name = 'xxx.jpg',
+                    imgFangxing.status = 'done',
+                    this.fangxinlist.push(imgFangxing);
 
-
+                    imgUrl.url = res.data.renTingHuxingImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                    imgUrl.uid = ss.length;
+                    imgUrl.name = 'xxx.jpg';
+                    imgUrl.status = 'huxing';
+                    this.shineiList.push(imgUrl);
                     // var XiaoquImg = {};
                     // XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
                     //     XiaoquImg.uid = '-3',
@@ -957,6 +960,7 @@
                     let ShiwainewObj = [];
                     arr.forEach(a => {
                         const source = JSON.parse(`{"${a.status}":"${a.url}"}`);//利用JSON.parse将对象//格式直接造出来
+                        
                         Object.assign(target, source);
                         if ('shinei' in source) {
                             ShineinewObj.push(source)
