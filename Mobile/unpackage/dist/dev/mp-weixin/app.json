@@ -3,12 +3,19 @@
     "pages/index/index",
     "pages/home/index",
     "pages/publish/index",
+    "pages/luru/index",
     "pages/houseSingle/index",
     "pages/center/center",
     "pages/publish/layout/rentrelease/rentrelease",
     "pages/publish/layout/salerelease/salerelease",
     "pages/center/layout/zhandian/zhandian",
-    "pages/center/layout/closeinter/closeinter"
+    "pages/center/layout/closeinter/closeinter",
+    "pages/center/layout/allinter/allinter",
+    "pages/home/ershoufang/ershouDetails",
+    "pages/home/ershoufang/ershouIndex",
+    "pages/home/shop/shopIndex",
+    "pages/home/zufang/zufangIndex",
+    "pages/home/tuijian/tuijianIndex"
   ],
   "subPackages": [],
   "window": {
@@ -40,6 +47,12 @@
         "iconPath": "static/APP2_experience.png",
         "selectedIconPath": "static/APP2_experience_let.png",
         "text": "发布"
+      },
+      {
+        "pagePath": "pages/luru/index",
+        "iconPath": "static/APP2_experience.png",
+        "selectedIconPath": "static/APP2_experience_let.png",
+        "text": "录入"
       },
       {
         "pagePath": "pages/center/center",

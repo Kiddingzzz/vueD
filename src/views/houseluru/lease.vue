@@ -532,7 +532,7 @@
                             </div>
                         </div>
                         <div class="bottomobx">
-                            <a-button type="" class="buttonfang okbutton" @click="saveHouse()">保存房源</a-button>
+                            <a-button type="" class="buttonfang okbutton" @click="Type()">保存房源</a-button>
                             <!-- <a-button type="" class="okbutton">保存草稿</a-button> -->
                         </div>
                     </a-form>
@@ -648,6 +648,7 @@
                 ceng: '',
                 lou: '',
                 weiyiUserId: '',
+                zufangweiyiUserId:'',
                 saveRes: {},
                 leasestyle: {
                     height: '470px'
@@ -659,10 +660,12 @@
         activated(options) {
             this.leasecearl()
             this.RtreciveId = this.$route.params.id
-            if (this.RtreciveId != undefined && this.RtreciveId != null)
+            if (this.RtreciveId != undefined || this.RtreciveId != null)
                 this.Rtbackfbdatas(this.RtreciveId);
         },
         mounted() {
+            if (this.RtreciveId != undefined || this.RtreciveId != null)
+                this.Rtbackfbdatas(this.RtreciveId);
             // this.kanfang="随时看房";
             this.zhuangxiu = "中等装修";
             this.gongnuan = "自供暖";
@@ -850,7 +853,7 @@
 
             },
             async Type() {
-                if (this.reciveId == '' || this.reciveId == undefined) {
+                if (this.RtreciveId == '' || this.RtreciveId == undefined) {
                     this.saveHouse();
                 }
                 else {
@@ -937,7 +940,7 @@
             async xiugaiZubao() {
                 if (this.ref.xiaoquName == null && this.ref.title == null &&
                     this.ref.rice == null && this.ref.simpleRice == null &&
-                    this.ref.square == null && this.ref.huxing == null &&
+                    this.ref.square == null && this.ref.renTingHuXing == null &&
                     this.ref.louceng == null && this.ref.zhuangxiu == null && this.ref.address == null && this.ref.imgHeader == null
                 ) {
                     this.savedisabled = false;
@@ -946,13 +949,9 @@
                 }
                 else {
                     //this.saveRes.urlsId = this.$store.userId;
-                    this.ref.renTingAddress = this.address;
-                    this.ref.xiaoquName = this.xiaoquName;
-                    this.ref.renTingTitle = this.title;
-                    this.ref.renTingHuXing = this.renTingHuXing;
-                    this.ref.huxing = this.selectedShi+'室'+this.selectedTing+'厅'+this.selectedWei+'卫' 
                     const arr = this.ZuFangPictureList;
                     this.ref = this.saveRes;
+                    this.ref.renTingHuXing = this.selectedShi+'室'+this.selectedTing+'厅'+this.selectedWei+'卫' 
                     const target = {};
                     let ShineinewObj = [];
                     let ShiwainewObj = [];
@@ -977,10 +976,18 @@
                         const gs = ShiwainewObj[g].shiwai;
                         shiwais.push(gs)
                     }
+
+                    const shineiRes1 = {
+                        shineiList: shineis.join(';'),
+                        shiwaiList: shiwais.join(';'),
+                        weiyiurl: this.zufangweiyiUserId,
+                    }
+                    var r15 = await this.$http.post(`${this.$config.api}/api/cms/imgM/modifyImgType`, shineiRes1);
+
                     const resg = {
                         shinei: encodeURIComponent(String(shineis)),
                         shiwai: encodeURIComponent(String(shiwais)),
-                        weiyiurl: encodeURI(this.weiyiUserId),
+                        weiyiurl: encodeURI(this.zufangweiyiUserId),
                     }
                     $.ajax({
                         type: 'GET',
@@ -990,6 +997,7 @@
                         jsonp: "callback",
                         jsonpCallback: "successCallback",//回调方法
                     })
+                    
 
                     await this.$http.post(`${this.$config.api}/api/cms/house/ZuFangBaocunData`, this.ref).then(response => {
                         if (response.status == 200) {
@@ -1007,12 +1015,11 @@
 
             async Rtbackfbdatas(id) {
                 await this.$http.get(`${this.$config.api}/api/cms/renTing/` + id + `/renTingbackdata`).then(res => {
-                    
                     var ret = res.data.address;
                     var weiyiUrlId = res.data.weiYiUrl;
+                    this.zufangweiyiUserId = weiyiUrlId;
                     this.$http.get(`${this.$config.api}/api/cms/imgM/getImgType?weiyiUrl=` + weiyiUrlId).then(req => {
                         var shineiList1 = req.data.shineiList.split(';');
-
                         var shineiList2 = shineiList1;
                         var shineiSS = shineiList2
                         for (let index = 0; index < shineiSS.length; index++) {
@@ -1036,7 +1043,7 @@
                     })
                     this.saveRes = res.data;
                     this.ref = res.data;
-                    this.address = this.ref.renTingQuyu
+                    this.address = this.ref.renTingQuyu;
                     this.chaoxiang = this.ref.chaoxiang;
                     this.spinning = false;
                     this.peitaocheckedList = ['宽带', '床', '衣柜', '沙发', '电视', '空调', '洗衣机', '冰箱', '暖气', '独立卫生间', '桌椅', '智能门锁']

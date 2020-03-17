@@ -74,7 +74,7 @@ export default {
 			border-radius: 10upx 10upx 0px 0px;
         }
         .selects{
-
+            
         }
      }
     
