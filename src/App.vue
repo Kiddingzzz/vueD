@@ -84,6 +84,17 @@
             <a-menu-item key="/zhandian" class="hh">
               <router-link to="zhandian"><i class="iconfont icon-wangzhan"></i>站点管理</router-link>
             </a-menu-item>
+            
+            <!-- <a-menu-item key="/tuijian" class="hh">
+              <router-link to="tuijian"><i class="iconfont icon-wangzhan"></i><span>站点管理</span></router-link>
+            </a-menu-item> -->
+          </a-sub-menu>
+            <a-sub-menu key="sub5">
+            <span slot="title"><a-icon type="setting" />教程</span>
+           
+             <a-menu-item key="/video" class="hh">
+              <router-link to="video"><i class="iconfont icon-wangzhan"></i>视频教程</router-link>
+            </a-menu-item>
             <!-- <a-menu-item key="/tuijian" class="hh">
               <router-link to="tuijian"><i class="iconfont icon-wangzhan"></i><span>站点管理</span></router-link>
             </a-menu-item> -->

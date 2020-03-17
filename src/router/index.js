@@ -24,6 +24,7 @@ import Rentshangpu from '@/views/cloudrelease/components/rentshangpu'
 import Saleshangpu from '@/views/cloudrelease/components/saleshangpu'
 import Shangpuzuluru from '@/views/houseluru/shangpuzuluru'
 import Fuburesult from '@/views/cloudrelease/fuburesult'
+import Video from '@/views/videos/video'
 Vue.use(Router)
 
 export default new Router({
@@ -218,6 +219,14 @@ export default new Router({
 			path: '/saleshangpu',
 			name: 'Saleshangpu',
 			component: Saleshangpu,			
+		},
+		{
+			path: '/video',
+			name: 'Video',
+			component: Video,		
+			meta: {
+				keepAlive: true
+			  }	
 		},
 
 	]

@@ -12,7 +12,8 @@ import VueJsonp from 'vue-jsonp'
 import './assets/iconfont/iconfont.css';
 import { encryptDes, decryptDes } from './des';
 import Axios from 'axios';
-import 'jquery'
+import 'babel-polyfill';
+import 'jquery';
 Vue.use(ElementUI);
 Vue.use(Antd);
 Vue.use(VueJsonp);

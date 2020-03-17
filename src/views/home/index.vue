@@ -284,7 +284,7 @@
                 ricelow: '',
                 pagination: {
                     total: 0,
-                    pageSize: 10,//每页中显示10条数据
+                    pageSize: 20,//每页中显示10条数据
                     showSizeChanger: true,
                     pageSizeOptions: ["10", "20", "50", "100"],//每页中显示的数据
                     showTotal: total => `共有 ${total} 条数据`,  //分页中显示总的数据
@@ -293,7 +293,7 @@
                 // 查询参数
                 queryParam: {
                     page: 1,//第几页
-                    size: 10,//每页中显示数据的条数
+                    size: 20,//每页中显示数据的条数
                     hosName: "",
                     hosCode: "",
                     province: "",
