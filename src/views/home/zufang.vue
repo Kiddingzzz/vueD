@@ -5,7 +5,7 @@
                 <dl class="secitem secitem_fist">
                     <dt class="fl">区域：</dt>
                     <dd>
-                        <a-radio-group defaultValue="不限" size="small" buttonStyle="solid" @change="quyuChange">
+                        <a-radio-group defaultValue="不限" v-model="requyu" size="small" buttonStyle="solid" @change="quyuChange">
                             <a-radio-button value="不限" @click="reset('不限')">不限</a-radio-button>
                             <a-radio-button value="渝北" @click="reset('渝北')">渝北</a-radio-button>
                             <a-radio-button value="南岸" @click="reset('南岸')">南岸</a-radio-button>
@@ -57,7 +57,7 @@
                 <!-- 筛选条件 -->
 
                 <!-- 租金 -->
-                <!-- <dl id="secitem-rent" class="secitem">
+                <dl id="secitem-rent" class="secitem">
                     <dt class="fl" style="margin-top:2px;">租金：</dt>
                     <dd>
                         <a-radio-group v-model="zujinvalue" size="small" buttonStyle="solid" @change="zujinChange">
@@ -70,7 +70,7 @@
                             <a-radio-button value="3000-4500" @click="reset('3000-4500')">3000-4500元</a-radio-button>
                             <a-radio-button value="4500-more" @click="reset('4500-more')">4500元以上</a-radio-button>
                         </a-radio-group>
-                        <span class="prifilter">
+                        <!-- <span class="prifilter">
                             <span class="text">
                                 <input type="number" style="width:60px;" v-model="ricelowinput" @focus="inputFocus" />
                             </span>
@@ -83,14 +83,14 @@
                                 <a-button type="primary" v-if="inputChange" @click="reset('shaiRice')">价格筛选</a-button>
                             </span>
                             <span class="errorMsg">{{errorMsg}}</span>
-                        </span>
+                        </span> -->
                     </dd>
-                </dl> -->
+                </dl>
                 <!-- 厅室 -->
                 <dl class="secitem">
                     <dt>厅室：</dt>
                     <dd id="secitem-room">
-                        <a-radio-group defaultValue="厅室不限" size="small" buttonStyle="solid" @change="huxingChange">
+                        <a-radio-group defaultValue="厅室不限" v-model="rehuxing" size="small" buttonStyle="solid" @change="huxingChange">
                             <a-radio-button value="厅室不限" @click="reset('厅室不限')" class='select'>不限</a-radio-button>
                             <a-radio-button value="1室" @click="reset('1室')">一室</a-radio-button>
                             <a-radio-button value="2室" @click="reset('2室')">两室</a-radio-button>
@@ -122,7 +122,7 @@
                             </a-select>
                         </div> -->
                         <div class="moniselectcon">
-                            <a-select labelInValue :defaultValue="{ key: '装修不限' }" style="width: 120px"
+                            <a-select v-model="rezhuangxiu" :defaultValue="{ key: '装修不限' }" style="width: 120px"
                                 @change="zhuangxiuChange">
                                 <a-select-option value="装修不限" @click="reset('装修不限')">装修不限</a-select-option>
                                 <a-select-option value="毛坯" @click="reset('毛坯')">毛坯</a-select-option>
@@ -246,8 +246,12 @@
     export default {
         data() {
             return {
+                requyu: '不限',//重置区域
+                rehuxing: '厅室不限',//重置厅室
+                rezhuangxiu: '装修不限',//重置装修
                 columns,
                 list: [],
+                listt: [],//每步筛选值
                 searchName: '11',
                 chaoxiangselect: '',
                 zhuangxiuselect: '',
@@ -279,6 +283,17 @@
                     city: ""
                 },
             };
+        },
+        watch:{   //监听路由变化重置筛选条件
+            $route( to , from ){   
+                // console.log( to , from )
+                if(to.path == '/zufang'){
+                    this.requyu = '不限'
+                    this.zujinvalue = '租金不限'
+                    this.rehuxing = '厅室不限'
+                    this.rezhuangxiu = '装修不限'
+                }
+            }
         },
         mounted() {
             this.getDashboard();
@@ -316,8 +331,8 @@
                 }
             },
             zhuangxiuChange(value) {
-                if (value.key != '朝向不限') {
-                    this.zhuangxiuselect = value.key
+                if (value != '裝修不限') {
+                    this.zhuangxiuselect = value
                 }
             },
             chaoxiangChange(value) {
@@ -339,7 +354,8 @@
                 }
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/renPythonHomeList`);
                 const res = respones.data;
-                if (pi == undefined || pi == '商铺类型' || pi == '厅室不限' || pi == '装修不限' || pi == '租金不限' || pi == '不限') {
+              //  if (pi == undefined || pi == '商铺类型' || pi == '厅室不限' || pi == '装修不限' || pi == '租金不限' || pi == '不限') {
+                if (pi == undefined) {
                     const pagination = { ...this.pagination };
                     // pagination.total = res.totalCount;
                     this.list = res.items;
@@ -347,29 +363,59 @@
                     this.loading = false;
                     return
                 } else {
-                    const datas = {
-                        SearchName:pi
-                    }
-                    const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/renPythonHomeList?SearchName=`+ datas.SearchName);
-                    const res = respones.data;
+                    // const datas = {
+                    //     SearchName:pi
+                    // }
+                    // const respones = await this.$http.get(`${this.$config.api}/api/cms/homeIn/renPythonHomeList?SearchName=`+ datas.SearchName);
+                    // const res = respones.data;
                     const pagination = { ...this.pagination };
                     // pagination.total = res.totalCount;
                     this.pagination = pagination;
                     this.loading = false;
                     this.list = res.items;
+                    if (pi == '不限') {
+                        this.quyu = '';
+                    }
+                    if (pi == '厅室不限') {
+                        this.huxingselect = ''
+                    }
+                   
+                    if (pi == '装修不限') {
+                        this.zhuangxiuselect = ''
+                    }
+                    if (pi == '租金不限') {
+                        this.zujin = ''
+                        this.ricehigh = ''
+                    }
+                    //筛选装修和地区
+                    let condition = { zhuangxiu: this.zhuangxiuselect, renTingAddress: this.quyu }
+                    this.listt = mohufilter(condition, res.items)
+                   
+                    //筛选户型
+                    if (this.huxingselect != 'moreroom') {
+                        let huxingcondition = { renTingHuXing: this.huxingselect }
+                        this.listt = mohufilter(huxingcondition, this.listt);
+                    }
+                    if (this.huxingselect == 'moreroom') {
+                        this.listt = this.listt.filter(function (item) {
+                            return 5 <= item.renTingHuXing.split("室")[0]
+                        });
+                    }
+                    
+                    //筛选租金
                     const that = this;
-                    if (that.ricehighinput == '') {
-                        that.listt = that.list.filter(function (item) {
+                    if (this.ricehighinput == '') {
+                        this.listt = this.listt.filter(function (item) {
                             if (that.ricehigh == 'more') {
-                                return that.ricelow <= item.renTingZujin
+                                return that.ricelow <= Number(item.renTingZujin)
                             } else if (that.ricehigh == '') {
-                                return 0 <= item.renTingZujin
+                                return 0 <= Number(item.renTingZujin)
                             } else {
-                                return that.ricelow <= item.renTingZujin & item.renTingZujin <= that.ricehigh
+                                return that.ricelow <= Number(item.renTingZujin) & Number(item.renTingZujin) <= that.ricehigh
                             }
                         });
                     }
-                    this.list = that.listt
+                    this.list = this.listt
                 }
             },
             reset(data) {
