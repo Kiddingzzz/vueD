@@ -35,12 +35,12 @@
   const video =[
     {
       title: '01-如何注册开单王',
-      picname: '图片链接',
+      picname: require('../../assets/videotest.png'),//'图片链接',
       src: '视频链接',
     },
     {
       title: '02-如何注册开单王',
-      picname: '图片链接',
+      picname: require('../../assets/videotest.png'),//'图片链接',
       src: '视频链接',
     },
   ];
@@ -102,8 +102,8 @@ export default {
             .botool{
                 position: absolute;
                 z-index: 99;
-                top: 20px;
-                right: 20px;
+                top: 40px;
+                right: 40px;
                 img{
                     width: 80px;
                     height: 80px;  

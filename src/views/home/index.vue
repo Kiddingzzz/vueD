@@ -5,7 +5,7 @@
                 <dl class="secitem secitem_fist">
                     <dt class="fl">区域：</dt>
                     <dd>
-                        <a-radio-group defaultValue="不限" size="small" buttonStyle="solid" @change="quyuChange">
+                        <a-radio-group defaultValue="不限" v-model="requyu" size="small" buttonStyle="solid" @change="quyuChange">
                             <a-radio-button value="不限" @click="reset('不限')">不限</a-radio-button>
                             <a-radio-button value="渝北" @click="reset('渝北')">渝北</a-radio-button>
                             <a-radio-button value="南岸" @click="reset('南岸')">南岸</a-radio-button>
@@ -60,7 +60,7 @@
                 <dl id="secitem-rent" class="secitem">
                     <dt class="fl" style="margin-top:2px;">房价：</dt>
                     <dd>
-                        <a-radio-group defaultValue="租金不限" size="small" buttonStyle="solid" @change="zujinChange">
+                        <a-radio-group defaultValue="租金不限" v-model="zujinvalue" size="small" buttonStyle="solid" @change="zujinChange">
                             <a-radio-button value="租金不限" @click="reset('租金不限')" class='select'>不限</a-radio-button>
                             <a-radio-button value="0-80" @click="reset('0-80')">80万以下</a-radio-button>
                             <a-radio-button value="80-130" @click="reset('80-130')">80-130万</a-radio-button>
@@ -77,7 +77,7 @@
                 <dl class="secitem">
                     <dt class="fl">厅室：</dt>
                     <dd id="secitem-room">
-                        <a-radio-group defaultValue="厅室不限" size="small" buttonStyle="solid" @change="huxingChange">
+                        <a-radio-group defaultValue="厅室不限" v-model="rehuxing" size="small" buttonStyle="solid" @change="huxingChange">
                             <a-radio-button value="厅室不限" @click="reset('厅室不限')" class='select'>不限</a-radio-button>
                             <a-radio-button value="1室" @click="reset('1室')">一室</a-radio-button>
                             <a-radio-button value="2室" @click="reset('2室')">两室</a-radio-button>
@@ -109,7 +109,7 @@
               </a-menu>
               <a-button style="margin-left: 8px"> {{chaoxiangselect}} <a-icon type="down" /> </a-button>
             </a-dropdown> -->
-                            <a-select labelInValue :defaultValue="{ key: '朝向不限' }"
+                            <a-select v-model="rechaoxiang" :defaultValue="{ key: '朝向不限' }"
                                 style="width: 120px; margin-right:20px;" @change="chaoxiangChange">
                                 <a-select-option value="朝向不限" @click="reset('朝向不限')">朝向不限</a-select-option>
                                 <a-select-option value="东" @click="reset('东')">东</a-select-option>
@@ -135,7 +135,7 @@
               </a-menu>
               <a-button style="margin-left: 8px"> {{zhuangxiuselect}} <a-icon type="down" /> </a-button>
             </a-dropdown> -->
-                            <a-select labelInValue :defaultValue="{ key: '装修不限' }" style="width: 120px"
+                            <a-select v-model="rezhuangxiu" :defaultValue="{ key: '装修不限' }" style="width: 120px"
                                 @change="zhuangxiuChange">
                                 <a-select-option value="装修不限" @click="reset('装修不限')">装修不限</a-select-option>
                                 <a-select-option value="毛坯" @click="reset('毛坯')">毛坯</a-select-option>
@@ -271,6 +271,11 @@
     export default {
         data() {
             return {
+                requyu: '不限',//重置区域
+                rehuxing: '厅室不限',//重置厅室
+                rezhuangxiu: '装修不限',//重置装修
+                zujinvalue: '租金不限', //重置租金
+                rechaoxiang: '朝向不限',//重置朝向
                 columns,
                 list: [],
                 listt: [],
@@ -300,6 +305,18 @@
                     city: ""
                 },
             };
+        },
+        watch:{   //监听路由变化重置筛选条件
+            $route( to , from ){   
+                // console.log( to , from )
+                if(to.path == '/index'){
+                    this.requyu = '不限'
+                    this.zujinvalue = '租金不限'
+                    this.rehuxing = '厅室不限'
+                    this.rezhuangxiu = '装修不限'
+                    this.rechaoxiang = '朝向不限'
+                }
+            }
         },
         activated(){
             this.getDashboard();
@@ -334,13 +351,13 @@
                 }
             },
             zhuangxiuChange(value) {
-                if (value.key != '裝修不限') {
-                    this.zhuangxiuselect = value.key
+                if (value != '裝修不限') {
+                    this.zhuangxiuselect = value
                 }
             },
             chaoxiangChange(value) {
-                if (value.key != '朝向不限') {
-                    this.chaoxiangselect = value.key
+                if (value != '朝向不限') {
+                    this.chaoxiangselect = value
                 }
             },
             async getDashboard(pi) {

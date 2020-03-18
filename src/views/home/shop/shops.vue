@@ -5,7 +5,7 @@
             <dl class="secitem secitem_fist">
               <dt class="fl">区域：</dt>
               <dd>
-                <a-radio-group defaultValue="不限" size="small" buttonStyle="solid" @change="quyuChange">
+                <a-radio-group defaultValue="不限" v-model="requyu" size="small" buttonStyle="solid" @change="quyuChange">
                   <a-radio-button value="不限" @click="reset('不限')">不限</a-radio-button>
                   <a-radio-button value="渝北" @click="reset('渝北')">渝北</a-radio-button>
                   <a-radio-button value="南岸" @click="reset('南岸')">南岸</a-radio-button>
@@ -89,7 +89,6 @@
                 </a-radio-group>
               </dd>
             </dl>
-                
             <!-- 厅室 -->
             <!-- <dl class="secitem">
               <dt>厅室：</dt>
@@ -111,7 +110,7 @@
               <dd id="secitem-other" style="display:flex;">
                 <div class="moniselectcon">
                   <a-select
-                    labelInValue
+                    v-model="retype"
                     :defaultValue="{ key: '商铺类型' }"
                     style="width: 120px; margin-right:20px;"
                     @change="chaoxiangChange"
@@ -236,11 +235,12 @@
         export default {
           data() {
             return {
-              radio: "上海",
+              requyu: '不限',//重置区域
+              retype: '商铺类型',
               columns,
               list: [],
               listt: [],//每步筛选结果
-              zujinAny: '租金不限',
+              zujinAny: '租金不限',//重置租金
               searchName:'11',
               chaoxiangselect: '',
               zhuangxiuselect: '',
@@ -269,6 +269,16 @@
                 },
             };
           },
+          watch:{   //监听路由变化重置筛选条件
+            $route( to , from ){   
+                // console.log( to , from )
+                if(to.path == '/shops'){
+                    this.requyu = '不限'
+                    this.zujinAny = '租金不限'
+                    this.retype = '商铺类型'
+                }
+            }
+        },
           mounted() {
             this.getDashboard();
           },
@@ -296,8 +306,8 @@
               }
             },
             chaoxiangChange(value) {
-              if(value.key != '商铺类型'){
-                this.chaoxiangselect = value.key
+              if(value != '商铺类型'){
+                this.chaoxiangselect = value
               }
               if(this.chaoxiangselect != value){
                 this.radio = "上海"
@@ -370,9 +380,9 @@
                     // if (this.ricehighinput == '') {
                         this.listt = this.listt.filter(function (item) {
                             if (that.ricehigh == 'more') {
-                                return that.ricelow <= item.rice
+                                return that.ricelow <= Number(item.rice)
                             } else if (that.ricehigh == '') {
-                                return 0 <= item.rice
+                                return 0 <= Number(item.rice)
                             } else {
                                 return that.ricelow <= Number(item.rice) & Number(item.rice) <= that.ricehigh
                               // if(that.chaoxiangselect == '出租'){  
