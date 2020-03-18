@@ -47,6 +47,9 @@ export default {
             if(value == 'shiwai'){
                 this.value.status = 'shiwai'
             }
+            if(value == 'huxing'){
+                this.value.status = 'huxing'
+            }
             else{
                 this.value.status = 'shinei'
             }

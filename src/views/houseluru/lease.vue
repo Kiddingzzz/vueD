@@ -500,7 +500,7 @@
                                     :value="item" :key="index"></img-ZuFlist>
                             </div>
                         </div>
-                        <div class="shinei divallbox">
+                        <div class="shinei divallbox" style="display:none">
                             <div class="laberbox">
                                 <span class="laberboxtitle">&nbsp;房&nbsp;型&nbsp;图:</span>
                                 <div class="shineipadd">
@@ -891,18 +891,36 @@
                             const target = {};
                             let ShineinewObj = [];
                             let ShiwainewObj = [];
+                            let HuxingewObj = [];
                             arr.forEach(a => {
                                 const source = JSON.parse(`{"${a.status}":"${a.url}"}`);//利用JSON.parse将对象//格式直接造出来
                                 Object.assign(target, source);
                                 if ('shinei' in source) {
                                     ShineinewObj.push(source)
                                 }
-                                else {
+                                else if('huxing' in source){
+                                    HuxingewObj.push(source)
+                                }
+                                else if('shiwai' in source){
                                     ShiwainewObj.push(source)
                                 }
+                                
                             })
+                            if(HuxingewObj.length<1){
+                                this.savedisabled = false;
+                                this.loading = false;
+                                this.$message.error('图片中必须包含户型，请修改');
+                                return;
+                            }
+                            if(HuxingewObj.length>1){
+                                this.savedisabled = false;
+                                this.loading = false;
+                                this.$message.error('户型图只允许一张，请修改');
+                                return;
+                            }
                             var shineis = [];
                             var shiwais = [];
+                            var huxings=[];
                             for (let index = 0; index < ShineinewObj.length; index++) {
                                 const element = ShineinewObj[index].shinei;
                                 shineis.push(element)
@@ -911,14 +929,20 @@
                                 const gs = ShiwainewObj[g].shiwai;
                                 shiwais.push(gs)
                             }
+                             for (let h= 0; h< HuxingewObj.length; h++) {
+                                const hx = HuxingewObj[h].huxing;
+                                huxings.push(hx)
+                            }
                             const res = {
                                 shinei: encodeURIComponent(String(shineis)),
                                 shiwai: encodeURIComponent(String(shiwais)),
+                                huxing: encodeURIComponent(String(huxings)),
                                 weiyiurl: encodeURI(this.text),
                             }
                             const shineiRes = {
                                 shineiList: shineis.join(';'),
                                 shiwaiList: shiwais.join(';'),
+                                huxingList:huxings.join(';'),
                                 weiyiurl: this.text,
                                 type: '租房'
                             }
@@ -958,6 +982,7 @@
                     const target = {};
                     let ShineinewObj = [];
                     let ShiwainewObj = [];
+                    let HuxingewObj=[];
                     arr.forEach(a => {
                         const source = JSON.parse(`{"${a.status}":"${a.url}"}`);//利用JSON.parse将对象//格式直接造出来
                         
@@ -965,12 +990,28 @@
                         if ('shinei' in source) {
                             ShineinewObj.push(source)
                         }
+                        else if('huxing' in source){
+                            HuxingewObj.push(source)
+                        }
                         else {
                             ShiwainewObj.push(source)
                         }
                     })
+                    if(HuxingewObj.length<1){
+                        this.savedisabled = false;
+                        this.loading = false;
+                        this.$message.error('图片中必须包含户型图，请修改');
+                        return;
+                    }
+                    if(HuxingewObj.length>1){
+                         this.savedisabled = false;
+                        this.loading = false;
+                        this.$message.error('户型图只允许一张，请修改');
+                        return;
+                    }
                     var shineis = [];
                     var shiwais = [];
+                    var huxings=[]
                     for (let index = 0; index < ShineinewObj.length; index++) {
                         const element = ShineinewObj[index].shinei;
                         shineis.push(element)
@@ -980,10 +1021,14 @@
                         const gs = ShiwainewObj[g].shiwai;
                         shiwais.push(gs)
                     }
-
+                     for (let h = 0; h < HuxingewObj.length; h++) {
+                        const hx = HuxingewObj[h].huxing;
+                        huxings.push(hx)
+                    }
                     const shineiRes1 = {
                         shineiList: shineis.join(';'),
                         shiwaiList: shiwais.join(';'),
+                        huxingList:huxings.join(';'),
                         weiyiurl: this.zufangweiyiUserId,
                     }
                     var r15 = await this.$http.post(`${this.$config.api}/api/cms/imgM/modifyImgType`, shineiRes1);
@@ -991,6 +1036,7 @@
                     const resg = {
                         shinei: encodeURIComponent(String(shineis)),
                         shiwai: encodeURIComponent(String(shiwais)),
+                        huxing: encodeURIComponent(String(huxings)),
                         weiyiurl: encodeURI(this.zufangweiyiUserId),
                     }
                     $.ajax({
@@ -1024,6 +1070,7 @@
                     this.zufangweiyiUserId = weiyiUrlId;
                     this.$http.get(`${this.$config.api}/api/cms/imgM/getImgType?weiyiUrl=` + weiyiUrlId).then(req => {
                         var shineiList1 = req.data.shineiList.split(';');
+                        var huxingList1 = req.data.huxingList.split(';');
                         var shineiList2 = shineiList1;
                         var shineiSS = shineiList2
                         for (let index = 0; index < shineiSS.length; index++) {
@@ -1043,6 +1090,12 @@
                                 this.ZuFangPictureList.push(imgUrls);
                             }
                         }
+                        var imgshu=huxingList1[0]
+                        var imghus={}
+                        imghus.uid=shineiSS.length
+                        imghus.url = imgshu;
+                        imghus.status = 'huxing';
+                        this.ZuFangPictureList.push(imghus);
                         
                     })
                     this.saveRes = res.data;
@@ -1074,7 +1127,7 @@
 
 
                     var imgFangxing = {};
-                    imgFangxing.url = res.data.renTingFengImg.replace(/'/g, '').replace('[', '').replace(']', ''),
+                    imgFangxing.url = res.data.renTingHuxingImg.replace(/'/g, '').replace('[', '').replace(']', ''),
                         imgFangxing.uid = '-5',
                         imgFangxing.name = 'xxx.jpg',
                         imgFangxing.status = 'done',
