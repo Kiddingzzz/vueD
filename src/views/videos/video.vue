@@ -35,14 +35,13 @@
   const video =[
     {
       title: '01-如何注册开单王',
-      
-      picname: 'http://www.4846.com/Public/uploads/201903/5c870d25c010a.jpg',
-      src: '//xms-course-video.obs.cn-east-2.myhwclouds.com/4846/190220-register.mp4',
+      picname: '图片链接',
+      src: '视频链接',
     },
     {
       title: '02-如何注册开单王',
-      picname: 'http://www.4846.com/Public/uploads/201903/5c870d25c010a.jpg',
-      src: '//xms-course-video.obs.cn-east-2.myhwclouds.com/4846/6-1.mp4',
+      picname: '图片链接',
+      src: '视频链接',
     },
   ];
 export default {

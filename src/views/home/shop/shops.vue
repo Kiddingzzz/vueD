@@ -60,12 +60,12 @@
             <dl id="secitem-rent" class="secitem">
               <dt class="fl" style="margin-top:2px;">价格：</dt>
                <dd v-if="this.chaoxiangselect == ''">
-                <a-radio-group :defaultValue="zujinAny" size="small" buttonStyle="solid"  @change="zujinChange">
+                <a-radio-group value="租金不限" size="small" buttonStyle="solid"  @change="zujinChange">
                   <a-radio-button value="租金不限" @click="reset('租金不限')" class='select'>不限</a-radio-button>
                 </a-radio-group>
               </dd>
               <dd v-if="this.chaoxiangselect == '出租'">
-                <a-radio-group :defaultValue="zujinAny" size="small" buttonStyle="solid"  @change="zujinChange">
+                <a-radio-group defaultValue="租金不限" v-model="zujinAny" size="small" buttonStyle="solid"  @change="zujinChange">
                   <a-radio-button value="租金不限" @click="reset('租金不限')" class='select'>不限</a-radio-button>
                   <a-radio-button value="100-1500"  @click="reset('100-1500')">1500元/月以下</a-radio-button>
                   <a-radio-button value="1500-3500"  @click="reset('1500-3500')">1500-3500元/月</a-radio-button>
@@ -76,7 +76,7 @@
                 </a-radio-group>
               </dd>
               <dd v-if="this.chaoxiangselect == '出售'">
-                <a-radio-group :defaultValue="zujinAny" size="small" buttonStyle="solid"  @change="zujinChange">
+                <a-radio-group defaultValue="租金不限" v-model="zujinAny" size="small" buttonStyle="solid"  @change="zujinChange">
                   <a-radio-button value="租金不限" @click="reset('租金不限')" class='select reselect'>不限</a-radio-button>
                   <a-radio-button value="0-50"  @click="reset('0-50')">50万以下</a-radio-button>
                   <a-radio-button value="50-100"  @click="reset('50-100')">50-100万</a-radio-button>
@@ -89,7 +89,7 @@
                 </a-radio-group>
               </dd>
             </dl>
-      
+                
             <!-- 厅室 -->
             <!-- <dl class="secitem">
               <dt>厅室：</dt>
@@ -236,6 +236,7 @@
         export default {
           data() {
             return {
+              radio: "上海",
               columns,
               list: [],
               listt: [],//每步筛选结果
@@ -299,7 +300,7 @@
                 this.chaoxiangselect = value.key
               }
               if(this.chaoxiangselect != value){
-                console.log("1")
+                this.radio = "上海"
                 this.zujinAny = '租金不限'  
                 this.zujin = ""
                 this.ricelow = ""
@@ -358,9 +359,7 @@
                     }
                     //筛选地区
                     let condition = { address: this.quyu }
-                    this.listt = filter(condition, res.items)
-                    console.log(pi)
-                    
+                    this.listt = filter(condition, res.items) 
 
                     //筛选商铺类型
                     let chaoxiangcondition = { saleType: this.chaoxiangselect }
