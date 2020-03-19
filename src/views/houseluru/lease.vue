@@ -674,19 +674,41 @@
         },
         methods: {
             getMSDZu(value) {
+                console.log(this.ZuFangPictureList.length)
+                   console.log(value)
+               
                 if (this.ZuFangPictureList.length >= 4) {
+                     if(value.status =="huxing"){
+                        var s=0
+                        for (let i = 0; i < this.ZuFangPictureList.length; i++) {
+                            const huvalue = this.ZuFangPictureList[i].status;
+                            if (huvalue=='huxing') {
+                               s++;
+                            }
+                        }
+                        if(s==1){
+                           alert('至少包含一张房型图');
+                           return;
+                        }
+                           
+                      }
                     var ress = []
-                    for (let index = 0; index < this.ZuFangPictureList.length; index++) {
-                        const element = this.ZuFangPictureList[index];
+                    var zufanglists=[]
+                    zufanglists=this.ZuFangPictureList
+                    this.ZuFangPictureList=[]
+                    for (let index = 0; index < zufanglists.length; index++) {
+                        const element = zufanglists[index];
                         if (element.url != value.url) {
                             ress.push(element)
                         }
                     }
                     this.ZuFangPictureList = ress;
                 }
+                
                 else {
                     alert('房源图片至少保留3张')
                 }
+                
             },
             uuid() {
                 var s = [];
@@ -835,6 +857,7 @@
                     imgUrl.uid = ss.length;
                     imgUrl.name = 'xxx.jpg';
                     imgUrl.status = 'huxing';
+                    this.shineiList.push(imgUrl);
                     this.shineiList.push(imgUrl);
                     // var XiaoquImg = {};
                     // XiaoquImg.url = res.data.xiaoquImg.replace(/'/g, '').replace('[', '').replace(']', ''),
@@ -1065,6 +1088,7 @@
                 await this.$http.get(`${this.$config.api}/api/cms/renTing/` + id + `/renTingbackdata`).then(res => {
                     var ret = res.data.address;
                     var weiyiUrlId = res.data.weiYiUrl;
+                    console.log(weiyiUrlId)
                     this.zufangweiyiUserId = weiyiUrlId;
                     this.$http.get(`${this.$config.api}/api/cms/imgM/getImgType?weiyiUrl=` + weiyiUrlId).then(req => {
                         var shineiList1 = req.data.shineiList.split(';');
