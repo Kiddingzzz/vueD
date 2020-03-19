@@ -560,7 +560,7 @@
                 let number=arrays.length-1
                 let itz=false
                  //循环调用发布接口
-               
+                console.log("arrays:"+JSON.stringify(arrays))
                 for (let i = 0; i < arrays.length; i++) {
                     (function (i) {
                         setTimeout(function () {
@@ -619,7 +619,8 @@
                                 shi: shis,
                                 username:this.stusername,
                                 userpwd:this.stuserpwd ,
-                                cookies:encodeURIComponent(String(that.sitecookie))
+                                cookies:encodeURIComponent(String(that.sitecookie)),
+                                sendVideo:'需要',
 
                             }
                             let idss = this.pdef.id
