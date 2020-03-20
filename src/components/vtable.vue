@@ -30,6 +30,24 @@
                     <template slot="titles" slot-scope="text, record">
                         <span target="_blank">{{record.title}}</span>
                     </template>
+                    <span slot="videoions" slot-scope="text, record">
+                    <a-select   v-if="record.video!=' '"  default-value="包含视频" >
+                         <a-select-option  value="包含视频">
+                                包含视频
+                            </a-select-option>
+                            <a-select-option value="不包含视频" >
+                                不包含视频
+                            </a-select-option>
+                        </a-select>
+                    <a-select   v-if="record.video==' '"  default-value="不包含视频" >
+                         <a-select-option  value="包含视频">
+                                包含视频
+                            </a-select-option>
+                            <a-select-option value="不包含视频" >
+                                不包含视频
+                            </a-select-option>
+                        </a-select>
+                   </span>
                 </a-table>
             </a-layout-content>
         </a-layout>
@@ -41,14 +59,14 @@
             title: '小区',
             dataIndex: 'xiaoquName',
             key: 'det',
-            width: '8%'
+            width: '9%'
         },
         {
             dataIndex: 'title',
             key: 'biaoti',
             slots: { title: 'customTitles' },
             scopedSlots: { customRender: 'titles' },
-            width: '13%'
+            width: '14%'
         },
         // {
         //     title: '首页图',
@@ -87,12 +105,6 @@
             width: '6.7%'
         },
         {
-            title: '更新日期',
-            dataIndex: 'creationTime',
-            key: 'update',
-            width: '9.8%'
-        },
-        {
             title: '装修',
             dataIndex: 'zhuangxiu',
             key: 'upe',
@@ -116,12 +128,12 @@
             key: 'status',
             width: '7%'
         },
-        // {
-        //     title: '发布历史',
-        //     dataIndex: 'history',
-        //     key:'history',
-        //     width:100
-        // },
+         {
+            title: '房源视频',
+            key: 'videoions',
+            scopedSlots: { customRender: 'videoions' },
+            width: '8%'
+        },
        
         {
             title: '操作',
@@ -146,6 +158,7 @@
                 loadingdele: false,
                 selectedRows: [],
                 select: true,
+                videovalues:'包含视频',
             };
         },
         computed: {
@@ -165,11 +178,13 @@
         },
         mounted() {
             this.seachShow();
+
         },
         activated(){
             this.seachShow();
         },
         methods: {
+          
             handleClickRow(record, index){
                 return {
                     on: {
@@ -315,7 +330,7 @@
                 let update = JSON.parse(localStorage.getItem('update'));
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId);
                 if (respones.status == 200) {
-                    //console.log("respones.status:"+JSON.stringify(respones))
+                    console.log(respones.data.items[0].video)
                     this.list = respones.data.items;
 
                 }

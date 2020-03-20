@@ -691,7 +691,7 @@
                            return;
                         }
                            
-                      }
+                     }
                     var ress = []
                     var zufanglists=[]
                     zufanglists=this.ZuFangPictureList
@@ -706,7 +706,7 @@
                 }
                 
                 else {
-                    alert('房源图片至少保留3张')
+                    alert('房源图片数量不允许低至3张')
                 }
                 
             },

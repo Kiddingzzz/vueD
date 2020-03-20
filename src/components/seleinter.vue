@@ -562,8 +562,7 @@
                  //循环调用发布接口
                 console.log("arrays:"+JSON.stringify(arrays))
                 for (let i = 0; i < arrays.length; i++) {
-                    (function (i) {
-                        setTimeout(function () {
+                  
                             this.spinning = true;
                             this.pdef = arrays[i];
                             let huxing = this.pdef.huxing
@@ -590,6 +589,10 @@
                                 if (RegExp(/满五/).exec(xingzhi)) {
                                     xingzhi = "满五"
                                 }
+                            var videovalue=this.pdef.video
+                            var sendVideo='不需要'
+                            if(videovalue!='')
+                               sendVideo='需要'
                             const list = {
                                 xiaoquanme: this.pdef.xiaoquName,
                                 mianji: parseFloat(this.pdef.square),
@@ -620,7 +623,7 @@
                                 username:this.stusername,
                                 userpwd:this.stuserpwd ,
                                 cookies:encodeURIComponent(String(that.sitecookie)),
-                                sendVideo:'需要',
+                                
 
                             }
                             let idss = this.pdef.id
@@ -671,8 +674,7 @@
                                     }
                                   
                                 },2000);  
-                        }, i*7000);
-                    })(i)
+                     
                 }
                 
                 setTimeout(function(){
