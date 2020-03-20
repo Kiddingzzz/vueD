@@ -642,8 +642,6 @@
                                 userpwd:this.stuserpwd ,
                                 cookies:encodeURIComponent(String(that.sitecookie)),
                                 sendVideo:sendVideo
-                                
-
                             }
                            
                           
