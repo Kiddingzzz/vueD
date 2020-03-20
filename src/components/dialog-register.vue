@@ -54,7 +54,7 @@
                 </a-form-item>
                 <a-form-item>
                     <label class="codecomfire">验证码:</label>
-                    <a-input type="text" class="inputs-code" placeholder="请确认您手机收到的验证码" v-model="sendCode"></a-input>
+                    <a-input type="text" class="inputs-code" placeholder="请输入验证码" v-model="sendCode"></a-input>
                     <a-button class="btns-code" @click="sendcodeh()" :disabled='disabledcode'>{{getCodeText}}</a-button>
                 </a-form-item>
                 <a-form-item class="font-size">
@@ -750,4 +750,80 @@
             }
         }
     }
+    @media screen and (max-width: 768px) {
+        /deep/.ant-form-explain{
+            font-size: 12px;
+        }
+        /deep/.ant-form-item-control-wrapper{
+            width: 100% !important;
+        }
+         .dialog-container {
+            width: 75% !important;
+            height: 500px !important;
+            line-height: 20px;          
+            .dialog-title {
+                font-size: 16px !important;
+                padding: 20px 0px 0 0px !important;
+            }
+            .content {
+                margin-top: 20px !important;
+                line-height: 26px;
+                padding: 0 10px !important;
+                label {
+                    line-height: 25px !important;
+                    font-size: 12px !important;
+                }
+                div {
+                    .inputs {
+                        margin-left: 5px !important;
+                        width: 70% !important;
+                        text-indent: 5px !important;
+                        height: 26px !important;
+                    }
+
+                    .inputs-code {
+                        margin-left: 5px !important;
+                        width: 40% !important;
+                        height: 26px !important;
+                        text-indent: 5px !important;
+                    }
+
+                    .inputs-number {
+                        margin-left: 5px !important;
+                        width: 70% !important;
+                        text-indent: 5px !important;
+                        height: 26px !important;
+                    }
+
+                    .btns-code {
+                        margin-left: 5px !important;
+                        width: 30% !important;
+                        height: 26px !important;
+                        text-indent: 5px !important;
+                        padding: 0px;
+                    }
+                }
+                .font-size {
+                    margin-top: 10px !important;
+                    .checkout {
+                        width: 16px;
+                        height: 16px;
+                        margin-top: 6px;
+                    }
+
+                    a {
+                        font-size: 12px !important;
+                    }
+                }
+
+                .btn-register {
+                    width: 70% !important;
+                    height: 26px !important;
+                    line-height: 26px !important;
+                }
+            }
+        }
+   
+    }
+
 </style>

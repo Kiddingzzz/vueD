@@ -1,84 +1,99 @@
 <template>
     <div class="loginbg">
-        <div class="wrapper-login">
-            <div class="banner-login">
-                <div class="imgs">
-                    <img src="../assets/logoJXW.png" class="img">
-                </div>
+        <el-row :gutter="0">
+            <el-row :gutter="0">
+                <el-col :xs="4" :sm="4" :md="12" :lg="13" :xl="14">
+                    <div style="visibility:hidden">f</div>
+                </el-col>
+                <el-col :xs="16" :sm="16" :md="10" :lg="9" :xl="8">
+                    <div class="wrapper-login">
+                        <div class="banner-login ">    
+                            <div class="imgs">
+                                <img src="../assets/logoJXW.png" class="img">
+                            </div>
+                            <div class="biaoyu">房源群发 一键采集 开单就是这么简单！</div>
+                            <div class="item-qcode">
+                                <div v-if="account == 'qcode'">
+                                    <img src="../assets/weixin.jpg" class="maimgs">
+                                    <!-- <div class="icd">
+                            <div class="notification">
+                                <div v-if="type == 'pay'">
+                                <img src="../assets/pay.png" class="maimgs">
+                                </div>
+                                <div v-if="type == 'weixin'">
+                                <img src="../assets/weixin.jpg" class="maimgs">
+                                </div>
+                                <div v-if="type == 'qq'">
+                                <img src="../assets/qq.png" class="maimgs">
+                                </div>
+                            </div>
+                            <div class="icons">
+                                <img src="../assets/paylogo.png" class="imgs" @click="type = 'pay'">
+                                <img src="../assets/weixinlogo.png" class="imgs"  @click="type = 'weixin'">
+                                <img src="../assets/qqlogo.png" class="imgs" @click="type = 'qq'">
+                            </div>           
+                            </div> -->
+                            </div>
 
-                <div class="item-qcode">
-                    <div v-if="account == 'qcode'">
-                        <img src="../assets/weixin.jpg" class="maimgs">
-                        <!-- <div class="icd">
-                  <div class="notification">
-                    <div v-if="type == 'pay'">
-                      <img src="../assets/pay.png" class="maimgs">
-                    </div>
-                    <div v-if="type == 'weixin'">
-                      <img src="../assets/weixin.jpg" class="maimgs">
-                    </div>
-                    <div v-if="type == 'qq'">
-                      <img src="../assets/qq.png" class="maimgs">
-                    </div>
-                  </div>
-                  <div class="icons">
-                    <img src="../assets/paylogo.png" class="imgs" @click="type = 'pay'">
-                    <img src="../assets/weixinlogo.png" class="imgs"  @click="type = 'weixin'">
-                    <img src="../assets/qqlogo.png" class="imgs" @click="type = 'qq'">
-                  </div>           
-                </div> -->
-                </div>
-
-                    <div v-if="account == 'username'">
-                        <div style="    position: absolute;text-align: center;left: 98px;top: 112px;font-size: 16px;font-weight: 550;color: #1f9dcb;">
-                            房源群发 一键采集 开单就是这么简单！
+                                <div v-if="account == 'username'">
+                                    <!-- <div style="    position: absolute;text-align: center;left: 98px;top: 112px;font-size: 16px;font-weight: 550;color: #1f9dcb;">
+                                        房源群发 一键采集 开单就是这么简单！
+                                    </div> -->
+                                    <div class="logins">
+                                        <el-row :gutter="0">
+                                            <el-col :span="18" :offset="3" class="maginTop" style="margin-top:10px">
+                                                <!-- <el-input prefix-icon="iconfont icon-User" v-model="user" placeholder="请输入姓名" class="inputs"
+                                                @keyup.enter.native="doLogin()"></el-input> -->
+                                                <el-autocomplete
+                                                prefix-icon="iconfont icon-User"
+                                                class="inline-input"
+                                                v-model="user"
+                                                :fetch-suggestions="querySearch"
+                                                placeholder="请输入会员名称或手机号码"
+                                                value-key="userNameOrEmailAddress"
+                                                @input = "reset"
+                                                @select="handleSelect"
+                                                @keyup.enter.native="doLogin()"
+                                                ></el-autocomplete>
+                                            </el-col>
+                                            <el-col :span="18" :offset="3" class="maginTop">
+                                                    <el-input type="password" autocomplete="off" placeholder="请输入密码" v-model="password" class="inputs"
+                                                    @keyup.enter.native="doLogin()" prefix-icon="iconfont icon-mima"></el-input>
+                                            </el-col>
+                                            <el-col :span="6" :offset="3" class="maginTop">
+                                                <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
+                                            </el-col>
+                                            <el-col :span="18" :offset="3" class="maginTop" style="display:flex;flex-direction: column;">
+                                                <a-button class="btns" @click="doLogin()" :disabled="dis" :loading="loading">登录</a-button>
+                                                <a-button style="margin-top:10px" class="btns " @click="openMask" :disabled="dis">注册</a-button>
+                                            </el-col>
+                                            <dialog-register v-model="sendVal" @childByValue="getDate" type="danger" title="欢迎注册开单王">
+                                            </dialog-register>
+                                            <el-col :span="6" :offset="18" class="maginTop" style="margin-top:20px">
+                                                <div class="pwd" v-if="account == 'username'">
+                                                    <!-- <div @click="openMask" class="reg">注册</div> -->
+                                                    <div @click="openforget" class="forget">忘记密码</div>
+                                                    <forget v-model="forgetVal" @childValue="getforgetVal" type="danger" title="找回密码">
+                                                    </forget> 
+                                                </div>
+                                            </el-col>
+                                        </el-row>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- <div class="account">
+                                <div class="g2-cad" :class="{'active':account == 'qcode'}" @click="account = 'qcode'">二维码</div>
+                                <div class="g2-cad" :class="{'active':account == 'username'}" @click="account = 'username'">账号</div>
+                            </div> -->                    
+                        
                         </div>
-                        <div class="logins">
-                            <!-- <el-input prefix-icon="iconfont icon-User" v-model="user" placeholder="请输入姓名" class="inputs"
-                                @keyup.enter.native="doLogin()"></el-input> -->
-                                <el-autocomplete
-                                prefix-icon="iconfont icon-User"
-                                class="inline-input"
-                                v-model="user"
-                                :fetch-suggestions="querySearch"
-                                placeholder="请输入会员名称或手机号码"
-                                value-key="userNameOrEmailAddress"
-                                @input = "reset"
-                                @select="handleSelect"
-                                @keyup.enter.native="doLogin()"
-                                ></el-autocomplete>
-                                
-                            <el-input type="password" autocomplete="off" placeholder="请输入密码" v-model="password" class="inputs"
-                                @keyup.enter.native="doLogin()" prefix-icon="iconfont icon-mima"></el-input>
-              		        <el-checkbox v-model="checked" style="color:#023179;">记住密码</el-checkbox>
-                            <a-button class="btns" @click="doLogin()" :disabled="dis" :loading="loading">登录</a-button>
-                            <a-button class="btns" @click="openMask" :disabled="dis">注册</a-button>
-                        </div>
+                        
                     </div>
-                </div>
-                <!-- <div class="account">
-                    <div class="g2-cad" :class="{'active':account == 'qcode'}" @click="account = 'qcode'">二维码</div>
-                    <div class="g2-cad" :class="{'active':account == 'username'}" @click="account = 'username'">账号</div>
-                </div> -->
-
-                <dialog-register v-model="sendVal" @childByValue="getDate" type="danger" title="欢迎注册开单王">
-                </dialog-register>
-                <forget v-model="forgetVal" @childValue="getforgetVal" type="danger" title="找回密码">
-                </forget>
-
-                <div class="btm">
-                    <div class="pwd" v-if="account == 'username'">
-                        <!-- <div @click="openMask" class="reg">注册</div> -->
-                        <div @click="openforget" class="forget">忘记密码</div>
-                    </div>
-                </div>
-            
-            
-            
-            </div>
-            <div style="position: absolute;bottom: 20px;left: 10px;">
-                <a href="http://www.beian.miit.gov.cn" target="_blank">备案号:渝ICP备20000393号-1</a>
-            </div>
+                </el-col>
+            </el-row>
+        </el-row>
+        <div class="beian">
+            <a href="http://www.beian.miit.gov.cn" target="_blank">备案号:渝ICP备20000393号-1</a>
         </div>
     </div>
 </template>
@@ -351,189 +366,280 @@
 <style lang="less" scoped>
     // @import "../../styles";
     //@import "~@/assets/iconfont.css";
-/deep/.el-input,/deep/.el-input--prefix{
-    width: 350px;
-    margin-bottom: 35px;
-}
-.el-checkbox{
-    width: 350px;
-    display: flex;
-    align-items: center;
- }
-    .loginbg {
+    /deep/.el-autocomplete-suggestion__wrap{
+        padding: 5px 0;
+    }
+.loginbg {
         height: 100%;
         width: 100%;
+        overflow: hidden;
         background: white;
         position: absolute;
         top: 0;
         right: 0;
-    }
-
-    .wrapper-login {
-        height: 100%;
-        width: 100%;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        position: absolute;
-        top: 0;
-        right: 0;
+        z-index: 99;
         background: url("/static/bg1.jpg");
         background-size: 100% 100%;
-        box-sizing: boder-box;
-
-        .banner-login {
-            width: 450px;
-            height: 505px;
-            position: absolute;
-            top: 22vh;
-            right: 10vw;
-            line-height: 20px;
+        .wrapper-login{
+            padding: 0 0 5px 0;
+            background: coral;
+            margin-top: 25vh;
             border-radius: 10px;
             text-align: center;
             box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.3);
             background-color: rgba(255, 255, 255, 0.6);
-
-            .img {
-                width: 300px;
-                height: 150px;
-                // margin: 30px 0;
-            }
-
-            .item-qcode {
-                margin-top: 5px;
-
-                .icons {
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-around;
-                    // justify-content: center;
-                    margin: -20px 90px;
-                    height: 50px;
-
-                    img {
-                        width: 50px;
-                        height: 50px;
-                        border-radius: 5px;
-                    }
-                }
-
-                .maimgs {
-                    height: 230px;
-                    width: 230px;
-                }
-
-                // .notification {
-                //   div {
-                //     margin-top: 78px;
-                //     margin-bottom: 60px;
-                //     color: rgba(181, 181, 181, 1);
-                //     font-size: 14px;
-                //     text-align: center;
-                //     display: flex;
-                //     flex-direction: column-reverse;
-                //     align-items: center;
-                //     font-family: SourceHanSansSC-regular;
-                //     .maimgs{
-                //       margin-top: -55px;
-                //       height: 230px;
-                //       width: 230px;
-                //     }
-                //   }
-                // }
-                .icd {
-                    height: 230px;
-                }
-
-                .logins {
-                    display: flex;
-                    flex-flow: column;
-                    align-items: center;
-                    height: 250px;
-
-                    .el-input__inner {
-                        background-color: rgba(255, 255, 255, 1);
-                        border: none;
-                    }
-
-                    .inputs {
-                        width: 350px;
-                        height: 36px;
-                        border-radius: 0px 5px 5px 0px;
-                        color: rgba(135, 135, 135, 1);
-                        font-size: 14px;
-                        border: none;
-                        text-align: left;
-                        margin-bottom: 35px;
-                        font-family: Microsoft Yahei;
-                    }
-
-                    .btns {
-                        width: 350px;
-                        height: 36px;
-                        line-height: 20px;
-                        border-radius: 5px;
-                        background-color: #023179;
-                        color: rgba(255, 255, 255, 1);
-                        font-size: 14px;
-                        text-align: center;
-                        font-family: Roboto;
-                        border: none;
-                        margin-top: 5px;
-                    }
-                }
-            }
-
-            .account {
+            .banner-login{
                 display: flex;
-                // justify-content: space-between;
-                justify-content: center;
-                width: 184px;
-                height: 36px;
-                margin: 35px auto;
-
-                .g2-cad {
-                    width: 72px;
-                    line-height: 34px;
-                    border-radius: 5px;
-                    color: rgba(2, 49, 121, 0.8);
-                    font-size: 14px;
-                    text-align: center;
-                    font-family: Roboto;
-
-                    &.active {
-                        border: 1px solid rgba(2, 49, 121, 0.8);
-                        ;
-                    }
+                flex-direction: column;
+                align-items: center;
+                .imgs img{
+                    height: 70px;
+                    width: 150px;
                 }
-            }
-
-            .btm {
-                display: flex;
-                flex-direction: row;
-                justify-content: space-between;
-                height: 21px;
-                width: 100%;
-
-                .tip2 {
-                    margin-left: 20px;
-                    color: #dcdcdc;
-                }
-
-                .pwd {
-                    display: flex;
-                    flex-direction: row;
-
-                    .reg {
-                        width: 72px;
-                    }
-
-                    .forget {
-                        margin-left: 344px;
-                        margin-top: 30px;
-                    }
+                .biaoyu{
+                    font-size: 12px;
+                    font-weight: 550;
+                    color: #1f9dcb;
                 }
             }
         }
+        .beian{
+            position: absolute;
+            bottom: 20px;
+            left: 10px;
+            font-size: 12px;
+        }
+
     }
+    .btns {
+        height: 36px;
+        line-height: 20px;
+        border-radius: 5px;
+        background-color: #023179;
+        color: rgba(255, 255, 255, 1);
+        font-size: 14px;
+        text-align: center;
+        font-family: Roboto;
+        border: none;
+        margin-top: 5px;
+    }
+    .maginTop{
+        margin-top: 10px;
+    }
+@media screen and (min-width: 425px) and (max-width:1024px){ 
+    /deep/.el-input,/deep/.el-input--prefix{
+        width: 100%;
+        text-align: left;
+        // margin-bottom: 35px;
+    }
+    .el-autocomplete{
+       width: 100%;
+    }
+}
+@media screen and (min-width: 1024px) { 
+    /deep/.el-input,/deep/.el-input--prefix{
+        width: 350px;
+        text-align: left;
+        // margin-bottom: 35px;
+    }
+    .el-autocomplete{
+       width: 100%;
+    }
+    .wrapper-login{
+        width: 450px;
+        margin-top: 22vh !important;
+    }
+    .imgs img{
+        width: 300px !important;
+        height: 120px !important;
+    }
+    .biaoyu{
+        font-size: 16px !important;
+        margin-top: -20px;
+    }
+    .maginTop{
+        margin-top: 20px !important;
+    }
+}
+// .el-checkbox{
+//     width: 350px;
+//     display: flex;
+//     align-items: center;
+//  }
+//     .loginbg {
+//         height: 100%;
+//         width: 100%;
+//         background: white;
+//         position: absolute;
+//         top: 0;
+//         right: 0;
+//     }
+
+//     .wrapper-login {
+//         height: 100%;
+//         width: 100%;
+//         overflow: hidden;
+//         display: flex;
+//         flex-direction: column;
+//         justify-content: center;
+//         position: absolute;
+//         top: 0;
+//         right: 0;
+//         background: url("/static/bg1.jpg");
+//         background-size: 100% 100%;
+//         box-sizing: boder-box;
+//         .banner-login {
+//             width: 450px;
+//             height: 505px;
+//             position: absolute;
+//             top: 22vh;
+//             right: 10vw;
+//             line-height: 20px;
+//             border-radius: 10px;
+//             text-align: center;
+//             box-shadow: 10px 10px 20px 0px rgba(0, 0, 0, 0.3);
+//             background-color: rgba(255, 255, 255, 0.6);
+
+//             .img {
+//                 width: 300px;
+//                 height: 150px;
+//                 // margin: 30px 0;
+//             }
+
+//             .item-qcode {
+//                 margin-top: 5px;
+
+//                 .icons {
+//                     display: flex;
+//                     flex-direction: row;
+//                     justify-content: space-around;
+//                     // justify-content: center;
+//                     margin: -20px 90px;
+//                     height: 50px;
+
+//                     img {
+//                         width: 50px;
+//                         height: 50px;
+//                         border-radius: 5px;
+//                     }
+//                 }
+
+//                 .maimgs {
+//                     height: 230px;
+//                     width: 230px;
+//                 }
+
+//                 // .notification {
+//                 //   div {
+//                 //     margin-top: 78px;
+//                 //     margin-bottom: 60px;
+//                 //     color: rgba(181, 181, 181, 1);
+//                 //     font-size: 14px;
+//                 //     text-align: center;
+//                 //     display: flex;
+//                 //     flex-direction: column-reverse;
+//                 //     align-items: center;
+//                 //     font-family: SourceHanSansSC-regular;
+//                 //     .maimgs{
+//                 //       margin-top: -55px;
+//                 //       height: 230px;
+//                 //       width: 230px;
+//                 //     }
+//                 //   }
+//                 // }
+//                 .icd {
+//                     height: 230px;
+//                 }
+
+//                 .logins {
+//                     display: flex;
+//                     flex-flow: column;
+//                     align-items: center;
+//                     height: 250px;
+
+//                     .el-input__inner {
+//                         background-color: rgba(255, 255, 255, 1);
+//                         border: none;
+//                     }
+
+//                     .inputs {
+//                         width: 350px;
+//                         height: 36px;
+//                         border-radius: 0px 5px 5px 0px;
+//                         color: rgba(135, 135, 135, 1);
+//                         font-size: 14px;
+//                         border: none;
+//                         text-align: left;
+//                         margin-bottom: 35px;
+//                         font-family: Microsoft Yahei;
+//                     }
+
+//                     .btns {
+//                         width: 350px;
+//                         height: 36px;
+//                         line-height: 20px;
+//                         border-radius: 5px;
+//                         background-color: #023179;
+//                         color: rgba(255, 255, 255, 1);
+//                         font-size: 14px;
+//                         text-align: center;
+//                         font-family: Roboto;
+//                         border: none;
+//                         margin-top: 5px;
+//                     }
+//                 }
+//             }
+
+//             .account {
+//                 display: flex;
+//                 // justify-content: space-between;
+//                 justify-content: center;
+//                 width: 184px;
+//                 height: 36px;
+//                 margin: 35px auto;
+
+//                 .g2-cad {
+//                     width: 72px;
+//                     line-height: 34px;
+//                     border-radius: 5px;
+//                     color: rgba(2, 49, 121, 0.8);
+//                     font-size: 14px;
+//                     text-align: center;
+//                     font-family: Roboto;
+
+//                     &.active {
+//                         border: 1px solid rgba(2, 49, 121, 0.8);
+//                         ;
+//                     }
+//                 }
+//             }
+
+//             .btm {
+//                 display: flex;
+//                 flex-direction: row;
+//                 justify-content: space-between;
+//                 height: 21px;
+//                 width: 100%;
+
+//                 .tip2 {
+//                     margin-left: 20px;
+//                     color: #dcdcdc;
+//                 }
+
+//                 .pwd {
+//                     display: flex;
+//                     flex-direction: row;
+
+//                     .reg {
+//                         width: 72px;
+//                     }
+
+//                     .forget {
+//                         margin-left: 344px;
+//                         margin-top: 30px;
+//                     }
+//                 }
+//             }
+//         }
+//     }
 </style>
