@@ -547,8 +547,8 @@
                             </div>
                         </div>
 
-                        <div class="sellfangyuansp">
-                            <div class="selllaberbox">
+                        <div class="sellfooter" >
+                            <div class="selllaberbox sellfooterdec">
                                 <span class="selllaberboxtitle">房源视频:</span>
                                 <label> 视频大小在300M内，视频长度在1-3分钟为最佳，视频过短新三网审核不予通过。</label>
                                 <!-- <div>
@@ -559,11 +559,17 @@
                                     </a-upload>
                                 </div> -->
                             </div>
+                            <div class="selltupianbox">
+                                <div class="videbox">
+                                    <!-- <div class="botool"><img src="http://www.4846.com/Public/images/icon-video.png" alt=""></div> -->
+                                    <video class="videos" src="https://wosmedia1.anjukestatic.com/UcSrQpOnMUW/esftransform/6b5a41d8-69b6-4720-83b2-ae35b9bc1c66.1578375337442.51544-3519822469.mp4" controls></video>                               
+                                </div>
+                            </div>
                         </div>
                         <div class="sellbottomobx">
-                            <a-button type="" id='anchor-save' class="sellbuttonfang sellokbutton" v-anchor='anchor'
-                                @click="saveHouse()" :disabled="savedisabled" :loading="loading">保存房源</a-button>
-                            <!-- <a-button type="" class="sellokbutton">保存草稿</a-button> -->
+                                <a-button type="" id='anchor-save' class="sellbuttonfang sellokbutton" v-anchor='anchor'
+                                    @click="saveHouse()" :disabled="savedisabled" :loading="loading">保存房源</a-button>
+                                <!-- <a-button type="" class="sellokbutton">保存草稿</a-button> -->
                         </div>
                     </a-form>
                 </a-layout-content>
@@ -1456,6 +1462,38 @@
     }
 </script>
 <style lang="less" scoped>
+    .videbox{
+        position: relative;
+        width: 200px;
+        height: 100px;
+        overflow: hidden;
+    }
+    .videos{
+        width: 200px;
+        height: 100px;
+        background: #000;
+        margin-right: 10px;
+    }
+    .botool{
+        position: absolute;
+        z-index: 99;
+        top: 50%;
+        left: 50%;
+        margin: -25px 0 0 -25px;  
+        img{
+            height: 50px;
+            width: 50px;
+        }
+    }
+    .sellfooter{
+        width: 100% !important;
+        padding-left: 20px;
+        display: flex;
+        flex-direction: column;
+    }
+    .sellfooterdec{
+        height:40px;
+    }
     .errormsg {
         margin-left: 10px;
         color: red;
