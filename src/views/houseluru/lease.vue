@@ -22,7 +22,7 @@
                         <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                             <br /><br />
                             <a-input-search placeholder="例如：https://cq.58.com/zufang/40823717413021x.shtml"
-                                @search="onSeaRenTing" :disabled="disabled" enterButton="立即秒录" size="large" />
+                                @search="onSeaRenTing" v-model="searentvalue" :disabled="disabled" enterButton="立即秒录" size="large" />
                             <!-- <a-spin :spinning="spinning">
                             </a-spin> -->
                         </p>
@@ -591,6 +591,7 @@
                 peitaocheckedList: [],
                 plainOptionsjichu,
                 jichucheckedList: [],
+                searentvalue:'',
                 hezu,
                 zhifu,
                 optionsex,
@@ -730,10 +731,12 @@
                 var re = new RegExp(strRegex);
                 if (params == "" || !re.test(params)) {
                     alert("请输入正确的url地址");
+                    this.searentvalue='';
                     return;
                 }
-                if (params.indexOf('ershoufang') != -1) {
+                if (RegExp(/ershoufang/).exec(params)) {
                     alert("请输入租房地址")
+                    this.searentvalue='';
                     return;
                 }
                 this.uuid()

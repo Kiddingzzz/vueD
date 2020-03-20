@@ -189,7 +189,7 @@
                 return {
                     on: {
                         click: () => {
-                            // console.log('序号索引index' + JSON.stringify(record))
+                            //  console.log('序号索引index' + JSON.stringify(record))
                             if(this.select==true){
                                 this.selectedRowKeys.push(index)
                                 this.selectedRows.push(record)

@@ -22,7 +22,7 @@
                         <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
                             <br /><br />
                             <a-input-search placeholder="例如：https://cq.58.com/ershoufang/40823717413021x.shtml"
-                                @search="onSearch" :disabled="disabled" enterButton="立即秒录" size="large" />
+                                @search="onSearch" v-model="seachvalue" :disabled="disabled" enterButton="立即秒录" size="large" />
                         </p>
                         <div class="selllogo">
                             <a href="https://cq.58.com/ershoufang" target="_blank"><img class="wuba"
@@ -649,6 +649,7 @@
                 yongjin: '', //佣金比例
                 plainOptionspeitao,
                 plainOptionsjichu,
+                seachvalue:'',
                 peitaocheckedList: [],
                 jichucheckedList: [],
                 value2: '东',
@@ -828,10 +829,12 @@
                 var re = new RegExp(strRegex);
                 if (params == "" || !re.test(params)) {
                     alert("请输入正确的url地址");
+                    this.seachvalue='';
                     return;
                 }
-                if (params.indexOf('hezu') != -1 || params.indexOf('zu.anjuke') != -1 || params.indexOf('zufang') != -1) {
+                if (RegExp(/hezu/).exec(params) ||RegExp(/zu.anjuke/).exec(params)|| RegExp(/zufang/).exec(params)) {
                     alert("请输入二手房地址")
+                    this.seachvalue='';
                     return;
                 }
                 this.uuid()
