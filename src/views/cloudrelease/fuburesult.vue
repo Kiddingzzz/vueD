@@ -22,13 +22,14 @@
             </div>   
             <a-table class="fabutable" :columns="columns" :dataSource="listfb" >
                     <span slot="operation" slot-scope="text, record" class="caozuo">
-                        <a v-if="record.publishStatus!='已发布'" href="javascript:;" @click="update(record)">修改</a>
+                        <a v-if="record.publishStatus!='已发布'&&record.publishStatus!='等待结果中...'" href="javascript:;" @click="update(record)">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="confirm(record)"  okText="确定" cancelText="取消">
                             <a href="#">删除</a>
                         </a-popconfirm>
                     </span>
                     <span slot="jieguo" slot-scope="text, record" class="caozuo">
                         <div class="yes" v-if="record.publishStatus=='已发布'"><i class="iconfont icon-chenggong"></i><span>审核成功</span></div>
+                        <div class="yes" v-else-if="record.publishStatus=='等待结果中...'"><i class="iconfont icon-tishi"></i><span>审核中</span></div>
                         <div class="yes" v-else><i class="iconfont icon-shibai"></i><span>审核失败</span></div>
                     </span>
             </a-table>   
@@ -101,7 +102,12 @@ export default {
            
         },
         confirm(list) {
-            this.onDeletefb(list)
+            if(list.publishStatus=='等待结果中...'){
+                this.$message.warning('该房源还在审核中！！！');
+                return;
+            }
+            else
+              this.onDeletefb(list);
         },
         async onDeletefb(list) {
               if(list.houseType=="二手房")
@@ -140,10 +146,8 @@ export default {
         },
         async GetShowList(){
                 let update = JSON.parse(localStorage.getItem('update'));
-                console.log( update.userId)
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishAllList/` + update.userId);
                 if (respones.status == 200) {
-                    console.log(respones)
                     this.listfb = respones.data.items;
                    
                 }

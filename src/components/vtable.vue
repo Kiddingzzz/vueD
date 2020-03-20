@@ -39,7 +39,7 @@
                                 不包含视频
                             </a-select-option>
                         </a-select>
-                    <a-select   v-if="record.video==''"  default-value="不包含视频" >
+                    <a-select   v-else  default-value="不包含视频" >
                          <a-select-option  value="包含视频">
                                 包含视频
                             </a-select-option>
@@ -209,7 +209,7 @@
                 }
             },
             onSelectChange (selectedRowKeys,selectedRows) {
-                console.log(this.selectedRowKeys)
+                // console.log(this.selectedRowKeys)
                 this.selectedRowKeys = selectedRowKeys;
                 this.selectedRows = selectedRows;
             },
@@ -330,7 +330,7 @@
                 let update = JSON.parse(localStorage.getItem('update'));
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId);
                 if (respones.status == 200) {
-                    console.log(respones.data.items)
+                    // console.log(respones.data.items)
                     this.list = respones.data.items;
 
                 }

@@ -498,7 +498,7 @@
                                 <img alt="example" style="height:100%; width:100%;" :src="previewImage" />
                             </a-modal>
                         </div>
-                        <div class="sellshinei selldivallbox" style="min-height: 480px !important;">
+                        <div class="sellshinei selldivallbox" >
                             <div class="selllaberbox">
                                 <span class="selllaberboxtitle">房源照片: </span>
                                 <div class="shineipadd">
@@ -547,7 +547,7 @@
                             </div>
                         </div>
 
-                        <div class="sellfooter" >
+                        <div class="sellfooter" v-if="this.videovalue!=''" :v-show="true">
                             <div class="selllaberbox sellfooterdec">
                                 <span class="selllaberboxtitle">房源视频:</span>
                                 <label> 视频大小在300M内，视频长度在1-3分钟为最佳，视频过短新三网审核不予通过。</label>
@@ -562,10 +562,11 @@
                             <div class="selltupianbox">
                                 <div class="videbox">
                                     <!-- <div class="botool"><img src="http://www.4846.com/Public/images/icon-video.png" alt=""></div> -->
-                                    <video class="videos" src="https://wosmedia1.anjukestatic.com/UcSrQpOnMUW/esftransform/6b5a41d8-69b6-4720-83b2-ae35b9bc1c66.1578375337442.51544-3519822469.mp4" controls></video>                               
+                                    <video class="videos" :src="videovalue" controls></video>                               
                                 </div>
                             </div>
                         </div>
+                       
                         <div class="sellbottomobx">
                                 <a-button type="" id='anchor-save' class="sellbuttonfang sellokbutton" v-anchor='anchor'
                                     @click="saveHouse()" :disabled="savedisabled" :loading="loading">保存房源</a-button>
@@ -620,6 +621,7 @@
                 url: '11',
                 visible: false,
                 leavePage:false,
+                videovalue:'',
                 addxq: false,
                 addshowxqu: false,
                 spinning: false,
@@ -926,6 +928,7 @@
                         this.peitaocheckedList = ['电话', '热水器', '彩电', '空调', '冰箱', '洗衣机', '家具', '宽带网', '微波炉', '衣柜', '沙发', '厨具（可做饭）', '独立卫生间']
                     this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
                     this.checked = true
+                    console.log(res.data)
                     this.laf = res.data;
                     var ret = res.data.address;
                     if (RegExp(/简/).exec(this.laf.zhuangxiu))
@@ -936,6 +939,7 @@
                     this.chaoxiang = ret.chaoxiang;
                     this.spinning = false;
                     this.ref = res.data;
+                    this.videovalue=this.ref.video
                     // console.log(this.ref.weiyizhufang.replace(/(^\s*)|(\s*$)/g, ""))
                     //产权年限
                     this.chanquanNianxian = this.ref.chanquanNianxian
@@ -1321,6 +1325,7 @@
                     this.jichucheckedList = ['水', '煤气/天然气', '有线电视', '暖气', '车位', '露台', '阁楼', '储藏室/地下室']
                     this.checked = true
                     this.laf = res.data;
+                    this.videovalue=this.laf.video;
                     var weiyiUrlId = this.laf.weiYiUrl;
                     this.weiyiurlid = weiyiUrlId;
                     this.$http.get(`${this.$config.api}/api/cms/imgM/getImgType?weiyiUrl=` + weiyiUrlId).then(req => {
@@ -1464,13 +1469,12 @@
 <style lang="less" scoped>
     .videbox{
         position: relative;
-        width: 200px;
-        height: 100px;
+
         overflow: hidden;
     }
     .videos{
-        width: 200px;
-        height: 100px;
+        width: 500px;
+        height: 235px;
         background: #000;
         margin-right: 10px;
     }
@@ -1684,9 +1688,9 @@
     .selldivallbox {
         display: flex;
         border-bottom: 1px solid #ebedf0;
-        width: 100% !important;
+       
         padding-left: 20px;
-        height: 40px !important;
+       
         line-height: 40px;
     }
 

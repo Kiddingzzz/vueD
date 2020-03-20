@@ -574,8 +574,10 @@
                 for(let h=0;h<videohave.length;h++){
                        videonothave.push(videohave[h])
                 }
+                  let yuming=`${that.$config.api}/api/cms/house/modifyHouseStatus/`
+               
                  //循环调用发布接口
-                console.log(JSON.stringify(videonothave))
+                
                 for (let i = 0; i < videonothave.length; i++) {
                              
                             this.spinning = true;
@@ -609,6 +611,7 @@
                             if(videovalue!='')
                                sendVideo='需要'
                             const list = {
+                                houseuid:this.pdef.id,
                                 xiaoquanme: this.pdef.xiaoquName,
                                 mianji: parseFloat(this.pdef.square),
                                 taomianji: parseFloat(this.pdef.square) - 1,
@@ -628,7 +631,7 @@
                                 shoufu: null,
                                 yongjin: null,
                                 title: this.pdef.title,
-                                housejieshao: this.pdef.note,
+                                housejieshao: encodeURIComponent(String(this.pdef.note)),
                                 yehzuxintai: encodeURI(this.pdef.atittude),
                                 fuwujiwshao: encodeURI(String(this.pdef.fuwuCondition)),
                                 weiyiurl: encodeURI(this.pdef.weiYiUrl),
@@ -642,11 +645,11 @@
                                 
 
                             }
-                            let idss = this.pdef.id
-                            let dataConsole = '默认值';
-                            let dis=null;
-                            let texttypr=null;
-                            let yuming=`${that.$config.api}/api/cms/house/modifyHouseStatus/`
+                           
+                          
+                           
+                            const datas={houserid:this.pdef.id, type:"等待结果中..."}
+                            this.$http.post(yuming,datas)
                             $.ajax({
                                 type: 'GET',
                                 async:true,
@@ -656,40 +659,8 @@
                                 jsonp: "callback",
                                 jsonpCallback: "successCallback",//回调方法
                                 success: function (data) {
-                                    dataConsole = data;
-
-                                   if(dataConsole.status=="ok"){
-                                    //    that.$emit('getMsg', "sussMsg")
-                                        dis=idss
-                                        texttypr="已发布"
-                                   }
-                                  else{
-                                    // that.$emit('getMsg', "errMsg")
-                                        dis=idss
-                                        texttypr=data.message
-                                   }
                                 },
-                                error:function(){
-                                    dis=idss
-                                    texttypr="服务器错误，请重新发布"
-                                }
                             })
-                            //定时检测变化
-                               const interval= setInterval(async () => {
-                                   
-                                    if(dis!=null){
-                                        const datas={houserid:dis, type:texttypr}
-                                        that.$http.post(yuming,datas).then(Responses=>{
-                                            if(i==number){
-                                                clearInterval(interval);
-                                                // that.$message.success('您的房源已全部审核完毕，可在发布结果查看发布结果',5);
-                                                that.Msg('success')
-                                                itz=true
-                                            }
-                                        })
-                                    }
-                                  
-                                },2000);  
                      
                 }
                 
@@ -864,7 +835,12 @@
                     if (RegExp(/满五/).exec(xingzhi)) {
                         xingzhi = "满五"
                     }
+                var videovalue=this.pdef.video
+                var sendVideo='不需要'
+                if(videovalue!='')
+                    sendVideo='需要'
                 const list = {
+                    houseuid:this.pdef.id,
                     xiaoquanme: this.pdef.xiaoquName,
                     mianji: parseFloat(this.pdef.square),
                     taomianji: parseFloat(this.pdef.square) - 1,
@@ -884,7 +860,7 @@
                     shoufu: null,
                     yongjin: null,
                     title: this.pdef.title,
-                    housejieshao: this.pdef.note,
+                    housejieshao: encodeURIComponent(String(this.pdef.note)),
                     yehzuxintai: encodeURI(this.pdef.atittude),
                     fuwujiwshao: encodeURI(this.pdef.fuwuCondition),
                     weiyiurl: encodeURI(this.pdef.weiYiUrl),
@@ -893,16 +869,14 @@
                     shi: shis,
                     username:this.stusername,
                     userpwd:this.stuserpwd,
-                    cookies:encodeURIComponent(String(this.sitecookie))
+                    cookies:encodeURIComponent(String(this.sitecookie)),
+                    sendVideo:sendVideo
 
                 }
                 // console.log('list:' + JSON.stringify(list))
-                let that = this;
-                let fff = this.FanhuiData
-                let idss = this.pdef.id
-                let dis=''
-                let texttypr=''
                 let yuming=`${that.$config.api}/api/cms/house/modifyHouseStatus/`
+                const datas={houserid:this.pdef.id, type:"等待结果中..."}
+                this.$http.post(yuming,datas)
                 $.ajax({
                     type: 'GET',
                     url: 'http://47.108.24.104:8090/get_user?data=' + JSON.stringify(list),
@@ -911,34 +885,8 @@
                     jsonp:"callback",
                     jsonpCallback:"successCallback",//回调方法
                     success: function (data) {
-                         if(data.data.title=="发布成功"){
-                            dis=idss
-                            texttypr="已发布"
-                          }
-                         else{
-                             dis=idss
-                             texttypr=data.data.subMsg
-                         }
                     },
-                    error:function(){
-                          dis=idss
-                          texttypr="服务器错误，请重新发布"
-                     }
                 });
-              setTimeout(function(){
-                    const datas={
-                        houserid:dis,
-                        type:texttypr
-                    }
-                 if(dis!=null){ 
-                     that.$http.post(yuming,datas).then(Responses=>{
-                            // that.$message.success('您的审核完毕，可在发布结果查看发布结果',3);
-                            that.Msg('success')
-                    });
-                                      
-                 }                 
-              }, 24000)    
-
             },
           
             //aaa
