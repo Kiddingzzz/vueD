@@ -31,7 +31,7 @@
                         <span target="_blank">{{record.title}}</span>
                     </template>
                     <span slot="videoions" slot-scope="text, record">
-                    <a-select   v-if="record.video!=' '"  default-value="包含视频" >
+                    <a-select   v-if="record.video!=''"  default-value="包含视频" >
                          <a-select-option  value="包含视频">
                                 包含视频
                             </a-select-option>
@@ -39,7 +39,7 @@
                                 不包含视频
                             </a-select-option>
                         </a-select>
-                    <a-select   v-if="record.video==' '"  default-value="不包含视频" >
+                    <a-select   v-if="record.video==''"  default-value="不包含视频" >
                          <a-select-option  value="包含视频">
                                 包含视频
                             </a-select-option>
@@ -330,7 +330,7 @@
                 let update = JSON.parse(localStorage.getItem('update'));
                 const respones = await this.$http.get(`${this.$config.api}/api/cms/house/publishList/` + update.userId);
                 if (respones.status == 200) {
-                    console.log(respones.data.items[0].video)
+                    console.log(respones.data.items)
                     this.list = respones.data.items;
 
                 }

@@ -557,14 +557,29 @@
             async qunFaSanwang() {
                 let arrays = this.rav;
                 let that=this
-                let number=arrays.length-1
+                let number=arrays.lengths-1
                 let itz=false
+                var videohave=[]
+                var videonothave=[]
+                for( let s=0;s<arrays.length;s++){
+                     if(arrays[s].video==''){
+                        videohave.push(arrays[s])
+                     }
+                }
+                for( let j=0;j<arrays.length;j++){
+                     if(arrays[j].video!=''){
+                        videonothave.push(arrays[j])
+                     }
+                }
+                for(let h=0;h<videohave.length;h++){
+                       videonothave.push(videohave[h])
+                }
                  //循环调用发布接口
-                console.log("arrays:"+JSON.stringify(arrays))
-                for (let i = 0; i < arrays.length; i++) {
-                  
+                console.log(JSON.stringify(videonothave))
+                for (let i = 0; i < videonothave.length; i++) {
+                             
                             this.spinning = true;
-                            this.pdef = arrays[i];
+                            this.pdef = videonothave[i];
                             let huxing = this.pdef.huxing
                             let shis = huxing.split('室')[0]
                             let ting = huxing.split('室')[1].split('厅')[0]
@@ -623,6 +638,7 @@
                                 username:this.stusername,
                                 userpwd:this.stuserpwd ,
                                 cookies:encodeURIComponent(String(that.sitecookie)),
+                                sendVideo:sendVideo
                                 
 
                             }
@@ -653,10 +669,10 @@
                                         texttypr=data.message
                                    }
                                 },
-                                // error:function(){
-                                //     dis=idss
-                                //     texttypr="服务器错误，请重新发布"
-                                // }
+                                error:function(){
+                                    dis=idss
+                                    texttypr="服务器错误，请重新发布"
+                                }
                             })
                             //定时检测变化
                                const interval= setInterval(async () => {
