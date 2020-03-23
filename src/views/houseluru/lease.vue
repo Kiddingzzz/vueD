@@ -13,10 +13,10 @@
                 </div>
             </div>
         </div>
-        <a-modal title="秒录房源" width='800px' :bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk"
+        <a-modal title="秒录房源" width='800px':bodyStyle="leasestyle" v-model="visible" @ok="leasehanderOk"
             @cancel="cancelClick" :destroyOnClose="true" cancelText="取消" okText="确定">
             <a-spin :spinning="spinning">
-                <div style="height:420px;display:flex;flex-direction: column;justify-content: space-between;">
+                <div style="padding:0 10px;display:flex;flex-direction: column;justify-content: space-between;">
                     <div>
                         <p>1.点击网站logo可以快速进入对应的网站查看房源:(不会使用?查看帮助)</p>
                         <p>2.把需要获取的房源地址粘贴到文本框中,点击“立即秒录”:
@@ -652,9 +652,6 @@
                 weiyiUserId: '',
                 zufangweiyiUserId:'',
                 saveRes: {},
-                leasestyle: {
-                    height: '470px'
-                },
                 RtreciveId: '',
                 ZuFangPictureList: [],
             }
@@ -1345,9 +1342,7 @@
     }
 
     .leasefilter {
-        position: absolute;
-        bottom: 50px;
-        right: 0px;
+        margin-top: 20px;
     }
 
     .ant-table-row ant-table-row-level-0 {

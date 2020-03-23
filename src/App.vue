@@ -30,7 +30,8 @@
     </div>
     <a-layout style="flex-direction: row;">
       <!-- <a-layout-sider width="256" style="background:#fff"> -->
-      <div>
+      <div :class="{'smmeun': isSmeun}" style="display: flex;">
+        <div>
         <!--  :openKeys="openKeys" @openChange="onOpenChange" -->
         <a-menu
           mode="inline"
@@ -106,7 +107,8 @@
       </div>
       <div v-show="isSmall" @click="toggleCollapsed" class="menubtn">
           <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
-        </div>
+      </div>
+      </div>
       <!-- </a-layout-sider> -->
       <keep-alive>
       <router-view/>
@@ -124,6 +126,7 @@ export default {
       return {
         collapsed: false,
         isSmall: true,
+        isSmeun: true , //隐藏menu
         rootSubmenuKeys: ['sub1','sub2', 'sub3', 'sub4'],
         isShow: false,
         // user:'',
@@ -151,8 +154,10 @@ export default {
         if(this.collapsed==false){
           //菜单没有收起
           this.isShow = true
+          this.isSmeun = false
         }else{
           this.isShow = false
+          this.isSmeun = true
         }
     },
     updated () {
@@ -197,8 +202,10 @@ export default {
         if(this.collapsed==false){
           //菜单没有收起
           this.isShow = true
+          this.isSmeun = false
         }else{
           this.isShow = false
+          this.isSmeun = true
         }
       },
     //   // historyWatch () {
@@ -325,6 +332,9 @@ export default {
 .show{
   width: 256px;
 }
+.smmeun{
+  margin-left:  -80px;
+}
 .menubtn{
   margin-top: 10px;
   height:25px;
@@ -399,6 +409,11 @@ export default {
       .ant-dropdown-link{
         color: white;
       }
+    }
+  }
+  @media screen and (min-width: 768px){
+    .smmeun{
+      margin-left: 0;
     }
   }
 </style>

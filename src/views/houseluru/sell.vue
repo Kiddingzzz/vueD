@@ -744,6 +744,7 @@
             }
         },
         activated(options) {
+            this.seachvalue = ''
             this.clear()
             //页面变化时，清空原有数据
             this.reciveId = this.$route.params.id
@@ -1604,11 +1605,9 @@
         float: left;
     }
 
-    // .sellfontU {
-    //     position: absolute;
-    //     bottom: 50px;
-    //     right: 0px;
-    // }
+    .sellfontU {
+        margin-top:20px;
+    }
 
     /* .ant-table-row ant-table-row-level-0 {
         display: flex;
