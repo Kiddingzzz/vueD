@@ -526,4 +526,72 @@
             }
         }
     }
+    @media screen and (max-width: 768px) {
+        /deep/.ant-form-explain{
+            font-size: 12px;
+        }
+        /deep/.ant-form-item-control-wrapper{
+            width: 100% !important;
+        }
+         .forget-container {
+            width: 75% !important;
+            height: 400px !important;
+            line-height: 20px;          
+            .forget-title {
+                font-size: 16px !important;
+                padding: 20px 0px 0 0px !important;
+            }
+            .content {
+                margin-top: 20px !important;
+                padding: 0 10px !important;
+                label {
+                    line-height: 25px !important;
+                    font-size: 12px !important;
+                }
+                div {
+                    .inputs {
+                        margin-left: 5px !important;
+                        width: 70% !important;
+                        text-indent: 5px !important;
+                    }
+
+                    .inputs-code {
+                        margin-left: 5px !important;
+                        width: 40% !important;
+                        text-indent: 5px !important;
+                    }
+
+                    .inputs-number {
+                        margin-left: 5px !important;
+                        width: 70% !important;
+                        text-indent: 5px !important;
+                    }
+
+                    .btns-code {
+                        margin-left: 5px !important;
+                        width: 30% !important;
+                        text-indent: 5px !important;
+                        padding: 0px;
+                    }
+                }
+                .font-size {
+                    margin-top: 10px !important;
+                    .checkout {
+                        width: 16px;
+                        height: 16px;
+                        margin-top: 6px;
+                    }
+
+                    a {
+                        font-size: 12px !important;
+                    }
+                }
+
+                .btn-forget {
+                    width: 70% !important;
+                }
+            }
+        }
+   
+    }
 </style>

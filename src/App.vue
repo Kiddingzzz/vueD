@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <a-layout id="components-layout-demo-top-side-2" v-if="$route.meta.keepAlive">
+    <a-layout id="components-layout-demo-top-side-2" v-if="$route.meta.keepAlive" style="display: flex;flex-direction: column;">
     <div class="header-wrapper">
       <canvas ref="sky" class="sky"></canvas>
       <a-layout-header class="header">
@@ -28,8 +28,9 @@
 
       </a-layout-header>
     </div>
-    <a-layout>
-      <a-layout-sider width="200" style="background: #fff">
+    <a-layout style="flex-direction: row;">
+      <!-- <a-layout-sider width="256" style="background:#fff"> -->
+      <div>
         <!--  :openKeys="openKeys" @openChange="onOpenChange" -->
         <a-menu
           mode="inline"
@@ -37,9 +38,11 @@
           :defaultOpenKeys="['sub1']"
           :style="{ height: '100%', borderRight: 0 }"
           :selectedKeys="[this.$route.path]"
+          :inlineCollapsed="collapsed"
+          :class="{ 'show': isShow }"
         >
           <a-sub-menu key="sub1">
-            <span slot="title" class="hh"><a-icon type="user" />个人房源</span>
+            <span slot="title" class="hh"><a-icon type="user" /><span>个人房源</span></span>
             <a-menu-item key="/index" class="hh">
               <router-link to="index"><i class="iconfont icon-ershoufang"></i>二手房</router-link>
               <!-- <router-link to="test"><i class="iconfont icon-ershoufang"></i>test</router-link> -->
@@ -52,7 +55,7 @@
             </a-menu-item>
           </a-sub-menu>
           <a-sub-menu key="sub2">
-            <span slot="title"><a-icon type="inbox" />房源录入</span>
+            <span slot="title"><a-icon type="inbox" /><span>房源录入</span></span>
             <a-menu-item key="/lease" class="hh">
               <router-link to="lease"><i class="iconfont icon-zufang"></i>租房录入</router-link>
             </a-menu-item>  
@@ -68,7 +71,7 @@
           </a-sub-menu>
 
           <a-sub-menu key="sub3">
-            <span slot="title"><a-icon type="cloud" />云发布</span>
+            <span slot="title"><a-icon type="cloud" /><span>云发布</span></span>
             <a-menu-item key="/rentrelease" class="hh">
               <router-link to="rentrelease"><i class="iconfont icon-zufang"></i>出租群发</router-link>
             </a-menu-item>  
@@ -80,7 +83,7 @@
             </a-menu-item>          
           </a-sub-menu>
           <a-sub-menu key="sub4">
-            <span slot="title"><a-icon type="setting" />个人管理</span>
+            <span slot="title"><a-icon type="setting" /><span>个人管理</span></span>
             <a-menu-item key="/zhandian" class="hh">
               <router-link to="zhandian"><i class="iconfont icon-wangzhan"></i>站点管理</router-link>
             </a-menu-item>
@@ -90,7 +93,7 @@
             </a-menu-item> -->
           </a-sub-menu>
             <a-sub-menu key="sub5">
-            <span slot="title"><a-icon type="setting" />教程</span>
+            <span slot="title"><a-icon type="setting" /><span>教程</span></span>
            
              <a-menu-item key="/video" class="hh">
               <router-link to="video"><i class="iconfont icon-wangzhan"></i>视频教程</router-link>
@@ -100,7 +103,11 @@
             </a-menu-item> -->
           </a-sub-menu>
         </a-menu>
-      </a-layout-sider>
+      </div>
+      <div v-show="isSmall" @click="toggleCollapsed" class="menubtn">
+          <a-icon :type="collapsed ? 'menu-unfold' : 'menu-fold'" />
+        </div>
+      <!-- </a-layout-sider> -->
       <keep-alive>
       <router-view/>
       </keep-alive>
@@ -115,8 +122,10 @@ export default {
   name: 'App',
   data() {
       return {
-        rootSubmenuKeys: ['sub1','sub2', 'sub3', 'sub4'],
         collapsed: false,
+        isSmall: true,
+        rootSubmenuKeys: ['sub1','sub2', 'sub3', 'sub4'],
+        isShow: false,
         // user:'',
         // logouttxt:'',
         userinfo: [],
@@ -130,6 +139,7 @@ export default {
         flakes: [], // flake instances
         canvas: '',
         ctx: '',
+        screenWidth: document.documentElement.clientWidth,
       };
     },
     mounted(){
@@ -137,7 +147,13 @@ export default {
       // let ip = returnCitySN["cip"];
       // console.log('app.vue的ip=================='+ip)
       // this.menuChange()
-      
+        console.log(this.screenWidth)
+        if(this.collapsed==false){
+          //菜单没有收起
+          this.isShow = true
+        }else{
+          this.isShow = false
+        }
     },
     updated () {
         let update = JSON.parse(localStorage.getItem('update'));
@@ -176,6 +192,15 @@ export default {
       });
     },
     methods: {
+      toggleCollapsed() {
+        this.collapsed = !this.collapsed;
+        if(this.collapsed==false){
+          //菜单没有收起
+          this.isShow = true
+        }else{
+          this.isShow = false
+        }
+      },
     //   // historyWatch () {
     //   //   this.news = (this.$route.path === '/sell' ? 1 : 0);
     //   // },
@@ -296,6 +321,24 @@ export default {
 }
 /deep/.ant-layout-header, .header-wrapper{
   background: linear-gradient(to right,#1278f6,#00b4aa);
+}
+.show{
+  width: 256px;
+}
+.menubtn{
+  margin-top: 10px;
+  height:25px;
+  width:25px;
+  background:#fff;
+  text-align: center;
+  line-height: 25px;
+  border-radius: 0 5px 5px 0;
+}
+.drawerBtn{
+  position: fixed;
+  z-index: 88;
+  left: 0;
+  top: 50px;
 }
 .hh:hover{
   background: #e6f7ff;

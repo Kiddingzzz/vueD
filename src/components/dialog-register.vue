@@ -759,7 +759,7 @@
         }
          .dialog-container {
             width: 75% !important;
-            height: 500px !important;
+            height: 530px !important;
             line-height: 20px;          
             .dialog-title {
                 font-size: 16px !important;
@@ -767,7 +767,6 @@
             }
             .content {
                 margin-top: 20px !important;
-                line-height: 26px;
                 padding: 0 10px !important;
                 label {
                     line-height: 25px !important;
@@ -778,13 +777,11 @@
                         margin-left: 5px !important;
                         width: 70% !important;
                         text-indent: 5px !important;
-                        height: 26px !important;
                     }
 
                     .inputs-code {
                         margin-left: 5px !important;
                         width: 40% !important;
-                        height: 26px !important;
                         text-indent: 5px !important;
                     }
 
@@ -792,13 +789,11 @@
                         margin-left: 5px !important;
                         width: 70% !important;
                         text-indent: 5px !important;
-                        height: 26px !important;
                     }
 
                     .btns-code {
                         margin-left: 5px !important;
                         width: 30% !important;
-                        height: 26px !important;
                         text-indent: 5px !important;
                         padding: 0px;
                     }
@@ -818,8 +813,6 @@
 
                 .btn-register {
                     width: 70% !important;
-                    height: 26px !important;
-                    line-height: 26px !important;
                 }
             }
         }

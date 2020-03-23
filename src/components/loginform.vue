@@ -69,7 +69,7 @@
                                             </el-col>
                                             <dialog-register v-model="sendVal" @childByValue="getDate" type="danger" title="欢迎注册开单王">
                                             </dialog-register>
-                                            <el-col :span="6" :offset="18" class="maginTop" style="margin-top:20px">
+                                            <el-col :span="6" :offset="18" class="maginTop" style="margin-top:40px">
                                                 <div class="pwd" v-if="account == 'username'">
                                                     <!-- <div @click="openMask" class="reg">注册</div> -->
                                                     <div @click="openforget" class="forget">忘记密码</div>
@@ -380,6 +380,7 @@
         z-index: 99;
         background: url("/static/bg1.jpg");
         background-size: 100% 100%;
+        position: relative;
         .wrapper-login{
             padding: 0 0 5px 0;
             background: coral;

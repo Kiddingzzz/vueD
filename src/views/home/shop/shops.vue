@@ -127,7 +127,7 @@
           <div class="shopwrap">
             <a-layout style="padding: 24px 24px 24px 24px">
               <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-                <a-table :columns="columns" :dataSource="list" :loading="loading" @change="handleTableChange" :pagination="pagination">
+                <a-table :scroll="{ x:'calc(600px + 50%)'}" :columns="columns" :dataSource="list" :loading="loading" @change="handleTableChange" :pagination="pagination">
                   <span slot="customTitle">
                     <!-- <a-icon type="smile-o"/> --> 时间</span>
                   <span slot="customTitles">
@@ -405,9 +405,16 @@
           }
         }
       </script>
-<style lang="less">
+<style lang="less" scoped>
   /deep/.ant-table-thead > tr > th, /deep/.ant-table-tbody > tr > td{
       padding: 16px 10px !important;
+  }
+  /deep/.ant-table-tbody > tr > td a{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;  // 控制多行的行数
+        -webkit-box-orient: vertical;
   }
   .ant-radio-button-wrapper{
       border: 0px !important;

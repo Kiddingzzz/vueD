@@ -1690,11 +1690,8 @@
 
     .selldivallbox {
         display: flex;
-        border-bottom: 1px solid #ebedf0;
-       
+        border-bottom: 1px solid #ebedf0;       
         padding-left: 20px;
-       
-        line-height: 40px;
     }
 
     .sellpicdivbox {
@@ -1706,16 +1703,12 @@
     .selllaberbox {
         display: flex;
         align-items: center;
+        flex-wrap: wrap;
     }
 
     .selllaberboxtitle {
         color: red;
         padding-right: 10px;
-    }
-
-    .selltupianbox {
-
-        padding-left: 60px;
     }
 
     .sellshinei {

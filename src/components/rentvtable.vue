@@ -16,7 +16,7 @@
                         </template>
                     </span>-->
                 </div>
-                <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list" :customRow="handleClickRow">
+                <a-table :scroll="{ x:'calc(750px + 50%)'}" :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list" :customRow="handleClickRow">
                     <span slot="operation" slot-scope="text, record">
                         <a href="javascript:;" @click="ZuupdateItem(record.id)">修改</a>
                         <a-popconfirm title="确定删除么？" @confirm="confirm(record.id)" okText="确认" cancelText="取消">
@@ -40,7 +40,7 @@
             title: '小区',
             dataIndex: 'xiaoquName',
             key: 'xiaoquName',
-            width: '7.5%'
+            width: '8%'
         },
         {
             dataIndex: 'renTingTitle',
@@ -65,7 +65,7 @@
             title: '面积',
             dataIndex: 'renTingMianji',
             key: 'renTingMianji',
-            width: '5.5%'
+            width: '6.5%'
         },
         {
             title: '价格',
@@ -77,13 +77,13 @@
             title: '朝向',
             dataIndex: 'renTingChaoxiang',
             key: 'renTingChaoxiang',
-            width: '5.5%'
+            width: '6.5%'
         },
         {
             title: '楼层',
             dataIndex: 'renTingLouceng',
             key: 'renTingLouceng',
-            width: '6.7%'
+            width: '5.7%'
         },
         {
             title: '更新日期',
@@ -114,7 +114,7 @@
             title: '区域',
             dataIndex: 'renTingQuyu',
             key: 'renTingQuyu',
-            width: '7.2%'
+            width: '7%'
         },
          {
             title: '状态',
@@ -127,8 +127,9 @@
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
             key: 'donation',
-            width: '12%'
-
+            // width: '12%',
+            width: 70,
+            fixed: 'right',
         },
     ];
 
@@ -285,6 +286,16 @@
 
 </script>
 <style scoped lang="less">
+/deep/.ant-table-tbody>tr>td {
+        padding: 16px 10px !important;
+    }
+ /deep/.ant-table-tbody>tr>td a{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;  // 控制多行的行数
+        -webkit-box-orient: vertical;
+    }
     .wrap {
         width: 100%;
         display: flex;

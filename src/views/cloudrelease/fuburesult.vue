@@ -20,7 +20,7 @@
                     </div>
                 </div>
             </div>   
-            <a-table class="fabutable" :columns="columns" :dataSource="listfb" >
+            <a-table :scroll="{ x:600}" class="fabutable" :columns="columns" :dataSource="listfb" >
                     <span slot="operation" slot-scope="text, record" class="caozuo">
                         <a v-if="record.publishStatus!='已发布'&&record.publishStatus!='等待结果中...'" href="javascript:;" @click="update(record)">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="confirm(record)"  okText="确定" cancelText="取消">
@@ -38,11 +38,11 @@
 </template>
 <script>
 const columns = [{
-        title: '小区名称',
+        title: '小区',
         dataIndex: 'xiaoquName',
         width:'15%',
     }, {
-        title: '发布房源标题',
+        title: '发布标题',
         dataIndex: 'title',
         width:'30 %',
     }, {
@@ -53,19 +53,21 @@ const columns = [{
         title: '房源类型',
         dataIndex: 'houseType',
         scopedSlots: { customRender: 'houseType' },
-        width:'15%'
-    },
-    {
-        title: '操作',
-        dataIndex: 'operation',
-        scopedSlots: { customRender: 'operation' },
-        width:'15%'
+        width:'12%'
     },
     {
         title: '结果',
         dataIndex: 'jieguo',
         scopedSlots: { customRender: 'jieguo' },
-        width:'10%'
+        width:'13%'
+    },
+    {
+        title: '操作',
+        dataIndex: 'operation',
+        scopedSlots: { customRender: 'operation' },
+        // width:'15%'
+        width: 70,
+        fixed: 'right',
     },
 ];
 
@@ -157,6 +159,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+/deep/.ant-table-tbody>tr>td {
+    padding: 16px 10px !important;
+}
 .fabuall {
     display: flex;
     width: 100%;

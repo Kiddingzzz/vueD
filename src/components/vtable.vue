@@ -17,7 +17,7 @@
                     </span>-->
                 </div>
                 <!-- <a-table :rowSelection="rowSelection" :columns="columns" :dataSource="list">  -->
-                <a-table :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list" :customRow="handleClickRow">
+                <a-table :scroll="{ x:'calc(750px + 50%)'}" :rowSelection="{selectedRowKeys: selectedRowKeys, onChange: onSelectChange}" :columns="columns" :dataSource="list" :customRow="handleClickRow">
                     <span slot="operation" slot-scope="text, record, index" class="caozuo">
                         <a href="javascript:;" @click="updateItem(record.id)">修改</a>
                         <a-popconfirm title="确定删除?" @confirm="onDelete(record.id,index)"  okText="确定" cancelText="取消">
@@ -140,8 +140,9 @@
             dataIndex: 'operation',
             scopedSlots: { customRender: 'operation' },
             key: 'donation',
-            width: '10%'
-
+            // width: '10%'
+            width: 70,
+            fixed: 'right',
         },
     ];
 

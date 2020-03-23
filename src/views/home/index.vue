@@ -151,12 +151,12 @@
         <div class="wrap">
             <a-layout style="padding: 24px">
                 <a-layout-content :style="{ background: '#fff', padding: '24px', margin: 0, minHeight: '280px' }">
-                    <a-table :columns="columns" :dataSource="list" :loading="loading" @change="handleTableChange" :pagination="pagination">
+                    <a-table :scroll="{ x:'calc(600px + 50%)'}" :columns="columns" :dataSource="list" :loading="loading" @change="handleTableChange" :pagination="pagination">
                         <span slot="customTitle">
                             <!-- <a-icon type="smile-o"/> --> 时间</span>
                         <span slot="customTitles">
                             <!-- <a-icon type="smile-o"/> --> 标题</span>
-                        <template slot="phones" slot-scope="text, record">
+                        <template slot="phones" slot-scope="text, record" class="title">
                             <a :href="record.url" target="_blank">{{record.phone}}</a>
                         </template>
                         <template slot="titles" slot-scope="text, record">
@@ -190,7 +190,7 @@
             title: '小区',
             dataIndex: 'xiaoquName',
             key: 'xiaoquName',
-            width: '7%'
+            width: '7%', 
         },
         {
             dataIndex: 'title',
@@ -221,13 +221,13 @@
             title: '朝向',
             dataIndex: 'chaoxiang',
             key: 'chaoxiang',
-            width: '5%'
+            width: '6%'
         },
         {
             title: '户型',
             dataIndex: 'huxing',
             key: 'huxing',
-            width: '6%'
+            width: '7%'
         },
         {
             title: '楼层',
@@ -245,7 +245,7 @@
             title: '联系人',
             dataIndex: 'lianxiPeople',
             key: 'lianxiPeople',
-            width: '7.4%'
+            width: '6.4%'
         },
         {
             title: '电话',
@@ -456,7 +456,13 @@
     /deep/.ant-table-tbody>tr>td {
         padding: 16px 10px !important;
     }
-
+     /deep/.ant-table-tbody>tr>td a{
+        overflow: hidden;
+        text-overflow: ellipsis;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;  // 控制多行的行数
+        -webkit-box-orient: vertical;
+    }
     .ant-radio-button-wrapper {
         border: 0px !important;
     }

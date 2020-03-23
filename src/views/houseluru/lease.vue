@@ -477,7 +477,8 @@
                                 <span class="laberboxtitle">房源照片: </span>
                                 <div class="shineipadd">
                                     最多20张。您可以<span class="sellorangelaber">发布客厅/卧室/厨房</span>
-                                </div>等3张以上照片可帮助您获得较好效果！
+                                    等3张以上照片可帮助您获得较好效果！
+                                </div>
                                 <!-- <div class="shineipadd">
                                     最多10张。您可以<label class="piclaber">从我的图库选择</label>
                                     <a-button type="" class="buttontuku">我的图库</a-button>
@@ -486,7 +487,7 @@
                                     <label class="orangelaber">可拖拽交换位置</label>
                                 </div> -->
                             </div>
-                            <div class="tupianbox">
+                            <!-- <div class="tupianbox"> -->
                                 <!-- <a-upload action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
                                     listType="picture-card" :fileList="shineiList" @preview="handlePreview"
                                     @change="handleChange">
@@ -494,11 +495,11 @@
                                 <a-modal :visible="previewVisible" :footer="null" @cancel="handleCancel">
                                     <img alt="example" style="width: 100%;height:650px;" :src="previewImage" />
                                 </a-modal> -->
-                            </div>
-                            <div style="width:100%;display:flex;flex-wrap: wrap;">
-                                <img-ZuFlist v-for="(item,index) in ZuFangPictureList" @DeleteValueZu="getMSDZu"
-                                    :value="item" :key="index"></img-ZuFlist>
-                            </div>
+                                <div style="width:100%;display:flex;flex-wrap: wrap;">
+                                    <img-ZuFlist v-for="(item,index) in ZuFangPictureList" @DeleteValueZu="getMSDZu"
+                                        :value="item" :key="index"></img-ZuFlist>
+                                </div>
+                            <!-- </div> -->
                         </div>
                         <div class="shinei divallbox" style="display:none">
                             <div class="laberbox">
@@ -549,7 +550,7 @@
     const provinceData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const proquyuseData = ['江北', '万州', '九龙坡', '渝中', '涪陵', '沙坪坝', '合川', '长寿', '南岸', '渝北', '巴南', '北碚', '大渡口', '永川', '两江新区', '璧山', '重庆周边', '石柱', '江津'];
     const plainOptioncx = ['东', '南', '西', '北', '东西', '东南', '西北', '西南', '东北', '南北'];
-    const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简装修', '毛坯'];
+    const plainOptionzx = ['豪华装修', '精装修', '中等装修', '简单装修', '毛坯'];
     const plainOptioncf = ['随时看房', '非工作时间', '电话预约', '其他'];
     const plainOptiongn = ['集体供暖', '自供暖', '不供暖'];
     const plainOptionsc = ['普通上传', '批量上传', '大图压缩批量上传'];
@@ -1465,8 +1466,7 @@
 
     .laberbox {
         display: flex;
-        align-items: center;
-        height: 40px;
+        flex-wrap: wrap;
 
         .laberboxtitle {
             color: red;
@@ -1479,7 +1479,6 @@
     }
 
     .shinei {
-        height: 180px !important;
         flex-flow: column;
         flex: 0 0 auto;
     }
@@ -1506,7 +1505,6 @@
         display: flex;
         width: 100% !important;
         padding-left: 20px;
-        height: 40px !important;
     }
 
     .bottomobx {
